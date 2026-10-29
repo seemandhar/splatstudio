@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio"
+version = "0.1.0"
+description = "Installable Gaussian splatting methods with executable component contracts"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Seemandhar Jain"}, {name = "Keshav Gupta"}, {name = "Manmohan Chandraker"}]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/seemandhar/splatstudio"
+Documentation = "https://github.com/seemandhar/splatstudio/tree/main/docs"
+Issues = "https://github.com/seemandhar/splatstudio/issues"
+
+[project.optional-dependencies]
+runtime = ["torch>=2.1", "gsplat>=1.5.3,<1.6", "numpy>=1.24", "Pillow>=10", "plyfile>=1"]
+data = ["opencv-python-headless>=4.8", "numpy>=1.24", "Pillow>=10", "plyfile>=1"]
+reports = ["matplotlib>=3.8", "Pillow>=10"]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.scripts]
+splatstudio = "splatstudio.cli:main"
+ss-methods = "splatstudio.cli:methods_main"
+ss-create = "splatstudio.cli:create_main"
+ss-inspect = "splatstudio.cli:inspect_main"
+ss-verify = "splatstudio.cli:verify_main"
+ss-train = "splatstudio.cli:train_main"
+ss-eval = "splatstudio.cli:eval_main"
+ss-compare = "splatstudio.cli:compare_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+splatstudio = ["catalog.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,8 @@
+{"step": 1, "loss": 0.1492510437965393, "gaussians": 192, "losses": {"photometric": 0.1492483764886856, "scale-prior": 2.6641796466719825e-06}}
+{"step": 100, "loss": 0.09457183629274368, "gaussians": 192, "losses": {"photometric": 0.09456897526979446, "scale-prior": 2.8634051432163687e-06}}
+{"step": 200, "loss": 0.07890086621046066, "gaussians": 192, "losses": {"photometric": 0.07889807969331741, "scale-prior": 2.7870351004821714e-06}}
+{"step": 300, "loss": 0.047557931393384933, "gaussians": 192, "losses": {"photometric": 0.04755508154630661, "scale-prior": 2.8503175144578563e-06}}
+{"step": 400, "loss": 0.0564151294529438, "gaussians": 192, "losses": {"photometric": 0.0564122200012207, "scale-prior": 2.9091618216625648e-06}}
+{"step": 500, "loss": 0.04042906314134598, "gaussians": 192, "losses": {"photometric": 0.04042615368962288, "scale-prior": 2.9103932774887653e-06}}
+{"step": 600, "loss": 0.04272916167974472, "gaussians": 382, "losses": {"photometric": 0.04272620752453804, "scale-prior": 2.9551620173151605e-06}}
+{"step": 700, "loss": 0.04191768169403076, "gaussians": 623, "losses": {"photometric": 0.041916362941265106, "scale-prior": 1.3199072554925806e-06}}

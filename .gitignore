@@ -1,0 +1,14 @@
+.venv/
+.venv*/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+runs/
+artifacts/
+data/
+site/
+docs/research-plan.md
+docs/validation.md

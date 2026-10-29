@@ -1,0 +1,8 @@
+{"step": 1, "loss": 0.1661183387041092, "gaussians": 192, "losses": {"photometric": 0.1661183387041092, "surfel-geometry": 0.0}}
+{"step": 100, "loss": 0.08704321086406708, "gaussians": 192, "losses": {"photometric": 0.08704321086406708, "surfel-geometry": 0.0}}
+{"step": 200, "loss": 0.071294404566288, "gaussians": 192, "losses": {"photometric": 0.071294404566288, "surfel-geometry": 0.0}}
+{"step": 300, "loss": 0.0517323836684227, "gaussians": 192, "losses": {"photometric": 0.0517323836684227, "surfel-geometry": 0.0}}
+{"step": 400, "loss": 0.05789072811603546, "gaussians": 192, "losses": {"photometric": 0.05789072811603546, "surfel-geometry": 0.0}}
+{"step": 500, "loss": 0.04581621289253235, "gaussians": 192, "losses": {"photometric": 0.04581621289253235, "surfel-geometry": 0.0}}
+{"step": 600, "loss": 0.04811163246631622, "gaussians": 378, "losses": {"photometric": 0.04811163246631622, "surfel-geometry": 0.0}}
+{"step": 700, "loss": 0.05584064871072769, "gaussians": 479, "losses": {"photometric": 0.05584064871072769, "surfel-geometry": 0.0}}

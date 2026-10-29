@@ -1,0 +1,37 @@
+{
+  "scope": "Native SDK unit and integration validation",
+  "cpu_tests": {
+    "tests": "36",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2.167",
+    "timestamp": "2026-10-29T16:37:19.331310-07:00"
+  },
+  "ruff": "passed",
+  "package_builds": [
+    "splatstudio",
+    "splatstudio-nerfstudio-methods"
+  ],
+  "clean_wheel_discovery": "passed_without_torch",
+  "external_plugin_cuda_install_check": {
+    "status": "passed",
+    "method": "installation-check-559c01cb",
+    "steps": 40,
+    "checks": [
+      "scaffold",
+      "install",
+      "discovery",
+      "verification",
+      "training",
+      "evaluation"
+    ],
+    "test_metrics": {
+      "psnr": 17.768520832061768,
+      "ssim": 0.6220643818378448
+    },
+    "paper_reproduction": "unverified",
+    "purpose": "Software integration test on an analytic sphere fixture"
+  },
+  "paper_reproduction": "unverified"
+}

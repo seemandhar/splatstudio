@@ -1,0 +1,128 @@
+{
+  "scene": "spheres",
+  "recipe": {
+    "device": "cuda:0",
+    "max_gaussians": 100000,
+    "methods": [
+      "gsplat",
+      "gsplat-absgrad",
+      "gsplat-aa",
+      "gsplat-mcmc",
+      "gsplat-surfel",
+      "scale-prior"
+    ],
+    "num_gaussians": 192,
+    "seeds": "0",
+    "steps": 700
+  },
+  "runs": [
+    {
+      "status": "passed",
+      "method": "gsplat",
+      "seed": 0,
+      "metrics": {
+        "psnr": 19.307279586791992,
+        "ssim": 0.7489775717258453
+      },
+      "resources": {
+        "checkpoint_bytes": 454005,
+        "gaussians": 622,
+        "peak_memory_bytes": 9417216,
+        "training_seconds": 2.602316589996917
+      },
+      "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+      "paper_reproduction": "unverified",
+      "record": "gsplat-seed0/test.json"
+    },
+    {
+      "status": "passed",
+      "method": "gsplat-absgrad",
+      "seed": 0,
+      "metrics": {
+        "psnr": 19.516249179840088,
+        "ssim": 0.7661093920469284
+      },
+      "resources": {
+        "checkpoint_bytes": 424181,
+        "gaussians": 580,
+        "peak_memory_bytes": 9357312,
+        "training_seconds": 2.9356289290008135
+      },
+      "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+      "paper_reproduction": "unverified",
+      "record": "gsplat-absgrad-seed0/test.json"
+    },
+    {
+      "status": "passed",
+      "method": "gsplat-aa",
+      "seed": 0,
+      "metrics": {
+        "psnr": 20.832205772399902,
+        "ssim": 0.7960405796766281
+      },
+      "resources": {
+        "checkpoint_bytes": 519285,
+        "gaussians": 713,
+        "peak_memory_bytes": 9472512,
+        "training_seconds": 3.045146584001486
+      },
+      "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+      "paper_reproduction": "unverified",
+      "record": "gsplat-aa-seed0/test.json"
+    },
+    {
+      "status": "passed",
+      "method": "gsplat-mcmc",
+      "seed": 0,
+      "metrics": {
+        "psnr": 20.72685194015503,
+        "ssim": 0.8079508394002914
+      },
+      "resources": {
+        "checkpoint_bytes": 168309,
+        "gaussians": 211,
+        "peak_memory_bytes": 8980480,
+        "training_seconds": 2.922464326999034
+      },
+      "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+      "paper_reproduction": "unverified",
+      "record": "gsplat-mcmc-seed0/test.json"
+    },
+    {
+      "status": "passed",
+      "method": "gsplat-surfel",
+      "seed": 0,
+      "metrics": {
+        "psnr": 19.24485445022583,
+        "ssim": 0.738127276301384
+      },
+      "resources": {
+        "checkpoint_bytes": 351477,
+        "gaussians": 479,
+        "peak_memory_bytes": 17833984,
+        "training_seconds": 4.705904639995424
+      },
+      "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+      "paper_reproduction": "unverified",
+      "record": "gsplat-surfel-seed0/test.json"
+    },
+    {
+      "status": "passed",
+      "method": "scale-prior",
+      "seed": 0,
+      "metrics": {
+        "psnr": 19.436773777008057,
+        "ssim": 0.7544089555740356
+      },
+      "resources": {
+        "checkpoint_bytes": 465013,
+        "gaussians": 623,
+        "peak_memory_bytes": 17944064,
+        "training_seconds": 3.1834445249987766
+      },
+      "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+      "paper_reproduction": "unverified",
+      "record": "scale-prior-seed0/test.json"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-nerfstudio-methods"
+version = "0.1.0"
+description = "The SPLATIFY research method collection for SplatStudio and Nerfstudio"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+dependencies = ["nerfstudio>=1.1.5,<1.2"]
+
+[project.entry-points."nerfstudio.method_configs"]
+ss-gs-template = "splatstudio_zoo.configs:gs_template_method"
+ss-absgs = "splatstudio_zoo.configs:absgs_method"
+ss-depth-reg-gs = "splatstudio_zoo.configs:depth_reg_gs_method"
+ss-feature-gs = "splatstudio_zoo.configs:feature_gs_method"
+ss-micro-splatting = "splatstudio_zoo.configs:micro_splatting_method"
+ss-compact-gs = "splatstudio_zoo.configs:compact_gs_method"
+ss-msaa-gs = "splatstudio_zoo.configs:msaa_gs_method"
+ss-opti3dgs = "splatstudio_zoo.configs:opti3dgs_method"
+ss-decomp-gs = "splatstudio_zoo.configs:decomp_gs_method"
+ss-nebula-gs = "splatstudio_zoo.configs:nebula_gs_method"
+ss-bogauss = "splatstudio_zoo.configs:bogauss_method"
+ss-light-gs = "splatstudio_zoo.configs:light_gs_method"
+ss-stablegs = "splatstudio_zoo.configs:stablegs_method"
+ss-vod3dgs-s = "splatstudio_zoo.configs:vod3dgs_s_method"
+ss-vod3dgs-l = "splatstudio_zoo.configs:vod3dgs_l_method"
+ss-rain-gs = "splatstudio_zoo.configs:rain_gs_method"
+ss-bubble-gs = "splatstudio_zoo.configs:bubble_gs_method"
+ss-trick-gs = "splatstudio_zoo.configs:trick_gs_method"
+ss-clod-gs = "splatstudio_zoo.configs:clod_gs_method"
+ss-twodgs = "splatstudio_zoo.configs:twodgs_method"
+ss-pixel-gs = "splatstudio_zoo.configs:pixel_gs_method"
+ss-gaussian-shader = "splatstudio_zoo.configs:gaussian_shader_method"
+ss-scaffold-gs = "splatstudio_zoo.configs:scaffold_gs_method"
+ss-dwtgs = "splatstudio_zoo.configs:dwtgs_method"
+ss-lp3dgs = "splatstudio_zoo.configs:lp3dgs_method"
+ss-compgs = "splatstudio_zoo.configs:compgs_method"
+ss-compgs-enhanced = "splatstudio_zoo.configs:compgs_enhanced_method"
+ss-cor-gs = "splatstudio_zoo.configs:cor_gs_method"
+ss-fsgs = "splatstudio_zoo.configs:fsgs_method"
+ss-msaa-gs-plus = "splatstudio_zoo.configs:msaa_gs_plus_method"
+ss-diamond-gs-3d = "splatstudio_zoo.configs:diamond_gs_3d_method"
+ss-fast-gs = "splatstudio_zoo.configs:fast_gs_method"
+ss-fast-gs-big = "splatstudio_zoo.configs:fast_gs_big_method"
+
+[tool.setuptools.packages.find]
+include = ["splatstudio_zoo*"]

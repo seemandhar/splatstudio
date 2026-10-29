@@ -1,0 +1,41 @@
+{
+  "method": "scale-prior",
+  "metrics": {
+    "psnr": 19.832175731658936,
+    "ssim": 0.7873173505067825
+  },
+  "paper_reproduction": "unverified",
+  "per_view": [
+    {
+      "frame": "images/002.png",
+      "psnr": 20.4583740234375,
+      "ssim": 0.8064640760421753
+    },
+    {
+      "frame": "images/006.png",
+      "psnr": 18.592058181762695,
+      "ssim": 0.7530068755149841
+    },
+    {
+      "frame": "images/010.png",
+      "psnr": 20.042600631713867,
+      "ssim": 0.7895190119743347
+    },
+    {
+      "frame": "images/014.png",
+      "psnr": 20.23567008972168,
+      "ssim": 0.800279438495636
+    }
+  ],
+  "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+  "resources": {
+    "checkpoint_bytes": 465013,
+    "gaussians": 623,
+    "peak_memory_bytes": 17944064,
+    "training_seconds": 3.1834445249987766
+  },
+  "scene": "release-spheres",
+  "schema_version": 1,
+  "seed": 0,
+  "split": "validation"
+}

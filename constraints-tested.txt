@@ -1,0 +1,8 @@
+# Versions used for the local v0.1 validation; Python 3.11.14.
+torch==2.10.0
+gsplat==1.5.3
+numpy==1.26.4
+Pillow==12.1.0
+plyfile==1.1.2
+pytest==9.2.0
+ruff==0.17.3

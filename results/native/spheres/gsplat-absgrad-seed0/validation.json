@@ -1,0 +1,41 @@
+{
+  "method": "gsplat-absgrad",
+  "metrics": {
+    "psnr": 19.83306646347046,
+    "ssim": 0.7912017852067947
+  },
+  "paper_reproduction": "unverified",
+  "per_view": [
+    {
+      "frame": "images/002.png",
+      "psnr": 20.50676727294922,
+      "ssim": 0.8089269399642944
+    },
+    {
+      "frame": "images/006.png",
+      "psnr": 18.473133087158203,
+      "ssim": 0.7543758749961853
+    },
+    {
+      "frame": "images/010.png",
+      "psnr": 20.28765106201172,
+      "ssim": 0.8009942173957825
+    },
+    {
+      "frame": "images/014.png",
+      "psnr": 20.064714431762695,
+      "ssim": 0.8005101084709167
+    }
+  ],
+  "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+  "resources": {
+    "checkpoint_bytes": 424181,
+    "gaussians": 580,
+    "peak_memory_bytes": 9357312,
+    "training_seconds": 2.9356289290008135
+  },
+  "scene": "release-spheres",
+  "schema_version": 1,
+  "seed": 0,
+  "split": "validation"
+}

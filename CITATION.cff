@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Please cite this software and the original papers for methods used."
+type: software
+title: "SplatStudio: Installable Methods and Traceable Experiments for Gaussian Splatting"
+version: 0.1.0
+date-released: 2026-10-29
+license: MIT
+repository-code: "https://github.com/seemandhar/splatstudio"
+authors:
+  - family-names: Jain
+    given-names: Seemandhar
+  - family-names: Gupta
+    given-names: Keshav
+  - family-names: Chandraker
+    given-names: Manmohan

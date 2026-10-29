@@ -1,0 +1,3341 @@
+{
+  "schema_version": 1,
+  "methods": [
+    {
+      "name": "ss-absgs",
+      "entry_point": "splatstudio_zoo.configs:absgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "AbsGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32413172721862793,
+            "terms": {
+              "main_loss": 0.32413172721862793,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.47451508045196533,
+            "terms": {
+              "main_loss": 0.47451508045196533,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5931271910667419,
+            "terms": {
+              "main_loss": 0.5931271910667419,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.43495720624923706,
+            "terms": {
+              "main_loss": 0.43495720624923706,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.33314236998558044,
+            "terms": {
+              "main_loss": 0.33314236998558044,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5402407646179199,
+            "terms": {
+              "main_loss": 0.5402407646179199,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6077247262001038,
+            "terms": {
+              "main_loss": 0.6077247262001038,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.42954784631729126,
+            "terms": {
+              "main_loss": 0.42954784631729126,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33317485451698303,
+            "terms": {
+              "main_loss": 0.33317485451698303,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-bogauss",
+      "entry_point": "splatstudio_zoo.configs:bogauss_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "BOGausSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32413166761398315,
+            "terms": {
+              "main_loss": 0.32413166761398315,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4745151400566101,
+            "terms": {
+              "main_loss": 0.4745151400566101,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.593126654624939,
+            "terms": {
+              "main_loss": 0.593126654624939,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4349585771560669,
+            "terms": {
+              "main_loss": 0.4349585771560669,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3331369161605835,
+            "terms": {
+              "main_loss": 0.3331369161605835,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5402409434318542,
+            "terms": {
+              "main_loss": 0.5402409434318542,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6077144145965576,
+            "terms": {
+              "main_loss": 0.6077144145965576,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.42954733967781067,
+            "terms": {
+              "main_loss": 0.42954733967781067,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3331630229949951,
+            "terms": {
+              "main_loss": 0.3331630229949951,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-bubble-gs",
+      "entry_point": "splatstudio_zoo.configs:bubble_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "BubbleGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493888,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6388443112373352,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.0016254049260169268,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32579272985458374,
+            "terms": {
+              "main_loss": 0.32412776350975037,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.0016649644821882248,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4762103259563446,
+            "terms": {
+              "main_loss": 0.47454047203063965,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.0016698619583621621,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5948135256767273,
+            "terms": {
+              "main_loss": 0.5931346416473389,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.001678877742961049,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4367341995239258,
+            "terms": {
+              "main_loss": 0.43504807353019714,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.001686122384853661,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.33489763736724854,
+            "terms": {
+              "main_loss": 0.3332025706768036,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.0016950785648077726,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5418597459793091,
+            "terms": {
+              "main_loss": 0.5401567220687866,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.0017030361341312528,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6093933582305908,
+            "terms": {
+              "main_loss": 0.6076823472976685,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.001711035380139947,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.43126019835472107,
+            "terms": {
+              "main_loss": 0.4295418858528137,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.0017183116870000958,
+              "max_scale": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3349676728248596,
+            "terms": {
+              "main_loss": 0.33324116468429565,
+              "scale_reg": 0.0,
+              "global_opacity_entropy": 0.001726506743580103,
+              "max_scale": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-clod-gs",
+      "entry_point": "splatstudio_zoo.configs:clod_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "CLoDGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493888,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372189521789551,
+            "terms": {
+              "main_loss": 0.6372189521789551,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3241249918937683,
+            "terms": {
+              "main_loss": 0.3241249918937683,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4745174050331116,
+            "terms": {
+              "main_loss": 0.4745174050331116,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5931273698806763,
+            "terms": {
+              "main_loss": 0.5931273698806763,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.43495988845825195,
+            "terms": {
+              "main_loss": 0.43495988845825195,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.33315855264663696,
+            "terms": {
+              "main_loss": 0.33315855264663696,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.540245771408081,
+            "terms": {
+              "main_loss": 0.540245771408081,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.607717752456665,
+            "terms": {
+              "main_loss": 0.607717752456665,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.42956674098968506,
+            "terms": {
+              "main_loss": 0.42956674098968506,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33317261934280396,
+            "terms": {
+              "main_loss": 0.33317261934280396,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-compact-gs",
+      "entry_point": "splatstudio_zoo.configs:compact_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "CompactGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3241312503814697,
+            "terms": {
+              "main_loss": 0.3241312503814697,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.47451603412628174,
+            "terms": {
+              "main_loss": 0.47451603412628174,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.593126654624939,
+            "terms": {
+              "main_loss": 0.593126654624939,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4349590241909027,
+            "terms": {
+              "main_loss": 0.4349590241909027,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.33314356207847595,
+            "terms": {
+              "main_loss": 0.33314356207847595,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.540239691734314,
+            "terms": {
+              "main_loss": 0.540239691734314,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6077256202697754,
+            "terms": {
+              "main_loss": 0.6077256202697754,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4295467734336853,
+            "terms": {
+              "main_loss": 0.4295467734336853,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33317315578460693,
+            "terms": {
+              "main_loss": 0.33317315578460693,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-compgs",
+      "entry_point": "splatstudio_zoo.configs:compgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "CompGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.38396239280700684,
+            "terms": {
+              "main_loss": 0.38396239280700684,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.5280025601387024,
+            "terms": {
+              "main_loss": 0.5280025601387024,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.6000754833221436,
+            "terms": {
+              "main_loss": 0.6000754833221436,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.48849213123321533,
+            "terms": {
+              "main_loss": 0.48849213123321533,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.39006170630455017,
+            "terms": {
+              "main_loss": 0.39006170630455017,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5746827125549316,
+            "terms": {
+              "main_loss": 0.5746827125549316,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6292463541030884,
+            "terms": {
+              "main_loss": 0.6292463541030884,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.470986008644104,
+            "terms": {
+              "main_loss": 0.470986008644104,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3700318932533264,
+            "terms": {
+              "main_loss": 0.3700318932533264,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-compgs-enhanced",
+      "entry_point": "splatstudio_zoo.configs:compgs_enhanced_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "CompGSEnhancedModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2690112,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6426099538803101,
+            "terms": {
+              "main_loss": 0.6426099538803101,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.38851451873779297,
+            "terms": {
+              "main_loss": 0.3885120153427124,
+              "scale_reg": 0.0,
+              "tv_loss": 2.5122606075456133e-06
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.5313509702682495,
+            "terms": {
+              "main_loss": 0.5313445329666138,
+              "scale_reg": 0.0,
+              "tv_loss": 6.428667802538257e-06
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.6004260182380676,
+            "terms": {
+              "main_loss": 0.6004148721694946,
+              "scale_reg": 0.0,
+              "tv_loss": 1.1163374438183382e-05
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.49350282549858093,
+            "terms": {
+              "main_loss": 0.49348604679107666,
+              "scale_reg": 0.0,
+              "tv_loss": 1.6769819922046736e-05
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.39456045627593994,
+            "terms": {
+              "main_loss": 0.39453694224357605,
+              "scale_reg": 0.0,
+              "tv_loss": 2.3509175662184134e-05
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5777409076690674,
+            "terms": {
+              "main_loss": 0.5777100324630737,
+              "scale_reg": 0.0,
+              "tv_loss": 3.086886499659158e-05
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6311293840408325,
+            "terms": {
+              "main_loss": 0.6310904622077942,
+              "scale_reg": 0.0,
+              "tv_loss": 3.8896054320503026e-05
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4667132496833801,
+            "terms": {
+              "main_loss": 0.46666526794433594,
+              "scale_reg": 0.0,
+              "tv_loss": 4.799092494067736e-05
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.35946333408355713,
+            "terms": {
+              "main_loss": 0.35940536856651306,
+              "scale_reg": 0.0,
+              "tv_loss": 5.7961347920354456e-05
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-cor-gs",
+      "entry_point": "splatstudio_zoo.configs:cor_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "CoRGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2516160,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.8843131065368652,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0,
+              "field2_color": 0.24709421396255493
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.9499582052230835,
+            "terms": {
+              "main_loss": 0.46478432416915894,
+              "scale_reg": 0.0,
+              "field2_color": 0.48517388105392456
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.6921066045761108,
+            "terms": {
+              "main_loss": 0.4337911605834961,
+              "scale_reg": 0.0,
+              "field2_color": 0.25831544399261475
+            }
+          },
+          {
+            "step": 3,
+            "loss": 1.0592923164367676,
+            "terms": {
+              "main_loss": 0.5486627817153931,
+              "scale_reg": 0.0,
+              "field2_color": 0.5106294751167297
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.6646420955657959,
+            "terms": {
+              "main_loss": 0.4263871908187866,
+              "scale_reg": 0.0,
+              "field2_color": 0.2382548749446869
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.7348517775535583,
+            "terms": {
+              "main_loss": 0.2813296914100647,
+              "scale_reg": 0.0,
+              "field2_color": 0.45352208614349365
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.8472057580947876,
+            "terms": {
+              "main_loss": 0.39787572622299194,
+              "scale_reg": 0.0,
+              "field2_color": 0.44933000206947327
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.7398415803909302,
+            "terms": {
+              "main_loss": 0.395175039768219,
+              "scale_reg": 0.0,
+              "field2_color": 0.34466657042503357
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.6792304515838623,
+            "terms": {
+              "main_loss": 0.34984952211380005,
+              "scale_reg": 0.0,
+              "field2_color": 0.32938095927238464
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.8333988189697266,
+            "terms": {
+              "main_loss": 0.4608425498008728,
+              "scale_reg": 0.0,
+              "field2_color": 0.37255626916885376
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-decomp-gs",
+      "entry_point": "splatstudio_zoo.configs:decomp_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "DecompGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.529153048992157,
+            "terms": {
+              "main_loss": 0.529153048992157,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.2616080939769745,
+            "terms": {
+              "main_loss": 0.2616080939769745,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.39585453271865845,
+            "terms": {
+              "main_loss": 0.39585453271865845,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.4981394112110138,
+            "terms": {
+              "main_loss": 0.4981394112110138,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.37238457798957825,
+            "terms": {
+              "main_loss": 0.37238457798957825,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.25797146558761597,
+            "terms": {
+              "main_loss": 0.25797146558761597,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.4528711438179016,
+            "terms": {
+              "main_loss": 0.4528711438179016,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.5261495113372803,
+            "terms": {
+              "main_loss": 0.5261495113372803,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.350324809551239,
+            "terms": {
+              "main_loss": 0.350324809551239,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.24988871812820435,
+            "terms": {
+              "main_loss": 0.24988871812820435,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-depth-reg-gs",
+      "entry_point": "splatstudio_zoo.configs:depth_reg_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "DepthRegGSModelConfig",
+      "training_check": {
+        "status": "not_run",
+        "reason": "Requires monocular depth model weights"
+      }
+    },
+    {
+      "name": "ss-diamond-gs-3d",
+      "entry_point": "splatstudio_zoo.configs:diamond_gs_3d_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "DiamondGS3DModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2658499,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.7016619443893433,
+            "terms": {
+              "main_loss": 0.6956416964530945,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.0049999975599348545,
+              "opacity_entropy": 0.0009752429905347526,
+              "specular_sparsity": 4.500000432017259e-05
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.39596739411354065,
+            "terms": {
+              "main_loss": 0.389903724193573,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005030227825045586,
+              "opacity_entropy": 0.0009886289481073618,
+              "specular_sparsity": 4.480908319237642e-05
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.5332257151603699,
+            "terms": {
+              "main_loss": 0.5271469354629517,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005042457953095436,
+              "opacity_entropy": 0.0009916763519868255,
+              "specular_sparsity": 4.465683741727844e-05
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.6553298830986023,
+            "terms": {
+              "main_loss": 0.6492413878440857,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005048040766268969,
+              "opacity_entropy": 0.0009959206217899919,
+              "specular_sparsity": 4.452441862667911e-05
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4944268763065338,
+            "terms": {
+              "main_loss": 0.48833245038986206,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005051402375102043,
+              "opacity_entropy": 0.0009986254153773189,
+              "specular_sparsity": 4.440238626557402e-05
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.4015173316001892,
+            "terms": {
+              "main_loss": 0.3954162001609802,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005054545123130083,
+              "opacity_entropy": 0.001002296688966453,
+              "specular_sparsity": 4.430253466125578e-05
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.6015275716781616,
+            "terms": {
+              "main_loss": 0.5954198837280273,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005057755392044783,
+              "opacity_entropy": 0.0010057310573756695,
+              "specular_sparsity": 4.420817276695743e-05
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6449248790740967,
+            "terms": {
+              "main_loss": 0.6388112902641296,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005060485564172268,
+              "opacity_entropy": 0.0010089612333104014,
+              "specular_sparsity": 4.41142801719252e-05
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4955461025238037,
+            "terms": {
+              "main_loss": 0.4894276261329651,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005062710959464312,
+              "opacity_entropy": 0.0010117560159415007,
+              "specular_sparsity": 4.40187614003662e-05
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.4071867763996124,
+            "terms": {
+              "main_loss": 0.40106165409088135,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.005065973848104477,
+              "opacity_entropy": 0.0010152282193303108,
+              "specular_sparsity": 4.392106711748056e-05
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-dwtgs",
+      "entry_point": "splatstudio_zoo.configs:dwtgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "DWTGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 2.3493077754974365,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.7118247747421265,
+              "dwt_hf_loss": 0.0002641076280269772
+            }
+          },
+          {
+            "step": 1,
+            "loss": 2.106520652770996,
+            "terms": {
+              "main_loss": 0.5760486125946045,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.530471920967102
+            }
+          },
+          {
+            "step": 2,
+            "loss": 1.5536396503448486,
+            "terms": {
+              "main_loss": 0.4341117739677429,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.119527816772461
+            }
+          },
+          {
+            "step": 3,
+            "loss": 1.1297454833984375,
+            "terms": {
+              "main_loss": 0.35141000151634216,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 0.7783355116844177
+            }
+          },
+          {
+            "step": 4,
+            "loss": 1.974778175354004,
+            "terms": {
+              "main_loss": 0.5465784072875977,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.4281997680664062
+            }
+          },
+          {
+            "step": 5,
+            "loss": 2.2169132232666016,
+            "terms": {
+              "main_loss": 0.6019782423973083,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.6149349212646484
+            }
+          },
+          {
+            "step": 6,
+            "loss": 1.537806749343872,
+            "terms": {
+              "main_loss": 0.43115028738975525,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.1066564321517944
+            }
+          },
+          {
+            "step": 7,
+            "loss": 1.052493929862976,
+            "terms": {
+              "main_loss": 0.3043035566806793,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 0.7481904029846191
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.9017871618270874,
+            "terms": {
+              "main_loss": 0.2923645079135895,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 0.6094226837158203
+            }
+          },
+          {
+            "step": 9,
+            "loss": 1.9951272010803223,
+            "terms": {
+              "main_loss": 0.5497572422027588,
+              "scale_reg": 0.0,
+              "dwt_lf_loss": 1.4453699588775635
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-fast-gs",
+      "entry_point": "splatstudio_zoo.configs:fast_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "FastGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32447558641433716,
+            "terms": {
+              "main_loss": 0.32447558641433716,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4744258522987366,
+            "terms": {
+              "main_loss": 0.4744258522987366,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5933256149291992,
+            "terms": {
+              "main_loss": 0.5933256149291992,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4347101151943207,
+            "terms": {
+              "main_loss": 0.4347101151943207,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3339872658252716,
+            "terms": {
+              "main_loss": 0.3339872658252716,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5405830144882202,
+            "terms": {
+              "main_loss": 0.5405830144882202,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6082659959793091,
+            "terms": {
+              "main_loss": 0.6082659959793091,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4307622015476227,
+            "terms": {
+              "main_loss": 0.4307622015476227,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33409562706947327,
+            "terms": {
+              "main_loss": 0.33409562706947327,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-fast-gs-big",
+      "entry_point": "splatstudio_zoo.configs:fast_gs_big_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "FastGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3244776427745819,
+            "terms": {
+              "main_loss": 0.3244776427745819,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.47442495822906494,
+            "terms": {
+              "main_loss": 0.47442495822906494,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5933257341384888,
+            "terms": {
+              "main_loss": 0.5933257341384888,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4347093105316162,
+            "terms": {
+              "main_loss": 0.4347093105316162,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3339887857437134,
+            "terms": {
+              "main_loss": 0.3339887857437134,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5405758023262024,
+            "terms": {
+              "main_loss": 0.5405758023262024,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6082668900489807,
+            "terms": {
+              "main_loss": 0.6082668900489807,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4307679533958435,
+            "terms": {
+              "main_loss": 0.4307679533958435,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3340652585029602,
+            "terms": {
+              "main_loss": 0.3340652585029602,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-feature-gs",
+      "entry_point": "splatstudio_zoo.configs:feature_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "FeatureGSModelConfig",
+      "training_check": {
+        "status": "not_run",
+        "reason": "Requires feature targets; RGB-only training would not exercise its method"
+      }
+    },
+    {
+      "name": "ss-fsgs",
+      "entry_point": "splatstudio_zoo.configs:fsgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "FSGSModelConfig",
+      "training_check": {
+        "status": "not_run",
+        "reason": "Requires monocular depth model weights"
+      }
+    },
+    {
+      "name": "ss-gaussian-shader",
+      "entry_point": "splatstudio_zoo.configs:gaussian_shader_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "GaussianShaderModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2572224,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.41400110721588135,
+            "terms": {
+              "color_loss": 0.4049273431301117,
+              "normal_loss": 0.011481690220534801,
+              "sparse_loss": -0.002407945692539215,
+              "normal_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.12238898128271103,
+            "terms": {
+              "color_loss": 0.1129785105586052,
+              "normal_loss": 0.01180447917431593,
+              "sparse_loss": -0.0023940051905810833,
+              "normal_reg": 1.500000013088254e-09
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.3034372329711914,
+            "terms": {
+              "color_loss": 0.2938190698623657,
+              "normal_loss": 0.011990996077656746,
+              "sparse_loss": -0.002372844610363245,
+              "normal_reg": 4.484171256535774e-09
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.38705718517303467,
+            "terms": {
+              "color_loss": 0.37756261229515076,
+              "normal_loss": 0.011845706030726433,
+              "sparse_loss": -0.0023511317558586597,
+              "normal_reg": 8.084000135966107e-09
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.29166683554649353,
+            "terms": {
+              "color_loss": 0.28198811411857605,
+              "normal_loss": 0.012012772262096405,
+              "sparse_loss": -0.0023340561892837286,
+              "normal_reg": 1.1988890769032423e-08
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.12403891235589981,
+            "terms": {
+              "color_loss": 0.11486558616161346,
+              "normal_loss": 0.011488139629364014,
+              "sparse_loss": -0.002314831130206585,
+              "normal_reg": 1.613264721811447e-08
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.32500118017196655,
+            "terms": {
+              "color_loss": 0.31560638546943665,
+              "normal_loss": 0.01169191487133503,
+              "sparse_loss": -0.002297150669619441,
+              "normal_reg": 2.047786118453132e-08
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.4034380614757538,
+            "terms": {
+              "color_loss": 0.39384207129478455,
+              "normal_loss": 0.011877228505909443,
+              "sparse_loss": -0.002281276509165764,
+              "normal_reg": 2.492132367137856e-08
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.20397701859474182,
+            "terms": {
+              "color_loss": 0.19491331279277802,
+              "normal_loss": 0.011330495588481426,
+              "sparse_loss": -0.002266824245452881,
+              "normal_reg": 2.9533593348674003e-08
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.09953568875789642,
+            "terms": {
+              "color_loss": 0.09029042720794678,
+              "normal_loss": 0.011498503386974335,
+              "sparse_loss": -0.002253282116726041,
+              "normal_reg": 3.4529335835031816e-08
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-gs-template",
+      "entry_point": "splatstudio_zoo.configs:gs_template_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "GSTemplateModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3241312503814697,
+            "terms": {
+              "main_loss": 0.3241312503814697,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.47451603412628174,
+            "terms": {
+              "main_loss": 0.47451603412628174,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.593126654624939,
+            "terms": {
+              "main_loss": 0.593126654624939,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4349590539932251,
+            "terms": {
+              "main_loss": 0.4349590539932251,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.33315372467041016,
+            "terms": {
+              "main_loss": 0.33315372467041016,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5402407050132751,
+            "terms": {
+              "main_loss": 0.5402407050132751,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6077271699905396,
+            "terms": {
+              "main_loss": 0.6077271699905396,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4295470714569092,
+            "terms": {
+              "main_loss": 0.4295470714569092,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33317193388938904,
+            "terms": {
+              "main_loss": 0.33317193388938904,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-light-gs",
+      "entry_point": "splatstudio_zoo.configs:light_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "LightGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32413166761398315,
+            "terms": {
+              "main_loss": 0.32413166761398315,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4745151996612549,
+            "terms": {
+              "main_loss": 0.4745151996612549,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.593126654624939,
+            "terms": {
+              "main_loss": 0.593126654624939,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4349585473537445,
+            "terms": {
+              "main_loss": 0.4349585473537445,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3331475853919983,
+            "terms": {
+              "main_loss": 0.3331475853919983,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5402416586875916,
+            "terms": {
+              "main_loss": 0.5402416586875916,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6077148914337158,
+            "terms": {
+              "main_loss": 0.6077148914337158,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4295474886894226,
+            "terms": {
+              "main_loss": 0.4295474886894226,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3331579267978668,
+            "terms": {
+              "main_loss": 0.3331579267978668,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-lp3dgs",
+      "entry_point": "splatstudio_zoo.configs:lp3dgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "LP3DGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493888,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372188925743103,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32413166761398315,
+            "terms": {
+              "main_loss": 0.32413166761398315,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4745151400566101,
+            "terms": {
+              "main_loss": 0.4745151400566101,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5931267142295837,
+            "terms": {
+              "main_loss": 0.5931267142295837,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.434958815574646,
+            "terms": {
+              "main_loss": 0.434958815574646,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.333137571811676,
+            "terms": {
+              "main_loss": 0.333137571811676,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.540241003036499,
+            "terms": {
+              "main_loss": 0.540241003036499,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6077144145965576,
+            "terms": {
+              "main_loss": 0.6077144145965576,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4295474886894226,
+            "terms": {
+              "main_loss": 0.4295474886894226,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3331633508205414,
+            "terms": {
+              "main_loss": 0.3331633508205414,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-micro-splatting",
+      "entry_point": "splatstudio_zoo.configs:micro_splatting_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "MicroSplattingModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.7209410667419434,
+            "terms": {
+              "main_loss": 0.6372188925743103,
+              "scale_reg": 0.0,
+              "l2_photo": 0.08372216671705246,
+              "cov_trace": 0.0,
+              "isotropy": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.34598565101623535,
+            "terms": {
+              "main_loss": 0.3244442939758301,
+              "scale_reg": 0.0,
+              "l2_photo": 0.021541345864534378,
+              "cov_trace": 0.0,
+              "isotropy": 2.821309852407694e-09
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.5335848927497864,
+            "terms": {
+              "main_loss": 0.47458186745643616,
+              "scale_reg": 0.0,
+              "l2_photo": 0.05900303274393082,
+              "cov_trace": 0.0,
+              "isotropy": 5.822953674794462e-09
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.6719403266906738,
+            "terms": {
+              "main_loss": 0.5933412909507751,
+              "scale_reg": 0.0,
+              "l2_photo": 0.07859902828931808,
+              "cov_trace": 0.0,
+              "isotropy": 1.0204853850837026e-08
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4920627176761627,
+            "terms": {
+              "main_loss": 0.43500083684921265,
+              "scale_reg": 0.0,
+              "l2_photo": 0.05706185847520828,
+              "cov_trace": 0.0,
+              "isotropy": 1.599222976267356e-08
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3555794060230255,
+            "terms": {
+              "main_loss": 0.33361777663230896,
+              "scale_reg": 0.0,
+              "l2_photo": 0.02196160890161991,
+              "cov_trace": 0.0,
+              "isotropy": 2.1994548404791203e-08
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.6052265763282776,
+            "terms": {
+              "main_loss": 0.5400598645210266,
+              "scale_reg": 0.0,
+              "l2_photo": 0.06516670435667038,
+              "cov_trace": 0.0,
+              "isotropy": 2.8169081289775022e-08
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.688808262348175,
+            "terms": {
+              "main_loss": 0.6077922582626343,
+              "scale_reg": 0.0,
+              "l2_photo": 0.081015944480896,
+              "cov_trace": 0.0,
+              "isotropy": 3.5154993582864336e-08
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4698677659034729,
+            "terms": {
+              "main_loss": 0.4301212430000305,
+              "scale_reg": 0.0,
+              "l2_photo": 0.039746496826410294,
+              "cov_trace": 0.0,
+              "isotropy": 4.2651063125731525e-08
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.35106223821640015,
+            "terms": {
+              "main_loss": 0.3334924876689911,
+              "scale_reg": 0.0,
+              "l2_photo": 0.01756969466805458,
+              "cov_trace": 0.0,
+              "isotropy": 5.16699110164609e-08
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-msaa-gs",
+      "entry_point": "splatstudio_zoo.configs:msaa_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "MSAAGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.7034464478492737,
+            "terms": {
+              "main_loss": 0.637580394744873,
+              "scale_reg": 0.0,
+              "aws_l1": 0.05694779381155968,
+              "grad_loss": 0.008918306790292263
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3530121147632599,
+            "terms": {
+              "main_loss": 0.32505297660827637,
+              "scale_reg": 0.0,
+              "aws_l1": 0.019068259745836258,
+              "grad_loss": 0.008890881203114986
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.518994152545929,
+            "terms": {
+              "main_loss": 0.47490423917770386,
+              "scale_reg": 0.0,
+              "aws_l1": 0.03642955794930458,
+              "grad_loss": 0.007660300936549902
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.653030514717102,
+            "terms": {
+              "main_loss": 0.5934462547302246,
+              "scale_reg": 0.0,
+              "aws_l1": 0.05184340476989746,
+              "grad_loss": 0.007740844041109085
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.47566571831703186,
+            "terms": {
+              "main_loss": 0.4354917109012604,
+              "scale_reg": 0.0,
+              "aws_l1": 0.03183593973517418,
+              "grad_loss": 0.008338063023984432
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3619120419025421,
+            "terms": {
+              "main_loss": 0.3335310220718384,
+              "scale_reg": 0.0,
+              "aws_l1": 0.020522717386484146,
+              "grad_loss": 0.007858315482735634
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5920479893684387,
+            "terms": {
+              "main_loss": 0.5401056408882141,
+              "scale_reg": 0.0,
+              "aws_l1": 0.04462580755352974,
+              "grad_loss": 0.00731652369722724
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6700668334960938,
+            "terms": {
+              "main_loss": 0.6079561710357666,
+              "scale_reg": 0.0,
+              "aws_l1": 0.05606398731470108,
+              "grad_loss": 0.006046653725206852
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.47030776739120483,
+            "terms": {
+              "main_loss": 0.4304075837135315,
+              "scale_reg": 0.0,
+              "aws_l1": 0.030906034633517265,
+              "grad_loss": 0.00899415835738182
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.36208805441856384,
+            "terms": {
+              "main_loss": 0.3337061107158661,
+              "scale_reg": 0.0,
+              "aws_l1": 0.01944650709629059,
+              "grad_loss": 0.008935417048633099
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-msaa-gs-plus",
+      "entry_point": "splatstudio_zoo.configs:msaa_gs_plus_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "MSAAGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2690112,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.7034464478492737,
+            "terms": {
+              "main_loss": 0.637580394744873,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.05694779381155968,
+              "grad_loss": 0.008918306790292263
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3530121147632599,
+            "terms": {
+              "main_loss": 0.32505297660827637,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.019068261608481407,
+              "grad_loss": 0.008890881203114986
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.5189945101737976,
+            "terms": {
+              "main_loss": 0.4749046564102173,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.03642955422401428,
+              "grad_loss": 0.007660300936549902
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.653030514717102,
+            "terms": {
+              "main_loss": 0.5934462547302246,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.05184340476989746,
+              "grad_loss": 0.00774084497243166
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.475669264793396,
+            "terms": {
+              "main_loss": 0.4354952573776245,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.03183593973517418,
+              "grad_loss": 0.008338061161339283
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3619178533554077,
+            "terms": {
+              "main_loss": 0.3335368037223816,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.02052273228764534,
+              "grad_loss": 0.007858308963477612
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5920490026473999,
+            "terms": {
+              "main_loss": 0.5401066541671753,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.04462580010294914,
+              "grad_loss": 0.007316522300243378
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6700668334960938,
+            "terms": {
+              "main_loss": 0.6079561710357666,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.05606397986412048,
+              "grad_loss": 0.006046653725206852
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4703119099140167,
+            "terms": {
+              "main_loss": 0.4304117262363434,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.03090602532029152,
+              "grad_loss": 0.008994155563414097
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3620910048484802,
+            "terms": {
+              "main_loss": 0.33370912075042725,
+              "scale_reg": 0.0,
+              "tv_loss": 0.0,
+              "aws_l1": 0.019446488469839096,
+              "grad_loss": 0.008935406804084778
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-nebula-gs",
+      "entry_point": "splatstudio_zoo.configs:nebula_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "NebulaGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2476608,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.9488853812217712,
+            "terms": {
+              "main_loss": 0.8594958782196045,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.04078872129321098,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 0.0,
+              "star_sharpness": 0.04860080033540726
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.988554060459137,
+            "terms": {
+              "main_loss": 0.8951882123947144,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.04346407577395439,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 1.1945956376879785e-12,
+              "star_sharpness": 0.049901802092790604
+            }
+          },
+          {
+            "step": 2,
+            "loss": 1.010722041130066,
+            "terms": {
+              "main_loss": 0.9160153269767761,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.04479324445128441,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 6.026720355406523e-12,
+              "star_sharpness": 0.04991345480084419
+            }
+          },
+          {
+            "step": 3,
+            "loss": 1.002516269683838,
+            "terms": {
+              "main_loss": 0.9083582758903503,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.044278599321842194,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 1.596200602249631e-11,
+              "star_sharpness": 0.049879323691129684
+            }
+          },
+          {
+            "step": 4,
+            "loss": 1.0063729286193848,
+            "terms": {
+              "main_loss": 0.911980926990509,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.04450118541717529,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 3.2729340071480095e-11,
+              "star_sharpness": 0.04989085718989372
+            }
+          },
+          {
+            "step": 5,
+            "loss": 1.0003196001052856,
+            "terms": {
+              "main_loss": 0.9062469005584717,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.04418513551354408,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 5.7421335047935784e-11,
+              "star_sharpness": 0.049887534230947495
+            }
+          },
+          {
+            "step": 6,
+            "loss": 1.0027713775634766,
+            "terms": {
+              "main_loss": 0.9086208343505859,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.044279538094997406,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 9.31988028418651e-11,
+              "star_sharpness": 0.04987100884318352
+            }
+          },
+          {
+            "step": 7,
+            "loss": 1.027524471282959,
+            "terms": {
+              "main_loss": 0.931931734085083,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.0457112155854702,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 1.4220895294680957e-10,
+              "star_sharpness": 0.04988149181008339
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.9917169809341431,
+            "terms": {
+              "main_loss": 0.8982882499694824,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.04361461102962494,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 2.0669475853107855e-10,
+              "star_sharpness": 0.0498141273856163
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.9992024302482605,
+            "terms": {
+              "main_loss": 0.905346691608429,
+              "scale_reg": 0.0,
+              "multiscale_l1": 0.044056762009859085,
+              "opacity_ceiling": 0.0,
+              "accum_sparsity": 0.0,
+              "scale_isotropy": 2.8092364545706516e-10,
+              "star_sharpness": 0.049798958003520966
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-opti3dgs",
+      "entry_point": "splatstudio_zoo.configs:opti3dgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "Opti3DGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.4400917887687683,
+            "terms": {
+              "main_loss": 0.4400917887687683,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3333932161331177,
+            "terms": {
+              "main_loss": 0.3333932161331177,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.41074126958847046,
+            "terms": {
+              "main_loss": 0.41074126958847046,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.46375104784965515,
+            "terms": {
+              "main_loss": 0.46375104784965515,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4401913583278656,
+            "terms": {
+              "main_loss": 0.4401913583278656,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.32118046283721924,
+            "terms": {
+              "main_loss": 0.32118046283721924,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.39369937777519226,
+            "terms": {
+              "main_loss": 0.39369937777519226,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.4480403661727905,
+            "terms": {
+              "main_loss": 0.4480403661727905,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.33944469690322876,
+            "terms": {
+              "main_loss": 0.33944469690322876,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.28147128224372864,
+            "terms": {
+              "main_loss": 0.28147128224372864,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-pixel-gs",
+      "entry_point": "splatstudio_zoo.configs:pixel_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "PixelGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372189521789551,
+            "terms": {
+              "main_loss": 0.6372189521789551,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3240526616573334,
+            "terms": {
+              "main_loss": 0.3240526616573334,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4745408296585083,
+            "terms": {
+              "main_loss": 0.4745408296585083,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5931347012519836,
+            "terms": {
+              "main_loss": 0.5931347012519836,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4350156784057617,
+            "terms": {
+              "main_loss": 0.4350156784057617,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3330760896205902,
+            "terms": {
+              "main_loss": 0.3330760896205902,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5402546525001526,
+            "terms": {
+              "main_loss": 0.5402546525001526,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6074866056442261,
+            "terms": {
+              "main_loss": 0.6074866056442261,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.42956453561782837,
+            "terms": {
+              "main_loss": 0.42956453561782837,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.3330700099468231,
+            "terms": {
+              "main_loss": 0.3330700099468231,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-rain-gs",
+      "entry_point": "splatstudio_zoo.configs:rain_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "RAINGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2471438,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.511052668094635,
+            "terms": {
+              "main_loss": 0.511052668094635,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.43538981676101685,
+            "terms": {
+              "main_loss": 0.43538981676101685,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.5135223269462585,
+            "terms": {
+              "main_loss": 0.5135223269462585,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5509003400802612,
+            "terms": {
+              "main_loss": 0.5509003400802612,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4913925528526306,
+            "terms": {
+              "main_loss": 0.4913925528526306,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.441689670085907,
+            "terms": {
+              "main_loss": 0.441689670085907,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.532992959022522,
+            "terms": {
+              "main_loss": 0.532992959022522,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.5496367812156677,
+            "terms": {
+              "main_loss": 0.5496367812156677,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4946843683719635,
+            "terms": {
+              "main_loss": 0.4946843683719635,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.43315649032592773,
+            "terms": {
+              "main_loss": 0.43315649032592773,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-scaffold-gs",
+      "entry_point": "splatstudio_zoo.configs:scaffold_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "ScaffoldGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2508037,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6762054562568665,
+            "terms": {
+              "main_loss": 0.6762054562568665,
+              "vol_reg": 7.092175180467564e-10
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.3829483389854431,
+            "terms": {
+              "main_loss": 0.3829483389854431,
+              "vol_reg": 7.16705472747492e-10
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.49878937005996704,
+            "terms": {
+              "main_loss": 0.49878937005996704,
+              "vol_reg": 7.407206514820075e-10
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.6261666417121887,
+            "terms": {
+              "main_loss": 0.6261666417121887,
+              "vol_reg": 7.360581033566405e-10
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.47970670461654663,
+            "terms": {
+              "main_loss": 0.47970670461654663,
+              "vol_reg": 7.095914411614501e-10
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3792612850666046,
+            "terms": {
+              "main_loss": 0.3792612850666046,
+              "vol_reg": 7.133271751058601e-10
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5753703117370605,
+            "terms": {
+              "main_loss": 0.5753703117370605,
+              "vol_reg": 7.111114475044644e-10
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6358343362808228,
+            "terms": {
+              "main_loss": 0.6358343362808228,
+              "vol_reg": 6.96130930677441e-10
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4735555052757263,
+            "terms": {
+              "main_loss": 0.4735555052757263,
+              "vol_reg": 6.877574620922644e-10
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.36034655570983887,
+            "terms": {
+              "main_loss": 0.36034655570983887,
+              "vol_reg": 7.053840289650282e-10
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-stablegs",
+      "entry_point": "splatstudio_zoo.configs:stablegs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "StableGSModelConfig",
+      "training_check": {
+        "status": "not_run",
+        "reason": "Requires DUSt3R depth priors and model weights"
+      }
+    },
+    {
+      "name": "ss-trick-gs",
+      "entry_point": "splatstudio_zoo.configs:trick_gs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "TrickGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2495040,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6116132736206055,
+            "terms": {
+              "main_loss": 0.5235335826873779,
+              "scale_reg": 0.0,
+              "mask_loss": 0.044039856642484665,
+              "sh_mask_loss": 0.044039856642484665
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.327534943819046,
+            "terms": {
+              "main_loss": 0.24248147010803223,
+              "scale_reg": 0.0,
+              "mask_loss": 0.04128113016486168,
+              "sh_mask_loss": 0.04377233609557152
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.46872130036354065,
+            "terms": {
+              "main_loss": 0.3870362639427185,
+              "scale_reg": 0.0,
+              "mask_loss": 0.03819069266319275,
+              "sh_mask_loss": 0.04349435493350029
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5915013551712036,
+            "terms": {
+              "main_loss": 0.5139792561531067,
+              "scale_reg": 0.0,
+              "mask_loss": 0.03431662544608116,
+              "sh_mask_loss": 0.04320549592375755
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4386768937110901,
+            "terms": {
+              "main_loss": 0.36597010493278503,
+              "scale_reg": 0.0,
+              "mask_loss": 0.029801461845636368,
+              "sh_mask_loss": 0.04290534183382988
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3233133554458618,
+            "terms": {
+              "main_loss": 0.2554711401462555,
+              "scale_reg": 0.0,
+              "mask_loss": 0.02524876408278942,
+              "sh_mask_loss": 0.04259346425533295
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.4993235468864441,
+            "terms": {
+              "main_loss": 0.4360889196395874,
+              "scale_reg": 0.0,
+              "mask_loss": 0.020965201780200005,
+              "sh_mask_loss": 0.04226943477988243
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.5885422229766846,
+            "terms": {
+              "main_loss": 0.5294363498687744,
+              "scale_reg": 0.0,
+              "mask_loss": 0.01717306487262249,
+              "sh_mask_loss": 0.04193279147148132
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.3754024803638458,
+            "terms": {
+              "main_loss": 0.31979697942733765,
+              "scale_reg": 0.0,
+              "mask_loss": 0.01402236707508564,
+              "sh_mask_loss": 0.041583117097616196
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.28533732891082764,
+            "terms": {
+              "main_loss": 0.23260343074798584,
+              "scale_reg": 0.0,
+              "mask_loss": 0.01151393074542284,
+              "sh_mask_loss": 0.041219957172870636
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-twodgs",
+      "entry_point": "splatstudio_zoo.configs:twodgs_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "TwoDGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2493504,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 1.4800468683242798,
+            "terms": {
+              "main_loss": 0.6372189521789551,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.0002687998057808727,
+              "depth_distortion": 0.772720992565155,
+              "normal_consistency": 0.06983820348978043
+            }
+          },
+          {
+            "step": 1,
+            "loss": 1.1644134521484375,
+            "terms": {
+              "main_loss": 0.3254408836364746,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.00026838903431780636,
+              "depth_distortion": 0.7737730145454407,
+              "normal_consistency": 0.06493109464645386
+            }
+          },
+          {
+            "step": 2,
+            "loss": 1.4703593254089355,
+            "terms": {
+              "main_loss": 0.4747190475463867,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.0002680101606529206,
+              "depth_distortion": 0.9225655198097229,
+              "normal_consistency": 0.07280667871236801
+            }
+          },
+          {
+            "step": 3,
+            "loss": 1.3871408700942993,
+            "terms": {
+              "main_loss": 0.5936717391014099,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.00026788713876158,
+              "depth_distortion": 0.7225627899169922,
+              "normal_consistency": 0.07063858956098557
+            }
+          },
+          {
+            "step": 4,
+            "loss": 1.3422991037368774,
+            "terms": {
+              "main_loss": 0.4362022280693054,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.00026780940243043005,
+              "depth_distortion": 0.8516299724578857,
+              "normal_consistency": 0.054199058562517166
+            }
+          },
+          {
+            "step": 5,
+            "loss": 1.3774415254592896,
+            "terms": {
+              "main_loss": 0.3370993733406067,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.000267762370640412,
+              "depth_distortion": 0.985419511795044,
+              "normal_consistency": 0.05465487390756607
+            }
+          },
+          {
+            "step": 6,
+            "loss": 1.3903075456619263,
+            "terms": {
+              "main_loss": 0.5427523851394653,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.00026773192803375423,
+              "depth_distortion": 0.7750673294067383,
+              "normal_consistency": 0.07222004979848862
+            }
+          },
+          {
+            "step": 7,
+            "loss": 1.6396960020065308,
+            "terms": {
+              "main_loss": 0.6096288561820984,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.0002677152515389025,
+              "depth_distortion": 0.9632320404052734,
+              "normal_consistency": 0.0665673092007637
+            }
+          },
+          {
+            "step": 8,
+            "loss": 1.112067699432373,
+            "terms": {
+              "main_loss": 0.4360131025314331,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.00026770911063067615,
+              "depth_distortion": 0.6128345727920532,
+              "normal_consistency": 0.06295226514339447
+            }
+          },
+          {
+            "step": 9,
+            "loss": 1.0531463623046875,
+            "terms": {
+              "main_loss": 0.3395375609397888,
+              "scale_reg": 0.0,
+              "scale_flatten": 0.0002676591684576124,
+              "depth_distortion": 0.6436403393745422,
+              "normal_consistency": 0.06970088183879852
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-vod3dgs-l",
+      "entry_point": "splatstudio_zoo.configs:vod3dgs_l_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "VoD3DGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2495808,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372189521789551,
+            "terms": {
+              "main_loss": 0.6372189521789551,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32438117265701294,
+            "terms": {
+              "main_loss": 0.32438117265701294,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4742858409881592,
+            "terms": {
+              "main_loss": 0.4742858409881592,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5931575894355774,
+            "terms": {
+              "main_loss": 0.5931575894355774,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.4343796968460083,
+            "terms": {
+              "main_loss": 0.4343796968460083,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.3324759006500244,
+            "terms": {
+              "main_loss": 0.3324759006500244,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5397847294807434,
+            "terms": {
+              "main_loss": 0.5397847294807434,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6074241399765015,
+            "terms": {
+              "main_loss": 0.6074241399765015,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4283924996852875,
+            "terms": {
+              "main_loss": 0.4283924996852875,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33214473724365234,
+            "terms": {
+              "main_loss": 0.33214473724365234,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    },
+    {
+      "name": "ss-vod3dgs-s",
+      "entry_point": "splatstudio_zoo.configs:vod3dgs_s_method",
+      "paper_reproduction": "unverified",
+      "configuration_import": "passed",
+      "model_config": "VoD3DGSModelConfig",
+      "training_check": {
+        "status": "passed",
+        "steps": 10,
+        "parameter_elements_at_start": 2495808,
+        "training_trace": [
+          {
+            "step": 0,
+            "loss": 0.6372189521789551,
+            "terms": {
+              "main_loss": 0.6372189521789551,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 1,
+            "loss": 0.32438117265701294,
+            "terms": {
+              "main_loss": 0.32438117265701294,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 2,
+            "loss": 0.4742858409881592,
+            "terms": {
+              "main_loss": 0.4742858409881592,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 3,
+            "loss": 0.5931580066680908,
+            "terms": {
+              "main_loss": 0.5931580066680908,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 4,
+            "loss": 0.43437114357948303,
+            "terms": {
+              "main_loss": 0.43437114357948303,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 5,
+            "loss": 0.33247631788253784,
+            "terms": {
+              "main_loss": 0.33247631788253784,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 6,
+            "loss": 0.5398083925247192,
+            "terms": {
+              "main_loss": 0.5398083925247192,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 7,
+            "loss": 0.6074090003967285,
+            "terms": {
+              "main_loss": 0.6074090003967285,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 8,
+            "loss": 0.4283912181854248,
+            "terms": {
+              "main_loss": 0.4283912181854248,
+              "scale_reg": 0.0
+            }
+          },
+          {
+            "step": 9,
+            "loss": 0.33215397596359253,
+            "terms": {
+              "main_loss": 0.33215397596359253,
+              "scale_reg": 0.0
+            }
+          }
+        ],
+        "overrides": {
+          "num_downscales": 0,
+          "dataparser.downscale_factor": 1,
+          "seed": 0,
+          "viewer": "disabled",
+          "data": "analytic-spheres"
+        },
+        "scope": "Short training with callbacks and finite-state checks; late schedules untested"
+      }
+    }
+  ],
+  "environment": {
+    "nerfstudio": "1.1.5",
+    "gsplat": "1.4.0",
+    "torch": "2.1.2+cu118",
+    "numpy": "1.24.4",
+    "splatstudio-nerfstudio-methods": "0.1.0"
+  },
+  "nerfstudio_source_sha256": "7940cf8e95efe13a25bc857063575b89105146f9202952c1bc67e569ca19836f",
+  "source_hashes": {
+    "__init__.py": "601f6893d9e56c0dd063e137f59981e2b3595d624af63af36a3c5827b4a3e2f5",
+    "configs.py": "2fb4e4158d84a2b272e513fdb88053d842f5fddd536368c735896fcadd379ebf",
+    "datamanagers.py": "2868968dcb55eb4dc07cce7c6a15f7e678619bac26704981e30b5a6f571f6508",
+    "diamond_datamanagers.py": "fc5a0277099e567675f7cbb6cdb4caf7727a79382591b2bcac44aba8ea34a554",
+    "losses.py": "e648dbd8cd5437f72bd35b3909068ce2e543104156b0a02218bb02f1c15bfed0",
+    "methods/__init__.py": "0631558272b30b22f0a097afc55949dc2623d4329dabc853f65c3baffc137239",
+    "methods/absgs.py": "048ed491f4fbe88c20a8989a0d78a92c7e773bde326acfe3a624b8bb9243bef8",
+    "methods/bogauss.py": "9fef867e29f06a49a146e995c75800d63e498592a74e806fcf07476da7d9af56",
+    "methods/bubble_gs.py": "f517eb9ff259c5095ea064769b507d23622b415f1abc6238db2d2ba13d006592",
+    "methods/clod_gs.py": "ee40dd8144c29e4f4c25a8ec0cadf0bd4b77559acee88be96832999e0b00c37c",
+    "methods/compact_gs.py": "c8b16b91821d6a98ae1ba91ff129a990a7206681b8cf5f76b43ef066425cb6f0",
+    "methods/compgs.py": "8254b72000c4e544c98a839c3fe2987092496da8e2a43c8e6dee6cc683497840",
+    "methods/compgs_enhanced.py": "cf158ef1f0bd3e27f43d3c0d43efbb17268d8438bfe2715aec646c992f2b3e43",
+    "methods/cor_gs.py": "b40d30100d34c192945c07db2e05b6ffe5f814a1983767b06f738c1ecb52e9f0",
+    "methods/decomp_gs.py": "00ed539c0dde4aa465c2954b7eb7c1158304e0cb7ad3e8c836c1217cd8b916db",
+    "methods/depth_reg.py": "283b7738088ad6f52c992afadc6cc7d9d1565ced8f1c540c79f7dd13bb8e766d",
+    "methods/diamond_gs.py": "b23abcd5ff47486cb3a4316c2e93bc03018ffd2f78ea2ab5724cc7160e430fe0",
+    "methods/diamond_gs_3d.py": "8335e6aee1b47afae73bc66058de1a91e1eac4b3c9c7a9849ad8fbc729f0534a",
+    "methods/dwtgs.py": "e44d96fcecc928ca1a616659a54008dff497a9f4bf11844a1b1e9bb19af117d4",
+    "methods/fast_gs.py": "0410bbf3730a629a42cde4ccfdc51cfc74481a7dd290ae57aca2509d7d7966fb",
+    "methods/feature_gs.py": "12bff9f2c20b84ef4205c6bc5ebdf4e579509abed49ce3b78e2e09ed5b93abc2",
+    "methods/fsgs.py": "9ffb42cedfd210e9927281da16ae0211f26074e903f4bbe7bb7b66a243e59ab7",
+    "methods/gaussian_shader.py": "dd8a39f3fe9913eb5d9404cc6c9831467e8f67809306da6127825a933548054c",
+    "methods/light_gs.py": "fe1360c651b9a70bd9fd51f724ae83ec688b162c0e57aaf66847c077d6cb0951",
+    "methods/lp3dgs.py": "5aa3475295c91b9f73b2563cc7df29294cf333a4522ff6c4dc67e23b1d932481",
+    "methods/micro_splatting.py": "986da475f99a6e8cf83d92b621f432e99070fd3e9c15016a3b9882cf5fff662c",
+    "methods/msaa_gs.py": "13a1b40e15c356eeeb2e421ae1daada526c7bca8f7a4ae376df9a62afb1ca337",
+    "methods/msaa_gs_enhanced.py": "d908594fcc618a6c4dfecea71229acf98e7e4c60dec4897b10e546937842e958",
+    "methods/nebula_gs.py": "98e1b3f00660a63ada3c36653b7188054a81f31a777e29267df1215a437d0fc4",
+    "methods/opti3dgs.py": "f215d136d7454be3857f4b9eef5ce12f9636ef9c033472064d3c4b9a56a3c1cf",
+    "methods/pixel_gs.py": "59a418d8f6d7349be8be7ec35580126a14b0b4287463829bf5f376b910b05c65",
+    "methods/rain_gs.py": "f33996d284e95986975ab28f5136f4ab0f6a58fd6471c2dec3dadad136e4ea56",
+    "methods/scaffold_gs.py": "9b632349a43bc932a4cc8efe6d287dc85e09e5dba5049c30b1001ad463a8a9d1",
+    "methods/stablegs.py": "2b9ebb05d482f3e42b7f3aab56c90117c1154854be45b5e2ba8d68297a2fa1ea",
+    "methods/stablegs_datamanager.py": "1c32b97570a6af8f818658c2d9ddb0e674d82508a479f392353d09547ce1383a",
+    "methods/trick_gs.py": "0154e098d1eb4804f3b94317154b33f76e8045819a90bfa8af77d2663e3c27c8",
+    "methods/twodgs.py": "eddcd2dae77f3cd014c9d0ff28448cdfe03e8cd28776099194952ede29187886",
+    "methods/vod3dgs.py": "f2abcdf9a168f81d5c93427e6ac3c0efa31f1a3f460ccd862a003fbd568dda36",
+    "model.py": "828be62eb9cdcf3d8254b8d248003b733ae81215adb603afb431609a01919a6c",
+    "optimizers.py": "1586740b7f6e3144e9dde3a7672b95bc91ef68ce782b3a13bd36fdd1522c98ab",
+    "rendering.py": "484f07d04bdbcaaab1fdf0fd9cf8253767732553b4b7a22dbcb9c78c0d0f1ab4",
+    "shading.py": "bc092909bc275e439d263fb53c24e77f8c4038c535b6cad36f402a43afc100de"
+  },
+  "paper_reproduction": "unverified"
+}

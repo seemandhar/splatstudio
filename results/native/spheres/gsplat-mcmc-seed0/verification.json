@@ -1,0 +1,170 @@
+{
+  "contract_issues": [],
+  "contributions": [
+    {
+      "name": "state-lifecycle",
+      "probes": [
+        "state-transitions"
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "photometric-objective",
+      "probes": [
+        "photometric-gradient"
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "rasterizer-statistics",
+      "probes": [
+        "renderer-gradient"
+      ],
+      "status": "passed"
+    }
+  ],
+  "device": "cuda:0",
+  "method": "gsplat-mcmc",
+  "paper_reproduction": "unverified",
+  "probes": [
+    {
+      "evidence": {
+        "checked_fields": [
+          "means",
+          "opacities",
+          "quats",
+          "scales",
+          "sh0",
+          "shN"
+        ],
+        "final_gaussians": 13,
+        "initial_gaussians": 12,
+        "operations": [
+          "duplicate",
+          "split",
+          "prune",
+          "checkpoint"
+        ],
+        "optimizer_moments_checked": true
+      },
+      "name": "state-transitions",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "gradient_norm": 0.04543624445796013,
+        "loss": 0.3751473128795624
+      },
+      "name": "photometric-gradient",
+      "status": "passed"
+    },
+    {
+      "evidence": {
+        "rgb_shape": [
+          16,
+          16,
+          3
+        ],
+        "screen_gradient_norm": 0.0005616066628135741
+      },
+      "name": "renderer-gradient",
+      "status": "passed"
+    }
+  ],
+  "schema_version": 1,
+  "specification": {
+    "api_version": 1,
+    "citations": [
+      "https://arxiv.org/abs/2404.09591"
+    ],
+    "components": [
+      {
+        "config": {
+          "absgrad": false,
+          "antialiased": false
+        },
+        "factory": "splatstudio.backends.gsplat:create_renderer",
+        "kind": "renderer",
+        "name": "gsplat",
+        "provides": [
+          "render.rgb",
+          "render.depth.expected_z",
+          "gradient.screen.signed"
+        ],
+        "requires": [
+          "state.gaussian3d",
+          "camera.pinhole"
+        ]
+      },
+      {
+        "config": {
+          "cap_max": 1000000
+        },
+        "factory": "splatstudio.backends.gsplat:create_mcmc",
+        "kind": "density",
+        "name": "mcmc-density",
+        "provides": [],
+        "requires": []
+      },
+      {
+        "config": {},
+        "factory": "splatstudio.losses:create_photometric",
+        "kind": "loss",
+        "name": "photometric",
+        "provides": [],
+        "requires": [
+          "render.rgb"
+        ]
+      }
+    ],
+    "contributions": [
+      {
+        "description": "Gaussian fields and optimizer state stay aligned",
+        "name": "state-lifecycle",
+        "probes": [
+          "state-transitions"
+        ]
+      },
+      {
+        "description": "Photometric objective reaches rendered RGB",
+        "name": "photometric-objective",
+        "probes": [
+          "photometric-gradient"
+        ]
+      },
+      {
+        "description": "Renderer supplies density-controller statistics",
+        "name": "rasterizer-statistics",
+        "probes": [
+          "renderer-gradient"
+        ]
+      }
+    ],
+    "description": "gsplat MCMC density strategy; complete paper reproduction unverified.",
+    "fields": [],
+    "name": "gsplat-mcmc",
+    "probes": [
+      {
+        "description": "Duplicate, split, prune, optimizer alignment, and checkpoint round trip",
+        "function": "splatstudio.probes:state_transitions",
+        "name": "state-transitions",
+        "requires_cuda": false
+      },
+      {
+        "description": "Photometric loss has a finite nonzero gradient",
+        "function": "splatstudio.probes:photometric_gradient",
+        "name": "photometric-gradient",
+        "requires_cuda": false
+      },
+      {
+        "description": "Configured renderer executes and supplies declared gradients",
+        "function": "splatstudio.probes:renderer_gradient",
+        "name": "renderer-gradient",
+        "requires_cuda": true
+      }
+    ],
+    "representation": "gaussian3d"
+  },
+  "status": "declared_checks_passed",
+  "timestamp": "2026-10-29T23:28:32.671195+00:00"
+}

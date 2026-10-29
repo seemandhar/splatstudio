@@ -1,0 +1,8 @@
+{"step": 1, "loss": 0.1492483764886856, "gaussians": 192, "losses": {"photometric": 0.1492483764886856}}
+{"step": 100, "loss": 0.09445303678512573, "gaussians": 192, "losses": {"photometric": 0.09445303678512573}}
+{"step": 200, "loss": 0.0784795880317688, "gaussians": 192, "losses": {"photometric": 0.0784795880317688}}
+{"step": 300, "loss": 0.045973919332027435, "gaussians": 192, "losses": {"photometric": 0.045973919332027435}}
+{"step": 400, "loss": 0.0559186153113842, "gaussians": 192, "losses": {"photometric": 0.0559186153113842}}
+{"step": 500, "loss": 0.03840719908475876, "gaussians": 192, "losses": {"photometric": 0.03840719908475876}}
+{"step": 600, "loss": 0.04015585407614708, "gaussians": 201, "losses": {"photometric": 0.04015585407614708}}
+{"step": 700, "loss": 0.05412930250167847, "gaussians": 211, "losses": {"photometric": 0.05412930250167847}}

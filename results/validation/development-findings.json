@@ -1,0 +1,40 @@
+{
+  "scope": "Development checks before the release fixes; these are not final runtime results.",
+  "findings": [
+    {
+      "method": "ss-cor-gs",
+      "initial_training_check": {
+        "status": "failed",
+        "reason": "AttributeError: 'CoRGSModel' object has no attribute 'device'"
+      },
+      "final_evidence": "zoo.json"
+    },
+    {
+      "method": "ss-scaffold-gs",
+      "initial_training_check": {
+        "status": "failed",
+        "reason": "RuntimeError: \"conv_depthwise2d_forward_cuda\" not implemented for 'Byte'"
+      },
+      "final_evidence": "zoo.json"
+    },
+    {
+      "method": "ss-twodgs",
+      "initial_training_check": {
+        "status": "failed",
+        "reason": "IndexError: tensors used as indices must be long, int, byte or bool tensors"
+      },
+      "final_evidence": "zoo.json"
+    },
+    {
+      "method": "gsplat-surfel",
+      "issue": "Immediate L1 distortion weight 100 and aligned initial surfels produced poor early optimization.",
+      "preliminary_poster_metrics": {
+        "psnr": 5.448788462014034,
+        "ssim": 0.38931893685768393
+      },
+      "resolution": "Use diverse initial surfel normals and the gsplat example L1 weight 0.01 with explicit 3000/7000-step geometry warmups.",
+      "final_evidence": "../native/poster/gsplat-surfel-seed0/test.json",
+      "limitation": "Final 1200-step run does not exercise the later geometry losses."
+    }
+  ]
+}

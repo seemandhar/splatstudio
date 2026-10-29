@@ -1,0 +1,1115 @@
+{
+  "schema_version": 1,
+  "source": "Existing SPLATIFY evaluation archive",
+  "limitations": [
+    "Not rerun with this repository",
+    "Original recipe/commit unavailable",
+    "No verified seed, split, image resolution, or resource budget",
+    "Reported standard deviations are from source exports, not across seeds",
+    "Not eligible for paired comparison or a SplatStudio leaderboard"
+  ],
+  "records": [
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 24.865657806396484,
+        "psnr_std": 2.5056049823760986,
+        "ssim": 0.7481873035430908,
+        "ssim_std": 0.07319971919059753,
+        "lpips": 0.2925781309604645,
+        "lpips_std": 0.024789689108729362
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/bicycle.json",
+      "source_sha256": "27fc75f3d872e3896d794cd6bf17b2627464b08372389b180983a415ed0d08ae",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "bonsai",
+      "metrics": {
+        "psnr": 31.683109283447266,
+        "psnr_std": 2.8772084712982178,
+        "ssim": 0.9441907405853271,
+        "ssim_std": 0.015934813767671585,
+        "lpips": 0.19389231503009796,
+        "lpips_std": 0.027837160974740982
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/bonsai.json",
+      "source_sha256": "6fed3e52ee1b1c4188cf5616b8e8b2bca9ca1ce8acf93b4fb32512bd48f1ca40",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "counter",
+      "metrics": {
+        "psnr": 28.797447204589844,
+        "psnr_std": 1.799552083015442,
+        "ssim": 0.9036334156990051,
+        "ssim_std": 0.021009765565395355,
+        "lpips": 0.22922563552856445,
+        "lpips_std": 0.03559757024049759
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/counter.json",
+      "source_sha256": "d812c7e5a8184a80d2c80ba900aa289268c6dea0ef7d698e125740c81c8faa51",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "flowers",
+      "metrics": {
+        "psnr": 21.473251342773438,
+        "psnr_std": 0.8867311477661133,
+        "ssim": 0.6017339825630188,
+        "ssim_std": 0.05960891395807266,
+        "lpips": 0.3775213956832886,
+        "lpips_std": 0.028981206938624382
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/flowers.json",
+      "source_sha256": "81233bb33864adf9fb88e60078b7de3edeebec7d79934f6a01b335455d449aa5",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 27.503772735595703,
+        "psnr_std": 1.9224854707717896,
+        "ssim": 0.8464676737785339,
+        "ssim_std": 0.031753059476614,
+        "lpips": 0.19701004028320312,
+        "lpips_std": 0.013219340704381466
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/garden.json",
+      "source_sha256": "3af625da8a370d81441937c94faa118646a900a6f65dd691f03598cf93332547",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "kitchen",
+      "metrics": {
+        "psnr": 31.360965728759766,
+        "psnr_std": 1.615451693534851,
+        "ssim": 0.9219357967376709,
+        "ssim_std": 0.04188366234302521,
+        "lpips": 0.15244366228580475,
+        "lpips_std": 0.04264754056930542
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/kitchen.json",
+      "source_sha256": "a85a353288e15b6ba35212f5843ce637442060e683263c068dd819585f6a4c63",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "room",
+      "metrics": {
+        "psnr": 31.81068229675293,
+        "psnr_std": 3.06742262840271,
+        "ssim": 0.9244800806045532,
+        "ssim_std": 0.032601747661828995,
+        "lpips": 0.23451349139213562,
+        "lpips_std": 0.055436935275793076
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/room.json",
+      "source_sha256": "3b19c7e5f2e87d8e9a85fa4d7fea44fe81dd241f7e1e5a107923b8a31e0f1319",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "stump",
+      "metrics": {
+        "psnr": 25.636295318603516,
+        "psnr_std": 1.8533780574798584,
+        "ssim": 0.7508751153945923,
+        "ssim_std": 0.06135902926325798,
+        "lpips": 0.30513593554496765,
+        "lpips_std": 0.0434306301176548
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/stump.json",
+      "source_sha256": "9c22441b7ede134b9580d5b3575abc72a88a32da18a33decc58b5d6a38cb22c7",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "bogauss",
+      "recorded_method": "bogauss",
+      "scene": "treehill",
+      "metrics": {
+        "psnr": 22.91549301147461,
+        "psnr_std": 2.8079888820648193,
+        "ssim": 0.6457657217979431,
+        "ssim_std": 0.08255738019943237,
+        "lpips": 0.3867087960243225,
+        "lpips_std": 0.030467716977000237
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "bogauss/treehill.json",
+      "source_sha256": "24256b749dbb82b6873136e3563666437c802a51d24b3da2c2d80c759c608759",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 25.71909523010254,
+        "psnr_std": 2.7437655925750732,
+        "ssim": 0.7705422043800354,
+        "ssim_std": 0.07686962187290192,
+        "lpips": 0.33939865231513977,
+        "lpips_std": 0.06526023149490356
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/bicycle.json",
+      "source_sha256": "45616211e887976057d4ed28d36d6bf276b27e880d299609a83788cfb2055e81",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "bonsai",
+      "metrics": {
+        "psnr": 31.96836280822754,
+        "psnr_std": 3.5064873695373535,
+        "ssim": 0.9519872665405273,
+        "ssim_std": 0.017417578026652336,
+        "lpips": 0.17980769276618958,
+        "lpips_std": 0.03326919674873352
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/bonsai.json",
+      "source_sha256": "72d4e48c80b5d0de2d4ecd82f2ecc4ff5664b6b3edebd0c89a4b64a61ea739e1",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "counter",
+      "metrics": {
+        "psnr": 28.158573150634766,
+        "psnr_std": 1.826593279838562,
+        "ssim": 0.9038750529289246,
+        "ssim_std": 0.021312475204467773,
+        "lpips": 0.2286515235900879,
+        "lpips_std": 0.04025229066610336
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/counter.json",
+      "source_sha256": "32aae849f4c59a104588412cfbb0cc4219085d2ab557e73c0a72c8a5ffb213be",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "flowers",
+      "metrics": {
+        "psnr": 21.652732849121094,
+        "psnr_std": 1.5544424057006836,
+        "ssim": 0.6718056797981262,
+        "ssim_std": 0.06419866532087326,
+        "lpips": 0.3281670808792114,
+        "lpips_std": 0.03904601186513901
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/flowers.json",
+      "source_sha256": "0b88fa2f03b5e9c0c87c5acfca06e4ca463c118b55b8ecf0635e6c7af5b34b70",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 28.201236724853516,
+        "psnr_std": 1.9853039979934692,
+        "ssim": 0.8492284417152405,
+        "ssim_std": 0.02852676995098591,
+        "lpips": 0.22495552897453308,
+        "lpips_std": 0.01924068108201027
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/garden.json",
+      "source_sha256": "50791f4a3c71ffc69f5ee40012de56c9476062d436387d89662a204e7551c7b5",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "kitchen",
+      "metrics": {
+        "psnr": 31.394336700439453,
+        "psnr_std": 1.6447643041610718,
+        "ssim": 0.930015504360199,
+        "ssim_std": 0.028373850509524345,
+        "lpips": 0.1442357897758484,
+        "lpips_std": 0.03560604900121689
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/kitchen.json",
+      "source_sha256": "8b18d1741f76cc9af69f04f56afad8e7674072e6bf3c112a625ffb7f9767cb37",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "room",
+      "metrics": {
+        "psnr": 32.738731384277344,
+        "psnr_std": 2.031822681427002,
+        "ssim": 0.9412426948547363,
+        "ssim_std": 0.021635297685861588,
+        "lpips": 0.21399764716625214,
+        "lpips_std": 0.034973353147506714
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/room.json",
+      "source_sha256": "1674145f628fa85cf89ceb98245ad362511f1fe69555db366bb482869f4e4ce5",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "stump",
+      "metrics": {
+        "psnr": 24.82802391052246,
+        "psnr_std": 3.121145009994507,
+        "ssim": 0.7399123311042786,
+        "ssim_std": 0.07501174509525299,
+        "lpips": 0.3052220046520233,
+        "lpips_std": 0.04160239174962044
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/stump.json",
+      "source_sha256": "96c6e1f414d573ae277efa91c7412ea94ccd753a438e6dbb2a8520d677684ea7",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "decomp-gs",
+      "recorded_method": "decomp-gs",
+      "scene": "treehill",
+      "metrics": {
+        "psnr": 19.881982803344727,
+        "psnr_std": 4.783693790435791,
+        "ssim": 0.626284658908844,
+        "ssim_std": 0.1029110923409462,
+        "lpips": 0.3884826600551605,
+        "lpips_std": 0.028877682983875275
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "decomp-gs/treehill.json",
+      "source_sha256": "bb1b964ed4fd4bfebd459394ff3121016a5ced493f05c9de8c8c6d6edb402910",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 17.306360244750977,
+        "psnr_std": 2.4740383625030518,
+        "ssim": 0.34405291080474854,
+        "ssim_std": 0.08196056634187698,
+        "lpips": 0.4249267876148224,
+        "lpips_std": 0.09443029016256332
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/bicycle.json",
+      "source_sha256": "b7f78f845bc336211c26b0064aa6718f568183d70618a53b016eb8d0d696b9bc",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "bonsai",
+      "metrics": {
+        "psnr": 20.496532440185547,
+        "psnr_std": 4.08976936340332,
+        "ssim": 0.7411320209503174,
+        "ssim_std": 0.09898130595684052,
+        "lpips": 0.33059820532798767,
+        "lpips_std": 0.12778513133525848
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/bonsai.json",
+      "source_sha256": "99304685ca16fab983c5bb5f331311a4f2b47856af3e2bd946a518162bbe5a36",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "counter",
+      "metrics": {
+        "psnr": 18.778085708618164,
+        "psnr_std": 3.7103734016418457,
+        "ssim": 0.6502352356910706,
+        "ssim_std": 0.12759651243686676,
+        "lpips": 0.3495965301990509,
+        "lpips_std": 0.1221238374710083
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/counter.json",
+      "source_sha256": "db4f5281a8cef20cf64f9cd57469dbdd9305f35623a276ab69b769c25f22b90c",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "flowers",
+      "metrics": {
+        "psnr": 14.808784484863281,
+        "psnr_std": 1.2449318170547485,
+        "ssim": 0.23931218683719635,
+        "ssim_std": 0.06875286251306534,
+        "lpips": 0.4549805223941803,
+        "lpips_std": 0.0664573535323143
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/flowers.json",
+      "source_sha256": "2b096cee7be99931a82040dadecabedb0ddf0077b45eaa5466636d2e17e852f8",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 20.30442237854004,
+        "psnr_std": 2.404979705810547,
+        "ssim": 0.5501333475112915,
+        "ssim_std": 0.10665912926197052,
+        "lpips": 0.26413360238075256,
+        "lpips_std": 0.09486769884824753
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/garden.json",
+      "source_sha256": "7ecc060ab9194e40896071201af22aff9b5b3b303f813cdf1fcddfca1ef23069",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "kitchen",
+      "metrics": {
+        "psnr": 21.150657653808594,
+        "psnr_std": 3.1350696086883545,
+        "ssim": 0.7344589233398438,
+        "ssim_std": 0.09293293952941895,
+        "lpips": 0.2682948410511017,
+        "lpips_std": 0.09145598858594894
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/kitchen.json",
+      "source_sha256": "abf9d79428dad16457cf3b4b50c3b7c2e8f83ad7152d2bfef5569955cc4f80ed",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "room",
+      "metrics": {
+        "psnr": 21.089433670043945,
+        "psnr_std": 4.157284259796143,
+        "ssim": 0.7412058711051941,
+        "ssim_std": 0.08927450329065323,
+        "lpips": 0.3305787444114685,
+        "lpips_std": 0.11727646738290787
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/room.json",
+      "source_sha256": "3a59402ebd40136f2f4b2a6ca4294783bfa55d234663c51c8b736a0068a364d4",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "stump",
+      "metrics": {
+        "psnr": 18.682344436645508,
+        "psnr_std": 1.1413991451263428,
+        "ssim": 0.3431459069252014,
+        "ssim_std": 0.06257620453834534,
+        "lpips": 0.41098135709762573,
+        "lpips_std": 0.06480009108781815
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/stump.json",
+      "source_sha256": "03a5b9721b5b528b566e25e90bcff31da40d335543194692e69819e8bb173da7",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "dwtgs",
+      "recorded_method": "dwtgs",
+      "scene": "treehill",
+      "metrics": {
+        "psnr": 15.545170783996582,
+        "psnr_std": 2.0441665649414062,
+        "ssim": 0.33446118235588074,
+        "ssim_std": 0.06087886169552803,
+        "lpips": 0.5383492112159729,
+        "lpips_std": 0.0997895672917366
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "dwtgs/treehill.json",
+      "source_sha256": "4b68dd0e1055782a6db9635c47e46df720444f4b0e9353fed18534c65294c0c4",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 25.220951080322266,
+        "psnr_std": 2.6062278747558594,
+        "ssim": 0.7610350251197815,
+        "ssim_std": 0.07697413861751556,
+        "lpips": 0.1704271137714386,
+        "lpips_std": 0.03793628513813019
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/bicycle.json",
+      "source_sha256": "f8e51c747f4a8a2fc515d80f9995e004c61ed99ad49cc1cc9c9192f31be1862e",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "bonsai",
+      "metrics": {
+        "psnr": 31.3902530670166,
+        "psnr_std": 2.7294933795928955,
+        "ssim": 0.940514087677002,
+        "ssim_std": 0.01603313349187374,
+        "lpips": 0.10169953107833862,
+        "lpips_std": 0.018846480175852776
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/bonsai.json",
+      "source_sha256": "4f1da0c5820fda3bfcb57143ab82970db7a4b10acd036d9cf65232ba1caf88bd",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "counter",
+      "metrics": {
+        "psnr": 28.604228973388672,
+        "psnr_std": 1.876090168952942,
+        "ssim": 0.9009024500846863,
+        "ssim_std": 0.02090955525636673,
+        "lpips": 0.14803864061832428,
+        "lpips_std": 0.037244733422994614
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/counter.json",
+      "source_sha256": "b618445adda02c0e584553794e568baea98ef44cb8cd987615e0dbc3f76a4895",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 27.500568389892578,
+        "psnr_std": 2.072726249694824,
+        "ssim": 0.8510098457336426,
+        "ssim_std": 0.03270938992500305,
+        "lpips": 0.1019320860505104,
+        "lpips_std": 0.012895255349576473
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/garden.json",
+      "source_sha256": "d69e21e4f070962e878f6f2c91e489f330d0181e5e21520facdce0c7d7b5812a",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "kitchen",
+      "metrics": {
+        "psnr": 31.181726455688477,
+        "psnr_std": 1.8518623113632202,
+        "ssim": 0.9207360744476318,
+        "ssim_std": 0.04200899228453636,
+        "lpips": 0.09783484041690826,
+        "lpips_std": 0.04234936460852623
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/kitchen.json",
+      "source_sha256": "c99008e651d52f04e25fd94e49b7f2ffd1a2bc5879479bf0ebd16248df7c3c38",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "room",
+      "metrics": {
+        "psnr": 31.68663787841797,
+        "psnr_std": 2.6940062046051025,
+        "ssim": 0.9278971552848816,
+        "ssim_std": 0.023948194459080696,
+        "lpips": 0.13238711655139923,
+        "lpips_std": 0.05096299573779106
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/room.json",
+      "source_sha256": "89211c61b67966a4019950d0df8a9c8e0a8fdab11fd2a764d07f71ef966eca38",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "micro-splatting",
+      "recorded_method": "micro-splatting",
+      "scene": "treehill",
+      "metrics": {
+        "psnr": 22.567184448242188,
+        "psnr_std": 2.8290202617645264,
+        "ssim": 0.6400182843208313,
+        "ssim_std": 0.08446478098630905,
+        "lpips": 0.2803879976272583,
+        "lpips_std": 0.043935626745224
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "micro-splatting/treehill.json",
+      "source_sha256": "391bea66de28e45a219046088bee9bf978fb6e921502f728e7d1e54c80856b03",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "msaa-gs",
+      "recorded_method": "msaa-gs",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 24.191967010498047,
+        "psnr_std": 2.091797113418579,
+        "ssim": 0.6655561923980713,
+        "ssim_std": 0.06088939309120178,
+        "lpips": 0.39153939485549927,
+        "lpips_std": 0.02584328129887581
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "msaa-gs/bicycle.json",
+      "source_sha256": "9998253d7a643507cc047e869764d988ab4b827d51d6f32866dc8ee61dacac61",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "msaa-gs",
+      "recorded_method": "msaa-gs",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 26.22336769104004,
+        "psnr_std": 1.5034505128860474,
+        "ssim": 0.7715802192687988,
+        "ssim_std": 0.02776109240949154,
+        "lpips": 0.31538957357406616,
+        "lpips_std": 0.01819383166730404
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "msaa-gs/garden.json",
+      "source_sha256": "8200c34d339b5f7c98e1806828b17b5d8312193fd8aa015293747ddfb634b2c3",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "msaa-gs-plus",
+      "recorded_method": "msaa-gs-plus",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 24.157493591308594,
+        "psnr_std": 2.1517233848571777,
+        "ssim": 0.6696131825447083,
+        "ssim_std": 0.061359766870737076,
+        "lpips": 0.38709115982055664,
+        "lpips_std": 0.02566601149737835
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "msaa-gs-plus/bicycle.json",
+      "source_sha256": "ead4193e841b073ecd8b293bb818f331fbdc39a0c4fe61d1638e534ab490582e",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 25.44529151916504,
+        "psnr_std": 2.624974250793457,
+        "ssim": 0.7782796025276184,
+        "ssim_std": 0.07854714244604111,
+        "lpips": 0.1299622803926468,
+        "lpips_std": 0.03660014644265175
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/bicycle.json",
+      "source_sha256": "950d4723c271c84c3384a12f4e15e0e0b1689a015fbbf81367b78a95446e1f3c",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "bonsai",
+      "metrics": {
+        "psnr": 32.54499435424805,
+        "psnr_std": 3.0891993045806885,
+        "ssim": 0.9542828798294067,
+        "ssim_std": 0.015402439050376415,
+        "lpips": 0.07571758329868317,
+        "lpips_std": 0.016628608107566833
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/bonsai.json",
+      "source_sha256": "ff68b89f79b884fe8b0d75a5458779bdad08a73fc0e96477baa19369b7b4cdb0",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "counter",
+      "metrics": {
+        "psnr": 29.17963981628418,
+        "psnr_std": 1.923351764678955,
+        "ssim": 0.916938841342926,
+        "ssim_std": 0.021344315260648727,
+        "lpips": 0.11516731977462769,
+        "lpips_std": 0.0357225239276886
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/counter.json",
+      "source_sha256": "62b71619b17b65e15b21d5d1816feaf90b65c3f7401dcc534c990d4769e82749",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "flowers",
+      "metrics": {
+        "psnr": 21.85434913635254,
+        "psnr_std": 1.1409744024276733,
+        "ssim": 0.644589364528656,
+        "ssim_std": 0.07384072989225388,
+        "lpips": 0.19030272960662842,
+        "lpips_std": 0.05310697481036186
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/flowers.json",
+      "source_sha256": "d0510cb8948749cfa3dac169fb9c956658b9597346f8fe66c50684ceda5a1fd3",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 27.961938858032227,
+        "psnr_std": 2.2706048488616943,
+        "ssim": 0.8710283041000366,
+        "ssim_std": 0.036043766885995865,
+        "lpips": 0.07044903934001923,
+        "lpips_std": 0.013136342167854309
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/garden.json",
+      "source_sha256": "b17244733f23a5a5472a5ffc004f61e8dc5b7d95b3a5653b62a8c684b2924bdf",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "kitchen",
+      "metrics": {
+        "psnr": 32.04130935668945,
+        "psnr_std": 1.8528143167495728,
+        "ssim": 0.9326614141464233,
+        "ssim_std": 0.044997911900281906,
+        "lpips": 0.08036980777978897,
+        "lpips_std": 0.04351561889052391
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/kitchen.json",
+      "source_sha256": "c8086ca3c6652f539d70fe81c213c037bb8f52ed61199726e2442d64254e22a2",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "room",
+      "metrics": {
+        "psnr": 32.15028762817383,
+        "psnr_std": 2.6698732376098633,
+        "ssim": 0.9344420433044434,
+        "ssim_std": 0.020119683817029,
+        "lpips": 0.11176526546478271,
+        "lpips_std": 0.043014153838157654
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/room.json",
+      "source_sha256": "1ca0109c817087672a12213b980619d4ea22568d51611a2c22dcd2dd1697d679",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "stump",
+      "metrics": {
+        "psnr": 26.64664649963379,
+        "psnr_std": 2.1933579444885254,
+        "ssim": 0.7842649221420288,
+        "ssim_std": 0.06839127093553543,
+        "lpips": 0.13778367638587952,
+        "lpips_std": 0.04767328500747681
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/stump.json",
+      "source_sha256": "cec5ae0d21ac30f9a0db2c4c7a26afffba37bbe9ce461e8274b821b77e3f3bbd",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "opti3dgs",
+      "recorded_method": "opti3dgs",
+      "scene": "treehill",
+      "metrics": {
+        "psnr": 21.87449073791504,
+        "psnr_std": 2.759559392929077,
+        "ssim": 0.6425584554672241,
+        "ssim_std": 0.09213674813508987,
+        "lpips": 0.21580560505390167,
+        "lpips_std": 0.053034089505672455
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "opti3dgs/treehill.json",
+      "source_sha256": "8dc3a972aea89d9b60116954247d3dbecf857f5e3430de4148cee4723cbd1bd5",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "rain-gs",
+      "recorded_method": "rain-gs",
+      "scene": "flowers",
+      "metrics": {
+        "psnr": 13.671663284301758,
+        "psnr_std": 0.5426875352859497,
+        "ssim": 0.21199816465377808,
+        "ssim_std": 0.030255379155278206,
+        "lpips": 0.5717414021492004,
+        "lpips_std": 0.033054761588573456
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "rain-gs/flowers.json",
+      "source_sha256": "cdef9d3dac3fed116a88b49f06e5986e74e8fb8b6e447eaa5df4f1f005faea6a",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "trick-gs",
+      "recorded_method": "trick-gs",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 25.240543365478516,
+        "psnr_std": 2.5667734146118164,
+        "ssim": 0.7614439725875854,
+        "ssim_std": 0.07595819979906082,
+        "lpips": 0.26844334602355957,
+        "lpips_std": 0.024916278198361397
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "trick-gs/bicycle.json",
+      "source_sha256": "a69af3e06f799e4ba235b7cffb305acf9da3bf697a82ffc09166c0c1f3936fc8",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "trick-gs",
+      "recorded_method": "trick-gs",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 25.787837982177734,
+        "psnr_std": 2.0851104259490967,
+        "ssim": 0.7994523048400879,
+        "ssim_std": 0.040513280779123306,
+        "lpips": 0.2411561757326126,
+        "lpips_std": 0.015578028745949268
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "trick-gs/garden.json",
+      "source_sha256": "ba854ba991a0ec560678aa175e69420196d384171567fc8d9587bb6baede166b",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "bicycle",
+      "metrics": {
+        "psnr": 25.139419555664062,
+        "psnr_std": 2.592254638671875,
+        "ssim": 0.7496752738952637,
+        "ssim_std": 0.07810560613870621,
+        "lpips": 0.17891524732112885,
+        "lpips_std": 0.037525393068790436
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/bicycle.json",
+      "source_sha256": "9a7519f50c689d14c82faa12a7532206450c35705429d2c0c2930eb6c19d9267",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "bonsai",
+      "metrics": {
+        "psnr": 31.759023666381836,
+        "psnr_std": 2.7413487434387207,
+        "ssim": 0.9426718354225159,
+        "ssim_std": 0.01654587686061859,
+        "lpips": 0.10012667626142502,
+        "lpips_std": 0.01969260908663273
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/bonsai.json",
+      "source_sha256": "233d0afe80f1b73bb06c367daa4d7efeb5aa85f0354de95fc2662142ccc86cf0",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "counter",
+      "metrics": {
+        "psnr": 28.594907760620117,
+        "psnr_std": 1.9870259761810303,
+        "ssim": 0.8978188037872314,
+        "ssim_std": 0.02199794538319111,
+        "lpips": 0.15379978716373444,
+        "lpips_std": 0.03757514804601669
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/counter.json",
+      "source_sha256": "cefc61b63f229835a46e05608c3effbbfd4e3c6aafe5863d3e9d3ad8688d75aa",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "flowers",
+      "metrics": {
+        "psnr": 20.842653274536133,
+        "psnr_std": 0.9760671257972717,
+        "ssim": 0.5917795896530151,
+        "ssim_std": 0.06332185119390488,
+        "lpips": 0.2863146662712097,
+        "lpips_std": 0.042937491089105606
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/flowers.json",
+      "source_sha256": "d72c008e5d4f5c105d349ae53c16945e60b12c10598de25322d24472296988ae",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "garden",
+      "metrics": {
+        "psnr": 27.41824722290039,
+        "psnr_std": 1.9937132596969604,
+        "ssim": 0.8380494713783264,
+        "ssim_std": 0.0312502384185791,
+        "lpips": 0.12223160266876221,
+        "lpips_std": 0.013617987744510174
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/garden.json",
+      "source_sha256": "a9527e16c7eb93efc0e296c2e6332e27ba13aa0dc97f44a57135c235111fd9cf",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "kitchen",
+      "metrics": {
+        "psnr": 30.950838088989258,
+        "psnr_std": 2.1386330127716064,
+        "ssim": 0.916169285774231,
+        "ssim_std": 0.04264730587601662,
+        "lpips": 0.10394296050071716,
+        "lpips_std": 0.04324588552117348
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/kitchen.json",
+      "source_sha256": "04235204fa1d9323abe40e5d3912d2a9605c8bc1cccf7fcadd72bfdd322bbcef",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "room",
+      "metrics": {
+        "psnr": 31.574195861816406,
+        "psnr_std": 2.7432565689086914,
+        "ssim": 0.9246965646743774,
+        "ssim_std": 0.024251306429505348,
+        "lpips": 0.13628803193569183,
+        "lpips_std": 0.05201420933008194
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/room.json",
+      "source_sha256": "5ff0ca0f175b652c8e263d985a94651931a62fe2a9a3a27dc5dfbd81b3adadae",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "stump",
+      "metrics": {
+        "psnr": 25.555021286010742,
+        "psnr_std": 1.9684267044067383,
+        "ssim": 0.7433631420135498,
+        "ssim_std": 0.06625308841466904,
+        "lpips": 0.1900922954082489,
+        "lpips_std": 0.0506163127720356
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/stump.json",
+      "source_sha256": "6710cf80baf81cd9c17ce4472116488050fe2d1725a1dc2b0a32411f1941be1c",
+      "paper_reproduction": "unverified"
+    },
+    {
+      "catalog_method": "vod3dgs-l",
+      "recorded_method": "vod3dgs-l",
+      "scene": "treehill",
+      "metrics": {
+        "psnr": 22.395097732543945,
+        "psnr_std": 2.6668570041656494,
+        "ssim": 0.6299453973770142,
+        "ssim_std": 0.07882824540138245,
+        "lpips": 0.2927261292934418,
+        "lpips_std": 0.038519375026226044
+      },
+      "status": "historical_unverified",
+      "seed": null,
+      "protocol_id": null,
+      "source_record": "vod3dgs-l/treehill.json",
+      "source_sha256": "21a828c2ee719e023fc2c5283d088c6a668921d1096e89b6f3cc1f67cd3c1112",
+      "paper_reproduction": "unverified"
+    }
+  ]
+}

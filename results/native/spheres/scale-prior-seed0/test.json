@@ -1,0 +1,41 @@
+{
+  "method": "scale-prior",
+  "metrics": {
+    "psnr": 19.436773777008057,
+    "ssim": 0.7544089555740356
+  },
+  "paper_reproduction": "unverified",
+  "per_view": [
+    {
+      "frame": "images/000.png",
+      "psnr": 19.63349151611328,
+      "ssim": 0.7992236018180847
+    },
+    {
+      "frame": "images/004.png",
+      "psnr": 20.28976058959961,
+      "ssim": 0.7728579044342041
+    },
+    {
+      "frame": "images/008.png",
+      "psnr": 18.62908363342285,
+      "ssim": 0.7578594088554382
+    },
+    {
+      "frame": "images/012.png",
+      "psnr": 19.194759368896484,
+      "ssim": 0.6876949071884155
+    }
+  ],
+  "protocol_id": "a04e3dfbfb70393fe30e4bc5b56ee4ea770f47d1fb61356ed044450917114540",
+  "resources": {
+    "checkpoint_bytes": 465013,
+    "gaussians": 623,
+    "peak_memory_bytes": 17944064,
+    "training_seconds": 3.1834445249987766
+  },
+  "scene": "release-spheres",
+  "schema_version": 1,
+  "seed": 0,
+  "split": "test"
+}
