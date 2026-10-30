@@ -5,6 +5,7 @@
 <p align="center">
   <a href="https://github.com/seemandhar/splatstudio/actions/workflows/ci.yml"><img src="https://github.com/seemandhar/splatstudio/actions/workflows/ci.yml/badge.svg" alt="Tests" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-82e4c3" alt="MIT license" /></a>
+  <a href="https://arxiv.org/abs/2610.09116"><img src="https://img.shields.io/badge/SPLATIFY-arXiv%3A2610.09116-b31b1b" alt="SPLATIFY paper on arXiv" /></a>
   <a href="docs/methods.md"><img src="https://img.shields.io/badge/research_configs-33-a5a0ff" alt="33 research configurations" /></a>
   <a href="docs/results.md"><img src="https://img.shields.io/badge/release-0.1_experimental-ffaf8c" alt="Experimental version 0.1" /></a>
 </p>
@@ -125,7 +126,22 @@ Start with [CONTRIBUTING.md](CONTRIBUTING.md). High-priority work includes indep
 
 ## Credits and citation
 
-SplatStudio builds on [gsplat](https://github.com/nerfstudio-project/gsplat) and [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio). The method collection originates in [SPLATIFY](https://github.com/seemandhar/splatify); its exact source commit and file hashes are preserved in [ORIGIN.json](packages/nerfstudio-methods/ORIGIN.json). Please cite the original method papers when using their techniques.
+SplatStudio builds on [gsplat](https://github.com/nerfstudio-project/gsplat) and [Nerfstudio](https://github.com/nerfstudio-project/nerfstudio). The method collection originates in **SPLATIFY: Reproduce, Discover, Innovate! From Papers and Ideas to Trainable 3DGS Code** ([arXiv paper](https://arxiv.org/abs/2610.09116), [code](https://github.com/seemandhar/splatify)); its exact source commit and file hashes are preserved in [ORIGIN.json](packages/nerfstudio-methods/ORIGIN.json).
+
+Please cite SPLATIFY when using this toolkit, and the original method papers when using their techniques:
+
+```bibtex
+@article{jain2026splatify,
+  title = {SPLATIFY: Reproduce, Discover, Innovate! From Papers and Ideas to Trainable 3DGS Code},
+  author = {Jain, Seemandhar and Gupta, Keshav and Chandraker, Manmohan},
+  journal = {arXiv preprint arXiv:2610.09116},
+  year = {2026},
+  doi = {10.48550/arXiv.2610.09116},
+  url = {https://arxiv.org/abs/2610.09116}
+}
+```
+
+To additionally cite the SplatStudio software:
 
 ```bibtex
 @software{jain2026splatstudio,

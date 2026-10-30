@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Please cite this software and the original papers for methods used."
+message: "Please cite SPLATIFY and the original papers for methods used."
 type: software
 title: "SplatStudio: Installable Methods and Traceable Experiments for Gaussian Splatting"
 version: 0.1.0
@@ -13,3 +13,17 @@ authors:
     given-names: Keshav
   - family-names: Chandraker
     given-names: Manmohan
+preferred-citation:
+  type: article
+  title: "SPLATIFY: Reproduce, Discover, Innovate! From Papers and Ideas to Trainable 3DGS Code"
+  authors:
+    - family-names: Jain
+      given-names: Seemandhar
+    - family-names: Gupta
+      given-names: Keshav
+    - family-names: Chandraker
+      given-names: Manmohan
+  journal: "arXiv preprint arXiv:2610.09116"
+  year: 2026
+  doi: "10.48550/arXiv.2610.09116"
+  url: "https://arxiv.org/abs/2610.09116"
