@@ -1,0 +1,89 @@
+{
+  "paper": "DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds",
+  "arxiv": "2503.18402",
+  "method_label": "3DGS +Ours (DashGaussian on the 3DGS backbone, Adam)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.81, "ssim": 0.828, "lpips": 0.203, "time_min": 10.16, "n_gs_M": 2.69},
+        "per_scene": {
+          "psnr": {"bicycle": 25.70, "garden": 27.93, "stump": 27.32, "flowers": 22.17, "treehill": 23.14,
+                   "room": 31.58, "kitchen": 31.58, "counter": 28.90, "bonsai": 32.01},
+          "ssim": {"bicycle": 0.785, "garden": 0.873, "stump": 0.797, "flowers": 0.631, "treehill": 0.659,
+                   "room": 0.923, "kitchen": 0.926, "counter": 0.910, "bonsai": 0.944},
+          "lpips": {"bicycle": 0.202, "garden": 0.110, "stump": 0.201, "flowers": 0.318, "treehill": 0.309,
+                    "room": 0.203, "kitchen": 0.128, "counter": 0.188, "bonsai": 0.177},
+          "time_min": {"bicycle": 14.86, "garden": 11.72, "stump": 9.64, "flowers": 10.78, "treehill": 12.13,
+                       "room": 8.06, "kitchen": 9.68, "counter": 7.31, "bonsai": 7.28},
+          "n_gs_M": {"bicycle": 5.38, "garden": 3.42, "stump": 3.80, "flowers": 3.22, "treehill": 3.63,
+                     "room": 1.29, "kitchen": 1.39, "counter": 1.01, "bonsai": 1.06}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.72, "ssim": 0.826, "lpips": 0.201, "time_min": 18.31, "n_gs_M": 3.12},
+        "per_scene": {
+          "psnr": {"bicycle": 25.61, "garden": 27.80, "stump": 26.91, "flowers": 21.86, "treehill": 22.85,
+                   "room": 31.72, "kitchen": 31.41, "counter": 29.12, "bonsai": 32.19},
+          "ssim": {"bicycle": 0.778, "garden": 0.874, "stump": 0.784, "flowers": 0.622, "treehill": 0.652,
+                   "room": 0.927, "kitchen": 0.933, "counter": 0.915, "bonsai": 0.947},
+          "lpips": {"bicycle": 0.203, "garden": 0.102, "stump": 0.207, "flowers": 0.328, "treehill": 0.317,
+                    "room": 0.191, "kitchen": 0.113, "counter": 0.178, "bonsai": 0.173},
+          "time_min": {"bicycle": 24.82, "garden": 23.99, "stump": 19.87, "flowers": 16.50, "treehill": 17.05,
+                       "room": 15.60, "kitchen": 18.28, "counter": 15.08, "bonsai": 13.56},
+          "n_gs_M": {"bicycle": 5.74, "garden": 5.10, "stump": 4.64, "flowers": 3.36, "treehill": 3.62,
+                     "room": 1.51, "kitchen": 1.74, "counter": 1.17, "bonsai": 1.24}
+        }
+      },
+      "source": "Table 2 (tab:second-result) averages; supp. Table 7 (tab:scenewise-m360) per scene"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.83, "ssim": 0.844, "lpips": 0.189, "time_min": 6.13, "n_gs_M": 1.43},
+        "per_scene": {
+          "psnr": {"train": 22.01, "truck": 25.66}, "ssim": {"train": 0.806, "truck": 0.882},
+          "lpips": {"train": 0.223, "truck": 0.156}, "time_min": {"train": 5.91, "truck": 6.38},
+          "n_gs_M": {"train": 1.01, "truck": 1.85}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.62, "ssim": 0.847, "lpips": 0.177, "time_min": 10.59, "n_gs_M": 1.83},
+        "per_scene": {
+          "psnr": {"train": 21.78, "truck": 25.45}, "ssim": {"train": 0.812, "truck": 0.882},
+          "lpips": {"train": 0.207, "truck": 0.146}, "time_min": {"train": 8.46, "truck": 12.72},
+          "n_gs_M": {"train": 1.08, "truck": 2.58}
+        }
+      },
+      "source": "Table 2; supp. Table 9 (tab:scenewise-tat)"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 29.29, "ssim": 0.901, "lpips": 0.256, "time_min": 8.16, "n_gs_M": 2.18},
+        "per_scene": {
+          "psnr": {"drjohnson": 28.75, "playroom": 29.84}, "ssim": {"drjohnson": 0.895, "playroom": 0.906},
+          "lpips": {"drjohnson": 0.262, "playroom": 0.249}, "time_min": {"drjohnson": 8.68, "playroom": 7.64},
+          "n_gs_M": {"drjohnson": 2.47, "playroom": 1.89}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.50, "ssim": 0.904, "lpips": 0.244, "time_min": 17.27, "n_gs_M": 2.82},
+        "per_scene": {
+          "psnr": {"drjohnson": 29.09, "playroom": 29.90}, "ssim": {"drjohnson": 0.901, "playroom": 0.907},
+          "lpips": {"drjohnson": 0.244, "playroom": 0.244}, "time_min": {"drjohnson": 19.47, "playroom": 17.27},
+          "n_gs_M": {"drjohnson": 3.31, "playroom": 2.32}
+        }
+      },
+      "source": "Table 2; supp. Table 8 (tab:scenewise-db)"
+    }
+  },
+  "official_code_readme_results": {
+    "note": "Numbers from the official README after the 2025-08-16 reproduction bug fix, RTX 4090, averages only; '3DGS' and '3DGS-Dash' rows (Adam).",
+    "mipnerf360": {"3dgs": {"psnr": 27.51, "ssim": 0.8159, "lpips": 0.2149, "n_gs_M": 2.73, "time_min": 12.70},
+                   "3dgs_dash": {"psnr": 27.70, "ssim": 0.8201, "lpips": 0.2140, "n_gs_M": 2.42, "time_min": 6.21}},
+    "db": {"3dgs": {"psnr": 29.83, "ssim": 0.9069, "lpips": 0.2377, "n_gs_M": 2.48, "time_min": 10.74},
+           "3dgs_dash": {"psnr": 29.87, "ssim": 0.9061, "lpips": 0.2458, "n_gs_M": 1.94, "time_min": 3.78}},
+    "tandt": {"3dgs": {"psnr": 23.73, "ssim": 0.8526, "lpips": 0.1694, "n_gs_M": 1.57, "time_min": 8.04},
+              "3dgs_dash": {"psnr": 24.01, "ssim": 0.8514, "lpips": 0.1789, "n_gs_M": 1.20, "time_min": 3.88}}
+  },
+  "notes": "baseline_3dgs is the authors' own 3DGS retrain in Table 2 (not the 3DGS paper's numbers). Time is total optimization time in minutes on a ~80 TFLOPS FP32 GPU (paper) / RTX 4090 (README). The headline '200 seconds' result (Table 1) is DashGaussian on Taming-3DGS (Sparse Adam + efficient backward), not reproduced here; this reproduction targets the 3DGS backbone variant."
+}

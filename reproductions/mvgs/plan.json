@@ -1,0 +1,12 @@
+{"method": "mvgs", "module": "ss_mvgs",
+ "variants": {"mvgs": "indoor CIG recipe, 39000 steps", "mvgs-outdoor": "M=3 at w1600, 30000 steps"},
+ "components": [
+  {"name": "mvgs-renderer", "kind": "renderer", "factory": "ss_mvgs.renderer:create_renderer",
+   "provides": ["render.rgb", "render.depth.expected_z", "gradient.screen.signed", "render.multiview_batch"]},
+  {"name": "mvgs-density", "kind": "density", "factory": "ss_mvgs.density:create_density", "requires": ["gradient.screen.signed"]},
+  {"name": "photometric", "kind": "loss", "factory": "ss_mvgs.losses:create_photometric", "requires": ["render.rgb", "render.multiview_batch"]}],
+ "fields": [],
+ "probes": ["mvgs-multiview-sum", "mvgs-cig-schedule", "mvgs-mvad", "mvgs-crd", "mvgs-cycle"],
+ "contributions": ["multi-view-regulated-learning", "cross-intrinsic-guidance", "multi-view-augmented-densification", "cross-ray-densification"],
+ "fidelity_gaps": ["gsplat rasterizer (shared)", "Adam before densify (shared)", "coarse targets resized from w1600 images", "single continuous run instead of checkpoint chain (state equivalent)", "memory of M-view graph", "no T&T/DB config", "paper 3DGS rows use images_4/2"],
+ "feasible_natively": true}

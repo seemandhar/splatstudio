@@ -1,0 +1,11 @@
+{
+  "method": "pgsr",
+  "variants": ["pgsr-tnt"],
+  "module": "ss_pgsr",
+  "components": ["pgsr-plane (renderer)", "pgsr-density (density)", "pgsr-rgb (loss)", "pgsr-flatten (loss)", "pgsr-single-view (loss)", "pgsr-mv-geo (loss)", "pgsr-mv-ncc (loss)"],
+  "fields": [],
+  "probes": ["state-transitions", "plane-depth", "flatten-loss", "single-view", "mv-geometry", "mv-ncc", "exposure", "neighbour-graph", "density-recipe"],
+  "contributions": ["C1 planar flattening", "C2 unbiased plane depth (official CUDA)", "C3 edge-aware single-view", "C4 multi-view geometric", "C5 multi-view NCC", "C6 exposure compensation", "C7 AbsGS+official densification and multi-view trim"],
+  "fidelity_gaps": ["optimizer step before densify (runtime order)", "sampling with replacement", "images_4/2 JPGs instead of PIL -r resize", "ncc_scale != 1 unsupported", "no mesh / DTU / TnT geometry evaluation", "seed and eval metric implementation"],
+  "feasible_natively": true
+}

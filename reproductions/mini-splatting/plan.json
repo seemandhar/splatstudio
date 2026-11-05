@@ -1,0 +1,8 @@
+{"method": "mini-splatting", "module": "ss_mini_splatting",
+ "methods": ["mini-splatting", "mini-splatting-indoor", "mini-splatting-d"],
+ "components": ["ms-renderer (gsplat + target image passthrough)", "ms-density (C1-C5, custom CUDA stats)", "photometric"],
+ "fields": [],
+ "probes": ["ms-stats-kernel", "ms-depth-midpoint", "ms-blur-split", "ms-depth-reinit", "ms-simplification", "ms-schedule"],
+ "contributions": ["blur-split", "depth-reinitialization", "intersection-preserving", "importance-sampling", "pipeline-schedule"],
+ "fidelity_gaps": ["white background", "random view sampling", "optimizer step before density", "gsplat alpha numerics", "exact vs approx knn at init", "importance metric by method name"],
+ "feasible_natively": true}

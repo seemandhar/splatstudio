@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-edgs"
+version = "0.1.0"
+description = "EDGS (arXiv 2504.13204) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+# romatch (RoMa, commit 370117431ffc) is installed separately with --no-deps; see README.
+dependencies = ["splatstudio>=0.1,<0.2", "scipy"]
+
+[project.entry-points."splatstudio.methods"]
+edgs = "ss_edgs:method"
+edgs-nosh = "ss_edgs:nosh"
+
+[project.scripts]
+ss-edgs-init = "ss_edgs.preprocess:main"
+
+[tool.setuptools.packages.find]
+include = ["ss_edgs*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,31 @@
+{
+  "paper": "Compressed 3D Gaussian Splatting for Accelerated Novel View Synthesis",
+  "slug": "c3dgs",
+  "plan_id": 42,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "plugin_freeze_sha": "3666e9660aab3b68",
+  "bench_exps": [
+    "c3dgs-mipnerf360"
+  ],
+  "result": {
+    "psnr_delta": {
+      "bicycle": -0.21,
+      "garden": -0.28,
+      "counter": -0.07
+    },
+    "size_MiB": {
+      "bicycle": 49.3,
+      "garden": 38.7,
+      "counter": 14.0
+    }
+  }
+}

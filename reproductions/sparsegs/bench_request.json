@@ -1,0 +1,80 @@
+{
+ "method": "sparsegs",
+ "datasets": {
+  "mipnerf360-sgs12": [
+   "bicycle",
+   "bonsai",
+   "counter",
+   "garden",
+   "kitchen",
+   "stump"
+  ]
+ },
+ "steps": 10000,
+ "per_scene_reported": false,
+ "extra": "",
+ "recipe": "3dgs",
+ "eval_splits": [
+  "test",
+  "validation"
+ ],
+ "baseline": {
+  "method": "sparsegs-3dgs",
+  "datasets": {
+   "mipnerf360-sgs12": [
+    "bicycle",
+    "bonsai",
+    "counter",
+    "garden",
+    "kitchen",
+    "stump"
+   ]
+  },
+  "steps": 10000,
+  "note": "Protocol-matched control = paper's 3DGS row (17.49 / 0.499 / 0.431). Compare our gain with the paper's +1.88 dB (19.37 vs 17.49)."
+ },
+ "optional_variant": {
+  "method": "sparsegs-paperprune",
+  "note": "pruning range as the paper describes (official code has a thread-rank index bug); -0.3 dB better than official in the 2k smoke"
+ },
+ "paper_reference": {
+  "dataset": "mipnerf360 12-view",
+  "average": {
+   "psnr": 19.37,
+   "ssim": 0.577,
+   "lpips": 0.398
+  },
+  "baseline_3dgs": {
+   "psnr": 17.49,
+   "ssim": 0.499,
+   "lpips": 0.431
+  },
+  "source": "Table 1 / Table 3; averages only over 'seven' scenes; released data has 6"
+ },
+ "proposed_datasets_json_entry": {
+  "mipnerf360-sgs12": {
+   "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+   "native_root": "/home/sejain/datasets/mipnerf360/sparsegs12",
+   "scenes": {
+    "bicycle": "images",
+    "bonsai": "images",
+    "counter": "images",
+    "garden": "images",
+    "kitchen": "images",
+    "stump": "images"
+   },
+   "_doc": "SparseGS 12-view Mip-NeRF 360: train = the 12 images of the authors' released <scene>_12.zip (Google Drive from the official README; 6 scenes, no room; not llffhold8-compatible), test = llffhold8 minus train, val = all other non-train images (official metrics.py set = test+val). Images: full-res PIL bicubic /4 for ALL scenes (paper: 1/4) -> PNG. Init: COLMAP 3.9.1 MVS (point_triangulator with known poses, patch_match max_image_size 2000, geom_consistency) on the 12 train views only. Sidecar sgs_depth.npz = BoostingMonocularDepth (LeReS res101 + pix2pix merge, Final) of the train views, cv2 cubic resize + min-max (official loader), keyed by native viewmat. Built by reproductions/sparsegs/tools/prepare_m360_sgs12.py (BMD repo ~/models/bmd/repo, PYTHONPATH ~/models/bmd/pylib); NOT rebuildable by bench.py prepare."
+  }
+ },
+ "notes": "--steps must be 10000 (= component total_steps: SDS after 6667, floater pruning at 6667, warp from 5000). SDS loads SD2.1-base fp16 (~3 GB) from ~/models/sd21base at step 6667; peak ~6 GB at 1297x840. First use JIT-compiles the CUDA depth kernel (~1 min). ~0.2 s/step on a shared A6000 at 2k (~35-45 min per scene incl. warp/SDS). Data root via ss-train --data (bench.py passes it) or SGS_DATA. Dataset build for stump/bonsai/kitchen was still running at hand-off: check ~/datasets/mipnerf360/sparsegs12/<scene>/sgs_depth.npz exists for all 6 (logs: reproductions/sparsegs/evidence/prep/chain{A,B}.log).",
+ "headline_metric": "per-view mean pooled over test \u222a validation (official metrics.py set)",
+ "methods": [
+  "sparsegs",
+  "sparsegs-3dgs",
+  "sparsegs-tuned6667"
+ ],
+ "tuned_variant": {
+  "method": "sparsegs-tuned6667",
+  "label": "TUNED (prune step chosen on test-split smoke)"
+ }
+}

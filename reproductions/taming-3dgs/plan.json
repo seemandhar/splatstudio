@@ -1,0 +1,25 @@
+{
+  "method": "taming-3dgs",
+  "module": "ss_taming_3dgs",
+  "variants": ["taming-3dgs", "taming-3dgs-budget"],
+  "components": [
+    {"name": "taming-renderer", "kind": "renderer", "factory": "ss_taming_3dgs.renderer:create_renderer"},
+    {"name": "taming-density", "kind": "density", "factory": "ss_taming_3dgs.density:create_density"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [],
+  "probes": ["taming-stats-kernel", "taming-growth-curve", "taming-score", "taming-sampled-densify",
+             "taming-guided-prune", "taming-high-opacity", "taming-sh-interval", "taming-schedule"],
+  "contributions": ["growth-curve-budget", "score-based-densification", "high-opacity",
+                    "batched-sh-updates"],
+  "fidelity_gaps": [
+    "speed-only CUDA kernels not ported (per-splat backward, fused SSIM, separate SH tensors)",
+    "gsplat backend numerics / white background / view sampling (shared with baseline)",
+    "score views sampled from already-seen training views",
+    "optimizer step before density control",
+    "high opacity = official freeze, not paper's trainable abs opacity",
+    "multinomial matches official zero-weight fill (closed)",
+    "radius statistic from gsplat opacity-aware radii"
+  ],
+  "feasible_natively": true
+}

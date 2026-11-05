@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-gaussianspa"
+version = "0.1.0"
+description = "GaussianSpa (arXiv 2411.06019) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+gaussianspa = "ss_gaussianspa:method"
+gaussianspa-imp = "ss_gaussianspa:importance"
+gaussianspa-drjohnson = "ss_gaussianspa:preset_drjohnson"
+gaussianspa-playroom = "ss_gaussianspa:preset_playroom"
+gaussianspa-bicycle = "ss_gaussianspa:preset_bicycle"
+gaussianspa-bonsai = "ss_gaussianspa:preset_bonsai"
+gaussianspa-counter = "ss_gaussianspa:preset_counter"
+gaussianspa-flowers = "ss_gaussianspa:preset_flowers"
+gaussianspa-garden = "ss_gaussianspa:preset_garden"
+gaussianspa-kitchen = "ss_gaussianspa:preset_kitchen"
+gaussianspa-room = "ss_gaussianspa:preset_room"
+gaussianspa-stump = "ss_gaussianspa:preset_stump"
+gaussianspa-treehill = "ss_gaussianspa:preset_treehill"
+gaussianspa-train = "ss_gaussianspa:preset_train"
+gaussianspa-truck = "ss_gaussianspa:preset_truck"
+
+[tool.setuptools.packages.find]
+include = ["ss_gaussianspa*"]
+
+[tool.setuptools.package-data]
+ss_gaussianspa = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

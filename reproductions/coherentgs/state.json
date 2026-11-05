@@ -1,0 +1,25 @@
+{
+  "paper": "CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians",
+  "slug": "coherentgs",
+  "plan_id": 55,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (approved, 5 minors)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "not-matched",
+  "method": "coherentgs",
+  "dataset": "llff-fewview3-cgs",
+  "bench_exps": [
+    "coherentgs-llff3"
+  ],
+  "result": {
+    "masked_psnr": 19.28,
+    "paper": 20.33,
+    "gsplat_same_init": 12.4
+  }
+}

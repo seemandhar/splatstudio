@@ -1,0 +1,30 @@
+{
+  "paper": "Trim 3D Gaussian Splatting for Accurate Geometry Representation",
+  "slug": "trimgs",
+  "plan_id": 37,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (2 majors = framing/benchmark scope; addressed by adding room and mandatory 30k flat-pretrain runs)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "plugin_freeze_sha": "4e184ab95770e797",
+  "bench_exps": [
+    "trimgs-mipnerf360",
+    "trimgs-indoor-mipnerf360",
+    "trimgs-pre30k-mipnerf360",
+    "trimgs-indoor-pre30k-mipnerf360"
+  ],
+  "result": {
+    "psnr_delta": {
+      "garden": -0.47,
+      "stump": -0.32,
+      "counter": -0.32,
+      "room": -0.11
+    }
+  }
+}

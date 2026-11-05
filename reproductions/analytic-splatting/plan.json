@@ -1,0 +1,69 @@
+{
+ "method": "analytic-splatting",
+ "module": "ss_analytic_splatting",
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "analytic-renderer",
+   "factory": "ss_analytic_splatting.renderer:create_renderer",
+   "provides": [
+    "gradient.screen.signed",
+    "render.rgb"
+   ]
+  },
+  {
+   "kind": "density",
+   "name": "analytic-density",
+   "factory": "ss_analytic_splatting.density:create_density",
+   "requires": [
+    "gradient.screen.signed"
+   ]
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "base"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "analytic-forward-integral",
+  "analytic-backward",
+  "analytic-logistic-cdf",
+  "analytic-density-schedule"
+ ],
+ "contributions": [
+  {
+   "id": "C1",
+   "name": "analytic-pixel-integral",
+   "probes": [
+    "analytic-forward-integral",
+    "analytic-backward"
+   ]
+  },
+  {
+   "id": "C2",
+   "name": "conditioned-logistic-cdf",
+   "probes": [
+    "analytic-logistic-cdf",
+    "analytic-forward-integral",
+    "analytic-backward"
+   ]
+  },
+  {
+   "id": "base",
+   "name": "3dgs-training",
+   "probes": [
+    "analytic-density-schedule"
+   ]
+  }
+ ],
+ "fidelity_gaps": [
+  "MTMT multi-scale headline protocol not benchmarked (no multi-resolution sampling in runtime); STST per-scene table used",
+  "densify/reset after optimizer step",
+  "runtime view sampling/SSIM/LPIPS differences",
+  "log-space reset coef",
+  "3D-filter variant not ported"
+ ],
+ "feasible_natively": true
+}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-flashgs"
+version = "0.1.0"
+description = "FlashGS (render-only CUDA rasterizer) for SplatStudio: evaluation renderer + speed/parity tool"
+requires-python = ">=3.10"
+dependencies = ["splatstudio", "gsplat", "torch"]
+
+[project.entry-points."splatstudio.methods"]
+flashgs = "ss_flashgs:method"
+
+[tool.setuptools]
+packages = ["ss_flashgs"]
+
+[tool.setuptools.package-data]
+ss_flashgs = ["csrc/**/*", "ref3dgs_csrc/**/*"]
+
+[tool.ruff]
+line-length = 100
+exclude = ["ss_flashgs/csrc", "ss_flashgs/ref3dgs_csrc"]

@@ -1,0 +1,33 @@
+{
+  "paper": "DeblurGS: Gaussian Splatting for Camera Motion Blur",
+  "arxiv": "2404.11358",
+  "method_label": "Ours (DeblurGS)",
+  "iterations": 150000,
+  "datasets": {
+    "deblurnerf-motion": {
+      "method": {"average": {"psnr": 26.28, "ssim": 0.862, "lpips": 0.086}},
+      "baseline_3dgs": {"average": {"psnr": 21.69, "ssim": 0.684, "lpips": 0.281}},
+      "scenes": ["ball", "basket", "buick", "coffee", "decoration", "girl", "heron", "parterre", "puppet", "stair"],
+      "source": "Table 1 (main_table.tex), Real Motion Blur [Deblur-NeRF]; averages only"
+    },
+    "synthetic-extreme-blur": {
+      "method": {"average": {"psnr": 30.23, "ssim": 0.890, "lpips": 0.078}},
+      "baseline_3dgs": {"average": {"psnr": 20.39, "ssim": 0.591, "lpips": 0.454}},
+      "source": "Table 1 (ExBluRF synthetic)"
+    },
+    "exblur-cp": {
+      "method": {"average": {"psnr": 31.75, "ssim": 0.806, "lpips": 0.172}},
+      "baseline_3dgs": {"average": {"psnr": 23.79, "ssim": 0.643, "lpips": 0.538}},
+      "source": "Table 1"
+    },
+    "exblur-np": {
+      "method": {"average": {"psnr": 30.11, "ssim": 0.768, "lpips": 0.192},
+                 "per_scene": {"psnr": {"camellia": 28.97, "stone_lantern": 29.07},
+                               "ssim": {"camellia": 0.711, "stone_lantern": 0.779},
+                               "lpips": {"camellia": 0.189, "stone_lantern": 0.194}}},
+      "baseline_3dgs": {"average": {"psnr": 22.34, "ssim": 0.611, "lpips": 0.532}},
+      "source": "Table 1; per-scene from ablation Table 2 (full row). ExBlur-NP COLMAP data unreleased."
+    }
+  },
+  "notes": "Metrics after test-pose post-optimisation (Sec. 4.2, official test.py): PSNR, SSIM (3DGS same-padded), LPIPS-Alex. 3DGS row is the authors' own vanilla 3DGS on blurry inputs. No per-scene tables for the released datasets (no supplementary in the arXiv e-print)."
+}

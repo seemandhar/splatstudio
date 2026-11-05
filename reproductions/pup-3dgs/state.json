@@ -1,0 +1,19 @@
+{
+ "paper": "PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting",
+ "slug": "pup-3dgs",
+ "plan_id": 36,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "plugin_freeze_sha": "40724b1bbf10c01a",
+ "bench_exps": [
+  "pup-3dgs-mipnerf360"
+ ],
+ "headline": "3 scenes at 90% pruned: \u22120.42/\u22120.33/\u22120.14 dB; pruning loss matches paper"
+}

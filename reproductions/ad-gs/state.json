@@ -1,0 +1,46 @@
+{
+ "paper": "AD-GS: Alternating Densification for Sparse-Input 3D Gaussian Splatting",
+ "slug": "ad-gs",
+ "plan_id": 34,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done",
+  "iteration1": "done",
+  "gap_analysis": "done"
+ },
+ "outcome": "not-matched",
+ "plugin_freeze_sha": "72b992286faeba16",
+ "bench_exps": [
+  "ad-gs-llff-fewview3"
+ ],
+ "baseline_exp": "baseline3dgs-llff-fewview3-10000",
+ "iteration": 1,
+ "plugin_freeze_sha_i1": "7fd7b73309841006",
+ "history": [
+  {
+   "iteration": 0,
+   "psnr": {
+    "horns": 18.89,
+    "fortress": 23.29,
+    "room": 21.8
+   }
+  },
+  {
+   "iteration": 1,
+   "changes": [
+    "poses_bounds near/far for pseudo poses",
+    "SH degree every 500 steps"
+   ],
+   "exps": [
+    "ad-gs-i1-s0",
+    "ad-gs-i1-s1",
+    "ad-gs-i1-s2"
+   ]
+  }
+ ],
+ "headline": "LLFF 3-view, 3 seeds (iter 1): horns 19.03 (-0.76), fortress 23.10 (-0.77), room 22.02 (-0.37) vs paper; no remaining code-grounded fix for ~0.4 dB; LPIPS gap is mostly the official [0,1]-input lpipsPyTorch convention"
+}

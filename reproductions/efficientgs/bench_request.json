@@ -1,0 +1,3 @@
+{"method": "efficientgs",
+ "datasets": {"mipnerf360": ["bicycle", "flowers", "garden", "stump", "treehill", "room", "counter", "kitchen", "bonsai"]},
+ "steps": 30000, "per_scene_reported": false, "extra": ""}

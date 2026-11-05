@@ -1,0 +1,37 @@
+{
+  "paper": "Improving Adaptive Density Control for 3D Gaussian Splatting",
+  "arxiv": "2503.14274",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.71, "ssim": 0.824, "lpips": 0.193}, "gaussians_millions": 3.3},
+      "baseline_3dgs": {"average": {"psnr": 27.39, "ssim": 0.813, "lpips": 0.218}, "gaussians_millions": 3.3},
+      "pixelgs": {"average": {"psnr": 27.53, "ssim": 0.822, "lpips": 0.191}, "gaussians_millions": 5.5},
+      "source": "Table 1 (tab:combined_metrics), 9 scenes"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.18, "ssim": 0.860, "lpips": 0.149}, "gaussians_millions": 2.4},
+      "baseline_3dgs": {"average": {"psnr": 23.74, "ssim": 0.846, "lpips": 0.178}, "gaussians_millions": 1.8},
+      "pixelgs": {"average": {"psnr": 23.83, "ssim": 0.854, "lpips": 0.151}, "gaussians_millions": 4.5},
+      "source": "Table 1, truck + train"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.63, "ssim": 0.902, "lpips": 0.240}, "gaussians_millions": 2.3},
+      "baseline_3dgs": {"average": {"psnr": 29.50, "ssim": 0.899, "lpips": 0.247}, "gaussians_millions": 2.8},
+      "pixelgs": {"average": {"psnr": 28.95, "ssim": 0.892, "lpips": 0.250}, "gaussians_millions": 4.6},
+      "source": "Table 1, drjohnson + playroom"
+    },
+    "all13_ablation": {
+      "method": {"average": {"psnr": 27.46, "ssim": 0.841, "lpips": 0.194}, "gaussians_thousands": 3021},
+      "wo_extent_correction": {"average": {"psnr": 27.34, "ssim": 0.841, "lpips": 0.194}, "gaussians_thousands": 3204},
+      "wo_pruning_strategy": {"average": {"psnr": 27.37, "ssim": 0.841, "lpips": 0.194}, "gaussians_thousands": 3097},
+      "wo_exp_grad_thresh": {"average": {"psnr": 27.45, "ssim": 0.842, "lpips": 0.195}, "gaussians_thousands": 3143},
+      "wo_opacity_correction": {"average": {"psnr": 27.30, "ssim": 0.839, "lpips": 0.191}, "gaussians_thousands": 4755},
+      "wo_pixel_gradient": {"average": {"psnr": 27.38, "ssim": 0.834, "lpips": 0.213}, "gaussians_thousands": 1989},
+      "baseline_3dgs": {"average": {"psnr": 27.16, "ssim": 0.832, "lpips": 0.216}, "gaussians_thousands": 2994},
+      "source": "Table 3 (tab:ablation_small), average over 13 scenes of all three datasets"
+    }
+  },
+  "notes": "Dataset averages only; no per-scene numbers in paper or appendix. Table 1 3DGS row (27.39/23.74/29.50) differs from the 3DGS paper (27.21/23.14/29.41) and from the 13-scene ablation 3DGS row (27.16), source not stated. Gains over that 3DGS row: mipnerf360 +0.32, tandt +0.44, db +0.13 dB. Table 2 (15k vs 30k, 3 scenes, one per dataset, unnamed): Ours 27.27/27.65 vs 3DGS 26.63/27.23."
+}

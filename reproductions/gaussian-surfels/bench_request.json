@@ -1,0 +1,92 @@
+{
+ "method": "gaussian-surfels",
+ "datasets": {
+  "dtu-gsurfels": [
+   "scan24",
+   "scan37",
+   "scan40",
+   "scan55",
+   "scan63",
+   "scan65",
+   "scan69",
+   "scan83",
+   "scan97",
+   "scan105",
+   "scan106",
+   "scan110",
+   "scan114",
+   "scan118",
+   "scan122"
+  ]
+ },
+ "steps": 15000,
+ "per_scene_reported": true,
+ "extra": "",
+ "recipe": "3dgs",
+ "primary_metric": "chamfer_mm per scan vs paper Table 1 (mean 0.88); PSNR/SSIM from ss-eval --split test vs paper Table 3 (32.51 / 0.942, 15-scan average only -> all 15 scans)",
+ "post_train": "PYTHONPATH=$HOME/models/gsurfels-pylib:$HOME/models/dtueval-pylib CUDA_VISIBLE_DEVICES=<same gpu> /home/sejain/splatify/tools/ssenv gsurfels-dtu-eval --run <run> --data <data> --dtu /home/sejain/datasets/dtu_official/gt   # writes <run>/dtu_cd.json (~2.5 min mesh + ~2.5-4.5 min CD, CPU-heavy)",
+ "control": {
+  "method": "gaussian-surfels-nogeo",
+  "datasets": {
+   "dtu-gsurfels": [
+    "scan24",
+    "scan37",
+    "scan106"
+   ]
+  },
+  "steps": 15000,
+  "note": "same pipeline with only L_p + L_m (in-house control, not the paper's 3DGS row 2.58 mm)"
+ },
+ "paper_reference": {
+  "chamfer_mm": {
+   "scan24": 0.66,
+   "scan37": 0.93,
+   "scan40": 0.54,
+   "scan55": 0.41,
+   "scan63": 1.06,
+   "scan65": 1.14,
+   "scan69": 0.85,
+   "scan83": 1.29,
+   "scan97": 1.53,
+   "scan105": 0.79,
+   "scan106": 0.82,
+   "scan110": 1.58,
+   "scan114": 0.45,
+   "scan118": 0.66,
+   "scan122": 0.53
+  },
+  "chamfer_mean": 0.88,
+  "psnr_mean": 32.51,
+  "ssim_mean": 0.942,
+  "3dgs_row": {
+   "chamfer_mean": 2.58,
+   "psnr_mean": 32.78
+  }
+ },
+ "proposed_datasets_json_entry": {
+  "dtu-gsurfels": {
+   "raw_root": "/home/sejain/datasets/gsurfels_dtu/raw",
+   "native_root": "/home/sejain/datasets/gsurfels_dtu/native",
+   "scenes": {
+    "scan24": "images",
+    "scan37": "images",
+    "scan40": "images",
+    "scan55": "images",
+    "scan63": "images",
+    "scan65": "images",
+    "scan69": "images",
+    "scan83": "images",
+    "scan97": "images",
+    "scan105": "images",
+    "scan106": "images",
+    "scan110": "images",
+    "scan114": "images",
+    "scan118": "images",
+    "scan122": "images"
+   },
+   "_doc": "Gaussian Surfels authors' DTU (HF turandai/gaussian-surfels-dtu, IDR layout, masks + Omnidata normals). 1600x1200; test = NeuS2 split (sorted ids 8,13,16,21,26,31,34 [+56]); validation = byte copies of test; images masked on black (official PSNR protocol); gsurfels/ sidecar (masks, priors, downscaled images, init); points.npz = 1e6 random points visual-hull pruned; cameras.npz for the evaluator. Built by reproductions/gaussian-surfels/tools/prepare_dtu.py; NOT rebuildable by bench.py prepare."
+  }
+ },
+ "notes": "15000 steps = paper/official iterations (LR/schedules hard-coded to absolute steps: keep --steps 15000). --num-gaussians 10000000 required (sidecar init applies only when all init points are kept). First use JIT-compiles the vendored rasterizer (~2-3 min, cached). ss-train must receive --data (bench.py does) so the sidecar is found. Smoke: 2000 steps (all at 1/4 res) 267 s on a busy GPU; full-res phase is slower (~2 GB peak). Expect ~20-40 min/scan + ~6 min mesh/CD.",
+ "min_free_gb": 8
+}

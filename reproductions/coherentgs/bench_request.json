@@ -1,0 +1,23 @@
+{
+  "method": "coherentgs",
+  "datasets": {"llff-fewview3-cgs": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]},
+  "steps": 13000,
+  "per_scene_reported": false,
+  "extra": "",
+  "recipe": "splatstudio",
+  "num_gaussians": 10000000,
+  "max_gaussians": 12000000,
+  "post_eval": "tools/ssenv python -m ss_coherentgs.evaluate --run <run> --split test   # paper's masked metrics (alpha < 1e-3 -> white in both); writes <run>/test_masked.json",
+  "baseline": {"method": "gsplat", "datasets": {"llff-fewview3-cgs": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]}, "steps": 13000,
+               "note": "Optional: gsplat from the same per-pixel (unaligned mono-depth) init; evaluate masked with `python -m ss_coherentgs.evaluate --run <gsplat run> --mask-run <coherentgs run>` (the paper masks every method with CoherentGS's alpha). Paper's 3DGS row (14.99) is vanilla 3DGS from its own init, so this is only indicative."},
+  "paper_reference": {"dataset": "llff-3view", "average": {"psnr": 20.33, "ssim": 0.725, "lpips": 0.180}, "baseline_3dgs": {"psnr": 14.99, "ssim": 0.483, "lpips": 0.362}, "metric": "MASKED (rendered CoherentGS opacity < 1e-3 excluded)", "source": "paper_results.json (Table 1); averages only, all 8 scenes"},
+  "proposed_datasets_json_entry": {
+    "llff-fewview3-cgs": {
+      "raw_root": "/home/sejain/datasets/llff/coherentgs-official/nerf_llff_data",
+      "native_root": "/home/sejain/datasets/llff/fewview3-cgs",
+      "scenes": {"fern": "images", "flower": "images", "fortress": "images", "horns": "images", "leaves": "images", "orchids": "images", "room": "images", "trex": "images"},
+      "_doc": "CoherentGS 3-view LLFF (official readLLFFInfo): official images_8 PNGs (504x378, pixel-identical to nerf_llff_data/images_8), official poses_bounds frame (fix_rotation, translations x 1/(0.75 min bound)), focal = f/8, centred principal point; test = every 8th sorted image, train = round(linspace) 3 of the rest (same names as llff-fewview3-r8), val = rest. points.npz = one point per training pixel (unaligned Depth-Anything depth after the official bilateral filtering), coherentgs.npz = depth-layer masks (5 ch), FlowFormer++ flows + consistency weights from the author-processed archive llff_sparse.zip (sha256 84caaa59...). Built by reproductions/coherentgs/tools/prepare_cgs_llff.py (PYTHONPATH=~/models/coherentgs/pylib for sklearn); NOT rebuildable by bench.py prepare."
+    }
+  },
+  "notes": "Must keep all 571,536 per-pixel points (--num-gaussians >= that) and use --recipe splatstudio (3dgs recipe kNN init ~20 GB at 571k points; scales are overwritten by the plugin). --steps 13000 = official iterations 7001-20000; the 1000 alignment iterations run inside density.initialize. Data root is read from ss-train --data (or COHERENTGS_DATA). Paper numbers are masked averages: compare test_masked.json masked_white with 20.33/0.725/0.180, and report unmasked ss-eval numbers alongside."
+}

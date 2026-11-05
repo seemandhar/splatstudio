@@ -1,0 +1,92 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "plugin/calibrate_weights.py",
+      "where": "ratio_fn / view_gradients / main (w_l, w_h targets)",
+      "problem": "The Fig. 2 ratio is matched with the wrong quantity, and w_h is matched with the wrong target and state. (a) Fig. 2's 'pixel gradient' without FR falls about 5x over training (0.25 to 0.055). Under L1 + 0.2 D-SSIM, mean|dL_photo/drgb| stays nearly constant, because the L1 gradient is sign(residual)/(3HW). So Fig. 2 cannot be mean|dL/drgb|. It is most likely the view-space (means2d) gradient that densification thresholds. (b) w_h is solved for a whole-image ratio of 2.0. That is the over-reconstruction-region value (0.125/0.055). At 12k-15k the well-reconstruction ratio is only about 1.1-1.2, so the correct whole-image target lies between these and is area-weighted. Using 2.0 inflates w_h. (c) w_h is measured on the 30k baseline checkpoint. That render is sharper than the 12k-15k state, so high-band amplitudes are larger and phase gradients (proportional to 1/|F_hat|) are smaller, which inflates w_h further. (d) The pooled mean is dominated by heavy-tailed high-band phase gradients. Measured on bicycle at 822x1237, with a 9x9 box-blurred GT standing in for the render: high-band phase term mean|g| = 15.3 (max 2048) versus amplitude 0.64. Low band: amplitude 0.096, phase 0.001. Photometric: 9.9e-7.",
+      "evidence": "Fig. 2 (FreGaussian_method_curve.pdf, read directly): w/o FR curves decay from 0.25 to 0.05. w/ FR at 12k-15k: well region ~0.065 vs 0.055, over region ~0.125 vs 0.055. Code: ratio = sum|g_p + w g_l| / sum|g_p| over rgb, target WEIGHT_TARGETS['w_h'] = 2.0.",
+      "fix": "Calibrate primarily on the per-Gaussian means2d gradient norm, the statistic grow_grad2d acts on (gradient_gain already computes it), and record the rgb ratio as well. Use a whole-image w_h target between 1.1 and 2.0, e.g. ~1.5 or area-weighted, documented as an assumption, and record the sensitivity at 1.5 and 2.0. Prefer a ~12k-15k baseline state; at minimum, label the 30k-checkpoint bias. Report the amplitude and phase gradient contributions separately for each scene."
+    },
+    {
+      "severity": "major",
+      "file": "plugin/calibrate_threshold.py",
+      "where": "main: baseline counts vs fregs-calib counts",
+      "problem": "The comparison is not like-for-like. Candidates train with --steps 15000, so the means LR decays as 0.01**(step/15000). Under that schedule the LR is 0.1x at step 7500 and 0.01x at step 15000, versus 0.32x and 0.1x in a 30000-step run. The baseline count comes from the 30k baseline's training.jsonl at step 15000. The faster position-LR decay during the whole densification window changes the view-space gradients and the clone/split counts. This biases N_fregs/N_gsplat and therefore grow_grad2d.",
+      "evidence": "runtime.train: optimizers['means'].lr = initial_lr * (0.01 ** (step / steps)). calibrate_threshold reads baseline counts from root/baseline-mipnerf360-30000/gsplat/... at step 15000.",
+      "fix": "Add gsplat to the same 15k sweep (--methods gsplat fregs-calib-g...) and compute the ratios inside that sweep, or run the candidates to 30000 steps and read step 15000."
+    },
+    {
+      "severity": "major",
+      "file": "plugin/calibrate_threshold.py",
+      "where": "remove_metrics (default unless --keep-metrics)",
+      "problem": "By default the script deletes validation.json, test.json and <run>.eval.json, which violates the workspace rule never to delete results. bench.py cmd_schedule marks a job done only if <run>/test.json exists. Deleting it makes the experiment's provenance inconsistent and risks re-queueing or overwriting runs (--retry-failed). Blinding does not need deletion.",
+      "evidence": "calibrate_threshold.py:36-42 unlink(); tools/bench.py:189 result = Path(job['run'])/'test.json'; job status depends on it.",
+      "fix": "Make it non-destructive. Never open the metric files. Record their paths and sha256 in threshold_calibration.json with 'blinded': true. Write a BLINDED.json marker in runs/<exp>/ stating that the metrics are unread and must not be summarized. Have summarize refuse experiments that carry the marker, if possible. Remove remove_metrics and the --keep-metrics flag, and update plan.md 6.2 and the README."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_fregs/frequency.py",
+      "where": "discrepancy: phase term and phase_eps",
+      "problem": "The code follows Eq. 6 literally, but the gradient of |angle F_hat - angle F| is 1/|F_hat| per bin. phase_eps = 1e-6 * sqrt(HW) excludes almost nothing: 199 of about 1M high-band bins in the bicycle check. The high-band phase term therefore dominates L_f's pixel gradient, about 24x the amplitude term, with max/mean around 130, and it drives the screen-gradient statistics behind densification. This follows the paper, so it is not a fidelity bug, but it is the largest numerical risk.",
+      "evidence": "Measured on a bicycle training view (822x1237, blurred proxy render): high_T phase mean|g| 15.28, max 2047.6; amplitude mean|g| 0.64.",
+      "fix": "Log the d_ha/d_hp/d_la/d_lp values and their gradient norms in training (or evidence). Pre-register a train-hold-out sensitivity variant (phase_eps of 1e-3 to 1e-2, or atan2_wrapped), labelled tuned. Keep the default literal."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_fregs/__init__.py",
+      "where": "fregs_fr (Base+FR ablation)",
+      "problem": "Base+FR applies w_l, calibrated for the low band only (r <= 0.1D, about 1.7% of bins), to the full spectrum from step 1. Per unit weight, the full-spectrum gradient is about 160x the low-band gradient (0.64+15.3 vs 0.096+0.001 in the check above). The ablation may therefore underperform because of weight scale rather than the absence of FA, which would exaggerate FA's measured contribution relative to the paper's +0.22 dB.",
+      "evidence": "_make('fregs-fr', frequency={'anneal': False}) leaves w_l unchanged, and frequency_loss uses w_l * terms['full'].",
+      "fix": "Record this as a fidelity gap. Optionally calibrate a separate full-spectrum weight for fregs-fr with the same Fig. 2 iteration-0 ratio (1.7), which is the only paper-anchored choice, and label it."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_fregs/__init__.py",
+      "where": "_make: `raised` gating of fregs-threshold probe/contribution",
+      "problem": "If grow_grad2d <= 0.0002 (mechanism removed, or a calibration that ends at or below 0.0002), the count-matched-densification contribution and its probe are silently dropped from fregs/fregs-fr instead of failing.",
+      "evidence": "raised = float(density_cfg['grow_grad2d']) > 0.0002; probes/contributions appended only if raised.",
+      "fix": "Always attach fregs-threshold for fregs and fregs-fr, so that a value <= 0.0002 makes the probe fail. Drop the probe only for the fregs-thr0002 diagnostic."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_fregs/frequency.py",
+      "where": "radius_grid (radius_units='index')",
+      "problem": "On non-square images an index-unit circle is anisotropic in cycles/pixel. For 822x1237, D = hypot(411, 618) = 742.2 and D0 = 74.2, which is 0.090 cyc/px vertically but 0.060 cyc/px horizontally. The band reaches vertical Nyquist at about t=8.4k, horizontal Nyquist at about 12.8k, and the corner bins only at T=15000. This literal reading of the paper's (H/2, W/2) origin is defensible.",
+      "evidence": "Measured D=742.19, D0=74.22, low band = 1.70% of bins at 822x1237.",
+      "fix": "No code change needed. State the anisotropy and the band timing explicitly under G6 in report.md."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(2) DFT", "status": "exact", "code": "frequency.py:spectrum (torch.fft.fft2 norm='backward', per channel on [C,H,W], fftshift so DC is at (H//2, W//2); zeroing Im at self-conjugate bins equals the analytic value and leaves gradients unchanged)"},
+    {"eq": "(3) amplitude", "status": "exact", "code": "frequency.py:_amplitude (+1e-20 inside the sqrt; negligible)"},
+    {"eq": "(4) phase arctan(Im/Re)", "status": "deviates", "code": "frequency.py:_phase: atan2 read for arctan (documented G5; 'arctan' option exists)"},
+    {"eq": "(5) d_a", "status": "exact", "code": "frequency.py:discrepancy (1/sqrt(HW) * sum over bins and channels, abs of the amplitude difference)"},
+    {"eq": "(6) d_p", "status": "deviates", "code": "frequency.py:discrepancy: raw atan2 difference as in the paper; phase_eps excludes bins with rendered |F| < 1e-6 sqrt(HW) (negligible effect)"},
+    {"eq": "(7)-(8) LF = F H_l, HF = F H_h", "status": "exact", "code": "frequency.py:low_mask/high_mask; gathering the masked bins is equivalent because zeroed bins give 0 amplitude and phase for both images"},
+    {"eq": "(9)-(12) d_la, d_lp, d_ha, d_hp", "status": "exact", "code": "frequency.py:frequency_terms"},
+    {"eq": "(13) band D0 < D_t < (t-T0)(D-D0)/(T-T0)+D0", "status": "exact", "code": "frequency.py:band_radius/high_mask (bound taken as an equality, r <= D_t inclusive; the boundary is measure-zero); D = corner radius hypot(H//2, W//2)"},
+    {"eq": "(14) L_f piecewise", "status": "exact", "code": "frequency.py:frequency_loss (low only for t <= T0, low + high for t > T0, 1-based step)"},
+    {"eq": "Sec 4.1 FR stop at 15000", "status": "exact", "code": "frequency.py:frequency_loss (t > stop_iter gives 0, graph-attached)"},
+    {"eq": "Sec 4.2 raised gradient threshold", "status": "exact", "code": "__init__.py:_make fregs-density (value pending calibration)"}
+  ],
+  "probe_assessment": [
+    {"probe": "freq-oracle", "detects_removal": true, "why": "An independent float64 explicit-DFT oracle with loop-built masks; value and gradient checked, including odd sizes. Removing the phase term fails (test_oracle_detects_wrong_loss). Missing fftshift, mean instead of sum, or wrong masks would also mismatch. Shares the phase_eps convention with the implementation, which is acceptable."},
+    {"probe": "freq-annealing", "detects_removal": true, "why": "A sinusoid at r*=24 must stay invisible until the analytically inverted t_cross and visible after it. No annealing (seen at t=1), no stop, or a wrong slope all fail. The bin-count sub-check reuses frequency.high_mask/radius_grid, but the loss-level checks are independent."},
+    {"probe": "fregs-gradient-gain", "detects_removal": true, "why": "Removing L_f raises a KeyError and w=0 gives ratio 1 (fails the 1.001 check). The Fig. 2 criterion (>1.2) only applies after calibration, so the probe is currently ProbeUnavailable and the contribution reports 'unverified' in ss-verify."},
+    {"probe": "fregs-threshold", "detects_removal": false, "why": "Functionally sound: no growth between 0.0002 and the threshold, while the base strategy grows. But the probe is only attached when grow_grad2d > 0.0002, so reverting the threshold drops the contribution instead of failing it. It checks the configured value, not count matching; count matching is evidenced only by the calibration JSON."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "G1 w_l/w_h are absent from the paper (LaTeX checked; the supplementary is commented out). The calibration procedure itself needs fixes (major issue 1).",
+    "G2 d0_frac/t0/t_end are assumed. t_end=15000 equals stop_iter, so the full band is active only at the final FR step.",
+    "G3 no 1/4-resolution warm-up; applies equally to the baseline.",
+    "G4 threshold count-matched on 3 scenes; the current procedure has an LR-schedule mismatch (major issue 2).",
+    "G5 raw atan2 phase with no wrap: literal to Eq. 6. phase_eps has negligible effect, and the 1/|F| gradient singularity dominates the high band.",
+    "G6 index-unit circular masks are anisotropic on non-square images; D is the corner radius.",
+    "G7 per-channel FFT summed; the paper text says 'averaged' while the equation writes 1/sqrt(HW)*sum. Only the scale differs, and w absorbs it.",
+    "G9 white composite: L_f and the photometric loss see the same unclamped HWC outputs['rgb'] = render + (1 - alpha) against the HWC frame['image']. 3DGS uses black for Mip-NeRF 360, which matters only where alpha < 1; this is a shared protocol gap.",
+    "Unchanged baseline: renderer, photometric, and DefaultStrategy defaults are identical to make_method('gsplat') except grow_grad2d."
+  ],
+  "summary": "The loss is a careful, literal implementation of Eq. 2-14. The FFT conventions are faithful: fftshift centring matches the paper's (H/2,W/2) origin including odd sizes; per-channel processing and 1/sqrt(HW)*sum follow the paper (only the scale differs); the raw atan2 phase difference is literal; zeroing Im at self-conjugate bins is exact and does not change gradients; phase_eps is negligible. The band masks partition the spectrum correctly with T0-exclusive and inclusive-r boundaries, and D is the corner radius. The loss sees the same white-composited HWC image as the photometric term, and the baseline components are untouched. pytest passes 20/20. ss-verify passes the oracle, annealing and threshold probes, and gradient-gain is unverified pending calibration. Not approved because of the calibration procedures, which decide the result: calibrate_weights matches the Fig. 2 ratio on mean|dL/drgb|, which cannot be Fig. 2's decaying 'pixel gradient', and solves w_h for the over-region ratio 2.0 on the whole image from a 30k checkpoint, so w_h is likely overestimated. calibrate_threshold compares 15k-step runs (faster means-LR decay) against a 30k run's step-15000 count, and it deletes metric files instead of blinding them non-destructively. It does use training views and training logs only."
+}

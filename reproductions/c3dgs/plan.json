@@ -1,0 +1,28 @@
+{
+  "method": "c3dgs",
+  "module": "ss_c3dgs",
+  "components": [
+    {"name": "c3dgs-renderer", "kind": "renderer", "factory": "ss_c3dgs.renderer:create_renderer"},
+    {"name": "c3dgs-density", "kind": "density", "factory": "ss_c3dgs.density:create_density"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [],
+  "probes": ["sensitivity-oracle", "vq-official", "qa-codebook", "codec-roundtrip", "pipeline", "schedule"],
+  "contributions": [
+    {"name": "sensitivity-pruning", "probes": ["sensitivity-oracle", "pipeline"]},
+    {"name": "sensitivity-aware-vq", "probes": ["vq-official", "pipeline"]},
+    {"name": "qa-finetune", "probes": ["qa-codebook", "pipeline", "schedule"]},
+    {"name": "morton-entropy-encoding", "probes": ["codec-roundtrip", "pipeline"]}
+  ],
+  "fidelity_gaps": [
+    "base model is our gsplat 3DGS 30k (white bg) instead of the 3DGS authors' released models",
+    "fine-tune renders over white background (official mip360: black); sensitivity uses black as official",
+    "runtime steps opacity once at the final step (official skips the last optimizer step)",
+    "random view sampling with replacement",
+    "gsplat rasteriser instead of the official CUDA rasteriser",
+    "ss-eval on decoded npz vs compress.py on in-memory fake-quantised model",
+    "WebGPU hardware-rasteriser speed not reproduced",
+    "index_add_ instead of torch_scatter"
+  ],
+  "feasible_natively": true
+}

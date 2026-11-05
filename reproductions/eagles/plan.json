@@ -1,0 +1,10 @@
+{"method": "eagles", "module": "ss_eagles",
+ "components": [
+  {"name": "eagles-renderer", "kind": "renderer", "factory": "ss_eagles.renderer:create_renderer"},
+  {"name": "eagles-density", "kind": "density", "factory": "ss_eagles.density:create_density"},
+  {"name": "eagles-photometric", "kind": "loss", "factory": "ss_eagles.losses:create_photometric"}],
+ "fields": [{"name": "q_shN", "shape": [16]}, {"name": "q_rot", "shape": [8]}, {"name": "q_opa", "shape": [1]}],
+ "probes": ["decoder-ste", "latent-init-lr", "entropy-size", "progressive-schedule", "influence-kernel", "influence-prune", "opacity-reset", "codec-bake", "schedule"],
+ "contributions": ["quantized-latent-attributes", "progressive-training", "influence-pruning"],
+ "fidelity_gaps": ["runtime sampling/background/step order shared with baseline", "no screen-size pruning (baseline same)", "atomic influence accumulation", "K*s downsampled camera", "constriction per-dim range coder for real bytes; paper size() exact", "decoders baked at final step (not runtime-checkpointed)"],
+ "feasible_natively": true}

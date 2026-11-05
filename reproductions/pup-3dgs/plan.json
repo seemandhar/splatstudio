@@ -1,0 +1,19 @@
+{"method": "pup-3dgs", "module": "ss_pup3dgs",
+ "variants": {"pup-3dgs-v1": "prune_ratios [0.66, 0.66] (arXiv v1, 88.44%)"},
+ "components": [
+  {"name": "gsplat", "kind": "renderer", "factory": "splatstudio.backends.gsplat:create_renderer", "unchanged": true},
+  {"name": "pup-density", "kind": "density", "factory": "ss_pup3dgs.density:create_density", "requires": ["gradient.screen.signed"],
+   "config": {"base_steps": 30000, "prune_steps": [30000, 35000], "prune_ratios": [0.8, 0.5], "fisher_resolution": 4, "finetune_lr_start": 30000, "finetune_lr_max_steps": 35000, "lr_final_ratio": 0.01, "exp_gamma": 0.95, "exp_every": 400, "reset_optimizer": true, "background": [1.0, 1.0, 1.0]}},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric", "unchanged": true}],
+ "fields": [],
+ "probes": ["fisher-oracle", "prune-schedule"],
+ "contributions": [
+  {"name": "fisher-sensitivity", "paper": "C1 + C2 (sec 3.1-3.3)", "probes": ["fisher-oracle"]},
+  {"name": "multi-round-prune-refine", "paper": "C3 (sec 3.4)", "probes": ["prune-schedule"]}],
+ "fidelity_gaps": [
+  "base 3DGS is the gsplat runtime recipe, not the authors' pretrained models",
+  "Fisher computed with official 3DGS-rasterizer kernel on gsplat-trained model (alpha clamp 0.99 vs 0.999), white background",
+  "5000 vs 4999 effective fine-tune updates per round; random views with replacement",
+  "pre-prune reference is the separate same-recipe baseline3dgs-*-30000 run",
+  "FPS/size not benchmarked"],
+ "feasible_natively": true}

@@ -1,0 +1,9 @@
+{"method": "dropgaussian", "module": "ss_dropgaussian",
+ "components": ["dropgaussian-renderer", "dropgaussian-density", "dropgaussian-photometric"],
+ "fields": [],
+ "probes": ["drop-compensation", "drop-schedule", "test-time-all-gaussians", "official-densification", "loss-weights"],
+ "contributions": ["dropgaussian-compensation (Eq. 5)", "progressive-drop-rate (Eq. 6)"],
+ "fidelity_gaps": ["with-replacement view sampling", "optimizer/densify order", "gsplat vs Inria rasterizer details", "LPIPS implementation", "COLMAP version for MVS init"],
+ "feasible_natively": true,
+ "extra_methods": ["dropgaussian-nodrop (gamma=0 ablation, protocol-matched baseline)"],
+ "dataset": "llff-fewview3-r8 (new; 8 scenes, 504x378)"}

@@ -1,0 +1,38 @@
+{
+ "method": "mini-splatting",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "counter"
+  ],
+  "db": [
+   "drjohnson",
+   "playroom"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "method_per_scene": {
+  "mipnerf360/bicycle": "mini-splatting",
+  "mipnerf360/garden": "mini-splatting",
+  "mipnerf360/counter": "mini-splatting-indoor",
+  "db/drjohnson": "mini-splatting-indoor",
+  "db/playroom": "mini-splatting-indoor"
+ },
+ "optional_methods": {
+  "mini-splatting-d": {
+   "mipnerf360": [
+    "bicycle",
+    "garden",
+    "counter"
+   ],
+   "db": [
+    "drjohnson",
+    "playroom"
+   ]
+  }
+ },
+ "note": "Official README picks imp_metric per scene class: outdoor (M360 outdoor, T&T) -> mini-splatting; indoor (M360 indoor, DB) -> mini-splatting-indoor. Launch the two names on their scene subsets in the same exp. Compare against baseline3dgs-*-30000 and the paper's 3DGS* row (paper_results.json baseline_3dgs). First job JIT-compiles the CUDA extension (~1.5 min, cached)."
+}

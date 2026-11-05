@@ -1,0 +1,40 @@
+{
+  "paper": "End-to-End Rate-Distortion Optimized 3D Gaussian Representation",
+  "slug": "rdo-gaussian",
+  "plan_id": 45,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (1 major = doc error; decoded eval confirmed as official protocol)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "arxiv": "2406.01597",
+  "official_code_commit": "710ebab8",
+  "method": "rdo-gaussian",
+  "custom_cuda": false,
+  "cpp_extension": "vendored CompressAI rANS (CPU)",
+  "bench_request": "bench_request.json",
+  "bench_dataset": "mipnerf360-1600",
+  "feasible_natively": true,
+  "plugin_freeze_sha": "a209d95e0112acc2",
+  "bench_exps": [
+    "rdo-gaussian-mipnerf360-1600"
+  ],
+  "baseline_exp": "baseline3dgs-mipnerf360-1600-30000",
+  "result": {
+    "psnr_delta": {
+      "bicycle": -0.23,
+      "garden": -0.3,
+      "counter": -0.11
+    },
+    "size_mb": {
+      "bicycle": 49.6,
+      "garden": 34.3,
+      "counter": 8.7
+    }
+  }
+}

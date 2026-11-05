@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-dngaussian"
+version = "0.1.0"
+description = "DNGaussian (CVPR 2024, arXiv 2403.06912) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy"]
+
+[project.entry-points."splatstudio.methods"]
+dngaussian = "ss_dngaussian:method"
+dngaussian-3dgs = "ss_dngaussian:method_3dgs"
+
+[tool.setuptools.packages.find]
+include = ["ss_dngaussian*"]
+
+[tool.setuptools.package-data]
+ss_dngaussian = ["csrc/*/*"]
+
+[tool.ruff]
+line-length = 110

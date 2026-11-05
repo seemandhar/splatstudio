@@ -1,0 +1,34 @@
+{
+  "paper": "Speedy-Splat: Fast 3D Gaussian Splatting with Sparse Pixels and Sparse Primitives",
+  "slug": "speedy-splat",
+  "plan_id": 72,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 4 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "ready_for_benchmark",
+  "arxiv": "2412.00578",
+  "method": "speedy-splat",
+  "official_code_commit": "34c45c6 (rasterizer b38abb6; stock 59f5f77)",
+  "custom_cuda": true,
+  "benchmark_target": "mipnerf360-1600 garden (paper 26.70, base 27.31) + counter (28.28, base 29.14) vs baseline3dgs-mipnerf360-1600-30000",
+  "smoke": {
+    "speedy-splat": 23.26,
+    "compressed_prune": 23.0,
+    "baseline": 23.02,
+    "steps": 2000,
+    "scene": "garden native",
+    "gaussians": {
+      "speedy-splat": 851399,
+      "compressed_prune": 142044,
+      "baseline": 845162
+    }
+  },
+  "bench_exps": [
+    "speedy-splat-1600"
+  ]
+}

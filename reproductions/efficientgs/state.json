@@ -1,0 +1,19 @@
+{
+ "paper": "EfficientGS: Streamlining Gaussian Splatting for Large-Scale High-Resolution Scene Representation",
+ "slug": "efficientgs",
+ "plan_id": 32,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done (1 major = missing count diagnostic; resolved by checking 30k count vs Table 4 ratio)",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "plugin_freeze_sha": "fbbd1e1c1962b0bb",
+ "bench_exps": [
+  "efficientgs-mipnerf360"
+ ],
+ "headline": "9 scenes: 26.99 vs 27.38 (−0.39); 0.30× Gaussians"
+}

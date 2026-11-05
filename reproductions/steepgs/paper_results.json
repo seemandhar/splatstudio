@@ -1,0 +1,214 @@
+{
+ "paper": "Steepest Descent Density Control for Compact 3D Gaussian Splatting",
+ "arxiv": "2505.05587",
+ "method_label": "SteepGS (Ours)",
+ "iterations": 30000,
+ "datasets": {
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.684,
+     "ssim": 0.84,
+     "lpips": 0.194,
+     "gaussians_millions": 0.958
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.974,
+      "truck": 25.395
+     },
+     "ssim": {
+      "train": 0.802,
+      "truck": 0.879
+     },
+     "lpips": {
+      "train": 0.23,
+      "truck": 0.16
+     },
+     "gaussians": {
+      "train": 530476,
+      "truck": 1387065
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.743,
+     "ssim": 0.848,
+     "lpips": 0.177,
+     "gaussians_millions": 1.83
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.091,
+      "truck": 25.394
+     },
+     "ssim": {
+      "train": 0.813,
+      "truck": 0.882
+     },
+     "lpips": {
+      "train": 0.207,
+      "truck": 0.147
+     },
+     "gaussians": {
+      "train": 1088197,
+      "truck": 2572172
+     }
+    }
+   },
+   "source": "Table 1 (averages, sec/4 tab_quantitative.tex); supp. Tables 6-9 (per scene, X_suppl.tex)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.963,
+     "ssim": 0.905,
+     "lpips": 0.25,
+     "gaussians_millions": 1.296
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.478,
+      "playroom": 30.447
+     },
+     "ssim": {
+      "drjohnson": 0.902,
+      "playroom": 0.909
+     },
+     "lpips": {
+      "drjohnson": 0.251,
+      "playroom": 0.25
+     },
+     "gaussians": {
+      "drjohnson": 1485567,
+      "playroom": 1107604
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.69,
+     "ssim": 0.904,
+     "lpips": 0.244,
+     "gaussians_millions": 2.818
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.209,
+      "playroom": 30.172
+     },
+     "ssim": {
+      "drjohnson": 0.901,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.244
+     },
+     "gaussians": {
+      "drjohnson": 3316036,
+      "playroom": 2320830
+     }
+    }
+   },
+   "source": "Table 1 (averages, sec/4 tab_quantitative.tex); supp. Tables 6-9 (per scene, X_suppl.tex)"
+  },
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.734,
+     "ssim": 0.857,
+     "lpips": 0.211,
+     "gaussians_millions": 1.606
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.89,
+      "garden": 27.159,
+      "stump": 26.115,
+      "bonsai": 31.911,
+      "counter": 28.737,
+      "kitchen": 31.03,
+      "room": 31.401
+     },
+     "ssim": {
+      "bicycle": 0.734,
+      "garden": 0.851,
+      "stump": 0.742,
+      "bonsai": 0.938,
+      "counter": 0.9,
+      "kitchen": 0.922,
+      "room": 0.915
+     },
+     "lpips": {
+      "bicycle": 0.268,
+      "garden": 0.142,
+      "stump": 0.271,
+      "bonsai": 0.211,
+      "counter": 0.217,
+      "kitchen": 0.137,
+      "room": 0.233
+     },
+     "gaussians": {
+      "bicycle": 2900640,
+      "garden": 2195185,
+      "stump": 3175021,
+      "bonsai": 746163,
+      "counter": 591508,
+      "kitchen": 922717,
+      "room": 710212
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.037,
+     "ssim": 0.872,
+     "lpips": 0.183,
+     "gaussians_millions": 3.339
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.253,
+      "garden": 27.417,
+      "stump": 26.705,
+      "bonsai": 32.298,
+      "counter": 29.006,
+      "kitchen": 31.628,
+      "room": 31.54
+     },
+     "ssim": {
+      "bicycle": 0.766,
+      "garden": 0.867,
+      "stump": 0.908,
+      "bonsai": 0.773,
+      "counter": 0.942,
+      "kitchen": 0.928,
+      "room": 0.919
+     },
+     "lpips": {
+      "bicycle": 0.21,
+      "garden": 0.107,
+      "stump": 0.215,
+      "bonsai": 0.203,
+      "counter": 0.2,
+      "kitchen": 0.126,
+      "room": 0.219
+     },
+     "gaussians": {
+      "bicycle": 6074705,
+      "garden": 5845401,
+      "stump": 4863462,
+      "bonsai": 1260017,
+      "counter": 1195896,
+      "kitchen": 1807771,
+      "room": 1550152
+     }
+    }
+   },
+   "source": "Table 1 (averages, sec/4 tab_quantitative.tex); supp. Tables 6-9 (per scene, X_suppl.tex)"
+  }
+ },
+ "notes": "3DGS row retrained by the authors (official 3DGS code). Mip-NeRF 360 uses 7 scenes (no flowers/treehill), images_4 outdoor / images_2 indoor (full_eval.py). Table 1 averages differ slightly from the per-scene means; supp. SSIM stump/bonsai/counter entries look misaligned. 'gaussians' = final point count (supp. Table 9)."
+}

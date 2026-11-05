@@ -1,0 +1,42 @@
+{
+ "method": "mini-splatting2",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "counter"
+  ],
+  "db": [
+   "drjohnson",
+   "playroom"
+  ]
+ },
+ "steps": 18000,
+ "per_scene_reported": true,
+ "extra": "",
+ "method_per_scene": {
+  "mipnerf360/bicycle": "mini-splatting2",
+  "mipnerf360/garden": "mini-splatting2",
+  "mipnerf360/counter": "mini-splatting2-indoor",
+  "db/drjohnson": "mini-splatting2-indoor",
+  "db/playroom": "mini-splatting2-indoor"
+ },
+ "optional_methods": {
+  "mini-splatting2-d": {
+   "mipnerf360": [
+    "bicycle",
+    "garden"
+   ]
+  },
+  "mini-splatting2-d-indoor": {
+   "mipnerf360": [
+    "counter"
+   ],
+   "db": [
+    "drjohnson",
+    "playroom"
+   ]
+  }
+ },
+ "note": "Paper/config fast trains 18000 steps (not 30000). imp_metric per official README: outdoor (M360 outdoor, T&T) -> mini-splatting2; indoor (M360 indoor, DB) -> mini-splatting2-indoor. Compare against baseline3dgs-*-30000 and the paper's 3DGS row; training time is a key metric: record training_seconds (shared 8xA6000 host, other jobs running) vs paper per-scene seconds (RTX 3090): bicycle 171, garden 205, counter 279, drjohnson 180, playroom 151. Same scenes as the mini-splatting (#28) bench for a direct MS vs MSv2 comparison. First job JIT-compiles ss_mini_splatting2_cuda (~1.5 min, cached)."
+}

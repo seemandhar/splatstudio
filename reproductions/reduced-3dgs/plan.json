@@ -1,0 +1,44 @@
+{
+ "method": "reduced-3dgs",
+ "module": "ss_reduced_3dgs",
+ "components": [
+  "reduced-renderer",
+  "reduced-density",
+  "photometric",
+  "opacity-l1",
+  "sh-sparsity"
+ ],
+ "fields": [
+  {
+   "name": "sh_degree",
+   "shape": [],
+   "learning_rate": 0.0,
+   "initial_value": 3.0
+  }
+ ],
+ "probes": [
+  "sh-sparsity-gradient",
+  "opacity-l1-gradient",
+  "knn-exact",
+  "redundancy-score",
+  "transmittance-stats",
+  "sh-band-culling",
+  "codec-roundtrip",
+  "schedule"
+ ],
+ "contributions": [
+  "C1 redundancy+opacity pruning",
+  "C2 adaptive SH bands",
+  "C3 codebook+half-float codec with decoded evaluation"
+ ],
+ "fidelity_gaps": [
+  "runtime op order",
+  "gsplat numerics",
+  "baseline protocol diffs",
+  "gsplat transmittance",
+  "Adam moments of culled coeffs zeroed",
+  "inf->65504 guard",
+  "PLY not written to run dir"
+ ],
+ "feasible_natively": true
+}

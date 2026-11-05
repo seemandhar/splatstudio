@@ -1,0 +1,50 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_mvgs/density.py", "where": "after_backward / densify (Gaussian budget)",
+   "problem": "MVAD halves beta on essentially every densify step (faithful to the official code), so garden grows ~2.2x the no-MVAD population by 1.5k steps and ~4x the gsplat baseline by 2k. Final garden baseline is 4.55M, so the MVGS run may reach 10-18M and could hit the 20M cap (the run then aborts) or run out of GPU memory with 3 views sharing one autograd graph.",
+   "evidence": "GPU ablation (garden, mvgs-outdoor, stages [[3,-1,1500]]): full 1.72M (halved 10/10 densify steps), nocrd 1.72M, nomvad 0.79M, none 0.79M; gsplat baseline 0.65M at step 1500.",
+   "fix": "Keep --max-gaussians at >=20M (or higher) for the outdoor scenes, request GPUs with >=40 GB free, and record the Gaussian count in the report as a contradiction of paper Table 2 (0.8M vs 1.1M)."},
+  {"severity": "minor", "file": "plugin/ss_mvgs/density.py", "where": "after_backward at stage-local it == 3000 (coarse stages)",
+   "problem": "In the official code, iteration == opt.iterations at the end of each 3000-iteration stage skips optimizer.step() (train.py:187) before the checkpoint. The runtime always applies Adam before density control, so the port applies one extra Adam update per coarse stage (3 in total).",
+   "evidence": "train.py:187 `if iteration < opt.iterations: optimizer.step()`; runtime.py:206-211",
+   "fix": "Add it to the fidelity-gap list (it is negligible)."},
+  {"severity": "minor", "file": "plugin/ss_mvgs/density.py", "where": "DEFAULTS.full_width_ratio",
+   "problem": "One ratio (counter 3115/1600) is used for every indoor scene. Room is 3114x2075, so the -r 4/2 sizes come out 1 px wider than the official round(W_full/r) (779 vs 778, 1558 vs 1557).",
+   "evidence": "room full-res (3114, 2075): official (389,259),(778,519),(1557,1038); port (389,259),(779,519),(1558,1038)",
+   "fix": "Set a per-scene ratio or derive it from the source images; otherwise just document it (already partly covered by gap 3)."},
+  {"severity": "minor", "file": "plugin/ss_mvgs/density.py", "where": "__init__ rng seed",
+   "problem": "The view-stack RNG uses config seed 0 whatever ss-train --seed is, so different seeds share the same view order.",
+   "evidence": "density.py:84 random.Random(int(self.c['seed']))",
+   "fix": "Optionally mix in the --seed argv value. This does not matter for single-seed benchmarks."},
+  {"severity": "minor", "file": "plugin/ss_mvgs/probes.py", "where": "crd",
+   "problem": "The CUDA CRD probe uses two views that share the same box, so the official box-index quirk (box_index official vs paper) is never told apart by a probe. Only the unit tests cover it, if at all.",
+   "evidence": "probes.py crd: 'paper/official indexing coincide here'",
+   "fix": "Add a 3-view case where sorted boxes differ and check that the official/paper cuboids differ in the expected way."},
+  {"severity": "minor", "file": "plugin/ss_mvgs/density.py", "where": "CRD efficacy note",
+   "problem": "With M=3 on garden, CRD cuboids contain 0-9 Gaussians per densify step (13 in total over 10 steps). The mechanism is a near no-op outdoors (faithful port: the AABB of 4 closest-point midpoints of a 20x40 window is tiny). Do not credit outdoor gains to CRD.",
+   "evidence": "ablation history: full inbox_total 13 vs cloned 1.31M; nocrd population identical within 0.4%",
+   "fix": "Mention it in the report; indoor M=48 (1128 pairs/step) may differ."}
+ ],
+ "equation_coverage": [
+  {"eq": "3DGS per-view loss (1-λ)L1 + λ D-SSIM, λ=0.2, same-padding SSIM", "status": "exact", "code": "losses.py:view_loss/ssim_same"},
+  {"eq": "(4) / gradient-chain: sum over M views, one backward", "status": "exact", "code": "losses.py:create_photometric.loss; renderer.py:Renderer.render"},
+  {"eq": "(9) CIG K'=K/s, stages 48/24/12/8 at -r 8/4/2/-1, 3000/3000/3000/30000 it (indoor); M=3, -r -1, 30000 (outdoor)", "status": "exact", "code": "density.py:INDOOR_STAGES/OUTDOOR_STAGES; geometry.py:stage_size/scaled_camera/stage_at"},
+  {"eq": "(10) MVAD: beta/2 if any ordered pair ||C_i/|C_i| - C_j/|C_j||| > 1 (code version, translation only)", "status": "exact", "code": "geometry.py:mvad_threshold; density.py:densify"},
+  {"eq": "Alg. 1 CRD: 20x40 max-mean window, sort desc, corner rays, closest-point midpoint, AABB, strict inside, clone OR gradient clone; official boxes[j] quirk", "status": "exact", "code": "geometry.py:max_loss_window/corner_rays/intersect_lines/cross_ray_boxes/in_boxes; density.py:densify"},
+  {"eq": "3DGS densify/prune (split on padded grads, prune opacity<0.005, world-size>0.1 extent when it>3000), stage-local schedules, LR restart", "status": "exact", "code": "density.py:densify/is_densify/is_reset/means_lr"}
+ ],
+ "probe_assessment": [
+  {"probe": "mvgs-multiview-sum", "detects_removal": true, "why": "Compares against independently rendered per-view losses and gradients, and rejects a mean or a single view."},
+  {"probe": "mvgs-cig-schedule", "detects_removal": true, "why": "Checks stage boundaries, M per stage, official sizes, the hand-scaled-K render and that eval renders at full resolution."},
+  {"probe": "mvgs-mvad", "detects_removal": true, "why": "An independent arccos form; [0,70] must halve and [0,50] must not."},
+  {"probe": "mvgs-crd", "detects_removal": true, "why": "Brute-force window port, independent unprojection and midpoint; an in-box clone is required and crd=False must clone nothing. It does not tell the box-index variants apart (minor)."},
+  {"probe": "mvgs-cycle", "detects_removal": true, "why": "Checks last-view-only counts, the stage size switch and that the LR restart overrides the runtime schedule."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "gsplat vs Inria rasterizer (shared with the baseline)",
+  "Runtime Adam step before density control, plus one extra Adam step at the end of each coarse stage",
+  "Coarse targets are bicubic-antialiased from the w1600 images, not PIL resizes from full-res; one full_width_ratio for every indoor scene (±1 px on room)",
+  "One continuous run instead of a checkpoint chain; the carried state is equivalent",
+  "Paper Table 2 claims fewer Gaussians than 3DGS; the official code (and this port) produces many more because MVAD fires on almost every densify step: P(halve) for 3 random garden views from the COLMAP origin is 0.92, and 1.0 for M>=8"
+ ],
+ "summary": "Faithful port. The multi-view batch reloads only the train split (cameras checked against the runtime by K and viewmat), so no test images leak into training. Evaluation runs under no_grad at full resolution. Densification stats use only the last view's means2d gradient, scaled to NDC by stage W/2, H/2, as in the official code. Stage table, per-stage densify/reset/LR restart and step totals (39000 indoor, 30000 outdoor) match run_360.py/train.py. MVAD check (the key question): the native w1600 frames are in the COLMAP world frame (c2w translations equal -R^T t from sparse/0 for garden/counter/room, and the loader does no recentring). The official code uses the same un-normalised camera_center / ||camera_center|| with the strict > 1 test at every densify step, so the port is identical. The extra Gaussian growth comes from the official MVAD rule: a GPU ablation shows MVAD alone accounts for it (1.72M vs 0.79M at 1.5k steps) and CRD adds about 0. This is a paper-vs-code contradiction, not a port bug. No critical or major issues; the main risk is the outdoor Gaussian budget and memory."}

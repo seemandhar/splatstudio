@@ -1,0 +1,13 @@
+{
+ "method": "atomgs",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--max-gaussians 20000000",
+ "notes": "Paper supp. per-scene: garden 27.44 (3DGS row 27.18), room 31.30 (31.22). Protocol mipnerf360 images_4/images_2 (3DGS full_eval). Baseline baseline3dgs-mipnerf360-30000 (garden 26.89, room 31.52). bench.py default --recipe 3dgs is required. Smoke peaked at 7.1M Gaussians by step 2000 (warm-up densification, as in supp. Fig. proliferation trend); extra raises the runtime population guard above bench.py's 12M (resource guard only)."
+}

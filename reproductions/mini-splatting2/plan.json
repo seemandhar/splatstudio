@@ -1,0 +1,11 @@
+{"method": "mini-splatting2", "module": "ss_mini_splatting2",
+ "variants": ["mini-splatting2", "mini-splatting2-indoor", "mini-splatting2-d", "mini-splatting2-d-indoor"],
+ "components": [
+  {"name": "msv2-renderer", "kind": "renderer", "factory": "ss_mini_splatting2.renderer:create_renderer"},
+  {"name": "msv2-density", "kind": "density", "factory": "ss_mini_splatting2.density:create_density"},
+  {"name": "photometric", "kind": "loss", "factory": "ss_mini_splatting2.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["msv2-stats-kernel", "msv2-critical-clone", "msv2-visibility-culling", "msv2-sparse-adam", "msv2-depth-reinit", "msv2-half-res", "msv2-schedule"],
+ "contributions": ["critical-gaussian-identification", "aggressive-gaussian-clone", "aggressive-densification-pipeline", "visibility-culling", "accelerated-training (sparse adam, half-res warm-up, SH off)"],
+ "fidelity_gaps": ["optimizer step before density control", "white background", "random view sampling with replacement", "gsplat vs Taming rasterizer numerics", "runtime SSIM vs fused-ssim", "torch vs PIL bicubic half-res targets", "rendered-colour fallback for views unseen before 2000", "shared A6000 host timing, gsplat instead of Taming"],
+ "feasible_natively": true}

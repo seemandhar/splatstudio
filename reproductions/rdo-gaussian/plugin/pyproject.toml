@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-rdo-gaussian"
+version = "0.1.0"
+description = "RDO-Gaussian (Wang et al., ECCV 2024) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "numpy"]
+
+[project.entry-points."splatstudio.methods"]
+rdo-gaussian = "ss_rdo_gaussian:method"
+rdo-gaussian-rate2 = "ss_rdo_gaussian:rate2"
+rdo-gaussian-rate3 = "ss_rdo_gaussian:rate3"
+rdo-gaussian-rate4 = "ss_rdo_gaussian:rate4"
+rdo-gaussian-rate5 = "ss_rdo_gaussian:rate5"
+rdo-gaussian-rate6 = "ss_rdo_gaussian:rate6"
+rdo-gaussian-smoke = "ss_rdo_gaussian:smoke"
+
+[tool.setuptools.packages.find]
+include = ["ss_rdo_gaussian*"]
+
+[tool.setuptools.package-data]
+ss_rdo_gaussian = ["csrc/*.cpp", "csrc/*.hpp", "csrc/*.h", "csrc/*.md", "csrc/LICENSE-*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

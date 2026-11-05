@@ -1,0 +1,59 @@
+{
+  "paper": "FatesGS: Fast and Accurate Sparse-View Surface Reconstruction Using Gaussian Splatting with Depth-Feature Consistency",
+  "slug": "fatesgs",
+  "plan_id": 53,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 7 minors)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched (iter 1)",
+  "method": "fatesgs",
+  "methods": [
+    "fatesgs",
+    "fatesgs-2dgs"
+  ],
+  "dataset": "dtu-fatesgs-23_24_33",
+  "benchmark_target": "DTU chamfer (mm), scans 24/37/106 vs paper Table 1",
+  "smoke_cd_scan24_1900steps": {
+    "fatesgs": 0.763,
+    "fatesgs-2dgs": 1.104
+  },
+  "not_reproduced": {
+    "dtu-nvs": "supp. Table 5 pixelNeRF 25-view NVS split: images not in the authors release",
+    "little-overlap": "set_22_25_28 Marigold depth not released (would need Marigold run)",
+    "blendedmvs": "qualitative only in paper"
+  },
+  "bench_exps": [
+    "fatesgs-dtu",
+    "fatesgs-i1-dtu"
+  ],
+  "result": {
+    "chamfer_mm": {
+      "scan24": 0.67,
+      "scan37": 1.91,
+      "scan106": 0.85
+    },
+    "paper": {
+      "scan24": 0.67,
+      "scan37": 1.94,
+      "scan106": 0.75
+    },
+    "control": {
+      "scan24": 1.2,
+      "scan37": 2.99,
+      "scan106": 2.0
+    }
+  },
+  "iterations": [
+    {
+      "n": 1,
+      "exp": "fatesgs-i1-dtu",
+      "fix": "screen-size prune removed (official densification_postfix zeroes max_radii2D before the check); found via SparseGS"
+    }
+  ]
+}

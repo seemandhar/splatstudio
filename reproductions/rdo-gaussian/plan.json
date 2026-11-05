@@ -1,0 +1,110 @@
+{
+ "method": "rdo-gaussian",
+ "module": "ss_rdo_gaussian",
+ "components": [
+  {
+   "name": "rdo-renderer",
+   "kind": "renderer"
+  },
+  {
+   "name": "rdo-density",
+   "kind": "density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss"
+  },
+  {
+   "name": "rdo-rate",
+   "kind": "loss"
+  },
+  {
+   "name": "rdo-vq",
+   "kind": "loss"
+  },
+  {
+   "name": "rdo-gs-prune",
+   "kind": "loss",
+   "weight": 0.0005
+  },
+  {
+   "name": "rdo-sh-prune",
+   "kind": "loss",
+   "weight": 0.005
+  }
+ ],
+ "fields": [
+  {
+   "name": "rdo_gs_mask",
+   "shape": [],
+   "lr": 0.01,
+   "init": 0.0
+  },
+  {
+   "name": "rdo_sh_mask",
+   "shape": [
+    3
+   ],
+   "lr": 0.05,
+   "init": 0.0
+  }
+ ],
+ "probes": [
+  "gs-mask-ste",
+  "sh-mask-ste",
+  "ecvq",
+  "kmeans-reactivate",
+  "rans-codec",
+  "encode-decode",
+  "schedule",
+  "rd-losses"
+ ],
+ "contributions": [
+  {
+   "name": "rd-objective",
+   "probes": [
+    "rd-losses",
+    "ecvq",
+    "schedule"
+   ]
+  },
+  {
+   "name": "gaussian-pruning",
+   "probes": [
+    "gs-mask-ste",
+    "rd-losses"
+   ]
+  },
+  {
+   "name": "adaptive-sh-pruning",
+   "probes": [
+    "sh-mask-ste",
+    "rd-losses"
+   ]
+  },
+  {
+   "name": "ecvq",
+   "probes": [
+    "ecvq",
+    "kmeans-reactivate",
+    "schedule"
+   ]
+  },
+  {
+   "name": "parameter-encoding",
+   "probes": [
+    "rans-codec",
+    "encode-decode"
+   ]
+  }
+ ],
+ "fidelity_gaps": [
+  "extra Adam step at step 30000",
+  "runtime background/sampling/SSIM differences",
+  "decoded-bitstream evaluation vs official fp32-xyz/unquantised-opacity PLY (option evaluate=official)",
+  "k-means/reactivation RNG",
+  "zero scale codeword clamp",
+  "dataset mipnerf360-1600 needs its own gsplat baseline"
+ ],
+ "feasible_natively": true
+}

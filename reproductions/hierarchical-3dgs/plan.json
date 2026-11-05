@@ -1,0 +1,7 @@
+{"method": "hierarchical-3dgs", "module": "ss_hierarchical_3dgs",
+ "components": ["hierarchy-renderer (renderer)", "hierarchy-density (density)", "photometric (loss)"],
+ "fields": [{"name": "h3d", "shape": [16], "purpose": "packed hierarchy nodes/boxes/flags"}],
+ "probes": ["h3dgs-hierarchy-build", "h3dgs-cut-selection", "h3dgs-alpha-interpolation", "h3dgs-hierarchy-optimization", "h3dgs-leaf-training"],
+ "contributions": ["hierarchy-generation", "cut-selection-and-switching", "hierarchy-optimization", "chunk-training"],
+ "fidelity_gaps": ["no depth regularization", "no exposure optimization", "no chunking/scaffold/skybox/consolidation/streaming", "runtime view sampling and densify ordering", "resolution protocol unknown", "appearance filter uses train cameras only", "black eval background"],
+ "feasible_natively": true}

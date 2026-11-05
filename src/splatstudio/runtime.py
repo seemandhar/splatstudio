@@ -40,9 +40,25 @@ def environment():
     return result
 
 
+_LPIPS = {}
+
+
+def lpips_metric(device):
+    """VGG LPIPS on [-1,1] NCHW inputs, matching the 3DGS evaluation script; None if absent."""
+    if device not in _LPIPS:
+        try:
+            import lpips
+
+            _LPIPS[device] = lpips.LPIPS(net="vgg", verbose=False).to(device).eval()
+        except ImportError:
+            _LPIPS[device] = None
+    return _LPIPS[device]
+
+
 @torch.no_grad()
 def measure(renderer, params, dataset, split, degree, device, image_directory=None):
     values = []
+    perceptual = lpips_metric(device)
     for name in dataset["splits"][split]:
         frame = on_device(dataset["frames"][name], device)
         rgb = renderer.render(params, frame, sh_degree=degree)["rgb"].clamp(0, 1)
@@ -56,15 +72,39 @@ def measure(renderer, params, dataset, split, degree, device, image_directory=No
                 pixels = (value.detach().cpu().numpy() * 255).round().astype("uint8")
                 Image.fromarray(pixels).save(folder / f"{index:04d}-{label}.png")
         mse = (rgb - frame["image"]).square().mean().clamp_min(1e-12)
-        values.append(
-            {
-                "frame": name,
-                "psnr": (-10 * torch.log10(mse)).item(),
-                "ssim": ssim(rgb, frame["image"]).item(),
-            }
-        )
-    metrics = {k: sum(v[k] for v in values) / len(values) for k in ("psnr", "ssim")}
+        row = {
+            "frame": name,
+            "psnr": (-10 * torch.log10(mse)).item(),
+            "ssim": ssim(rgb, frame["image"]).item(),
+        }
+        if perceptual is not None:
+            x, y = (t.permute(2, 0, 1)[None] * 2 - 1 for t in (rgb, frame["image"]))
+            row["lpips"] = perceptual(x, y).item()
+        values.append(row)
+    keys = [k for k in ("psnr", "ssim", "lpips") if k in values[0]]
+    metrics = {k: sum(v[k] for v in values) / len(values) for k in keys}
     return metrics, values
+
+
+RECIPES = ("splatstudio", "3dgs")
+
+
+def camera_extent(dataset):
+    """3DGS getNerfppNorm: 1.1 x max distance of training camera centers from their mean."""
+    centers = torch.stack(
+        [torch.linalg.inv(dataset["frames"][n]["viewmat"])[:3, 3] for n in dataset["splits"]["train"]]
+    )
+    return 1.1 * float(torch.linalg.vector_norm(centers - centers.mean(dim=0), dim=1).max())
+
+
+def knn_log_scales(points, k=3, chunk=4096):
+    """3DGS initialization: log sqrt of the mean squared distance to the k nearest points."""
+    out = torch.empty(len(points), device=points.device)
+    for start in range(0, len(points), chunk):
+        d2 = torch.cdist(points[start : start + chunk], points).square()
+        d2[torch.arange(d2.shape[0]), torch.arange(start, start + d2.shape[0])] = float("inf")
+        out[start : start + chunk] = d2.topk(k, dim=1, largest=False).values.mean(dim=1)
+    return out.clamp_min(1e-7).sqrt().log()[:, None].expand(-1, 3)
 
 
 def train(
@@ -79,8 +119,11 @@ def train(
     max_gaussians=1000000,
     device="cuda",
     log_every=100,
+    recipe="splatstudio",
 ):
     require_valid(method)
+    if recipe not in RECIPES:
+        raise ValueError(f"recipe must be one of {RECIPES}")
     if steps <= 0 or num_gaussians < 2 or max_gaussians < num_gaussians or log_every < 1:
         raise ValueError("Invalid step, point, resource-budget, or logging arguments")
     if not device.startswith("cuda") or not torch.cuda.is_available():
@@ -98,11 +141,26 @@ def train(
     renderer, density, losses = build(method)
     points, colors = initial_points(dataset, num_gaussians, seed, device)
     params, optimizers = initialize(method, points, colors)
-    scene_scale = max(
-        float(torch.linalg.vector_norm(points - points.mean(dim=0), dim=1).quantile(0.9)), 0.01
-    )
+    if recipe == "3dgs":
+        scene_scale = max(camera_extent(dataset), 0.01)
+        with torch.no_grad():
+            params["scales"].copy_(knn_log_scales(points))
+    else:
+        scene_scale = max(
+            float(torch.linalg.vector_norm(points - points.mean(dim=0), dim=1).quantile(0.9)),
+            0.01,
+        )
     optimizers["means"].param_groups[0]["lr"] *= scene_scale
     density.initialize(params, optimizers, scene_scale)
+    if hasattr(density, "set_training_cameras"):
+        # Optional hook for density components that need the training views (e.g. per-Gaussian
+        # sampling-rate filters). Cameras only: training images are not exposed here.
+        density.set_training_cameras(
+            [
+                {k: on_device(dataset["frames"][n], device)[k] for k in ("K", "viewmat", "width", "height")}
+                for n in dataset["splits"]["train"]
+            ]
+        )
     config = {
         "method": method.name,
         "specification": method.to_dict(),
@@ -113,6 +171,8 @@ def train(
         "downscale": downscale,
         "num_gaussians": num_gaussians,
         "max_gaussians": max_gaussians,
+        "recipe": recipe,
+        "scene_scale": scene_scale,
         "device": device,
         "environment": environment(),
         "protocol": dataset["protocol"],

@@ -1,0 +1,10 @@
+{"method": "absgs", "module": "ss_absgs",
+ "components": [
+  {"kind": "renderer", "name": "gsplat", "factory": "splatstudio.backends.gsplat:create_renderer", "config": {"absgrad": true, "antialiased": false}},
+  {"kind": "density", "name": "absgs-density", "factory": "ss_absgs.density:create_density", "config": {"clone_grad2d": 0.0002, "split_grad2d": 0.0004, "grow_scale3d": 0.001, "reduce_every": 0}},
+  {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["homodirectional-gradient", "split-clone-criteria", "state-transitions", "photometric-gradient", "renderer-gradient"],
+ "contributions": ["homodirectional-gradient", "decoupled-split-clone"],
+ "fidelity_gaps": ["runtime protocol (white bg, sampling, SSIM, LPIPS)", "baseline tau_S mismatch (gain partly from tau_S=0.001)", "no 2D screen-size pruning", "code-only extras not used (per paper)"],
+ "feasible_natively": true}

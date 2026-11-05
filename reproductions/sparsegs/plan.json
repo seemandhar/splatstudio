@@ -1,0 +1,17 @@
+{
+  "method": "sparsegs",
+  "module": "ss_sparsegs",
+  "components": [
+    {"name": "sparsegs-renderer", "kind": "renderer", "factory": "ss_sparsegs.renderer:create_renderer"},
+    {"name": "sparsegs-density", "kind": "density", "factory": "ss_sparsegs.density:create_density"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"},
+    {"name": "sparsegs-pearson", "kind": "loss", "factory": "ss_sparsegs.losses:create_pearson"},
+    {"name": "sparsegs-warp", "kind": "loss", "factory": "ss_sparsegs.losses:create_warp"},
+    {"name": "sparsegs-sds", "kind": "loss", "factory": "ss_sparsegs.losses:create_sds"}
+  ],
+  "fields": [],
+  "probes": ["softmax-depth", "pearson", "warp", "sds", "floater-prune", "state-transitions", "photometric-gradient"],
+  "contributions": ["C1 softmax/mode depth rendering", "C2 local+global Pearson depth loss", "C3 SDS (SD2.1) on elliptic views", "C4 depth-warping loss", "C5 dip-test floater pruning"],
+  "fidelity_gaps": ["released split (6 scenes) vs paper text", "gsplat RGB rasterizer clamp/gradient", "view sampling with replacement / valid SSIM", "optimizer-before-density order", "orthonormalised ellipse pose", "SD2.1 community mirror", "paper vs README hyper-parameters", "BMD 16-bit PNG"],
+  "feasible_natively": true
+}

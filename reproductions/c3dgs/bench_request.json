@@ -1,0 +1,14 @@
+{
+ "method": "c3dgs",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 35000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Single 35k run = 3DGS 30k (identical recipe to baseline3dgs-mipnerf360-30000) + sensitivity/prune/VQ at 30000 + 5000-step QA fine-tune + Morton/DEFLATE npz; ss-eval measures the decoded npz. steps must stay 35000 (= c3dgs-density total_steps; a guard raises otherwise). Size (paper formula, MiB of the npz): `tools/ssenv python reproductions/c3dgs/plugin/report_size.py <run_dir>` (also the 'encode' line of the training log). Paper supp. per-scene PSNR / SIZE: bicycle 24.970 / 47.15 MB, garden 26.746 / 46.57 MB, counter 28.671 / 13.79 MB; paper 3DGS 25.171 / 27.179 / 28.888 (deltas -0.20 / -0.43 / -0.22 dB). Our baseline3dgs: 24.92 / 26.89 / 28.85 (see reduced-3dgs notes). Compare deltas vs our baseline and MB. First call JIT-builds the official weighted_distance kernel (cached in ~/.cache/torch_extensions). Compression stage ~3-6 min on a shared GPU."
+}

@@ -1,0 +1,16 @@
+{
+ "method": "speedy-splat",
+ "datasets": {"mipnerf360-1600": ["garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": "baseline3dgs-mipnerf360-1600-30000 (garden 26.93, counter 29.04)",
+ "optional_methods": {
+  "speedy-splat-stock": {"mipnerf360-1600": ["garden", "counter"], "steps": 30000,
+                         "note": "control: stock Inria rasterizer + same density, no pruning (paper 'Baseline' row); gives the in-code-base PSNR/count reference and the unculled speed reference"},
+  "speedy-splat-accutile": {"mipnerf360-1600": ["garden", "counter"], "steps": 30000,
+                            "note": "paper '+AccuTile' row (lossless culling, no pruning); lower priority"}
+ },
+ "post": "after each run: tools/ssenv python -m ss_speedysplat.fps --run <run> -> <run>/speedy_fps.json (forward ms, tile-Gaussian pairs, speedy vs stock on the same checkpoint/GPU; secondary)",
+ "notes": "Official train.py uses -r -1 (images/ resized to width 1600) -> mipnerf360-1600 matches the official resolution. Paper targets (supp. breakout tables, full method '+Hard Pruning'): garden 26.70, counter 28.28 PSNR; paper 3D-GS baseline (same pipeline): 27.31 / 29.14 -> paper drop -0.61 / -0.86 dB. Gaussian counts per scene not reported (13-scene mean 2.93M -> 0.28M, Mip-NeRF 360 compression 10.6x); compare count reduction vs our baseline. Pruning steps 6000..27000 render all training views once each (cheap). First use JIT-builds the two rasterizers (~2 min, cached in ~/.cache/torch_extensions)."
+}

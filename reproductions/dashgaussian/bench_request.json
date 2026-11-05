@@ -1,0 +1,4 @@
+{"method": "dashgaussian",
+ "datasets": {"mipnerf360": ["garden", "bicycle", "room"], "tandt": ["truck", "train"], "db": ["drjohnson", "playroom"]},
+ "steps": 30000, "per_scene_reported": true, "extra": "",
+ "compare": "paper supp. Tables 7-9 '3DGS +Ours' rows; report training_seconds and gaussians vs baseline3dgs-<dataset>-30000 (paper speed-up 3DGS->+Ours: m360 1.8x, db 2.1x, tandt 1.7x)"}

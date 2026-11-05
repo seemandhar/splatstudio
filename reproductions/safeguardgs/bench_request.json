@@ -1,0 +1,8 @@
+{
+ "method": "safeguardgs",
+ "datasets": {"mipnerf360": ["bicycle", "flowers", "garden", "stump", "treehill", "room", "counter", "kitchen", "bonsai"]},
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "",
+ "notes": "Paper (arXiv v2 / WACV 2026) reports dataset averages only -> all 9 Mip-NeRF 360 scenes. Single 30k run: vanilla 3DGS + one top-1 Score_SG_36 prune at step 20000 (official per-tile kernel semantics). Reference: baseline3dgs-mipnerf360-30000. Paper target: 27.073 vs its 3DGS 27.434 (delta -0.361 dB), 350.3k vs 3159k Gaussians (88.9% pruned). Expect lower absolute counts here (images_4/images_2 vs the sweep's 1600-px images => fewer 16x16 tiles); compare compression ratio and delta PSNR. Optional ablation: selection 'pixel' (paper-text per-ray top-1)."
+}

@@ -1,0 +1,278 @@
+{
+ "paper": "AbsGS: Recovering Fine Details for 3D Gaussian Splatting",
+ "arxiv": "2404.10484",
+ "method_label": "AbsGS-0004 (tau_S=0.001)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.49,
+     "ssim": 0.82,
+     "lpips": 0.191
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.29,
+      "flowers": 21.347,
+      "garden": 27.487,
+      "stump": 26.711,
+      "treehill": 21.986,
+      "room": 31.614,
+      "counter": 29.031,
+      "kitchen": 31.621,
+      "bonsai": 32.323
+     },
+     "ssim": {
+      "bicycle": 0.783,
+      "flowers": 0.623,
+      "garden": 0.871,
+      "stump": 0.78,
+      "treehill": 0.617,
+      "room": 0.925,
+      "counter": 0.911,
+      "kitchen": 0.9293,
+      "bonsai": 0.945
+     },
+     "lpips": {
+      "bicycle": 0.171,
+      "flowers": 0.27,
+      "garden": 0.1,
+      "stump": 0.195,
+      "treehill": 0.278,
+      "room": 0.2,
+      "counter": 0.189,
+      "kitchen": 0.121,
+      "bonsai": 0.19
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.21,
+     "ssim": 0.815,
+     "lpips": 0.214
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.246,
+      "flowers": 21.52,
+      "garden": 27.41,
+      "stump": 26.55,
+      "treehill": 22.49,
+      "room": 30.632,
+      "counter": 28.7,
+      "kitchen": 30.317,
+      "bonsai": 31.98
+     },
+     "ssim": {
+      "bicycle": 0.771,
+      "flowers": 0.605,
+      "garden": 0.868,
+      "stump": 0.775,
+      "treehill": 0.638,
+      "room": 0.914,
+      "counter": 0.905,
+      "kitchen": 0.922,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.336,
+      "garden": 0.103,
+      "stump": 0.21,
+      "treehill": 0.317,
+      "room": 0.22,
+      "counter": 0.204,
+      "kitchen": 0.129,
+      "bonsai": 0.205
+     }
+    }
+   },
+   "baseline_3dgs_star_tauS_0.001": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.12,
+      "flowers": 21.439,
+      "garden": 27.11,
+      "stump": 26.457,
+      "treehill": 22.385,
+      "room": 31.35,
+      "counter": 28.93,
+      "kitchen": 31.312,
+      "bonsai": 32.11
+     }
+    },
+    "average": {
+     "psnr": 27.36,
+     "ssim": 0.809,
+     "lpips": 0.22
+    }
+   },
+   "variant_absgs_0008": {
+    "average": {
+     "psnr": 27.41,
+     "ssim": 0.815,
+     "lpips": 0.211
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.248,
+      "flowers": 21.468,
+      "garden": 27.375,
+      "stump": 26.594,
+      "treehill": 22.215,
+      "room": 31.331,
+      "counter": 28.96,
+      "kitchen": 31.485,
+      "bonsai": 32.046
+     }
+    }
+   },
+   "source": "main Table 1 (averages); supplementary Tables (SSIM360/PSNR360/LPIPS360), rows S=0.001"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.73,
+     "ssim": 0.853,
+     "lpips": 0.162
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.735,
+      "train": 21.721
+     },
+     "ssim": {
+      "truck": 0.888,
+      "train": 0.818
+     },
+     "lpips": {
+      "truck": 0.116,
+      "train": 0.157
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.14,
+     "ssim": 0.841,
+     "lpips": 0.183
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.187,
+      "train": 21.097
+     },
+     "ssim": {
+      "truck": 0.879,
+      "train": 0.802
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.218
+     }
+    }
+   },
+   "baseline_3dgs_star_tauS_0.001": {
+    "average": {
+     "psnr": 23.64,
+     "ssim": 0.842,
+     "lpips": 0.179
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.43,
+      "train": 21.851
+     }
+    }
+   },
+   "variant_absgs_0008": {
+    "average": {
+     "psnr": 23.54,
+     "ssim": 0.844,
+     "lpips": 0.1831
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.57,
+      "train": 21.51
+     }
+    }
+   },
+   "source": "main Table 1; supplementary T&T/DB tables, rows S=0.001"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.67,
+     "ssim": 0.902,
+     "lpips": 0.236
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.197,
+      "playroom": 30.141
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.156,
+      "playroom": 0.179
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.41,
+     "ssim": 0.903,
+     "lpips": 0.243
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.766,
+      "playroom": 30.044
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.906
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.241
+     }
+    }
+   },
+   "baseline_3dgs_star_tauS_0.001": {
+    "average": {
+     "psnr": 29.57,
+     "ssim": 0.897,
+     "lpips": 0.24
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.195,
+      "playroom": 29.935
+     }
+    }
+   },
+   "variant_absgs_0008": {
+    "average": {
+     "psnr": 29.69,
+     "ssim": 0.903,
+     "lpips": 0.241
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.195,
+      "playroom": 30.19
+     }
+    }
+   },
+   "source": "main Table 1; supplementary T&T/DB tables, rows S=0.001"
+  }
+ },
+ "notes": "baseline_3dgs = 3DGS paper numbers (copied by AbsGS). baseline_3dgs_star = authors' 3DGS retrain with tau_S=0.001. Main-table averages are reported; per-scene means of the supplementary may differ slightly (rounding). DB per-scene LPIPS for AbsGS-0004 S=0.001 (0.156/0.179) are inconsistent with the main-table DB LPIPS 0.236 - likely a supplementary typo; do not use. Memory (MB) tables omitted."
+}

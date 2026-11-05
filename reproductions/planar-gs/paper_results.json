@@ -1,0 +1,22 @@
+{
+  "paper": "Planar Gaussian Splatting", "arxiv": "2412.01931", "method_label": "Planar GS (ours)",
+  "iterations": 15000,
+  "datasets": {
+    "scannetv2_planes": {
+      "metric_type": "3D plane instance segmentation (VOI lower, RI/SC higher), 10 scenes (4 from Manhattan-SDF list, 6 unnamed)",
+      "method": {"average": {"voi": 3.045, "ri": 0.901, "sc": 0.430}},
+      "baseline_3dgs_ransac": {"average": {"voi": 5.056, "ri": 0.850, "sc": 0.306}},
+      "source": "main Table 1 (tab:scannet_seg)"
+    },
+    "replica_planes": {
+      "method": {"average": {"voi": 4.168, "ri": 0.943, "sc": 0.209}},
+      "baseline_3dgs_ransac": {"average": {"voi": 4.401, "ri": 0.904, "sc": 0.179}},
+      "source": "main Table 2 (tab:replica_seg); scenes not listed"
+    },
+    "scannetv2_geometry": {
+      "method": {"average": {"accuracy": 0.137, "completeness": 0.118}},
+      "source": "supp Table (tab:geometry)"
+    }
+  },
+  "notes": "No PSNR/SSIM/LPIPS reported anywhere (main or supp). No mipnerf360/tandt/db/DTU/MuSHRoom results. Ablation (2 unnamed ScanNet scenes) in tab:ablation."
+}

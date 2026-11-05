@@ -1,0 +1,8 @@
+{
+ "method": "eagles",
+ "datasets": {"mipnerf360": ["bicycle", "garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Paper supp. Table 2 (decoded model) PSNR / Storage MB / #Gaussians: bicycle 25.04 / 104 / 2.26M, garden 26.91 / 74 / 1.65M, counter 28.40 / 25 / 0.56M; authors' 3D-GS* 25.13 / 27.32 / 29.11 (paper deltas -0.09 / -0.41 / -0.71 dB). Our baseline: baseline3dgs-mipnerf360-30000. steps must stay 30000 (= eagles-density total_steps) or encode -> decode -> bake does not run. ss-eval measures the baked decoded model. Paper-formula size (GaussianModelSQ.size(), bits/8/1e6) and real range-coded bytes: `tools/ssenv python reproductions/eagles/plugin/report_size.py <run_dir>` (also printed as the 'encode' line in the training log). First call JIT-builds the CUDA influence kernel."
+}

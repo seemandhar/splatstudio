@@ -1,0 +1,41 @@
+{
+  "paper": "DOF-GS: Adjustable Depth-of-Field 3D Gaussian Splatting for Post-Capture Refocusing, Defocus Rendering and Blur Removal",
+  "slug": "dofgs",
+  "plan_id": 60,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (major fixed: per-scene variants dofgs / dofgs-bl-m001 / dofgs-nobl; 5 minors)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched (3/3 scenes)",
+  "notes": "report.md write blocked for subagent; content returned to caller. Data: cake,caps ready; others downloading (Drive rate limit).",
+  "bench_exps": [
+    "dofgs-cake",
+    "dofgs-caps",
+    "baseline-gsplat-deblurnerf-40000",
+    "dofgs-tools",
+    "baseline-gsplat-deblurnerf-tools-40000"
+  ],
+  "stability_fix": "clamp_overflowed_moments: inf exp_avg_sq pinned to FLT_MAX + exp_avg=0 (= official silent freeze); cake failed twice at 26k/34.5k before. caps ran with the pre-fix plugin (no overflow occurred there; fix is a no-op without overflow).",
+  "result": {
+    "psnr": {
+      "cake": 26.73,
+      "caps": 24.39,
+      "tools": 27.79
+    },
+    "paper": {
+      "cake": 26.87,
+      "caps": 24.63,
+      "tools": 27.73
+    },
+    "gsplat": {
+      "cake": 21.49,
+      "caps": 15.61,
+      "tools": 24.2
+    }
+  }
+}

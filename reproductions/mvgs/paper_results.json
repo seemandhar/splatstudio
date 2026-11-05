@@ -1,0 +1,37 @@
+{
+  "paper": "MVGS: Multi-view Regulated Gaussian Splatting for Novel View Synthesis",
+  "arxiv": "2410.02103",
+  "method_label": "3DGS (+Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 29.61, "ssim": 0.873, "lpips": 0.173},
+                 "per_scene": {
+                   "psnr": {"stump": 26.39, "room": 32.84, "counter": 30.21, "bonsai": 33.05, "bicycle": 25.08, "garden": 27.23, "kitchen": 32.57},
+                   "ssim": {"stump": 0.760, "room": 0.932, "counter": 0.928, "bonsai": 0.949, "bicycle": 0.752, "garden": 0.856, "kitchen": 0.934},
+                   "lpips": {"stump": 0.243, "room": 0.184, "counter": 0.151, "bonsai": 0.167, "bicycle": 0.226, "garden": 0.123, "kitchen": 0.113}}},
+      "baseline_3dgs": {"average": {"psnr": 28.69, "ssim": 0.870, "lpips": 0.182},
+                 "per_scene": {
+                   "psnr": {"stump": 26.55, "room": 30.63, "counter": 28.70, "bonsai": 31.98, "bicycle": 25.25, "garden": 27.41, "kitchen": 30.32},
+                   "ssim": {"stump": 0.775, "room": 0.914, "counter": 0.905, "bonsai": 0.938, "bicycle": 0.771, "garden": 0.868, "kitchen": 0.922},
+                   "lpips": {"stump": 0.210, "room": 0.220, "counter": 0.204, "bonsai": 0.205, "bicycle": 0.205, "garden": 0.103, "kitchen": 0.129}}},
+      "ablation_3dgs_psnr": {"baseline": 28.69, "+MVRL": 29.26, "+CRD": 29.37, "+MVAD": 29.52, "+CIG (full)": 29.61},
+      "source": "Table 1 (averages, 7 scenes), supp. Table t1_supp (per scene), Table t_ablation"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.44, "ssim": 0.865, "lpips": 0.143},
+                 "per_scene": {"psnr": {"truck": 26.14, "train": 22.74}, "ssim": {"truck": 0.893, "train": 0.838}, "lpips": {"truck": 0.125, "train": 0.162}}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183},
+                 "per_scene": {"psnr": {"truck": 25.18, "train": 21.09}, "ssim": {"truck": 0.879, "train": 0.802}, "lpips": {"truck": 0.148, "train": 0.218}}},
+      "source": "Table 1, supp. Table t2_supp"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.74, "ssim": 0.909, "lpips": 0.221},
+                 "per_scene": {"psnr": {"playroom": 30.33, "drjohnson": 29.16}, "ssim": {"playroom": 0.927, "drjohnson": 0.892}, "lpips": {"playroom": 0.201, "drjohnson": 0.241}}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243},
+                 "per_scene": {"psnr": {"playroom": 30.04, "drjohnson": 28.77}, "ssim": {"playroom": 0.906, "drjohnson": 0.899}, "lpips": {"playroom": 0.241, "drjohnson": 0.244}}},
+      "source": "Table 1, supp. Table t2_supp"
+    }
+  },
+  "notes": "Mip-NeRF 360 average is over 7 scenes (no flowers/treehill). The 3DGS rows equal the 3DGS paper's numbers (images_4/images_2 protocol), while the official MVGS script trains at -r -1 (width 1600). Official run_360.py: indoor = 4 stages (M=48 @ -r 8, 24 @ -r 4, 12 @ -r 2, 3000 it each, then M=8 @ -r -1 30000 it), outdoor (bicycle/garden/stump) = M=3 @ -r -1, 30000 it. No official T&T/DB config. Training time 2.4 h avg vs 0.3 h for 3DGS (RTX 3090 Ti), #Gaussians 0.8M vs 1.1M (Table t_parameter)."
+}

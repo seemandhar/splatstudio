@@ -1,0 +1,78 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "plugin/ss_dnsplatter/__init__.py",
+      "where": "method_rgb (lines 96-99) + density.py:97-112 (use_sidecar_init) + bench_request.json control note",
+      "problem": "The control dn-splatter-rgb is described as the in-house 'Splatfacto (L_rgb)' row, but it differs from the paper's Splatfacto baseline. The official baseline is vanilla `ns-train splatfacto` (eval/batch_run.py:186-207, with mushroom --load-pcd-normals False). It starts from the same 1M sensor-depth points, but with ISOTROPIC per-point kNN scales log(mean 3-NN) and random quats (splatfacto.py:214-220), and it uses Splatfacto's resolution schedule (num_downscales=2, resolution_schedule=3000). The control instead loads the DN-Splatter normal-aligned flat init (z-scale ÷10) and trains at full resolution from step 1. The DN-Splatter minus control delta, which is the quantity CLAUDE.md says to compare against the paper's +0.2 dB / +0.009 SSIM, therefore does not measure the paper's delta.",
+      "evidence": "batch_run.py: splatfacto_config = Config(experiment_name='splatfacto') with load_pcd_normals False by default; splatfacto model command has no dn flags; Splatfacto 1.1.3 defaults num_downscales=2 (splatfacto.py config) vs DN-Splatter override num_downscales=0 (dn_model.py:104). Table 4 row cites [kerbl, nerfstudio], same label as Table 1's vanilla Splatfacto.",
+      "fix": "Add an init mode to splatfacto-density (e.g. sidecar_init: 'oriented'|'isotropic'). 'isotropic' should load log(avg_dist) x3 (init.npz log_scales with column 2 multiplied back by 10, i.e. +log 10; -inf stays -1e4) and random unit quats. Use it for a 'splatfacto-control' method, or add it as a second control and keep dn-splatter-rgb as 'priors-off ablation'. Record the 1/4-to-1/2 resolution schedule (until step 6000) as a fidelity gap of the control, because the runtime cannot express it. Relabel the bench_request/report control note."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_dnsplatter/renderer.py",
+      "where": "Renderer.render line 296 (normal-pass background)",
+      "problem": "Rendering normals in the OpenCV frame equals the official OpenGL-frame loss only where alpha = 1. The official code adds the legacy rasterizer's white background (1,1,1) in the OpenGL frame, which is (1,-1,-1) in the OpenCV frame. The plugin adds (1,1,1) in the OpenCV frame, so partially covered pixels get a different normalised normal and a different gradient.",
+      "evidence": "dn_model.py:563 normals @ c2w_gl[:3,:3] (OpenGL cam frame) -> rasterize_gaussians default bg ones; D=diag(1,-1,-1): D·1 = (1,-1,-1). GPU check on the 2k smoke checkpoint: 2-10% of training pixels have alpha<0.99 (none <0.5), so the effect is small.",
+      "fix": "nimg = nimg[0] + (1 - nalpha[0]) * torch.tensor([1., -1., -1.], device=dev); extend the gaussian-normals probe with a partial-alpha pixel."
+    },
+    {
+      "severity": "minor",
+      "file": "paper_results.json / plan.md fidelity gap 4 / report.md gap 4",
+      "where": "evaluation split",
+      "problem": "Union ('all') is not an official metric. With eval_mode='all', DNSplatterPipeline.get_average_eval_image_metrics (dn_pipeline.py:255-276, 499-545) still averages long_capture frames (within_) and short_capture frames (with_) SEPARATELY. The paper text also settles which split Table 4 uses: every single-number MuSHRoom NVS table uses the within/left value (Table 'SfM vs sensor init' 1M row = 24.58/.8558 = Table 1 left; the 2DGS table states 'NVS is reported within the train sequence', 24.58 / Splatfacto 24.44 = Table 1 left).",
+      "evidence": "tables/main_sfm_init.tex, tables/ab_2dgs_vs_dn_splatter_mono_sensor.tex caption, tables/main_table_NVS_mushroom.tex.",
+      "fix": "Headline = test split (42 test.txt frames, within). Report validation (186 short_capture frames, cross) as secondary. Drop union, or label it non-official. Update the 'eval split not stated' wording to cite this evidence."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "Smoke run paragraph",
+      "problem": "The 2k smoke run (-0.65 dB vs control) is not diagnostic. The runtime decays the means LR to 1% over the given step count (runtime.py:209), so the full 30k schedule is compressed into 2k steps, densification has only 15 refine calls, and the paper's own ablation shows the normal TV term costing RGB (26.7 -> 26.4) while depth recovers it. No depth-unit or prior bug was found: projecting the 1M TSDF init points into 8 training frames gives a median z / sensor-depth ratio of 0.997-1.011 (metric poses, mm*1e-3 correct), sidecar viewmats match all 376 train frames (<1e-4), and the rendered normals reach cos 0.96-0.98 against Omnidata at 2k.",
+      "fix": "State that the smoke gap is expected to be noisy and judge on 30k only. Note that the paper's +0.2 dB is within run-to-run noise, so a tie is a valid outcome."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_dnsplatter/probes.py",
+      "where": "gaussian_normals",
+      "problem": "The probe only checks a fully covered centre pixel, so it cannot detect the background/frame-convention deviation above.",
+      "fix": "Add a partial-alpha pixel compared against the official GL-frame formula mapped through D."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_dnsplatter/density.py",
+      "where": "_accumulate line 120",
+      "problem": "Visibility is radii>0 on both axes (gsplat 1.5 per-axis radii) vs a scalar radius>0 in gsplat 1.0. The two are equivalent except for degenerate cases. This is already covered by fidelity gap 1 and is listed only for completeness.",
+      "fix": "None needed beyond the gap note."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(3) edge-aware log-L1 depth (code: x/y edge weights exp(-mean|∇I|), mask gt>0.1, scalar mean_x+mean_y, rgb clamp 10/255, weight (1+0.2))", "status": "exact", "code": "losses.py:edge_aware_log_l1/create_depth"},
+    {"eq": "(4)-(5) shortest-axis normal R·onehot(argmin s), flip toward camera with detached means", "status": "exact", "code": "renderer.py:gaussian_normals"},
+    {"eq": "(6) min-scale loss min(exp s).mean(), weight 1", "status": "exact", "code": "losses.py:create_scale"},
+    {"eq": "(7) alpha-composited normals, detached means2d, per-pixel normalise, (n+1)/2", "status": "deviates", "code": "renderer.py:render (background colour in wrong frame for alpha<1; see minor issue)"},
+    {"eq": "(8) normal L1 (mean over HxWx3 of [0,1] maps), weight 1 (normal_lambda never applied in code)", "status": "exact", "code": "losses.py:create_normal"},
+    {"eq": "(9) TV smoothing on rendered normal map, weight 1", "status": "exact", "code": "losses.py:tv"},
+    {"eq": "(10) total = Splatfacto 0.8L1+0.2DSSIM + 1.2 L_D + L_N + L_smooth + L_scale (code weights; paper 0.2/0.1/0.1)", "status": "exact", "code": "__init__.py:_build"},
+    {"eq": "(11) mono-depth scale/shift alignment", "status": "missing", "code": "not needed: vr_room uses sensor depth (depth_mode='sensor' default)"}
+  ],
+  "probe_assessment": [
+    {"probe": "depth-loss", "detects_removal": true, "why": "compares against an independent formula and checks the constant-image reduction, edge down-weighting, mask gradients and the 1.2 weight"},
+    {"probe": "normal-loss", "detects_removal": true, "why": "independent L1+TV formula; checks that the TV term is present"},
+    {"probe": "scale-loss", "detects_removal": true, "why": "analytic value and gradient"},
+    {"probe": "gaussian-normals", "detects_removal": true, "why": "CUDA flat-Gaussian render checks axis, flip and detached means2d; does not cover the partial-alpha background"},
+    {"probe": "splatfacto-density", "detects_removal": true, "why": "synthetic stats: split/dup counts, post-reset densify suspension, reset clamp + Adam zeroing, unscaled means LR"},
+    {"probe": "sidecar-init", "detects_removal": true, "why": "checks that scales/quats are copied, mismatched points are rejected and -inf maps to an exact-zero scale"}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Loss weights follow the code, not the paper: depth_loss += depth_lambda*depth_loss (regularization_strategy.py:184) with --pipeline.model.depth-lambda 0.2 as used by README mushroom command and eval/batch_run.py dn_splatter_config (use_depth_loss/use_normal_loss/use_normal_tv_loss/load_pcd_normals True) -> effective 1.2; normal_lambda (0.1) stored but never applied -> L1 1 + TV 1; scale loss always on (weight 1).",
+    "Normals flipped toward camera every step with detached means (dn_model.py:550-557); normal pass uses detached xys and differentiable conics/opacities via legacy rasterize_gaussians (dn_model.py:563-577).",
+    "Splatfacto 1.1.3 density schedule/thresholds (absgrad 0.0008*0.5*max(H,W), size 0.01 metric, split screen 0.05 until 4000, cull alpha 0.1, cull scale 0.5 / screen 0.15 after 3000, reset every 3000 at ns%3000==100 to 0.2 with Adam zeroing, dup after in-place /1.6) match dn_model.py:271-385 and splatfacto.py:409-605; means LR 1.6e-4->1.6e-6 unscaled (dn_config.py) matches.",
+    "Sensor-depth TSDF 1M init (voxel 0.04, trunc 0.2, depth_trunc 4, per-frame random sampling), Open3D normals r=0.1/30nn, scales log(mean 3-NN) with z/10, quats rotating z to normal: matches pointcloud_utils.py and dn_model.py:186-214. 35.3% of points have all-(-inf) log scales; -1e4 is behaviourally identical to official -inf (exp->0, zero gradients, never split/culled by size, still rendered via the 0.3px blur).",
+    "Depth units: sensor png mm*1e-3, metric COLMAP poses (no orientation/centering/auto-scale, no applied_scale key); verified by projection ratio ~1.00.",
+    "Data split: train 376 long frames, test 42 test.txt (within/left), validation 186 short_capture (cross/right); same intrinsics for both trajectories.",
+    "gsplat 1.5.3 vs 1.0.0; LPIPS VGG vs torchmetrics AlexNet; with-replacement view sampling; no meshing; single scene."
+  ],
+  "summary": "The method port is faithful to the official code at 97588b4. The loss numerics and weights (1.2/1/1, confirmed against the README and batch_run flags), the normal construction, Splatfacto ADC, the init and the depth units all check out, and no bug was found that would make the priors hurt RGB. The 2k smoke gap is not diagnostic. One major issue: the dn-splatter-rgb control is not the paper's Splatfacto baseline (oriented flat init instead of isotropic kNN with random quats, and no resolution schedule), so the measured delta does not correspond to Table 4's 26.6 -> 26.8. Minor: the normal-pass background should be (1,-1,-1) in the OpenCV frame; drop union as a split. Headline split: test (42 test.txt frames, within). The paper's single-number MuSHRoom NVS tables all use the within value."
+}

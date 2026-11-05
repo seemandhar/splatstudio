@@ -1,0 +1,25 @@
+{
+ "paper": "EAGLES: Efficient Accelerated 3D Gaussians with Lightweight EncodingS",
+ "slug": "eagles",
+ "plan_id": 39,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "arxiv": "2312.04564",
+ "official_code_commit": "b9b50db075ca14e797a557300d66f52cc3fef7e5",
+ "method": "eagles",
+ "custom_cuda": true,
+ "bench_request": "bench_request.json",
+ "plugin_freeze_sha": "4dcab5673ca30adb",
+ "bench_exps": [
+  "eagles-mipnerf360"
+ ],
+ "headline": "Decoded-model PSNR vs paper: bicycle 24.80/25.04 (-0.24), garden 26.52/26.91 (-0.39), counter 28.09/28.40 (-0.31); delta vs gsplat -0.12/-0.37/-0.76 vs paper -0.09/-0.41/-0.71; size() 105.7/64.5/23.6 MB vs 104/74/25 MB (real coded bytes within 0.01 MB)",
+ "report": "report.md"
+}

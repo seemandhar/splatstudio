@@ -1,0 +1,7 @@
+{"method": "improving-densification",
+ "datasets": {"mipnerf360": ["garden", "room"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "baseline": {"garden": "baseline3dgs-mipnerf360-30000", "room": "baseline3dgs-mipnerf360-30000"},
+ "notes": "Paper appendix A.1 per-scene PSNR (best of 3 runs): garden 28.098 (paper 3DGS row 27.361, +0.74), room 32.652 (31.446, +1.21). Our gsplat baselines: garden 26.893, room 31.516 -> delta-based expectation ~27.63 / ~32.72. Protocol mipnerf360 (images_4 / images_2; the official code reads 'images' with -r -1 from an uninspectable data package, paper says 'as with 3DGS'). Budget N_max is looked up from the --data basename (garden 3M, room 1M). Black background, official rasterizer vendored (first job JIT-compiles ~1 min, cached). Smoke: garden 2k 24.64 dB / 0.98M vs gsplat 23.07 / 0.84M; Gaussian count tracks the official log exactly. Expect ~3M Gaussians on garden, ~1M on room; MU makes steps 20k-30k cheap."}

@@ -1,0 +1,10 @@
+{"method": "stopthepop", "module": "ss_stopthepop",
+ "components": [
+  {"kind": "renderer", "factory": "ss_stopthepop.renderer:create_renderer", "provides": ["render.rgb", "gradient.screen.signed"], "config": {"splatting": "configs/hierarchical.json", "background": [0, 0, 0]}},
+  {"kind": "density", "factory": "ss_stopthepop.density:create_density", "requires": ["gradient.screen.signed"], "config": "3DGS ADC defaults + opacity_decay 0"},
+  {"kind": "loss", "factory": "base photometric"}],
+ "fields": [],
+ "probes": ["stopthepop-topt", "stopthepop-perpixel-order", "stopthepop-backward", "stopthepop-popping", "stopthepop-culling", "stopthepop-schedule"],
+ "contributions": ["C1 per-ray t_opt", "C2 hierarchical per-pixel resorting", "C3 culling/load balancing", "C4 sorted front-to-back backward / training", "C5 popping metric (proxy)"],
+ "fidelity_gaps": ["optimizer step before density", "runtime sampling/SSIM/LPIPS differences", "FLIP+RAFT popping metric not reproduced at scene scale", "tile_based_culling false per released config", "timings on A6000", "opacity decay not benchmarked"],
+ "feasible_natively": true}

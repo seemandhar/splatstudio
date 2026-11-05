@@ -1,0 +1,23 @@
+{
+  "method": "sugar",
+  "module": "ss_sugar",
+  "components": ["sugar-renderer", "sugar-density", "photometric", "sugar-entropy", "sugar-sdf", "sugar-normal", "sugar-normal-consistency"],
+  "fields": [{"name": "sugar_rot2d", "shape": [2], "lr": 0.001}],
+  "probes": ["sdf-field", "normal-regularizer", "level-set", "poisson-mesh", "mesh-binding", "stage-schedule"],
+  "contributions": {
+    "C1-sdf-regularization": ["sdf-field", "stage-schedule"],
+    "C2-normal-regularization": ["normal-regularizer"],
+    "C3-level-set-mesh-extraction": ["level-set", "poisson-mesh"],
+    "C4-mesh-bound-refinement": ["mesh-binding", "stage-schedule"]
+  },
+  "fidelity_gaps": [
+    "mesh-extraction depth from gsplat expected depth + point KNN instead of PyTorch3D diamond z-buffer",
+    "white background (official black)",
+    "view sampling with replacement",
+    "SSIM/LPIPS implementation differences",
+    "gsplat rasterizer (alpha-cap straight-through fix) vs Inria",
+    "sqrt guard at d=1",
+    "paper 3DGS row is images_4/2; benchmark at 1600 px vs our 1600 baseline"
+  ],
+  "feasible_natively": true
+}

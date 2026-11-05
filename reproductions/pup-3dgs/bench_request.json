@@ -1,0 +1,14 @@
+{
+ "method": "pup-3dgs",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 40000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Single 40k run = 3DGS 30k + prune 80% + 5k refine + prune 50% + 5k refine. Pre-prune reference: baseline3dgs-mipnerf360-30000 (identical recipe/LR schedule for steps 1-30000). Paper targets (v3, 90%): bicycle 24.72, garden 26.23, counter 28.00; paper 3DGS: 25.09/27.28/29.11. Optional: pup-3dgs-v1 (88.44%; v1 targets 24.99/26.66/28.11)."
+}

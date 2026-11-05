@@ -1,0 +1,40 @@
+{
+  "paper": "ContextGS: Compact 3D Gaussian Splatting with Anchor Level Context Model",
+  "slug": "contextgs",
+  "plan_id": 44,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "arxiv": "2405.20721",
+  "official_code_commit": "eff8d19",
+  "method": "contextgs",
+  "custom_cuda": true,
+  "feasible_natively": true,
+  "ss_eval_transport": "cgs_blob per-anchor field",
+  "bench_dataset": "mipnerf360-1600",
+  "bench_request": "bench_request.json",
+  "plugin_freeze_sha": "c98cfe201ece825f",
+  "bench_exps": [
+    "contextgs-mipnerf360-1600"
+  ],
+  "result": {
+    "psnr_delta": {
+      "bicycle": 0.1,
+      "garden": -0.12,
+      "counter": -0.05
+    },
+    "size_mb": {
+      "bicycle": 25.38,
+      "garden": 20.65,
+      "counter": 6.4
+    },
+    "size_vs_our_hac": "-24/-17/-16 % (paper -21/-17/-13 %)"
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "paper": "DNGaussian: Optimizing Sparse-View 3D Gaussian Radiance Fields with Global-Local Depth Normalization",
+  "arxiv": "2403.06912",
+  "method_label": "DNGaussian (Ours)",
+  "iterations": 6000,
+  "datasets": {
+    "llff-3view": {
+      "method": {
+        "average": {
+          "psnr": 19.12,
+          "ssim": 0.591,
+          "lpips": 0.294,
+          "avge": 0.132
+        }
+      },
+      "baseline_3dgs": {
+        "average": {
+          "psnr": 15.52,
+          "ssim": 0.408,
+          "lpips": 0.405,
+          "avge": 0.209
+        }
+      },
+      "baseline_3dgs_dagger": {
+        "average": {
+          "psnr": 16.46,
+          "ssim": 0.44,
+          "lpips": 0.401,
+          "avge": 0.192
+        },
+        "note": "3DGS with the same hyper-parameters and the neural color renderer as DNGaussian"
+      },
+      "ablations": {
+        "AP_only": {
+          "psnr": 18.14,
+          "lpips": 0.354,
+          "ssim": 0.538
+        },
+        "hard_soft_no_norm": {
+          "psnr": 17.9,
+          "lpips": 0.351,
+          "ssim": 0.525
+        },
+        "AP_global": {
+          "psnr": 18.31,
+          "lpips": 0.339,
+          "ssim": 0.552
+        },
+        "AP_global_local": {
+          "psnr": 18.68,
+          "lpips": 0.331,
+          "ssim": 0.565
+        },
+        "hard_soft_global": {
+          "psnr": 18.55,
+          "lpips": 0.324,
+          "ssim": 0.562
+        },
+        "full": {
+          "psnr": 19.12,
+          "lpips": 0.294,
+          "ssim": 0.591
+        },
+        "wo_shape_freezing": {
+          "psnr": 17.96,
+          "lpips": 0.363,
+          "ssim": 0.547
+        },
+        "wo_center_freezing": {
+          "psnr": 18.87,
+          "lpips": 0.3,
+          "ssim": 0.584
+        },
+        "sh_degree_2": {
+          "psnr": 17.06,
+          "lpips": 0.333,
+          "ssim": 0.549
+        },
+        "sh_degree_3": {
+          "psnr": 17.11,
+          "lpips": 0.328,
+          "ssim": 0.56
+        },
+        "dpt_large_384": {
+          "psnr": 19.03,
+          "lpips": 0.297,
+          "ssim": 0.59
+        }
+      },
+      "source": "Table 1 (LLFF, 3 views); ablations Tables 4, 5 and supp. Tables 2, 4; 8-scene averages only"
+    },
+    "llff-6view": {
+      "method": {
+        "average": {
+          "psnr": 22.18,
+          "ssim": 0.755,
+          "lpips": 0.198
+        }
+      },
+      "baseline_3dgs": {
+        "average": {
+          "psnr": 20.63,
+          "ssim": 0.699,
+          "lpips": 0.226
+        }
+      },
+      "source": "supp. Table 7",
+      "baseline_3dgs_dagger": {
+        "average": {
+          "psnr": 21.09,
+          "ssim": 0.699,
+          "lpips": 0.229,
+          "avge": 0.103
+        }
+      }
+    },
+    "llff-9view": {
+      "method": {
+        "average": {
+          "psnr": 23.17,
+          "ssim": 0.788,
+          "lpips": 0.18
+        }
+      },
+      "baseline_3dgs": {
+        "average": {
+          "psnr": 20.44,
+          "ssim": 0.697,
+          "lpips": 0.23
+        }
+      },
+      "source": "supp. Table 7",
+      "baseline_3dgs_dagger": {
+        "average": {
+          "psnr": 23.21,
+          "ssim": 0.785,
+          "lpips": 0.176,
+          "avge": 0.076
+        }
+      }
+    },
+    "dtu-3view": {
+      "method": {
+        "average": {
+          "psnr": 18.91,
+          "ssim": 0.79,
+          "lpips": 0.176,
+          "avge": 0.102
+        }
+      },
+      "baseline_3dgs": {
+        "average": {
+          "psnr": 10.99,
+          "ssim": 0.585,
+          "lpips": 0.313,
+          "avge": 0.252
+        }
+      },
+      "source": "Table 1",
+      "baseline_3dgs_dagger": {
+        "average": {
+          "psnr": 14.74,
+          "ssim": 0.672,
+          "lpips": 0.249,
+          "avge": 0.169
+        }
+      }
+    },
+    "blender-8view": {
+      "method": {
+        "average": {
+          "psnr": 24.305,
+          "ssim": 0.886,
+          "lpips": 0.088
+        }
+      },
+      "baseline_3dgs": {
+        "average": {
+          "psnr": 22.226,
+          "ssim": 0.858,
+          "lpips": 0.114
+        }
+      },
+      "source": "Table 2"
+    }
+  },
+  "notes": "No Mip-NeRF 360 / T&T / DB results and no per-scene numbers anywhere in the paper (main + supplementary) or the README; the LLFF comparison must use the 8-scene average. The 3DGS baselines are the authors' runs (random init). SSIM flavour of the table not stated."
+}

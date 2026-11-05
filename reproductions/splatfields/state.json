@@ -1,0 +1,62 @@
+{
+  "paper": "SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction",
+  "slug": "splatfields",
+  "plan_id": 50,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (1 major fixed: refine_stop 40000)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "partial (2/3 scenes)",
+  "method": "splatfields",
+  "methods": [
+    "splatfields-3dgs",
+    "splatfields"
+  ],
+  "benchmark": "blender-fewview6 (+12) chair/hotdog/ficus, two-stage (see bench_request.json)",
+  "not_reproduced": {
+    "dtu-3view": "needs the 2DGS-preprocessed DTU (Google Drive), pixelNeRF 3-view split, masks; not attempted (Blender covers the static claim)",
+    "4d": "Owlii / NeRF-DS dynamic branch out of scope"
+  },
+  "review_1_fixes": "done",
+  "plugin_freeze_sha": "f32f62e64feb314b",
+  "bench_exps": [
+    "splatfields-stage1-fv6",
+    "splatfields-fv6"
+  ],
+  "stage1_result": {
+    "chair": [
+      22.71,
+      22.75
+    ],
+    "ficus": [
+      22.16,
+      22.25
+    ],
+    "hotdog": [
+      21.26,
+      21.16
+    ]
+  },
+  "result": {
+    "psnr_delta": {
+      "chair": -0.78,
+      "hotdog": -0.18,
+      "ficus": 0.09
+    },
+    "gain_vs_stage1": {
+      "chair": 1.54,
+      "hotdog": 4.75,
+      "ficus": 0.19
+    },
+    "paper_gain": {
+      "chair": 2.28,
+      "hotdog": 5.03,
+      "ficus": 0.01
+    }
+  }
+}

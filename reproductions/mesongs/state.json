@@ -1,0 +1,34 @@
+{
+  "paper": "MesonGS: Post-training Compression of 3D Gaussians via Efficient Attribute Transformation",
+  "slug": "mesongs",
+  "plan_id": 46,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (major: targets; switched to c1 config vs repo per-scene c1 csv rows, sizes in MiB and 1e6)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "plugin_freeze_sha": "992f4f4016742a48",
+  "bench_exps": [
+    "mesongs-c1-garden",
+    "mesongs-c1-bicycle",
+    "mesongs-c1-counter"
+  ],
+  "pass_criterion": "per-scene PSNR vs official results csv c1 rows within \u00b10.5; paper headline (28.61 dB, 27.62 MiB 7-scene avg) = c1",
+  "result": {
+    "psnr_delta": {
+      "bicycle": -0.16,
+      "garden": -0.02,
+      "counter": -0.22
+    },
+    "size_MB_1e6": {
+      "bicycle": 56.4,
+      "garden": 51.2,
+      "counter": 14.7
+    }
+  }
+}

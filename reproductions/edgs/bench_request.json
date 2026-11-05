@@ -1,0 +1,83 @@
+{
+ "method": "edgs",
+ "datasets": {
+  "mipnerf360-edgs": [
+   "bicycle",
+   "garden",
+   "counter"
+  ],
+  "tandt-edgs": [
+   "truck",
+   "train"
+  ],
+  "db-edgs": [
+   "drjohnson",
+   "playroom"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe splatstudio",
+ "data_paths": {
+  "mipnerf360-edgs/bicycle": "/home/sejain/datasets/edgs-init/mipnerf360/bicycle",
+  "mipnerf360-edgs/garden": "/home/sejain/datasets/edgs-init/mipnerf360/garden",
+  "mipnerf360-edgs/counter": "/home/sejain/datasets/edgs-init/mipnerf360/counter",
+  "tandt-edgs/truck": "/home/sejain/datasets/edgs-init/tandt/truck",
+  "tandt-edgs/train": "/home/sejain/datasets/edgs-init/tandt/train",
+  "db-edgs/drjohnson": "/home/sejain/datasets/edgs-init/db/drjohnson",
+  "db-edgs/playroom": "/home/sejain/datasets/edgs-init/db/playroom"
+ },
+ "proposed_datasets_json_entries": {
+  "mipnerf360-edgs": {
+   "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+   "native_root": "/home/sejain/datasets/edgs-init/mipnerf360",
+   "scenes": {
+    "bicycle": "images_4",
+    "garden": "images_4",
+    "counter": "images_2"
+   },
+   "_note": "EDGS-initialized copy of mipnerf360 (same transforms.json + hard-linked images => same dataset_sha256/protocol_id; points.npz replaced). Built by ss-edgs-init, not by bench.py prepare."
+  },
+  "tandt-edgs": {
+   "raw_root": "/home/sejain/datasets/tandt_db/tandt",
+   "native_root": "/home/sejain/datasets/edgs-init/tandt",
+   "scenes": {
+    "truck": "images",
+    "train": "images"
+   },
+   "_note": "EDGS-initialized copy of tandt (same transforms.json + hard-linked images => same dataset_sha256/protocol_id; points.npz replaced). Built by ss-edgs-init, not by bench.py prepare."
+  },
+  "db-edgs": {
+   "raw_root": "/home/sejain/datasets/tandt_db/db",
+   "native_root": "/home/sejain/datasets/edgs-init/db",
+   "scenes": {
+    "drjohnson": "images",
+    "playroom": "images"
+   },
+   "_note": "EDGS-initialized copy of db (same transforms.json + hard-linked images => same dataset_sha256/protocol_id; points.npz replaced). Built by ss-edgs-init, not by bench.py prepare."
+  }
+ },
+ "baseline_dataset_alias": {
+  "mipnerf360-edgs": "mipnerf360",
+  "tandt-edgs": "tandt",
+  "db-edgs": "db"
+ },
+ "optional_methods": {
+  "edgs-nosh": {
+   "mipnerf360-edgs": [
+    "bicycle",
+    "garden",
+    "counter"
+   ],
+   "tandt-edgs": [
+    "truck",
+    "train"
+   ],
+   "db-edgs": [
+    "drjohnson",
+    "playroom"
+   ]
+  }
+ },
+ "note": "Data must be the EDGS-initialized copies (points.npz from RoMa correspondences, training views only); edgs-density locates edgs_init.npz by the SHA-256 of the initial means and fails loudly otherwise. '--recipe splatstudio' is REQUIRED (appended after bench.py's --recipe 3dgs; argparse last wins): the 3dgs recipe's knn_log_scales does a [4096,N] cdist and OOMs (61 GiB) on EDGS's 3-7M points; edgs-density restores 3DGS's camera-extent means LR itself. --num-gaussians 10000000 (bench default) keeps all init points (max scene here 4.50M, counter). Compare against baseline3dgs-<base dataset>-30000 (same protocol_id) and paper_results.json (entries duplicated under the -edgs keys). edgs = paper-full (pinv SH init); edgs-nosh = released code = paper ablation 'w/o SH init' (M360 avg 27.80). Paper times include ~2 min init; our init timings are in each scene's edgs_init.json (garden 491 s on a shared A6000). Expect slow training (4M Gaussians from step 1; garden smoke 2k steps 455-765 s on a contended GPU)."
+}

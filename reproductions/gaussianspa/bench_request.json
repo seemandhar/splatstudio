@@ -1,0 +1,10 @@
+{"method": "gaussianspa",
+ "datasets": {"mipnerf360-1600": ["garden", "bicycle", "counter"]},
+ "steps": 40000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "method_per_scene": {
+  "mipnerf360-1600/garden": "gaussianspa-garden",
+  "mipnerf360-1600/bicycle": "gaussianspa-bicycle",
+  "mipnerf360-1600/counter": "gaussianspa-counter"},
+ "notes": "Protocol mipnerf360-1600 (official scripts use default -r -1: width 1600 from full-res images). 40000 steps (official). Per-scene methods are the official README presets: garden importance r1=0.60 r2=0.50, bicycle importance 0.50/0.72, counter opacity 0.60/0.50. Baseline: baseline3dgs-mipnerf360-1600-30000 (garden, bicycle, counter). Paper targets (supp. Table): bicycle 25.44, garden 27.26, counter 29.23 PSNR; #G 0.656/0.728/0.392M; paper 3DGS row (from EAGLES): 25.13/27.32/29.11. Importance-criterion runs recompute importance over all training views every 50 steps in 15200-25200 (~200 passes) — expect extra wall time. First job JIT-compiles the CUDA extension ss_gaussianspa_cuda (~1.5 min, cached)."}

@@ -1,0 +1,40 @@
+{
+ "paper": "DashGaussian: Optimizing 3D Gaussian Splatting in 200 Seconds",
+ "slug": "dashgaussian",
+ "plan_id": 31,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done",
+  "gap_analysis": "done"
+ },
+ "outcome": "matched",
+ "method": "dashgaussian",
+ "plugin_freeze_sha": "2f8d3a2e90fb52ea",
+ "bench_exps": [
+  "dashgaussian-mipnerf360",
+  "dashgaussian-tandt",
+  "dashgaussian-db"
+ ],
+ "iteration": 1,
+ "plugin_freeze_sha_i1": "4ad1da1d901202ce",
+ "history": [
+  {
+   "iteration": 1,
+   "changes": [
+    "PIL-resized data for garden/bicycle (protocol)",
+    "same-padded D-SSIM in training loss (official fused_ssim)"
+   ],
+   "exps": [
+    "dashgaussian-i1-pilr2",
+    "dashgaussian-i1-mipnerf360",
+    "dashgaussian-i1-db",
+    "dashgaussian-i1-tandt"
+   ]
+  }
+ ],
+ "headline": "7 scenes: mean −0.35 dB (5/7 within ±0.5) after 1 fix iteration"
+}

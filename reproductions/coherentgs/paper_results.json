@@ -1,0 +1,32 @@
+{
+  "paper": "CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians",
+  "arxiv": "2403.19495",
+  "method_label": "Ours",
+  "iterations": 13000,
+  "datasets": {
+    "llff": {
+      "method": {"average": {"psnr": 20.33, "ssim": 0.725, "lpips": 0.180}},
+      "method_2view": {"average": {"psnr": 18.32, "ssim": 0.644, "lpips": 0.220}},
+      "method_4view": {"average": {"psnr": 21.58, "ssim": 0.762, "lpips": 0.167}},
+      "baseline_3dgs": {"average": {"psnr": 14.99, "ssim": 0.483, "lpips": 0.362}},
+      "baseline_3dgs_2view": {"average": {"psnr": 12.83, "ssim": 0.311, "lpips": 0.470}},
+      "baseline_3dgs_4view": {"average": {"psnr": 17.31, "ssim": 0.584, "lpips": 0.297}},
+      "dngaussian_3view": {"average": {"psnr": 19.55, "ssim": 0.647, "lpips": 0.264}},
+      "ablation_3view": {"w/o alignment": {"psnr": 19.06, "ssim": 0.679, "lpips": 0.217},
+                          "w/o implicit decoder": {"psnr": 16.68, "ssim": 0.477, "lpips": 0.331},
+                          "w/o tv reg.": {"psnr": 20.20, "ssim": 0.724, "lpips": 0.186},
+                          "w/o flow reg.": {"psnr": 20.32, "ssim": 0.723, "lpips": 0.185},
+                          "w/o multisampling": {"psnr": 19.99, "ssim": 0.718, "lpips": 0.194},
+                          "w/o mask": {"psnr": 19.70, "ssim": 0.673, "lpips": 0.214},
+                          "3ch mask": {"psnr": 19.86, "ssim": 0.704, "lpips": 0.198},
+                          "7ch mask": {"psnr": 20.13, "ssim": 0.713, "lpips": 0.187}},
+      "source": "Table 1 (main, views 2/3/4), Table 3 (ablation, 3 views), supp. Tables 4-5; 3-view is the primary target"
+    },
+    "nvs_rgbd": {
+      "method": {"zed2": {"2view": {"psnr": 23.05, "ssim": 0.774, "lpips": 0.164}, "3view": {"psnr": 24.93, "ssim": 0.840, "lpips": 0.135}},
+                 "iphone": {"2view": {"psnr": 18.07, "ssim": 0.615, "lpips": 0.292}, "3view": {"psnr": 21.99, "ssim": 0.725, "lpips": 0.228}}},
+      "source": "Table 2 (dataset not available locally)"
+    }
+  },
+  "notes": "Averages only (no per-scene numbers in paper, supp. or README). All metrics are MASKED: pixels whose rendered CoherentGS opacity < 1e-3 are excluded for every method (same mask). 3DGS row is vanilla 3DGS retrained by the authors on the same split, evaluated with the CoherentGS mask. LLFF images_8 (504x378), 13000 regularized iterations after 1000 alignment iterations."
+}

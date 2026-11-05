@@ -1,0 +1,10 @@
+{"method": "improving-densification", "module": "ss_improving_densification",
+ "components": [
+  {"name": "improvedgs-raster", "kind": "renderer", "factory": "ss_improving_densification.renderer:create_renderer", "provides": ["render.rgb", "render.depth.inverse", "gradient.screen.inria_abs"]},
+  {"name": "improvedgs-density", "kind": "density", "factory": "ss_improving_densification.density:create_density", "requires": ["gradient.screen.inria_abs"]},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["raster-vendored", "eas-score", "eas-sampling", "las-geometry", "growth-control", "rap-schedule", "mu-gated-adam", "lr-schedule"],
+ "contributions": ["edge-aware-score", "long-axis-split", "recovery-aware-pruning", "multi-view-update", "growth-control", "improvedgs-hyperparameters"],
+ "fidelity_gaps": ["view sampling with replacement", "SSIM valid conv", "torch Adam vs official CUDA Adam", "empty pixel_weights in training renders", "data resolution ambiguity (images_4/2 used)", "MU code schedule 20000/24000 (paper 15000/22500)", "single seed vs best of 3", "SH switch at 1001"],
+ "feasible_natively": true}

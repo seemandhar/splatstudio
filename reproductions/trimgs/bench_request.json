@@ -1,0 +1,56 @@
+{
+ "method": "trimgs",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "stump",
+   "counter"
+  ]
+ },
+ "steps": 37000,
+ "per_scene_reported": true,
+ "extra": "",
+ "method_per_scene": {
+  "mipnerf360/garden": "trimgs",
+  "mipnerf360/stump": "trimgs",
+  "mipnerf360/counter": "trimgs-indoor"
+ },
+ "optional_methods": {
+  "trimgs@30000": {
+   "mipnerf360": [
+    "garden",
+    "stump",
+    "counter"
+   ],
+   "steps": 30000,
+   "note": "Same method names (trimgs for garden/stump, trimgs-indoor for counter) with --steps 30000 = exactly the flat-3DGS pre-training = the paper's '3DGS*' row. Lets us measure Delta(Trim3DGS - 3DGS*) on identical runtime; paper: garden -0.11, stump +0.06, counter -0.07 dB."
+  }
+ },
+ "paper_reference": {
+  "psnr": {
+   "garden": 27.28,
+   "stump": 26.59,
+   "counter": 28.89
+  },
+  "ssim": {
+   "garden": 0.864,
+   "stump": 0.77,
+   "counter": 0.907
+  },
+  "lpips": {
+   "garden": 0.111,
+   "stump": 0.215,
+   "counter": 0.196
+  },
+  "baseline_3dgs_star": {
+   "psnr": {
+    "garden": 27.39,
+    "stump": 26.53,
+    "counter": 28.96
+   }
+  },
+  "source": "paper_results.json (Table 3)"
+ },
+ "recipe": "3dgs",
+ "notes": "37000 = 30000 flat-3DGS pre-train + 7000 Trim fine-tune (official tune.py). Normal weight per official run_Mipnerf360.py: outdoor 0.1 (trimgs), indoor 0.01 (trimgs-indoor). Compare against baseline3dgs-mipnerf360-30000 (non-flat) and, better, the optional 30000-step trimgs runs (flat, paper's 3DGS*). bicycle avoided: flat 3DGS used 1.48x the Gaussians of gsplat at 2k steps, bicycle baseline already 6.6M (12M budget). First job JIT-compiles ss_trimgs_cuda (~1 min). Fine-tune adds an extra rasterization pass per step plus ~6 trimming passes over all train views and ~14 CPU kNN (5 s each at 5M). Headline geometry claims (DTU Chamfer, Tables 1-2) are out of scope."
+}

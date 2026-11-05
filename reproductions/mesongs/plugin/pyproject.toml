@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-mesongs"
+version = "0.1.0"
+description = "MesonGS (Xie et al., ECCV 2024, arXiv 2409.09756) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "numpy"]
+
+[project.entry-points."splatstudio.methods"]
+mesongs-bicycle = "ss_mesongs:method_bicycle"
+mesongs-flowers = "ss_mesongs:method_flowers"
+mesongs-garden = "ss_mesongs:method_garden"
+mesongs-stump = "ss_mesongs:method_stump"
+mesongs-treehill = "ss_mesongs:method_treehill"
+mesongs-room = "ss_mesongs:method_room"
+mesongs-counter = "ss_mesongs:method_counter"
+mesongs-kitchen = "ss_mesongs:method_kitchen"
+mesongs-bonsai = "ss_mesongs:method_bonsai"
+mesongs-train = "ss_mesongs:method_train"
+mesongs-truck = "ss_mesongs:method_truck"
+mesongs-drjohnson = "ss_mesongs:method_drjohnson"
+mesongs-playroom = "ss_mesongs:method_playroom"
+mesongs-c1-garden = "ss_mesongs:method_c1_garden"
+mesongs-noft-garden = "ss_mesongs:method_noft_garden"
+mesongs-c1-bicycle = "ss_mesongs:method_c1_bicycle"
+mesongs-noft-bicycle = "ss_mesongs:method_noft_bicycle"
+mesongs-c1-counter = "ss_mesongs:method_c1_counter"
+mesongs-noft-counter = "ss_mesongs:method_noft_counter"
+mesongs-smoke = "ss_mesongs:smoke"
+
+[tool.setuptools.packages.find]
+include = ["ss_mesongs*"]
+
+[tool.setuptools.package-data]
+ss_mesongs = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.h", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

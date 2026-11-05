@@ -1,0 +1,334 @@
+{
+ "paper": "Compact 3D Scene Representation via Self-Organizing Gaussian Grids",
+ "arxiv": "2312.13299",
+ "method_label": "Ours (w/ SH)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.0791,
+     "ssim": 0.7987,
+     "lpips": 0.2304,
+     "size_mb": 40.2846
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.5426,
+      "bonsai": 31.5413,
+      "counter": 28.4609,
+      "flowers": 21.5047,
+      "garden": 27.0307,
+      "kitchen": 30.7158,
+      "room": 31.0288,
+      "stump": 26.2676,
+      "treehill": 22.6191
+     },
+     "ssim": {
+      "bicycle": 0.7261,
+      "bonsai": 0.9366,
+      "counter": 0.896,
+      "flowers": 0.5899,
+      "garden": 0.8398,
+      "kitchen": 0.9115,
+      "room": 0.9157,
+      "stump": 0.7532,
+      "treehill": 0.6191
+     },
+     "lpips": {
+      "bicycle": 0.2516,
+      "bonsai": 0.1815,
+      "counter": 0.193,
+      "flowers": 0.3526,
+      "garden": 0.135,
+      "kitchen": 0.1388,
+      "room": 0.2051,
+      "stump": 0.2485,
+      "treehill": 0.3675
+     },
+     "size_mb": {
+      "bicycle": 53.202,
+      "bonsai": 23.781,
+      "counter": 17.619,
+      "flowers": 54.975,
+      "garden": 83.495,
+      "kitchen": 23.259,
+      "room": 14.196,
+      "stump": 50.488,
+      "treehill": 41.546
+     },
+     "gaussians": {
+      "bicycle": 2893401,
+      "bonsai": 1375929,
+      "counter": 960400,
+      "flowers": 2852721,
+      "garden": 4343056,
+      "kitchen": 1210000,
+      "room": 910116,
+      "stump": 2812329,
+      "treehill": 2229049
+     }
+    }
+   },
+   "method_no_sh": {
+    "average": {
+     "psnr": 26.5649,
+     "ssim": 0.7906,
+     "lpips": 0.2414,
+     "size_mb": 16.6849
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 23.9503,
+      "bonsai": 30.5186,
+      "counter": 27.55,
+      "flowers": 21.1599,
+      "garden": 26.5897,
+      "kitchen": 29.8092,
+      "room": 30.8989,
+      "stump": 25.9773,
+      "treehill": 22.6303
+     },
+     "ssim": {
+      "bicycle": 0.7128,
+      "bonsai": 0.9334,
+      "counter": 0.8878,
+      "flowers": 0.5714,
+      "garden": 0.8324,
+      "kitchen": 0.9014,
+      "room": 0.9157,
+      "stump": 0.7454,
+      "treehill": 0.615
+     },
+     "lpips": {
+      "bicycle": 0.266,
+      "bonsai": 0.191,
+      "counter": 0.2111,
+      "flowers": 0.3665,
+      "garden": 0.1434,
+      "kitchen": 0.1528,
+      "room": 0.2081,
+      "stump": 0.2604,
+      "treehill": 0.3732
+     },
+     "size_mb": {
+      "bicycle": 22.233,
+      "bonsai": 9.873,
+      "counter": 7.009,
+      "flowers": 22.23,
+      "garden": 33.345,
+      "kitchen": 9.006,
+      "room": 6.293,
+      "stump": 22.452,
+      "treehill": 17.723
+     },
+     "gaussians": {
+      "bicycle": 2845969,
+      "bonsai": 1329409,
+      "counter": 900601,
+      "flowers": 2819041,
+      "garden": 4359744,
+      "kitchen": 1181569,
+      "room": 883600,
+      "stump": 2822400,
+      "treehill": 2205225
+     }
+    }
+   },
+   "paper_table_v2": {
+    "method": {
+     "psnr": 27.64,
+     "ssim": 0.814,
+     "lpips": 0.22,
+     "size_mb": 40.3
+    },
+    "baseline_3dgs": {
+     "psnr": 27.55,
+     "ssim": 0.814,
+     "lpips": 0.222,
+     "size_mb": 785
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.55,
+     "ssim": 0.814,
+     "lpips": 0.222,
+     "size_mb": 785
+    }
+   },
+   "source": "per-scene + averages: official repo results/MipNeRF360/*.csv (ECCV-2024 release models, decompressed and evaluated with eval/download_eval.sh, 2024-09-16 fix); paper_table_v2: arXiv v2 Table 1 / supp. Table (SSIM)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.5598,
+     "ssim": 0.8375,
+     "lpips": 0.1855,
+     "size_mb": 22.7785
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.5579,
+      "truck": 25.5616
+     },
+     "ssim": {
+      "train": 0.7974,
+      "truck": 0.8776
+     },
+     "lpips": {
+      "train": 0.2225,
+      "truck": 0.1485
+     },
+     "size_mb": {
+      "train": 16.767,
+      "truck": 28.79
+     },
+     "gaussians": {
+      "train": 889249,
+      "truck": 1595169
+     }
+    }
+   },
+   "method_no_sh": {
+    "average": {
+     "psnr": 23.1482,
+     "ssim": 0.8278,
+     "lpips": 0.1985,
+     "size_mb": 9.293
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.2291,
+      "truck": 25.0674
+     },
+     "ssim": {
+      "train": 0.7868,
+      "truck": 0.8688
+     },
+     "lpips": {
+      "train": 0.2359,
+      "truck": 0.161
+     },
+     "size_mb": {
+      "train": 6.781,
+      "truck": 11.805
+     },
+     "gaussians": {
+      "train": 857476,
+      "truck": 1557504
+     }
+    }
+   },
+   "paper_table_v2": {
+    "method": {
+     "psnr": 25.63,
+     "ssim": 0.864,
+     "lpips": 0.208,
+     "size_mb": 21.4
+    },
+    "baseline_3dgs": {
+     "psnr": 25.54,
+     "ssim": 0.866,
+     "lpips": 0.201,
+     "size_mb": 454
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 25.54,
+     "ssim": 0.866,
+     "lpips": 0.201,
+     "size_mb": 454
+    }
+   },
+   "source": "per-scene + averages: official repo results/TanksAndTemples/*.csv (ECCV-2024 release models, decompressed and evaluated with eval/download_eval.sh, 2024-09-16 fix); paper_table_v2: arXiv v2 Table 1 / supp. Table (SSIM)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.2571,
+     "ssim": 0.8943,
+     "lpips": 0.2679,
+     "size_mb": 17.7365
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.8006,
+      "playroom": 29.7137
+     },
+     "ssim": {
+      "drjohnson": 0.8882,
+      "playroom": 0.9004
+     },
+     "lpips": {
+      "drjohnson": 0.2753,
+      "playroom": 0.2604
+     },
+     "size_mb": {
+      "drjohnson": 18.64,
+      "playroom": 16.833
+     },
+     "gaussians": {
+      "drjohnson": 919681,
+      "playroom": 861184
+     }
+    }
+   },
+   "method_no_sh": {
+    "average": {
+     "psnr": 29.1198,
+     "ssim": 0.892,
+     "lpips": 0.2701,
+     "size_mb": 5.7125
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.5207,
+      "playroom": 29.719
+     },
+     "ssim": {
+      "drjohnson": 0.8837,
+      "playroom": 0.9002
+     },
+     "lpips": {
+      "drjohnson": 0.2759,
+      "playroom": 0.2642
+     },
+     "size_mb": {
+      "drjohnson": 5.937,
+      "playroom": 5.488
+     },
+     "gaussians": {
+      "drjohnson": 811801,
+      "playroom": 788544
+     }
+    }
+   },
+   "paper_table_v2": {
+    "method": {
+     "psnr": 30.35,
+     "ssim": 0.909,
+     "lpips": 0.258,
+     "size_mb": 16.8
+    },
+    "baseline_3dgs": {
+     "psnr": 30.07,
+     "ssim": 0.907,
+     "lpips": 0.248,
+     "size_mb": 699
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 30.07,
+     "ssim": 0.907,
+     "lpips": 0.248,
+     "size_mb": 699
+    }
+   },
+   "source": "per-scene + averages: official repo results/DeepBlending/*.csv (ECCV-2024 release models, decompressed and evaluated with eval/download_eval.sh, 2024-09-16 fix); paper_table_v2: arXiv v2 Table 1 / supp. Table (SSIM)"
+  }
+ },
+ "notes": "The arXiv paper (v2) reports dataset averages only (Table 1). Per-scene numbers exist only in the official repository results/*.csv, produced 2024-09-16 by decompressing the released ECCV models and rendering/measuring with the original 3DGS code; README states this fixes the earlier metric computation (quantization/compression loss now included, Dr Johnson moved to DeepBlending). Those CSV numbers are the decoded-model reference used here (the v2 Table-1 PSNRs are higher, e.g. Mip-NeRF360 27.64 vs CSV 27.08, while sizes agree: 40.3 MB vs CSV mean 40.28 MB). size_mb = 'Size [Bytes]' / 1e6, where Size = sum of all files in the compressed directory (*.jxl + compression_info.csv + compression_config.yml; decompress.py get_size_of_files_in_dir). baseline_3dgs = 3DGS row of the paper's Table 1 (authors' retrained 3DGS; average only; no per-scene baseline is published)."
+}

@@ -1,0 +1,39 @@
+{
+ "paper": "FlashGS: Efficient 3D Gaussian Splatting for Large-scale and High-resolution Rendering",
+ "arxiv": "2408.07967",
+ "method_label": "FlashGS",
+ "iterations": 30000,
+ "datasets": {
+  "tandt": {
+   "speed": {
+    "gpu": "RTX 3090",
+    "avg_time_ms": {"truck": {"1080p": [2.22, 8.21], "4k": [3.46, 24.19]},
+                    "train": {"1080p": [1.93, 7.82], "4k": [3.32, 12.82]}},
+    "max_time_ms": {"truck": {"1080p": [4.44, 10.18], "4k": [4.65, 29.87]},
+                    "train": {"1080p": [3.48, 12.82], "4k": [4.22, 42.73]}},
+    "avg_speedup_vs_3dgs": {"truck": {"1080p": 3.76, "4k": 7.01}, "train": {"1080p": 4.20, "4k": 7.48}},
+    "max_speedup_vs_3dgs": {"truck": {"1080p": 4.74, "4k": 8.60}, "train": {"1080p": 6.89, "4k": 11.51}},
+    "min_speedup_vs_3dgs": {"truck": {"1080p": 2.29, "4k": 5.53}, "train": {"1080p": 2.19, "4k": 4.46}},
+    "a100_avg_time_ms_flashgs": {"truck": {"1080p": 3.37, "4k": 4.87}, "train": {"1080p": 3.05, "4k": 4.58}}
+   },
+   "source": "Table 1 (time pairs are [FlashGS, 3DGS] in ms)"
+  },
+  "db": {
+   "speed": {
+    "gpu": "RTX 3090",
+    "avg_time_ms": {"playroom": {"1080p": [1.44, 6.83], "4k": [2.72, 10.74]},
+                    "drjohnson": {"1080p": [1.63, 9.11], "4k": [2.99, 28.74]}},
+    "max_time_ms": {"playroom": {"1080p": [2.92, 10.74], "4k": [4.69, 32.11]},
+                    "drjohnson": {"1080p": [4.95, 16.92], "4k": [6.91, 57.67]}},
+    "avg_speedup_vs_3dgs": {"playroom": {"1080p": 4.92, "4k": 7.86}, "drjohnson": {"1080p": 6.18, "4k": 9.99}},
+    "max_speedup_vs_3dgs": {"playroom": {"1080p": 7.91, "4k": 11.16}, "drjohnson": {"1080p": 14.99, "4k": 21.66}},
+    "min_speedup_vs_3dgs": {"playroom": {"1080p": 3.16, "4k": 5.69}, "drjohnson": {"1080p": 3.07, "4k": 6.39}},
+    "a100_avg_time_ms_flashgs": {"playroom": {"1080p": 2.36, "4k": 3.98}, "drjohnson": {"1080p": 2.59, "4k": 4.35}}
+   },
+   "source": "Table 1"
+  }
+ },
+ "quality_claim": {"text": "FlashGS does not change the quality", "matrixcity_1080p_frame800_psnr": 31.52, "speedup": 8.57, "source": "Sec. 6.5, Fig. 12"},
+ "other_scenes_not_available": {"matrixcity": {"1080p_avg_speedup": 6.56, "4k_avg_speedup": 13.64}, "rubble_4608x3456_avg_speedup": 7.41},
+ "notes": "No per-scene PSNR/SSIM/LPIPS tables: the paper's quality claim is equality with the 3DGS rasterizer. No Mip-NeRF 360 results. Speedups are vs the original 3DGS CUDA rasterizer on RTX 3090; models trained 30K iterations with 3DGS."
+}

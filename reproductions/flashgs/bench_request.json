@@ -1,0 +1,30 @@
+{
+ "method": "flashgs",
+ "type": "evaluation",
+ "datasets": {
+  "tandt": [
+   "truck",
+   "train"
+  ],
+  "db": [
+   "drjohnson",
+   "playroom"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "train": false,
+ "commands": [
+  "CUDA_VISIBLE_DEVICES=<least-busy> tools/ssenv python reproductions/flashgs/plugin/apply_flashgs.py --run runs/baseline3dgs-tandt-30000/gsplat/tandt-truck --out reproductions/flashgs/results/truck.json",
+  "CUDA_VISIBLE_DEVICES=<least-busy> tools/ssenv python reproductions/flashgs/plugin/apply_flashgs.py --run runs/baseline3dgs-tandt-30000/gsplat/tandt-train --out reproductions/flashgs/results/train.json",
+  "CUDA_VISIBLE_DEVICES=<least-busy> tools/ssenv python reproductions/flashgs/plugin/apply_flashgs.py --run runs/baseline3dgs-db-30000/gsplat/db-drjohnson --out reproductions/flashgs/results/drjohnson.json",
+  "CUDA_VISIBLE_DEVICES=<least-busy> tools/ssenv python reproductions/flashgs/plugin/apply_flashgs.py --run runs/baseline3dgs-db-30000/gsplat/db-playroom --out reproductions/flashgs/results/playroom.json"
+ ],
+ "notes": "No training: FlashGS is render-only (official release has no backward). Paper protocol = render 30K 3DGS models; we use the shared gsplat 30K baselines. Run the 4 commands SEQUENTIALLY on ONE GPU, ideally the least utilised (timings are same-GPU ratios; do not run them concurrently with each other). Each: quality on all test views (gsplat / original 3DGS / FlashGS, SplatStudio metrics + parity) then speed at native, 1920 ('1080p') and 3840 ('4k') widths, 10 repeats/view; ~5-15 min per scene; needs ~10 GB GPU memory at 4K. Compare: (a) quality.flashgs.psnr vs quality.3dgs.psnr and quality.gsplat.psnr (paper: unchanged; target |dPSNR| <= 0.05 dB) and parity_mean; (b) speed.{1080p,4k}.vs_3dgs.avg_speedup vs paper_results.json avg_speedup_vs_3dgs (truck 3.76/7.01, train 4.20/7.48, playroom 4.92/7.86, drjohnson 6.18/9.99 on RTX 3090) - labelled same-GPU A6000 ratios, not comparable in absolute ms. Optional: `ss-train flashgs` is training-identical to gsplat and need not be benchmarked.",
+ "comparison_mapping": {
+  "tandt": "paper 1080p column vs speed.1080p (1920 wide; paper draft 1957x1091); 4k vs speed.4k",
+  "db": "paper 1080p column = native resolution (output.tex:833: Playroom 1264x832, DrJohnson 1332x876) -> compare vs speed.native; speed.1080p secondary"
+ },
+ "match_criteria": "quality |dPSNR(FlashGS-3DGS)|<=0.05 and parity>=40 dB; speed: same-GPU avg_speedup (mean of per-frame ratios) >= 0.8x paper at paper-equivalent resolution; 4k > 1080p; drjohnson largest gain; lightly-used GPU; rerun once for spread"
+}

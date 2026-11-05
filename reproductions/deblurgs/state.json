@@ -1,0 +1,11 @@
+{
+ "paper": "DeblurGS: Gaussian Splatting for Camera Motion Blur",
+ "slug": "deblurgs",
+ "plan_id": 76,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done"
+ },
+ "outcome": null
+}

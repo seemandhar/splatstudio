@@ -1,7 +1,14 @@
 """Native gsplat backend. Custom packages may replace either factory completely."""
 
+import gsplat
 import torch
 from gsplat import DefaultStrategy, MCMCStrategy, rasterization, rasterization_2dgs
+from gsplat.strategy.ops import reset_opa
+
+# gsplat 1.5.x DefaultStrategy never resets opacity: `step % reset_every == 0 & step > 0`
+# parses as a chained comparison ending in `0 > 0`. 3DGS resets every reset_every steps
+# while densifying, so the wrapper below performs the intended reset itself.
+GSPLAT_RESET_BROKEN = gsplat.__version__.startswith("1.5.")
 
 
 class Renderer:
@@ -47,7 +54,10 @@ class Renderer:
 
 class Density:
     def __init__(self, spec):
-        self.strategy = DefaultStrategy(**spec.config)
+        config = dict(spec.config)
+        # True (default): 3DGS opacity reset; False reproduces gsplat 1.5.x's actual behaviour.
+        self.opacity_reset = bool(config.pop("opacity_reset", True))
+        self.strategy = DefaultStrategy(**config)
         self.requires = {
             "gradient.surfel"
             if self.strategy.key_for_gradient == "gradient_2dgs"
@@ -68,6 +78,13 @@ class Density:
         self.strategy.step_post_backward(
             params, optimizers, self.state, step, outputs["info"], packed=False
         )
+        if self.opacity_reset and GSPLAT_RESET_BROKEN and resets_opacity(self.strategy, step):
+            reset_opa(params, optimizers, self.state, value=self.strategy.prune_opa * 2.0)
+
+
+def resets_opacity(strategy, step):
+    """Intended DefaultStrategy schedule: every reset_every steps, before refine_stop_iter."""
+    return 0 < step < strategy.refine_stop_iter and step % strategy.reset_every == 0
 
 
 def create_renderer(spec):

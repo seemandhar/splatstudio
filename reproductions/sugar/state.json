@@ -1,0 +1,36 @@
+{
+  "paper": "SuGaR: Surface-Aligned Gaussian Splatting for Efficient 3D Mesh Reconstruction and High-Quality Mesh Rendering",
+  "slug": "sugar",
+  "plan_id": 56,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (major fixed: benchmark at mipnerf360-1920; 6 minors documented)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "method": "sugar",
+  "smoke": {
+    "sugar-smoke_4000": 22.43509292602539,
+    "gsplat_4000": 24.18939224878947
+  },
+  "bench_exps": [
+    "sugar-mipnerf360-1920",
+    "baseline3dgs-mipnerf360-1920-30000"
+  ],
+  "result": {
+    "psnr_delta": {
+      "garden": -0.25,
+      "bicycle": -0.15,
+      "counter": -0.19
+    },
+    "vs_baseline_1920": {
+      "garden": -1.51,
+      "bicycle": -1.64,
+      "counter": -1.43
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{"method": "sog", "module": "ss_sog",
+ "components": [
+  {"name": "sog-renderer", "kind": "renderer", "factory": "ss_sog.renderer:create_renderer"},
+  {"name": "sog-density", "kind": "density", "factory": "ss_sog.density:create_density"},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"},
+  {"name": "sog-neighbor", "kind": "loss", "factory": "ss_sog.losses:create_neighbor_loss"}],
+ "fields": [],
+ "probes": ["log-xyz", "neighbor-loss", "grid-sort", "codec-roundtrip", "schedule", "decoded-eval", "sog-renderer-gradient"],
+ "contributions": ["grid-plas-sorting", "smoothness-regularization", "log-xyz-activation", "jxl-quantized-codec", "sog-densification"],
+ "fidelity_gaps": ["runtime optimizer step order / view sampling / white bg (shared)", "grad > vs >= threshold", "codec run in isolated numpy-1.26 subprocess env", "metadata file bytes may differ slightly", "intermediate logging compressions not run", "PLAS RNG", "no w/o-SH variant"],
+ "feasible_natively": true}

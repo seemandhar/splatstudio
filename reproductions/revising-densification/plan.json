@@ -1,0 +1,62 @@
+{
+ "method": "revising-densification",
+ "module": "ss_revising_densification",
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "gsplat",
+   "factory": "splatstudio.backends.gsplat:create_renderer"
+  },
+  {
+   "kind": "density",
+   "name": "revdens-density",
+   "factory": "ss_revising_densification.density:create_density",
+   "requires": [
+    "render.rgb"
+   ]
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "splatstudio.losses:create_photometric"
+  },
+  {
+   "kind": "loss",
+   "name": "revdens-aux",
+   "factory": "ss_revising_densification.losses:create_aux",
+   "config": {
+    "transmittance_weight": 0.1,
+    "error": "ssim"
+   }
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "error-attribution-oracle",
+  "error-score-max",
+  "error-driven-selection",
+  "growth-budget",
+  "clone-opacity",
+  "opacity-regularisation",
+  "error-map",
+  "adc-schedule",
+  "primitive-cap-table"
+ ],
+ "contributions": [
+  "C1 error-based densification",
+  "C2 clone opacity correction",
+  "C3 growth control",
+  "C4 opacity decrement + transmittance loss",
+  "C5 ADC until 27k"
+ ],
+ "fidelity_gaps": [
+  "error formula unspecified",
+  "cap from our baseline",
+  "prune/grow order",
+  "runtime white bg/Adam order/sampling/alpha clamp",
+  "single run",
+  "world-size prune kept",
+  "gsplat saturated-alpha grad drop"
+ ],
+ "feasible_natively": true
+}

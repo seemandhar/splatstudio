@@ -1,0 +1,10 @@
+{"method": "deblurgs", "module": "ss_deblurgs",
+ "components": [
+  {"kind": "renderer", "name": "deblurgs-renderer", "factory": "ss_deblurgs.renderer:create_renderer", "provides": ["render.rgb", "render.depth.expected_z", "gradient.screen.signed", "render.motion_blur"]},
+  {"kind": "density", "name": "deblurgs-density", "factory": "ss_deblurgs.density:create_density", "requires": ["gradient.screen.signed"]},
+  {"kind": "loss", "name": "deblurgs-objective", "factory": "ss_deblurgs.losses:create_objective", "requires": ["render.motion_blur"]}],
+ "fields": [],
+ "probes": ["state-transitions", "bezier-se3", "blur-synthesis", "alignment", "gamma", "smoothness", "densify-annealing", "test-pose-opt"],
+ "contributions": ["camera-trajectory", "subframe-alignment", "gamma-tonemap", "temporal-smoothness", "densification-annealing", "test-pose-alignment"],
+ "fidelity_gaps": ["view sampling with replacement", "adam step before densify", "SH +1 at 1001", "gsplat rasterizer (straight-through alpha cap)", "nu lr 3e-3 (paper) vs code default 0", "code lambda_smooth/L1 form vs paper", "released code under construction", "SSIM/LPIPS implementation", "average-only -> all 10 scenes"],
+ "feasible_natively": true}

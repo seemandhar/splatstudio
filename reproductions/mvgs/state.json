@@ -1,0 +1,20 @@
+{
+  "paper": "MVGS: Multi-view-regulated Gaussian Splatting for Novel View Synthesis",
+  "slug": "mvgs",
+  "plan_id": 54,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (approved, 6 minors; MVAD growth = official code)",
+    "benchmark": "running"
+  },
+  "outcome": "ready_for_benchmark",
+  "bench_exps": [
+    "mvgs-outdoor-1600",
+    "mvgs-indoor-1600 (OOM, kept)",
+    "mvgs-indoor-1600-m1"
+  ],
+  "memory_fix": "per-view checkpointing + shared activations; 48 views @3M: 51 GB -> 6.4 GB; loss/rgb bitwise equal; garden result from pre-fix plugin (mathematically unaffected)"
+}

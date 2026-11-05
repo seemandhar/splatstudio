@@ -1,0 +1,49 @@
+{
+ "approved": false,
+ "issues": [
+  {"severity": "major", "file": "paper_results.json; bench_request.json; plan.md; plugin/ss_trimgs/__init__.py", "where": "notes / optional_methods / module docstring ('3DGS*' = flat 3DGS = the pre-training stage, 'exactly')",
+   "problem": "The identification of the paper's 3DGS* row with the 30k flat-3DGS pre-training is an inference from the released code, not something the paper states, and is asserted as fact.",
+   "evidence": "latex/table/mipnerf.tex only says '$^*$: our re-implementation'; exp.tex says Trim is a 7K tune 'based on their [original 3DGS/2DGS] pretrained models'. 3DGS* room=31.40 vs the published original 3DGS 30.63 (other scenes within 0.2), i.e. an independent retrain whose architecture is unstated. Moreover the plugin's @30000 run is flat Gaussians + gsplat DefaultStrategy, not official train.py (densify_and_prune with size_threshold 20 after 3000 and 0.1*extent world-size prune, black background, official rasterizer, identity-quaternion init), so it equals neither the official flat pre-train nor necessarily 3DGS*.",
+   "fix": "Reword to 'assumed (code-derived)'. Make the trimgs@30000 runs mandatory and report three deltas: Trim vs trimgs@30000 (mechanism effect in this runtime), Trim vs baseline3dgs-30000, and each vs the paper's 3DGS*. Do not state that paper Delta(Trim-3DGS*) is reproduced from a different-baseline comparison."},
+  {"severity": "major", "file": "bench_request.json; plan.md", "where": "scene subset (garden, stump, counter)",
+   "problem": "The subset is acceptable for absolute-PSNR/SSIM/LPIPS checks (2 outdoor with weight 0.1, 1 indoor with 0.01, deltas of mixed sign: garden -0.11, stump +0.06, counter -0.07; bicycle excluded for the Gaussian budget, which is a justified reason) but it cannot support any claim about the paper's effect.",
+   "evidence": "Paper rendering deltas are |<=0.17| dB on the group means, below seed-to-seed noise (~0.1-0.2 dB) of 3DGS. Only one indoor scene exercises the 0.01 path. The paper's headline claim (DTU Chamfer 1.96->0.83 mm) is entirely out of scope, so the benchmark can only show 'no rendering regression', not the contribution.",
+   "fix": "Report per-scene, not averaged, against per-scene paper numbers; state that success = within ~0.3 dB of paper absolute and |delta vs @30000| small, plus LPIPS direction; if budget allows add bonsai or room (indoor) and a second seed. Add an explicit geometry-proxy (e.g. normal-consistency / Gaussian count / thin-Gaussian stats before vs after) or say geometry is unverified."},
+  {"severity": "minor", "file": "plugin/ss_trimgs/csrc/trim_contrib.cu; kernels.py; plan.md", "where": "Eq. (5) per-pixel weight",
+   "problem": "Code is faithful to the official rasterizer (alpha^(2*GAMMA) T^(2-2*GAMMA), GAMMA=0.5, i.e. alpha*T; covered-pixel count recorded before the 1/255 skip; alpha cap 0.99; same tile rect) but the paper Eq.(5) is alpha^gamma T^(1-gamma); the exponents differ (sum 2 vs 1) so the plugin's 'gamma 0.5' is not the paper's gamma.",
+   "evidence": "forward.cu:356-358 vs main.tex:255; plugin passes gamma to exp 2g and 2-2g.",
+   "fix": "Document in README/equation_coverage as 'deviates (code-faithful)': paper-gamma 0.5 would be sqrt(alpha T). Keep the code behaviour."},
+  {"severity": "minor", "file": "plugin/ss_trimgs/density.py", "where": "set_training_cameras / contribution",
+   "problem": "The literal top-5 record-insertion quirk is replicated exactly (list seeded with view 0 x5, updated only when a view beats the running max), and its result depends on the view order; the plugin re-creates the official random.shuffle(seed 0) but that only matches if the runtime's train list order equals the official sorted-by-name train list.",
+   "evidence": "tune.py:58-70 vs core.official_topk_insert; Random(0).shuffle(cams) on runtime order.",
+   "fix": "Assert in a test that runtime train order == name-sorted llffhold8 train list; note that the quirk makes C_k closer to a mean of the last few record-breaking views than a true top-5, so it is a source of run-to-run variance."},
+  {"severity": "minor", "file": "plugin/ss_trimgs/losses.py", "where": "_neighbours",
+   "problem": "kNN refresh at (t-1)%500==0 (t=1,501,...) and on N change vs official reset at t%500==0 (after the step) and after each densify; effect is a sub-step shift. kNN is also recomputed from post-step means (runtime order).",
+   "evidence": "tune.py:183,214 vs losses.py:_neighbours", "fix": "None required; note in README."},
+  {"severity": "minor", "file": "plugin/ss_trimgs/density.py", "where": "pre-training stage",
+   "problem": "Pre-training starts from the runtime's random-quaternion init (flat normals random) whereas official FlattenGaussianModel.create_from_pcd uses identity rotations with a 2-column scale; and scales[:,0] is pinned only after strategy ops (same call, so harmless). flat_schedule probe is CPU-only and does not exercise the gsplat pre-train path.",
+   "evidence": "runtime.initialize / FlattenGaussianModel.create_from_pcd (gaussian_model.py:521-544)", "fix": "Verify quats init in runtime.initialize; if random, consider identity init for trimgs to match, or record as a gap."}
+ ],
+ "equation_coverage": [
+  {"eq": "(5) contribution", "status": "deviates", "code": "csrc/trim_contrib.cu:trim_contrib_kernel (code-faithful alpha^(2g)T^(2-2g); paper alpha^g T^(1-g))"},
+  {"eq": "(6) top-5 view mean", "status": "deviates", "code": "core.py:official_topk_insert (literal official quirk, not a true top-5)"},
+  {"eq": "scale-split Sec 4.2", "status": "exact", "code": "core.py:scale_split_mask/split_n; density.py:_densify (0.01*extent, radii>100, 3-way, s/(0.8*3), box with z uses x span, opacity prune 0.005, Adam zeros)"},
+  {"eq": "(7) normal consistency / depth normals", "status": "exact", "code": "losses.py:terms; core.py:depth_normals/sobel_mask/normal_map_loss (unnormalised alpha-weighted z with black bg, mask 0.05 + erosion 1, dilation 2, L1 on (n+1)/2)"},
+  {"eq": "(8) smoothness", "status": "exact", "code": "core.py:smooth_loss/knn_indices (16-NN incl. self, sign-aligned, close_thresh 1.0, weights 0.1 outdoor / 0.01 indoor)"},
+  {"eq": "flat Gaussians / 30k->37k schedule", "status": "exact", "code": "core.py:flat_scales, density.py:_start_finetune (Adam state cleared, constant 1.6e-6*extent means LR, 6 densify+trim events at t=1000..6000, normal loss from t=1)"}
+ ],
+ "probe_assessment": [
+  {"probe": "contribution-kernel", "detects_removal": true, "why": "compares CUDA sums/counts with an independent per-pixel loop at two gammas"},
+  {"probe": "trimming", "detects_removal": true, "why": "occluded-vs-visible fixture discriminates from opacity pruning; record-insertion list checked against [6,5,3,1,1]"},
+  {"probe": "scale-split", "detects_removal": true, "why": "counts, s/2.4, in-plane sampling, box exclusion, Adam moment alignment"},
+  {"probe": "normal-loss", "detects_removal": true, "why": "analytic plane normals, aligned vs tilted loss, gradient to quats, inactive before fine-tune; smoothness term is not separately probed"},
+  {"probe": "flat-schedule", "detects_removal": true, "why": "LR, Adam reset, pinned axis, radii; CPU-only, does not cover the pre-train strategy path"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "White vs black background; gsplat rasterizer (alpha cap 0.999, tile radius) vs official for training/eval renders",
+  "Pre-training uses gsplat DefaultStrategy, not train.py densify_and_prune (no screen-size/world-size prune like official, different init quats)",
+  "Random-with-replacement view sampling vs stack-without-replacement",
+  "Paper's 3DGS* architecture unknown; DTU geometry not reproduced"
+ ],
+ "summary": "No critical issues: code for trimming (kernel, tile coverage, 10%/1000 steps, literal top-5 quirk), scale split (thresholds, 3-way, z-bound bug), normal loss (depth-derived vs rendered normals, 16-NN smoothness, 0.1/0.01) and the 30k->37k schedule (Adam reset, constant 1.6e-6 means LR) match the official code; paper_results.json matches Table 3 exactly including 3DGS* and derived averages/deltas. Major: the claim that 3DGS* equals the flat pre-training stage is unsupported (paper says only 're-implementation' and describes tuning from original 3DGS), and the plugin's pre-train is not official train.py; the 3-scene subset is fine for absolute rendering numbers but cannot validate the paper's contribution (geometry out of scope, deltas below noise). Approved=false pending relabelling and mandatory @30000 reference runs."
+}

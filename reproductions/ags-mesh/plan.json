@@ -1,0 +1,7 @@
+{"method": "ags-mesh", "module": "ss_agsmesh",
+ "components": ["ags-render", "splatfacto-density", "photometric", "ags-depth", "ags-normal", "ags-scale"],
+ "fields": [],
+ "probes": ["dnc-filter", "depth-schedule", "normal-anr", "scale-loss", "surface-normals", "splatfacto-density", "sidecar-init", "gaussian-normals"],
+ "contributions": ["C1 depth-normal consistency filter (DNC)", "C2 adaptive normal regularization (ANR)", "C3 loss composition", "C4 adaptive TSDF + IsoOctree meshing (gap)"],
+ "fidelity_gaps": ["meshing/mesh metrics not implemented", "2DGS variant not ported", "regenerated init/normals", "gsplat 1.5.3, LPIPS VGG, sampling with replacement", "ScanNet++ infeasible (licence)"],
+ "feasible_natively": true}

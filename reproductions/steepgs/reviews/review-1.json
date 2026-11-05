@@ -1,0 +1,44 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "report.md", "where": "header / Fidelity gaps",
+   "problem": "Estimator provenance is stated imprecisely and its residual risk is not recorded. The arguments default 'inv_covar' does not fall through to another branch: gaussian_renderer/__init__.py:63 does SPLITTING_ESTIMATORS[pc.S_estimator], which raises KeyError (and gaussian_model.add_densification_stats:666 would raise NotImplementedError). So the official default cannot run, and the paper's runs must have passed an explicit --S_estimator. README.md:95 says inv_cov is the default, which supports the port's choice. However, the paper's own Hessian (3_method.tex:195, X_proofs.tex:379-383, sigma-weighted Upsilon Upsilon^T - P^T Pi(Sigma)^-1 P) corresponds to the 'partial' estimator, not inv_cov.",
+   "evidence": "arguments/__init__.py:96 'inv_covar'; gaussian_renderer/__init__.py:18-23,63; README.md:95",
+   "fix": "In report.md, say the default crashes (it does not fall back to another estimator), so inv_cov is chosen from README:95. Add a gap entry saying the paper numbers could have come from 'partial'. If the 30k gap is far off the paper's -0.26/-0.27 dB with a ~0.4-0.5x point count, port 'partial' as a labeled variant."},
+  {"severity": "minor", "file": "report.md", "where": "Fidelity gap 5",
+   "problem": "The inv_cov estimator c*Sigma^-1 (c = sum_pix dL/dG) differs from the paper's Hessian in three ways: it has no sigma weighting, no outer-product term, and the opposite sign of the dominant -sigma*Sigma^-1 term. As a result, selection reduces to 'c < 0 and screen grad >= 2e-4' (Gaussians whose loss falls if they get brighter), and v_min is always the shortest axis. The port matches the code exactly; this is a paper-vs-code note.",
+   "evidence": "gaussian_model.py:661-663 vs X_proofs.tex:383",
+   "fix": "Spell out the selection-rule consequence in gap 5 (already partially stated)."},
+  {"severity": "minor", "file": "bench_request.json", "where": "methods",
+   "problem": "Only steepgs is requested. The steepgs-adc control (same vendored rasterizer, official ADC) at 30k would split the renderer effect from the density effect. The paper's comparison is SteepGS vs the same code with ADC.",
+   "evidence": "bench_request.json lists method steepgs only",
+   "fix": "Also benchmark steepgs-adc on garden and counter, or justify using baseline3dgs-mipnerf360-30000 alone (the 2k smoke shows adc ~ gsplat, +0.21 dB)."},
+  {"severity": "minor", "file": "plugin/ss_steepgs/probes.py", "where": "dldg_kernel",
+   "problem": "The kernel probe's scene never reaches the 0.99 alpha clamp or the T<1e-4 early stop (opacities 0.2-0.7). The reference handles both, but the test does not exercise them. The rasterizer is a byte-identical vendor (diff -q: all 12 files identical), so the risk is low.",
+   "evidence": "probes.py dldg_kernel opacities rand*0.5+0.2",
+   "fix": "Optional: add a high-opacity Gaussian so the clamp/early-stop path is covered."}
+ ],
+ "equation_coverage": [
+  {"eq": "Thm.1 splitting matrix S = sum dl/dsigma * Hessian (Alg.1 line 40)", "status": "deviates", "code": "density.py:_accumulate (inv_cov estimator, exact port of official gaussian_model.py:661-663; paper formula = 'partial', not ported)"},
+  {"eq": "Alg.1 line 44 averaging S/T and grad/T (denom = visible count)", "status": "exact", "code": "core.py:averaged, density.py:_densify"},
+  {"eq": "Thm.2(i) lambda_min(S) < eps_split=-1e-6 AND ADC grad>=2e-4", "status": "exact", "code": "core.py:select (gaussian_model.py:543-559)"},
+  {"eq": "Thm.2(iv) offspring along +-v_min, length ||N(0,diag s)||, repeat-row sign quirk, scale s/1.6", "status": "exact", "code": "core.py:split_offsets, density.py:_densify (gaussian_model.py:569-628)"},
+  {"eq": "clone: copy and original at p + lr*v_min", "status": "exact", "code": "density.py:_densify (gaussian_model.py:590-604); lr = runtime lr(step) = official lr(iteration)"},
+  {"eq": "Thm.2(iii) opacity halving", "status": "deviates", "code": "off by default as in code: 'no_div_opacity' NOT in options => opacity copied; flag present => halved (name is inverted, port matches)"},
+  {"eq": "3DGS schedule: densify (500,15000) every 100, prune o<0.005, world prune >0.1*extent for step>3000, screen prune inert (max_radii2D zeroed in densification_postfix:390), reset min(o,0.01) every 3000 for step<15000", "status": "exact", "code": "density.py:after_backward/_prune_and_log"}
+ ],
+ "probe_assessment": [
+  {"probe": "steepgs-dLdG", "detects_removal": true, "why": "Independent float64 compositor vs the kernel's splitting[:,0,0] and the NDC screen gradient. A wrong estimator id or buffer would fail it."},
+  {"probe": "steepgs-splitting-matrix", "detects_removal": true, "why": "Checks c*Sigma^-1 averaged over visible views with an independent rotation formula. It perturbs scales between before/after_backward to verify the pre-step covariance."},
+  {"probe": "steepgs-saddle-criterion", "detects_removal": true, "why": "Expects exactly one Gaussian selected among five, and checks that the ablations change the count. It fails if the eigen or gradient condition is dropped."},
+  {"probe": "steepgs-split-direction", "detects_removal": true, "why": "Checks offsets along e_z = v_min, the parity-dependent sign pattern (K=1,2), s/1.6, copied opacity, and the clone shift lr*v_min."},
+  {"probe": "steepgs-schedule", "detects_removal": true, "why": "Checks exact densify steps 600..14900, the world prune starting after 3000, and the reset at 3000."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Optimizer step before density (official densifies first, and at densify iterations the step is skipped for the replaced tensors)",
+  "Views sampled with replacement, SSIM with valid convolution, SH degree increments one step later, lpips package",
+  "Black background (official default) vs runtime white; GT has no alpha so only uncovered pixels differ",
+  "Opacity copied (code default), sign quirk, clone coincident with the shifted original: all follow code",
+  "inv_cov estimator is a code simplification of the paper's Hessian; v_min = shortest axis",
+  "No world normalization in native data (raw COLMAP coordinates, extent ~4.9 on garden), so the absolute thresholds -1e-6 / 2e-4 have the same units as official"
+ ],
+ "summary": "Faithful port of SteepGS @63eee45. The vendored rasterizer is byte-identical to submodules/diff-gaussian-rasterization. The Python autograd wrapper, projection and NDC means2D match the Inria/SteepGS conventions. The density logic matches densify_and_split_steepest line by line: eigh ascending, filters, the repeat-row sign quirk, s/(0.8N), the clone shift with lr(step), opacity copied unless no_div_opacity (the flag enables halving), prune and reset. Loss scale (0.8 L1 + 0.2(1-SSIM)) and LR schedule match, so the absolute thresholds carry over. The official default S_estimator 'inv_covar' raises a KeyError and does not fall back to another estimator, so passing inv_cov (README default) is correct. Paper numbers in paper_results.json match supp. Tables 6-9. The 2k smoke (21.83 vs ADC control 23.23, 0.35x points) is plausible and not a sign bug. The log shows ~26% of Gaussians with lambda_min<-1e-6 and ~20% with high screen gradient, roughly independent, giving ~5% selected per interval vs ~18% for ADC. Since the port equals the code, the eigen sign convention is the official one. pytest 5/5 and ss-verify declared_checks_passed (CUDA probe included) reproduced. No critical or major issues."}

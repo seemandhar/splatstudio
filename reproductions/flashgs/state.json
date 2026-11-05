@@ -1,0 +1,47 @@
+{
+  "paper": "FlashGS: Efficient 3D Gaussian Splatting for Large-scale and High-resolution Rendering",
+  "slug": "flashgs",
+  "plan_id": 73,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (major = DB resolution mapping, fixed in comparison; 8 minors)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "partial",
+  "official_code_commit": "cdfc4e4002318423eda356eed02df8e01fa32cb6",
+  "arxiv": "2408.07967",
+  "method": "flashgs",
+  "custom_cuda": true,
+  "bench_request": "bench_request.json",
+  "notes": "render-only: official FlashGS has no backward; method trains as gsplat, evaluation tool applies FlashGS to baseline checkpoints",
+  "result": {
+    "dpsnr": {
+      "truck": 0.022,
+      "train": 0.032,
+      "drjohnson": -0.022,
+      "playroom": -0.166
+    },
+    "speedup_ratio_to_paper": {
+      "truck": [
+        0.95,
+        0.9
+      ],
+      "train": [
+        0.87,
+        0.88
+      ],
+      "drjohnson": [
+        0.68,
+        0.9
+      ],
+      "playroom": [
+        0.69,
+        0.92
+      ]
+    }
+  }
+}

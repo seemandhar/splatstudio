@@ -1,0 +1,125 @@
+{
+ "paper": "Trim 3D Gaussian Splatting for Accurate Geometry Representation",
+ "arxiv": "2406.07499",
+ "method_label": "Trim3DGS",
+ "iterations": 37000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.3022,
+     "ssim": 0.814,
+     "lpips": 0.2141
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.16,
+      "flowers": 21.29,
+      "garden": 27.28,
+      "stump": 26.59,
+      "treehill": 22.36,
+      "room": 31.05,
+      "counter": 28.89,
+      "kitchen": 31.07,
+      "bonsai": 32.03
+     },
+     "ssim": {
+      "bicycle": 0.767,
+      "flowers": 0.602,
+      "garden": 0.864,
+      "stump": 0.77,
+      "treehill": 0.63,
+      "room": 0.917,
+      "counter": 0.907,
+      "kitchen": 0.927,
+      "bonsai": 0.942
+     },
+     "lpips": {
+      "bicycle": 0.202,
+      "flowers": 0.334,
+      "garden": 0.111,
+      "stump": 0.215,
+      "treehill": 0.323,
+      "room": 0.218,
+      "counter": 0.196,
+      "kitchen": 0.127,
+      "bonsai": 0.201
+     }
+    },
+    "outdoor_mean_reported": {
+     "psnr": 24.54,
+     "ssim": 0.727,
+     "lpips": 0.237
+    },
+    "indoor_mean_reported": {
+     "psnr": 30.76,
+     "ssim": 0.923,
+     "lpips": 0.186
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.4056,
+     "ssim": 0.8127,
+     "lpips": 0.2183
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.18,
+      "flowers": 21.33,
+      "garden": 27.39,
+      "stump": 26.53,
+      "treehill": 22.48,
+      "room": 31.4,
+      "counter": 28.96,
+      "kitchen": 31.22,
+      "bonsai": 32.16
+     },
+     "ssim": {
+      "bicycle": 0.763,
+      "flowers": 0.599,
+      "garden": 0.865,
+      "stump": 0.767,
+      "treehill": 0.63,
+      "room": 0.919,
+      "counter": 0.907,
+      "kitchen": 0.923,
+      "bonsai": 0.941
+     },
+     "lpips": {
+      "bicycle": 0.212,
+      "flowers": 0.341,
+      "garden": 0.108,
+      "stump": 0.22,
+      "treehill": 0.33,
+      "room": 0.22,
+      "counter": 0.201,
+      "kitchen": 0.128,
+      "bonsai": 0.205
+     }
+    },
+    "outdoor_mean_reported": {
+     "psnr": 24.58,
+     "ssim": 0.725,
+     "lpips": 0.242
+    },
+    "indoor_mean_reported": {
+     "psnr": 30.93,
+     "ssim": 0.923,
+     "lpips": 0.189
+    }
+   },
+   "source": "Table 3 (table/mipnerf.tex) 'Trim3DGS' and '3DGS$^*$' rows; 9-scene average computed by us from the per-scene values (paper reports only outdoor/indoor means)"
+  },
+  "dtu_geometry_out_of_scope": {
+   "metric": "Chamfer distance (mm), 15 scans",
+   "trim3dgs_mesh_mean": 0.83,
+   "3dgs_mesh_mean": 1.96,
+   "trim3dgs_point_mean": 1.32,
+   "3dgs_point_mean": 1.64,
+   "source": "Tables 1-2",
+   "status": "not reproduced: no DTU data, no TSDF mesh extraction / DTU Chamfer evaluation in SplatStudio"
+  }
+ },
+ "notes": "iterations = 30000 flat-3DGS pre-training + 7000 Trim fine-tune. Baseline '3DGS*' is the authors' re-implementation = flat 3DGS (FlattenGaussianModel) trained 30k, i.e. exactly the pre-training stage of Trim3DGS. Paper deltas Trim3DGS - 3DGS*: outdoor -0.04 dB, indoor -0.17 dB PSNR; LPIPS -0.005/-0.003. TnT F-score is reported only for Trim2DGS (README), not Trim3DGS."
+}

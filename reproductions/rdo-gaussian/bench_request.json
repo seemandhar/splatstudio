@@ -1,0 +1,20 @@
+{
+ "method": "rdo-gaussian",
+ "datasets": {
+  "mipnerf360-1600": [
+   "garden",
+   "bicycle",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline_needed": "gsplat (baseline3dgs runtime) on mipnerf360-1600 garden/bicycle/counter: no shared baseline exists at the 1600-px protocol",
+ "optional_rd_points": [
+  "rdo-gaussian-rate2",
+  "rdo-gaussian-rate3",
+  "rdo-gaussian-rate4"
+ ],
+ "notes": "Official run_real_world.sh passes no -i/-r: full-res images PIL-resized to width 1600 (3DGS -r -1), llffhold 8 -> mipnerf360-1600. rdo-gaussian = highest rate (lambda_GS 0.0005, lambda_SH 0.005), which is the per-scene row of App. Tab. A.6/A.7. --steps must equal 30000 (encode/decode at total_steps; the density raises otherwise). After each run: tools/ssenv python reproductions/rdo-gaussian/plugin/report_size.py <run> -> <run>/rdo_size.json; report size_MB (bitstream bytes/1e6, official csv Size [Bytes]), never checkpoint_bytes. Paper: garden 26.78 dB / 38.75 MB, bicycle 24.88 / 43.14, counter 28.51 / 7.91; paper 3DGS rows 27.30 / 25.11 / 29.10 (delta -0.52 / -0.23 / -0.59). Official render.py evaluates the decoded bitstream (Scene.__init__ -> gaussians.decode; fp16 xyz, 8-bit opacity), matching our ss-eval of the decoded model; density evaluate='official' is a diagnostic undecoded mode (fp32 xyz, unquantised opacity) that no official evaluation mirrors (reviewer's estimate of the fp16-position/8-bit-opacity effect vs the undecoded model: 0.01-0.05 dB)."
+}

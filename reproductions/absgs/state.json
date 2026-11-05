@@ -1,0 +1,11 @@
+{
+  "paper": "AbsGS: Recovering Fine Details for 3D Gaussian Splatting",
+  "slug": "absgs",
+  "plan_id": 1,
+  "stages": {
+    "read": "done",
+    "plan": "done"
+  },
+  "outcome": "skipped",
+  "note": "existing Nerfstudio port kept; build stopped by user decision (ids 1-25 out of scope)"
+}

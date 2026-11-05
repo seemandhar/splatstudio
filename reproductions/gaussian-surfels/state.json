@@ -1,0 +1,52 @@
+{
+  "paper": "High-quality Surface Reconstruction using Gaussian Surfels",
+  "slug": "gaussian-surfels",
+  "plan_id": 62,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "report": "done",
+    "review": "done (approved, 7 minors; split = NeuS2 holdout confirmed by 04.exp.tex:72)",
+    "benchmark": "done"
+  },
+  "outcome": "matched",
+  "arxiv": "2404.17774",
+  "official_code_commit": "01d1249",
+  "method": "gaussian-surfels",
+  "methods": [
+    "gaussian-surfels",
+    "gaussian-surfels-nogeo"
+  ],
+  "custom_cuda": true,
+  "dataset": "dtu-gsurfels",
+  "benchmark_target": "DTU chamfer 15 scans (paper Table 1, mean 0.88) + PSNR 32.51 (Table 3, 15-scan avg)",
+  "smoke": {
+    "scene": "scan24",
+    "steps": 2000,
+    "psnr": 22.17,
+    "chamfer_mm": 2.084,
+    "gsplat_psnr": 18.75
+  },
+  "data": {
+    "raw": "/home/sejain/datasets/gsurfels_dtu/raw (HF turandai/gaussian-surfels-dtu, 21 GB)",
+    "native": "/home/sejain/datasets/gsurfels_dtu/native (17 GB)"
+  },
+  "extra_deps": {
+    "pymeshlab": "~/models/gsurfels-pylib (pip --target, numpy removed)",
+    "open3d/sklearn": "~/models/dtueval-pylib",
+    "omnidata_weights": "not needed: authors ship precomputed normals for DTU"
+  },
+  "bench_exps": [
+    "gsurfels-dtu",
+    "gsurfels-nogeo-dtu"
+  ],
+  "result": {
+    "mean_cd": 0.916,
+    "paper_cd": 0.883,
+    "psnr": 32.38,
+    "paper_psnr": 32.51,
+    "ssim": 0.94
+  }
+}

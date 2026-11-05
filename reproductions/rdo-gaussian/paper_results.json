@@ -1,0 +1,352 @@
+{
+ "paper": "End-to-End Rate-Distortion Optimized 3D Gaussian Representation",
+ "arxiv": "2406.01597",
+ "method_label": "Ours (RDO-Gaussian), highest rate (lambda_GS=0.0005, lambda_SH=0.005)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.05,
+     "ssim": 0.802,
+     "lpips": 0.239,
+     "size_mb": 23.46
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.88,
+      "flowers": 21.16,
+      "garden": 26.78,
+      "stump": 26.53,
+      "treehill": 22.53,
+      "room": 31.11,
+      "counter": 28.51,
+      "kitchen": 30.49,
+      "bonsai": 31.43
+     },
+     "ssim": {
+      "bicycle": 0.734,
+      "flowers": 0.577,
+      "garden": 0.838,
+      "stump": 0.762,
+      "treehill": 0.629,
+      "room": 0.918,
+      "counter": 0.902,
+      "kitchen": 0.921,
+      "bonsai": 0.937
+     },
+     "lpips": {
+      "bicycle": 0.266,
+      "flowers": 0.372,
+      "garden": 0.148,
+      "stump": 0.258,
+      "treehill": 0.364,
+      "room": 0.212,
+      "counter": 0.205,
+      "kitchen": 0.13,
+      "bonsai": 0.196
+     },
+     "size_mb": {
+      "bicycle": 43.14,
+      "flowers": 26.52,
+      "garden": 38.75,
+      "stump": 36.17,
+      "treehill": 28.76,
+      "room": 8.11,
+      "counter": 7.91,
+      "kitchen": 13.01,
+      "bonsai": 8.77
+     },
+     "gaussians_after_prune": {
+      "bicycle": 3505660,
+      "flowers": 2094918,
+      "garden": 3137452,
+      "stump": 2876289,
+      "treehill": 2281930,
+      "room": 617115,
+      "counter": 565275,
+      "kitchen": 1000366,
+      "bonsai": 654960
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.11,
+      "flowers": 21.32,
+      "garden": 27.3,
+      "stump": 26.67,
+      "treehill": 22.51,
+      "room": 31.62,
+      "counter": 29.1,
+      "kitchen": 31.45,
+      "bonsai": 32.33
+     },
+     "ssim": {
+      "bicycle": 0.747,
+      "flowers": 0.589,
+      "garden": 0.856,
+      "stump": 0.77,
+      "treehill": 0.635,
+      "room": 0.926,
+      "counter": 0.914,
+      "kitchen": 0.932,
+      "bonsai": 0.946
+     },
+     "lpips": {
+      "bicycle": 0.244,
+      "flowers": 0.359,
+      "garden": 0.122,
+      "stump": 0.242,
+      "treehill": 0.348,
+      "room": 0.197,
+      "counter": 0.184,
+      "kitchen": 0.117,
+      "bonsai": 0.181
+     },
+     "size_mb": {
+      "bicycle": 1335.48,
+      "flowers": 807.02,
+      "garden": 1329.37,
+      "stump": 1096.31,
+      "treehill": 809.95,
+      "room": 349.48,
+      "counter": 275.71,
+      "kitchen": 415.42,
+      "bonsai": 293.48
+     }
+    }
+   },
+   "rate_points_average": {
+    "lambda_gs": [
+     0.05,
+     0.02,
+     0.01,
+     0.005,
+     0.002,
+     0.0005
+    ],
+    "lambda_sh": [
+     0.5,
+     0.2,
+     0.1,
+     0.05,
+     0.02,
+     0.005
+    ],
+    "size_mb": [
+     1.71,
+     3.54,
+     6.16,
+     9.76,
+     15.35,
+     23.46
+    ],
+    "psnr": [
+     24.43,
+     25.38,
+     26.03,
+     26.5,
+     26.87,
+     27.05
+    ],
+    "ssim": [
+     0.683,
+     0.734,
+     0.764,
+     0.784,
+     0.796,
+     0.802
+    ],
+    "lpips": [
+     0.406,
+     0.343,
+     0.299,
+     0.268,
+     0.248,
+     0.239
+    ],
+    "gaussian_prune_ratio": [
+     0.965,
+     0.922,
+     0.862,
+     0.776,
+     0.636,
+     0.437
+    ],
+    "sh_prune_ratio": [
+     0.999,
+     0.996,
+     0.989,
+     0.97,
+     0.922,
+     0.809
+    ]
+   },
+   "official_csv_rates_0_3": {
+    "garden": {
+     "psnr": [
+      26.78,
+      26.6,
+      26.21,
+      25.65
+     ],
+     "size_bytes": [
+      38753920,
+      23199741,
+      13218263,
+      7682870
+     ],
+     "gaussians": [
+      3137452,
+      1926980,
+      1079279,
+      616312
+     ]
+    },
+    "bicycle": {
+     "psnr": [
+      24.88,
+      24.79,
+      24.56,
+      24.26
+     ],
+     "size_bytes": [
+      43143796,
+      29467484,
+      19443501,
+      12524239
+     ],
+     "gaussians": [
+      3505660,
+      2458190,
+      1617566,
+      1017264
+     ]
+    },
+    "counter": {
+     "psnr": [
+      28.51,
+      28.25,
+      27.78,
+      27.09
+     ],
+     "size_bytes": [
+      7909222,
+      4943978,
+      3110900,
+      1922506
+     ],
+     "gaussians": [
+      565275,
+      337186,
+      195056,
+      117140
+     ]
+    }
+   },
+   "source": "App. Tab. A.3 (averages), A.6/A.7 (per-scene, highest rate); official results/MipNeRF360/*.csv",
+   "protocol": "full-res images PIL-resized to width 1600 (3DGS -r -1 default), llffhold 8 -> our dataset mipnerf360-1600"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.34,
+     "ssim": 0.835,
+     "lpips": 0.195,
+     "size_mb": 12.02
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.04,
+      "train": 21.64
+     },
+     "ssim": {
+      "truck": 0.87,
+      "train": 0.799
+     },
+     "lpips": {
+      "truck": 0.161,
+      "train": 0.228
+     },
+     "size_mb": {
+      "truck": 14.87,
+      "train": 9.18
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "truck": 25.36,
+      "train": 21.97
+     },
+     "ssim": {
+      "truck": 0.878,
+      "train": 0.81
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.209
+     },
+     "size_mb": {
+      "truck": 609.32,
+      "train": 254.89
+     }
+    }
+   },
+   "source": "App. Tab. A.1, A.5"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.63,
+     "ssim": 0.902,
+     "lpips": 0.252,
+     "size_mb": 18.0
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.1,
+      "playroom": 30.16
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.905
+     },
+     "lpips": {
+      "drjohnson": 0.253,
+      "playroom": 0.251
+     },
+     "size_mb": {
+      "drjohnson": 22.89,
+      "playroom": 13.11
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.06,
+      "playroom": 29.96
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.901
+     },
+     "lpips": {
+      "drjohnson": 0.247,
+      "playroom": 0.246
+     },
+     "size_mb": {
+      "drjohnson": 771.44,
+      "playroom": 550.56
+     }
+    }
+   },
+   "source": "App. Tab. A.2, A.5"
+  }
+ },
+ "notes": "3DGS rows are the authors' re-implementation (same 1600-px loader). Size MB = 1e6 bytes of the bitstream directory (official csv Size [Bytes]). Method per-scene rows = highest rate point. Averages of the method at the 6 rate points in App. Tab. A.1-A.4. Official render.py evaluates the decoded bitstream (Scene.__init__ -> gaussians.decode; fp16 xyz, 8-bit opacity), matching our ss-eval of the decoded model; density evaluate='official' is a diagnostic undecoded mode (fp32 xyz, unquantised opacity) that no official evaluation mirrors (reviewer's estimate of the fp16-position/8-bit-opacity effect vs the undecoded model: 0.01-0.05 dB)."
+}

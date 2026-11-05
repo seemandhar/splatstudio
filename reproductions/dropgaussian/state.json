@@ -1,0 +1,35 @@
+{
+  "paper": "DropGaussian: Structural Regularization for Sparse-view Gaussian Splatting",
+  "slug": "dropgaussian",
+  "plan_id": 35,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched (iter 1)",
+  "dataset": "llff-fewview3-r8 (proposed key; ~/datasets/llff/fewview3-r8, 8 scenes)",
+  "plugin_freeze_sha": "269c3d44791df6e4",
+  "bench_exps": [
+    "dropgaussian-llff-r8",
+    "dropgaussian-i1-llff-r8"
+  ],
+  "iterations": [
+    {
+      "n": 1,
+      "exp": "dropgaussian-i1-llff-r8",
+      "fix": "straight-through alpha cap (gsplat backward zeroes grad where opac*G>0.999; Inria rasterizer does not); iter-0 mean 17.63 (fortress/room/trex collapsed after opacity resets)",
+      "diagnosis_note": "diagnosed with trex test-view PSNR (1 scene); fix matches official rasterizer behaviour, no hyper-parameter tuned"
+    }
+  ],
+  "result": {
+    "mean_psnr": 20.36,
+    "paper": 20.76,
+    "nodrop": 19.84,
+    "paper_3dgs": 19.22
+  }
+}

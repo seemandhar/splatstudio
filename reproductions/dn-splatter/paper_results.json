@@ -1,0 +1,44 @@
+{
+  "paper": "DN-Splatter: Depth and Normal Priors for Gaussian Splatting and Meshing",
+  "arxiv": "2403.17822",
+  "venue": "WACV 2025",
+  "method_label": "DN-Splatter (Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mushroom_vr_room": {
+      "method": {"per_scene": {"psnr": {"vr_room": 26.8}, "ssim": {"vr_room": 0.879}},
+                 "mesh": {"C-L1_cm": 2.5, "NC": 89.6, "F1": 87.1}, "train_minutes_4090": 17.9},
+      "baseline_3dgs": {"label": "Splatfacto (L_rgb)",
+                        "per_scene": {"psnr": {"vr_room": 26.6}, "ssim": {"vr_room": 0.870}},
+                        "mesh": {"C-L1_cm": 7.0, "NC": 78.0, "F1": 56.3}, "train_minutes_4090": 12.9},
+      "ablation_rows": {
+        "+Normal(L_N)": {"psnr": 26.7, "ssim": 0.874},
+        "+Normal(L_N+L_smooth)": {"psnr": 26.4, "ssim": 0.866},
+        "+Depth(L_D)": {"psnr": 27.1, "ssim": 0.885},
+        "+Both(L_D+L_N)": {"psnr": 26.9, "ssim": 0.883},
+        "+Both(L_D+L_N+L_smooth) = DN-Splatter": {"psnr": 26.8, "ssim": 0.879}
+      },
+      "source": "Table 'Comparison of geometric supervision strategies' (tables/ab_our_supervision_strat.tex), MuSHRoom 'VR room', iPhone, 30k it. Split: within (test.txt, every-10th frame of the training sequence). The table does not state it, but every single-number MuSHRoom NVS table in the paper uses the within value (main_sfm_init 1M row 24.58/.8558 = Table 1 left; ab_2dgs_vs_dn_splatter_mono_sensor caption 'NVS is reported within the train sequence'). eval_mode='all' still averages within_/with_ separately (dn_pipeline.py:255-276, 499-545); a union is not an official metric. Baseline = vanilla ns-train splatfacto (eval/batch_run.py:186-207)."
+    },
+    "mushroom": {
+      "method": {"average": {"within": {"psnr": 24.58, "ssim": 0.8558, "lpips": 0.1293},
+                             "cross": {"psnr": 21.89, "ssim": 0.7984, "lpips": 0.1797}},
+                 "depth_within": {"abs_rel": 0.0228, "sq_rel": 0.0089, "rmse": 0.1280, "delta1.25": 0.9854}},
+      "baseline_3dgs": {"label": "Splatfacto",
+                        "average": {"within": {"psnr": 24.44, "ssim": 0.8486, "lpips": 0.1387},
+                                    "cross": {"psnr": 21.33, "ssim": 0.7821, "lpips": 0.2240}}},
+      "scenes": ["coffee_room", "honka", "kokko", "sauna", "computer", "vr_room"],
+      "source": "Table main_table_NVS_mushroom (6-scene average only; left = every-10th frame of the training sequence, right = separate short_capture trajectory). Mesh Table main_table_mesh_mushroom: DN-Splatter C-L1 .0216 NC .8822 F1 .9243 (Splatfacto .0652/.7727/.5835)."
+    },
+    "scannetpp": {
+      "method": {"mesh_average": {"acc": 0.0940, "comp": 0.0395, "C-L1": 0.0667, "NC": 0.8316, "F1": 0.7658}},
+      "source": "Table main_table_mesh_scannetpp (b20a261fdf + 8b5caf3398, mesh only). ScanNet++ needs a licence agreement: not used."
+    },
+    "tandt_courtroom_sparse_mono": {
+      "method": {"psnr": {"every3_zoe": 20.88, "every3_depthanything": 20.91}},
+      "baseline_3dgs": {"psnr": {"every3": 20.68}},
+      "source": "supp. Table supp_sparse_mono (T&T advanced Courtroom, monocular depth; not locally available)."
+    }
+  },
+  "notes": "No Mip-NeRF 360 / T&T truck-train / Deep Blending numbers. Baseline rows are Nerfstudio Splatfacto v1.1.3 retrained by the authors with the same 1M sensor-depth init. Metrics from Nerfstudio (torchmetrics PSNR/SSIM, LPIPS-AlexNet from torchmetrics on [0,1] inputs)."
+}

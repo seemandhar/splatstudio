@@ -1,0 +1,56 @@
+{
+ "method": "pgsr",
+ "datasets": {
+  "mipnerf360-pilr": [
+   "bicycle",
+   "flowers",
+   "garden",
+   "stump",
+   "treehill",
+   "room",
+   "counter",
+   "kitchen",
+   "bonsai"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000",
+ "paper_target": {
+  "indoor": {
+   "psnr": 30.36,
+   "ssim": 0.934,
+   "lpips": 0.147
+  },
+  "outdoor": {
+   "psnr": 24.76,
+   "ssim": 0.752,
+   "lpips": 0.203
+  },
+  "all": {
+   "psnr": 27.25,
+   "ssim": 0.833,
+   "lpips": 0.178
+  }
+ },
+ "paper_3dgs_row": {
+  "indoor": {
+   "psnr": 30.99
+  },
+  "outdoor": {
+   "psnr": 24.24
+  },
+  "all": {
+   "psnr": 27.24
+  }
+ },
+ "our_baseline_groups": {
+  "outdoor": 24.79,
+  "indoor": 31.0,
+  "all": 27.55,
+  "exp": "baseline3dgs-mipnerf360-pilr-30000"
+ },
+ "notes": "Paper (Table view_eval) reports indoor/outdoor/all averages only -> all 9 scenes. Official run_mip360.py: -r4 outdoor / -r2 indoor (PIL resize of full-res images; we use mipnerf360-pilr (full-res PIL -r 4 / -r 2, = official run_mip360.py) = mipnerf360 protocol), black background, --densify_abs_grad_threshold 0.0002, exposure off, 30k steps. Compare group averages and the gain over our gsplat baseline vs paper gain over 3DGS (indoor -0.63, outdoor +0.52 dB). The density controller reloads the training split from --data (bench.py passes it). First job JIT-compiles ss_pgsr_plane (~1 min, cached). Expect slower training than gsplat: from step 7001 every step renders a second (neighbour) view with plane outputs, and every 1000 steps < 15000 all training views are rendered for the observation trim. Official cap 6M Gaussians (max_all_points), so --max-gaussians 12M is never reached. Optional extra (not requested): pgsr-tnt (exposure on) has no locally runnable paper target; DTU Chamfer needs full-view DTU (not available locally).",
+ "review_note": "review-1 major fixed: dataset mipnerf360-pilr vs baseline3dgs-mipnerf360-pilr-30000"
+}

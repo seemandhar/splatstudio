@@ -1,0 +1,33 @@
+{
+  "paper": "GaussianSpa: An \u201cOptimizing-Sparsifying\u201d Simplification Framework for Compact and High-Quality 3D Gaussian Splatting",
+  "slug": "gaussianspa",
+  "plan_id": 49,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "partial (2/3 scenes)",
+  "methods": [
+    "gaussianspa",
+    "gaussianspa-imp",
+    "gaussianspa-<scene> x13"
+  ],
+  "plugin_freeze_sha": "85fe12ab2d39961e",
+  "bench_exps": [
+    "gaussianspa-garden",
+    "gaussianspa-bicycle",
+    "gaussianspa-counter"
+  ],
+  "result": {
+    "psnr_delta": {
+      "bicycle": -0.2,
+      "garden": -0.74,
+      "counter": -0.15
+    }
+  }
+}

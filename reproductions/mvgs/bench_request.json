@@ -1,0 +1,28 @@
+{
+ "method": "mvgs",
+ "datasets": {
+  "mipnerf360-1600": [
+   "garden",
+   "counter",
+   "room"
+  ]
+ },
+ "steps": 39000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 20000000",
+ "method_per_scene": {
+  "mipnerf360-1600/garden": "mvgs-outdoor",
+  "mipnerf360-1600/counter": "mvgs",
+  "mipnerf360-1600/room": "mvgs"
+ },
+ "steps_per_method": {
+  "mvgs": 39000,
+  "mvgs-outdoor": 30000
+ },
+ "baseline": {
+  "garden": "baseline3dgs-mipnerf360-1600-30000",
+  "counter": "baseline3dgs-mipnerf360-1600-30000",
+  "room": "baseline3dgs-mipnerf360-1600b-30000"
+ },
+ "notes": "Official run_360.py: -r -1 (width 1600 from full-res images) => protocol mipnerf360-1600, white background, llffhold8. Outdoor scenes (bicycle/garden/stump) use M=3 for 30000 it => method mvgs-outdoor with --steps 30000 (ss-train refuses any other step count). Indoor scenes use cross-intrinsic stages M=48/24/12/8 at -r 8/4/2/-1 for 3000/3000/3000/30000 it => method mvgs with --steps 39000. Paper targets (supp. Table t1_supp, 3DGS+Ours): garden 27.23, counter 30.21, room 32.84 PSNR; paper's 3DGS row (copied from the 3DGS paper, images_4/2 protocol): 27.41 / 28.70 / 30.63. Our w1600 baselines: garden 26.93, counter 29.04, room 31.52. Expect slow training: 3-12 views rendered per step (paper: 2.4 h vs 0.3 h for 3DGS on a 3090 Ti) and high memory (README: >=40 GB; M=12 at 1558 px and M=8 at 1600 px share one autograd graph) - request GPUs with >=40 GB free (--min-free-gb 40). The density controller reloads the training images from --data (bench.py passes it). Smoke (2k steps, garden, mvgs-outdoor): MVAD halves the threshold at every densify step (camera directions from the COLMAP origin almost always differ by >60 deg), giving 3.19M Gaussians vs 0.78M for gsplat at 2k -> --max-gaussians raised to 20M; expect >5M Gaussians on outdoor scenes. Indoor compressed smoke (all 4 stages, 2k steps) ran 1000 s with 7.7 GB peak at 0.26M Gaussians; full indoor runs likely several hours."
+}

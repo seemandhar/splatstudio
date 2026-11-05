@@ -1,0 +1,33 @@
+{
+  "paper": "Improving Adaptive Density Control for 3D Gaussian Splatting",
+  "slug": "improving-adc",
+  "plan_id": 61,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 7 minors)",
+    "benchmark": "done (tandt, db; mipnerf360 paused 2/9)",
+    "report": "done"
+  },
+  "outcome": "matched (T&T, DB)",
+  "bench_exps": [
+    "improving-adc-mipnerf360",
+    "improving-adc-tandt",
+    "improving-adc-db"
+  ],
+  "bench_note": "T&T (2 scenes) and DB (2 scenes) = complete datasets, prioritised; mipnerf360 paused after 2/9 (9-scene average needed for that comparison; resume with bench.py launch --exp improving-adc-mipnerf360 ... when GPUs free)",
+  "result": {
+    "tandt": 23.93,
+    "db": 29.56,
+    "paper": {
+      "tandt": 24.18,
+      "db": 29.63
+    },
+    "gain_vs_ours": {
+      "tandt": 0.57,
+      "db": 0.28
+    }
+  }
+}

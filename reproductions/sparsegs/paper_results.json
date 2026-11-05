@@ -1,0 +1,39 @@
+{
+  "paper": "SparseGS: Sparse View Synthesis using 3D Gaussian Splatting",
+  "arxiv": "2312.00206",
+  "method_label": "SparseGS (Ours)",
+  "iterations": 10000,
+  "datasets": {
+    "mipnerf360-12view": {
+      "method": {"average": {"psnr": 19.37, "ssim": 0.577, "lpips": 0.398}},
+      "method_wo_mvs": {"average": {"psnr": 18.46, "ssim": 0.513, "lpips": 0.476}},
+      "baseline_3dgs": {"average": {"psnr": 17.49, "ssim": 0.499, "lpips": 0.431}},
+      "fsgs": {"average": {"psnr": 19.31, "ssim": 0.574, "lpips": 0.413}},
+      "ablation": {
+        "3dgs": {"psnr": 17.49, "lpips": 0.431, "ssim": 0.499},
+        "+pcc_alpha": {"psnr": 18.45, "lpips": 0.410, "ssim": 0.549},
+        "+pcc_softmax": {"psnr": 18.86, "lpips": 0.401, "ssim": 0.561},
+        "+pcc_softmax+uvr": {"psnr": 19.09, "lpips": 0.400, "ssim": 0.565},
+        "+pcc_softmax+uvr+pruning": {"psnr": 19.37, "lpips": 0.398, "ssim": 0.577}
+      },
+      "source": "Table 1 (12-view column), Table 3 ablation (Mip-NeRF360 12-view); averages over 'seven' scenes only"
+    },
+    "mipnerf360-24view": {
+      "method": {"average": {"psnr": 23.02, "ssim": 0.713, "lpips": 0.290}},
+      "method_wo_mvs": {"average": {"psnr": 22.03, "ssim": 0.631, "lpips": 0.381}},
+      "baseline_3dgs": {"average": {"psnr": 19.93, "ssim": 0.588, "lpips": 0.401}},
+      "source": "Table 1 (24-view column, 30k iterations)"
+    },
+    "llff-3view": {
+      "method": {"average": {"psnr": 19.86, "ssim": 0.668, "lpips": 0.322}},
+      "baseline_3dgs": {"average": {"psnr": 16.94, "ssim": 0.488, "lpips": 0.402}},
+      "source": "Table 2 (RegNeRF protocol)"
+    },
+    "dtu-3view": {
+      "method": {"average": {"psnr": 18.89, "ssim": 0.834, "lpips": 0.178}},
+      "baseline_3dgs": {"average": {"psnr": 14.18, "ssim": 0.628, "lpips": 0.301}},
+      "source": "Table 2"
+    }
+  },
+  "notes": "No per-scene numbers anywhere (paper, supplementary, README). Table columns are ordered PSNR, LPIPS, SSIM in the paper; stored here by name. 3DGS rows are the authors' runs in the same sparse protocol. Paper says 7 Mip-NeRF 360 scenes; the authors' released 12-view data has 6 (bicycle bonsai counter garden kitchen stump). Official metrics.py averages over all non-training images of the full scene."
+}

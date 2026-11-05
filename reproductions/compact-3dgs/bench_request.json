@@ -1,0 +1,14 @@
+{
+ "method": "compact-3dgs",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "bonsai"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "notes": "Evaluated variant = Ours+PP (decoded PP model). Paper supp. Table tab:per_360 Ours+PP PSNR / Storage MB: bicycle 24.73 / 42.42, garden 26.72 / 43.26, bonsai 31.98 / 16.40 (Ours no-PP: 24.77/62.99, 26.81/62.78, 32.08/35.44; #Gaussians 2.22M / 2.21M / 0.60M); authors' 3DGS*: 25.10 / 27.25 / 32.16 (paper deltas PP: -0.37 / -0.53 / -0.18 dB). Our baseline: baseline3dgs-mipnerf360-30000. --steps must stay 30000 (= compact-density total_steps; other lengths raise at step 1). ss-eval measures the decoded model. Sizes (official final_prune formulas, MB=1e6, Ours and Ours+PP, plus actual container bytes): `tools/ssenv python reproductions/compact-3dgs/plugin/report_size.py <run>` -> <run>/compact_size.json (never use checkpoint_bytes). No G-PCC in this paper (positions fp16). First call JIT-builds the CUDA hash grid (~1 min). Expect slower training than gsplat (hash grid + MLP over all Gaussians each step; smoke ~9 it/s on a shared GPU at 0.24M Gaussians)."
+}

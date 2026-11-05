@@ -1,0 +1,43 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_contextgs/model.py", "where": "FactorizedPrior.likelihood_cm",
+   "problem": "Likelihood is sigmoid(upper)-sigmoid(lower) without compressai's sign trick (sign=-sign(lower+upper), abs(sigmoid(s*u)-sigmoid(s*l))). Mathematically identical, but in float32 the positive tail cancels (both sigmoids ~1) and clamps to 1e-9 / zero gradient earlier than compressai for z-hat above roughly +7..8.",
+   "evidence": "official compressai EntropyBottleneck._likelihood; the factorized-prior probe re-derives with the same plain difference, so it cannot see this",
+   "fix": "Use the sign form in likelihood_cm (and in the probe reference). Expected effect on PSNR/size is negligible because hyper latents start at 0 and stay small."},
+  {"severity": "minor", "file": "plugin/ss_contextgs/codec.py", "where": "encode_factorized / bake size",
+   "problem": "Official hyper stream is compressai rANS whose CDF only spans the quantile range [-10, 10] (quantiles stay at init) with Exp-Golomb escape outside; the port codes the full [lo, hi] range with the factorized CDF, so any |z-hat|>10 is cheaper here than in the official size. Also 32+32 header bits per channel vs official none.",
+   "evidence": "paper.md 7.4 acknowledges escape; code has no escape cost",
+   "fix": "None required unless many |z-hat|>10 are observed; log max|z-hat| in contextgs_size.json to bound the effect (<<1% expected)."},
+  {"severity": "minor", "file": "plugin/ss_contextgs/levels.py", "where": "multi_scale vs code_levels (training vs coding partition)",
+   "problem": "Training partitions ALL anchors with masked-out ones collapsed to the origin (an extra pseudo-voxel at level 1), while bake partitions only mask-valid anchors. Because the verbatim level-1 gather order is positional, row alignment of level-1 context differs slightly between training and coding. Lossless (encode and decode agree) but the coded probabilities are not exactly the trained ones.",
+   "evidence": "official has the identical train/encode difference (multi_scale_generating passes mask_anchor_bool; conduct_encoding calls divide_levels(_anchor, None) on masked anchors)",
+   "fix": "None; faithful to official. Worth citing if the size gap vs paper is attributed to the level-1 quirk."},
+  {"severity": "minor", "file": "reproductions/contextgs/paper_results.json", "where": "tandt.method.per_scene.truck",
+   "problem": "Truck low-rate row follows the paper appendix (7.72 MB, 26.00/0.885/0.150) but the official results CSV has 13107200 B = 12.5 MB, 25.845/0.880/0.154 for ContextGS_lowrate (CSV looks like a copy of the high-rate size). Only matters for T&T, not the current mip360 benchmark.",
+   "evidence": "source/code/results/TanksAndTemples/truck.csv vs neurips_2024.tex:603",
+   "fix": "Add a note; keep the paper value as the target."}
+ ],
+ "equation_coverage": [
+  {"eq": "(4)-(6) partition, min-index representatives, forwarding", "status": "exact", "code": "levels.py:divide_levels/torch_unique_with_indices/find_divide_scale (line-by-line vs gaussian_model.py:1726-1766; level_num 3, tau 0.2, tolerance 0.01 or interval<1, scale_lower chaining, x_bound range upper)"},
+  {"eq": "(7)-(8) per-level context MLPs", "status": "exact", "code": "model.py:level_mlps/predict, levels.py:extract_context_feat/level_inputs (in dims 15/71/71, out 175, parent position and increasing-orig-index gather reproduced verbatim; matches official in training, conduct_encoding and conduct_decoding)"},
+  {"eq": "(9) hyperprior", "status": "exact", "code": "model.py:FactorizedPrior (compressai EntropyBottleneck equivalent: filters 3,3,3,3, init_scale 10, bound 1e-9; quantiles fixed at [-10,0,10], medians 0; official never calls aux_loss and update(force=True) does not touch quantiles; confirmed in source)"},
+  {"eq": "(10)-(11) rate loss", "status": "exact", "code": "levels.py:multi_scale + losses.py:create_rate (lambda_e 0.004, 5e-4*mean sigmoid(mask), 15% sample & mask_anchor, rate=mask fraction, hyper bits in numerator only, step>10000 only)"},
+  {"eq": "quantization phases", "status": "exact", "code": "renderer.py:_render_train (noise 3000<step<=10000, bound update at 10000, entropy from 10001, level scale searched at first entropy step)"},
+  {"eq": "anchor growing incl. hyper latent", "status": "exact", "code": "density.py:anchor_growing (scatter-max of parent hyper like feat; pruning/optimizer alignment via keep_anchors/append_anchors; pause range(3000,4000), stats from 501)"}
+ ],
+ "probe_assessment": [
+  {"probe": "level-partition", "detects_removal": true, "why": "brute-force min-index representatives, disjoint cover, ratios ~0.2, origin collapse of masked anchors"},
+  {"probe": "context-model", "detects_removal": true, "why": "perturbs finer/coarser attributes, removes hyper, and compares context rows to an independent gather of the official order"},
+  {"probe": "factorized-prior", "detects_removal": true, "why": "param count 732, init values, reference likelihood, noise/dequantize, 1e-9 bound; weak only for the float32 tail issue noted above"},
+  {"probe": "codec-roundtrip", "detects_removal": true, "why": "lossless Gaussian/Bernoulli/factorized including an outlier z=40, size within 2% of entropy"},
+  {"probe": "training-phases", "detects_removal": true, "why": "exact boundaries 3000/3001/10000/10001, bound update, 15% sample, rate-loss value, gradient to feat/hyper/mlp_grid/prior"},
+  {"probe": "anchor-density", "detects_removal": true, "why": "asserts grown anchors inherit hyper latent and Adam state alignment"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "gsplat rasterizer and white background instead of the Scaffold fork / black (official mip360 white_background False)",
+  "HAC CUDA arithmetic coder instead of torchac/compressai rANS; hyper range/escape differs slightly",
+  "runtime sampling/SSIM/update order differences (bank step skipped at step 30000, same as official)",
+  "1600-px protocol: official loader PIL-resizes width>1600 to 1600 via orig_w/1600 (camera_utils.py:22-39); mipnerf360-1600 + llffhold 8 matches",
+  "paper_results.json low-rate mip360, tandt and db per-scene rows match the appendix tables; mip360 and db also match the results CSVs (truck CSV is anomalous, see minor issue)"
+ ],
+ "summary": "No critical or major issues. Level partition, per-level context MLPs (including the parent-position and level-1 gather-order quirks, consistent across training, encode and decode), hyperprior (quantiles never trained in the official code), rate loss and schedules match the official code line by line. Hyper latent is correctly grown with scatter-max. Only minor numeric/coding-detail differences remain."}

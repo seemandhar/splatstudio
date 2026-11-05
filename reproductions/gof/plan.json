@@ -1,0 +1,7 @@
+{"method": "gof", "module": "ss_gof",
+ "components": ["gof-raytrace (renderer, vendored official CUDA)", "gof-density", "photometric", "gof-reg"],
+ "fields": [{"name": "filter_3d", "shape": [], "lr": 1e-8}],
+ "probes": ["ray-intersection", "opacity-field", "distortion-formula", "normal-consistency", "densify-metric", "density-recipe"],
+ "contributions": ["ray-gaussian-rendering", "opacity-field", "distortion-detached", "plane-normal-consistency", "abs-gradient-densification", "mip-3dgs-recipe"],
+ "fidelity_gaps": ["view sampling with replacement", "tetra mesh extraction not ported (geometry not benchmarked)", "decoupled appearance not ported (TnT only)", "log-space 3D filter coef", "evaluator SSIM valid conv / lpips package"],
+ "feasible_natively": true}

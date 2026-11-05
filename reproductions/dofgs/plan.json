@@ -1,0 +1,10 @@
+{"method": "dofgs", "module": "ss_dofgs",
+ "components": [
+  {"name": "dof-raster", "kind": "renderer", "factory": "ss_dofgs.renderer:create_renderer"},
+  {"name": "dofgs-density", "kind": "density", "factory": "ss_dofgs.density:create_density"},
+  {"name": "dofgs-objective", "kind": "loss", "factory": "ss_dofgs.losses:create_objective"}],
+ "fields": [{"name": "filter_3d", "shape": [], "lr": 1e-8}],
+ "probes": ["dof-kernel-reference", "pinhole-limit", "analytic-blur", "fk-gradients", "camera-init", "iln-mask-losses", "objective-schedule", "density-recipe", "state-transitions"],
+ "contributions": ["C1 finite-aperture CoC rasterizer", "C2 per-view focus/aperture", "C3 CoC map + ILN mask losses", "C4 detail-enhancement composite objective", "C5 densification extras + Mip filter"],
+ "fidelity_gaps": ["view sampling with replacement", "optimizer step before densify", "SSIM implementation differs from skimage", "final-iteration eval vs official per-scene checkpoint choice", "no 3DGS baseline in paper", "synthetic set not downloaded"],
+ "feasible_natively": true}

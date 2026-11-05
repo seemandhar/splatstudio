@@ -1,0 +1,12 @@
+{"method": "radegs", "module": "ss_radegs",
+ "components": [
+  {"name": "radegs-raster", "kind": "renderer", "factory": "ss_radegs.renderer:create_renderer"},
+  {"name": "radegs-density", "kind": "density", "factory": "ss_radegs.density:create_density"},
+  {"name": "photometric", "kind": "loss", "factory": "ss_radegs.losses:create_photometric"},
+  {"name": "radegs-reg", "kind": "loss", "factory": "ss_radegs.losses:create_regularizer"}],
+ "fields": [{"name": "filter_3d", "shape": [], "lr": 1e-8, "init": 0.0}],
+ "probes": ["rasterized-depth", "rasterized-normal", "kernel-gradients", "distortion-formula", "regularizer-schedule", "densify-metric", "density-recipe"],
+ "contributions": ["rasterized-depth (C1)", "rasterized-normal (C2)", "distortion+normal-consistency (C3)", "gof-densification+mip-3d-filter (inherited)"],
+ "fidelity_gaps": ["mesh extraction / DTU Chamfer / TnT F1 not ported (full-view DTU unavailable locally)", "decoupled appearance not ported (DTU/TnT only)", "Mip-NeRF 360 resolution protocol unstated -> images_4/images_2 (GOF)", "views sampled with replacement; optimizer step before densify; SH one step later", "3D filter coefficient in log space", "evaluator SSIM/LPIPS implementation shared with baseline", "paper-vs-code: code values used (w_n 0.05, NDC+edge distortion, 0.6 median mix)"],
+ "feasible_natively": true,
+ "code_commit": "2d4bc087f1b4bd62c96054fbe89d273490526b81"}

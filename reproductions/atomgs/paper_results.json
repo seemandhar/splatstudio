@@ -1,0 +1,29 @@
+{
+  "paper": "AtomGS: Atomizing Gaussian Splatting for High-Fidelity Radiance Field",
+  "arxiv": "2405.12369",
+  "method_label": "Ours (AtomGS)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.38, "ssim": 0.816, "lpips": 0.211},
+        "per_scene": {
+          "psnr": {"bicycle": 25.33, "flowers": 21.71, "garden": 27.44, "stump": 26.58, "treehill": 22.11, "room": 31.30, "counter": 28.97, "kitchen": 30.88, "bonsai": 32.15},
+          "ssim": {"bicycle": 0.772, "flowers": 0.611, "garden": 0.865, "stump": 0.774, "treehill": 0.633, "room": 0.918, "counter": 0.906, "kitchen": 0.925, "bonsai": 0.938},
+          "lpips": {"bicycle": 0.203, "flowers": 0.325, "garden": 0.104, "stump": 0.202, "treehill": 0.317, "room": 0.222, "counter": 0.202, "kitchen": 0.127, "bonsai": 0.202}}},
+      "baseline_3dgs": {"average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214},
+        "per_scene": {
+          "psnr": {"bicycle": 25.10, "flowers": 21.52, "garden": 27.18, "stump": 26.49, "treehill": 22.37, "room": 31.22, "counter": 28.96, "kitchen": 30.98, "bonsai": 32.18},
+          "ssim": {"bicycle": 0.763, "flowers": 0.603, "garden": 0.860, "stump": 0.763, "treehill": 0.626, "room": 0.916, "counter": 0.905, "kitchen": 0.923, "bonsai": 0.939},
+          "lpips": {"bicycle": 0.205, "flowers": 0.332, "garden": 0.107, "stump": 0.213, "treehill": 0.326, "room": 0.219, "counter": 0.200, "kitchen": 0.127, "bonsai": 0.204}}},
+      "source": "Table 1 (averages) / supp. Table 'breakdown' (per scene)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.70, "ssim": 0.849, "lpips": 0.166},
+        "per_scene": {"psnr": {"truck": 25.47, "train": 21.93}, "ssim": {"truck": 0.880, "train": 0.817}, "lpips": {"truck": 0.133, "train": 0.200}}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183},
+        "per_scene": {"psnr": {"truck": 25.39, "train": 22.02}, "ssim": {"truck": 0.878, "train": 0.812}, "lpips": {"truck": 0.148, "train": 0.208}}},
+      "source": "Table 1 / supp. Table 'breakdown'"
+    }
+  },
+  "notes": "Table 1 3DGS averages (27.21 / 23.14) are 3DGS-paper numbers; supp. per-scene 3DGS rows are retrained by the authors (M360 mean 26.67 over 11 scenes incl. T&T; T&T mean 23.71). Compare per-scene deltas against the supp. 3DGS row. Paper text gives tau=0.002 but code uses 0.0002."
+}

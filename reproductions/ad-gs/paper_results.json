@@ -1,0 +1,214 @@
+{
+ "paper": "AD-GS: Alternating Densification for Sparse-Input 3D Gaussian Splatting",
+ "arxiv": "2509.11003",
+ "method_label": "AD-GS",
+ "iterations": 10000,
+ "datasets": {
+  "llff-3view": {
+   "method": {
+    "average": {
+     "psnr": 20.06,
+     "ssim": 0.699,
+     "lpips": 0.237
+    },
+    "per_scene": {
+     "psnr": {
+      "fern": 20.82,
+      "flower": 19.86,
+      "fortress": 23.87,
+      "horns": 19.79,
+      "leaves": 16.64,
+      "orchids": 15.45,
+      "room": 22.39,
+      "trex": 21.68
+     },
+     "ssim": {
+      "fern": 0.705,
+      "flower": 0.648,
+      "fortress": 0.772,
+      "horns": 0.714,
+      "leaves": 0.578,
+      "orchids": 0.474,
+      "room": 0.879,
+      "trex": 0.823
+     },
+     "lpips": {
+      "fern": 0.243,
+      "flower": 0.288,
+      "fortress": 0.207,
+      "horns": 0.274,
+      "leaves": 0.251,
+      "orchids": 0.304,
+      "room": 0.155,
+      "trex": 0.178
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 18.9,
+     "ssim": 0.632,
+     "lpips": 0.269
+    },
+    "per_scene": {
+     "psnr": {
+      "fern": 19.84,
+      "flower": 19.2,
+      "fortress": 21.25,
+      "horns": 17.59,
+      "leaves": 15.74,
+      "orchids": 14.85,
+      "room": 21.61,
+      "trex": 21.08
+     },
+     "ssim": {
+      "fern": 0.652,
+      "flower": 0.589,
+      "fortress": 0.647,
+      "horns": 0.599,
+      "leaves": 0.514,
+      "orchids": 0.421,
+      "room": 0.847,
+      "trex": 0.791
+     },
+     "lpips": {
+      "fern": 0.262,
+      "flower": 0.316,
+      "fortress": 0.263,
+      "horns": 0.323,
+      "leaves": 0.273,
+      "orchids": 0.335,
+      "room": 0.184,
+      "trex": 0.197
+     }
+    }
+   },
+   "cor_gs": {
+    "average": {
+     "psnr": 19.59,
+     "ssim": 0.674,
+     "lpips": 0.271
+    },
+    "per_scene": {
+     "psnr": {
+      "fern": 20.74,
+      "flower": 19.76,
+      "fortress": 23.03,
+      "horns": 18.98,
+      "leaves": 15.81,
+      "orchids": 15.24,
+      "room": 21.57,
+      "trex": 21.62
+     },
+     "ssim": {
+      "fern": 0.693,
+      "flower": 0.642,
+      "fortress": 0.729,
+      "horns": 0.671,
+      "leaves": 0.518,
+      "orchids": 0.456,
+      "room": 0.867,
+      "trex": 0.816
+     },
+     "lpips": {
+      "fern": 0.267,
+      "flower": 0.319,
+      "fortress": 0.241,
+      "horns": 0.328,
+      "leaves": 0.314,
+      "orchids": 0.331,
+      "room": 0.172,
+      "trex": 0.193
+     }
+    }
+   },
+   "source": "main Table 2 (averages) / supp. 'Scene-wise Quantitative Results on LLFF dataset with 3 input views'"
+  },
+  "llff-6view": {
+   "method": {
+    "average": {
+     "psnr": 23.54,
+     "ssim": 0.793,
+     "lpips": 0.17
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 22.57,
+     "ssim": 0.757,
+     "lpips": 0.182
+    }
+   },
+   "source": "Table 2"
+  },
+  "llff-9view": {
+   "method": {
+    "average": {
+     "psnr": 25.02,
+     "ssim": 0.83,
+     "lpips": 0.142
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 24.02,
+     "ssim": 0.799,
+     "lpips": 0.151
+    }
+   },
+   "source": "Table 2"
+  },
+  "mipnerf360-12view": {
+   "method": {
+    "average": {
+     "psnr": 19.66,
+     "ssim": 0.593,
+     "lpips": 0.386
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 17.36,
+     "ssim": 0.496,
+     "lpips": 0.403
+    }
+   },
+   "source": "Table 3; per-scene in supp."
+  },
+  "mipnerf360-24view": {
+   "method": {
+    "average": {
+     "psnr": 23.68,
+     "ssim": 0.75,
+     "lpips": 0.249
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 22.06,
+     "ssim": 0.701,
+     "lpips": 0.253
+    }
+   },
+   "source": "Table 3; per-scene in supp."
+  },
+  "tandt-3view": {
+   "method": {
+    "average": {
+     "psnr": 19.724,
+     "ssim": 0.678,
+     "lpips": 0.285
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 16.992,
+     "ssim": 0.556,
+     "lpips": 0.352
+    }
+   },
+   "source": "Table 1 (8 NoPe-NeRF T&T scenes, not our truck/train)"
+  }
+ },
+ "notes": "3DGS rows are the authors' runs of the official 3DGS code on the same few-view split (10k its presumably). LPIPS = VGG (lpipsPyTorch). Mip-NeRF360 per-scene numbers exist for 12/24 views (bicycle, bonsai, counter, garden, kitchen, room, stump) but are not transcribed here."
+}

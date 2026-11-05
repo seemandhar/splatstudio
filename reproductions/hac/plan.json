@@ -1,0 +1,8 @@
+{"method": "hac", "module": "ss_hac",
+ "components": ["hac-renderer", "hac-density", "photometric", "hac-scaling-reg", "hac-rate"],
+ "fields": ["hac_feat[50]", "hac_offset[10,3]", "hac_scaling[6]", "hac_mask[10,1]", "hac_blob[8]"],
+ "probes": ["state-transitions", "photometric-gradient", "hash-grid", "entropy-model", "codec-roundtrip", "neural-gaussians", "anchor-density", "training-phases", "bake-eval"],
+ "contributions": ["scaffold-anchors", "hash-grid-context", "adaptive-quantization-entropy", "bitstream-and-decoded-eval"],
+ "fidelity_gaps": ["mip360 1.6K vs images_4/images_2", "gsplat rasterizer vs Scaffold diff-gaussian-rasterization", "white vs black background", "random view sampling / valid SSIM", "densify after vs before optimizer step", "render MLPs transported to ss-eval via per-anchor hac_blob field", "voxel size fixed to mip360 0.001", "official CUDA AE in memory vs torchac in paper", "bake only at total_steps"],
+ "feasible_natively": true,
+ "runtime_extension_suggested": "component state_dict persisted in checkpoint and restored at evaluate()"}

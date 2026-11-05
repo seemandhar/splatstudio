@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-hac"
+version = "0.1.0"
+description = "HAC (Chen et al., ECCV 2024) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+hac = "ss_hac:method"
+
+[tool.setuptools.packages.find]
+include = ["ss_hac*"]
+
+[tool.setuptools.package-data]
+ss_hac = ["csrc/*/*.cu", "csrc/*/*.cpp", "csrc/*/*.h", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_hac/csrc"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

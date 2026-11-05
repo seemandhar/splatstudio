@@ -1,0 +1,42 @@
+{
+  "paper": "Fast Feedforward 3D Gaussian Splatting Compression",
+  "slug": "fcgs",
+  "plan_id": 47,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "official_code_commit": "31e59a46f7e51505b46a7bbe6e53268ee3155fbf",
+  "arxiv": "2410.08017",
+  "method": "fcgs",
+  "custom_cuda": true,
+  "bench_request": "bench_request.json",
+  "methods": [
+    "fcgs",
+    "fcgs-lowrate",
+    "fcgs-smoke"
+  ],
+  "notes": "GPCC tmc3 v14.0 built by user; sizes re-measured",
+  "result": {
+    "psnr_delta": {
+      "bicycle": -0.25,
+      "garden": -0.37,
+      "counter": -0.26
+    },
+    "size_MiB": {
+      "bicycle": 114.0,
+      "garden": 91.6,
+      "counter": 23.8
+    },
+    "size_MiB_gpcc": {
+      "bicycle": 113.56,
+      "garden": 91.21,
+      "counter": 23.71
+    }
+  }
+}

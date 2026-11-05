@@ -1,0 +1,9 @@
+{"method": "mesongs-<scene>", "module": "ss_mesongs",
+ "components": [{"kind": "renderer", "factory": "ss_mesongs.renderer:create_renderer"},
+                {"kind": "density", "factory": "ss_mesongs.density:create_density"},
+                {"kind": "loss", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["importance", "octree", "raht", "block-quant", "euler", "codec-roundtrip", "pipeline", "schedule"],
+ "contributions": ["universal-pruning", "octree-geometry", "euler-replacement", "raht", "block-quantization", "sh-vq", "entropy-encoding", "finetune"],
+ "fidelity_gaps": ["base model is our gsplat 3DGS", "FT length 8000 from released mic script", "no best-on-test model selection", "views with replacement", "gsplat rasteriser", "euler sqrt clamp", "white bg vs black in released script", "decoded quats from euler matrix"],
+ "feasible_natively": true}

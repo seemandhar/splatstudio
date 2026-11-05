@@ -1,0 +1,7 @@
+{"method": "trimgs", "module": "ss_trimgs",
+ "components": ["trim-flat (renderer)", "trim-density (density)", "photometric (loss)", "trim-normal (loss)"],
+ "fields": [],
+ "probes": ["contribution-kernel", "trimming", "scale-split", "normal-loss", "flat-schedule"],
+ "contributions": ["C0 flat Gaussians + 30k/7k two-stage protocol", "C1 contribution-based trimming", "C2 scale-driven densification", "C3 normal regularization"],
+ "fidelity_gaps": ["white background", "gsplat rasterizer numerics", "gsplat DefaultStrategy pre-training", "random view sampling", "density after optimizer step", "baseline is non-flat 3DGS (use trimgs-pretrain for flat reference)", "geometry evaluation out of scope"],
+ "feasible_natively": true}

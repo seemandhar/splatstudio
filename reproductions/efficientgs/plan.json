@@ -1,0 +1,20 @@
+{
+  "method": "efficientgs",
+  "module": "ss_efficientgs",
+  "components": [
+    {"name": "egs-renderer", "kind": "renderer", "factory": "ss_efficientgs.renderer:create_renderer"},
+    {"name": "egs-density", "kind": "density", "factory": "ss_efficientgs.density:create_density"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [{"name": "sh_order", "shape": [1], "learning_rate": 1e-12, "initial_value": 0.0}],
+  "probes": ["egs-gradnorm-kernel", "egs-selective-densify", "egs-stats-kernel", "egs-topk-prune", "egs-sparse-sh", "egs-schedule"],
+  "contributions": ["selective-densification", "gaussian-pruning", "sparse-sh-order-increment", "pipeline-schedule"],
+  "fidelity_gaps": [
+    "runtime: white background, random view sampling, valid SSIM, density after optimizer step",
+    "gsplat alpha cap 0.999 vs official 0.99",
+    "gradient statistic from gsplat backward formula",
+    "large-scale datasets (Mill19, Foothill-Town) unavailable",
+    "valid-SSIM gradient magnitude vs tau_s"
+  ],
+  "feasible_natively": true
+}

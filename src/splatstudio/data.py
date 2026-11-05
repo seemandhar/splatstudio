@@ -37,6 +37,18 @@ def load_dataset(root, downscale=1):
         flat = [v for group in splits.values() for v in group]
         if len(flat) != len(set(flat)) or set(flat) != set(filenames):
             raise ValueError("Splits must be disjoint and cover exactly the dataset frames")
+    elif meta.get("split_protocol") == "llffhold8":
+        # 3DGS / Mip-NeRF 360 convention: sort by name, every 8th image is test, the
+        # rest train. Validation aliases test; it is reported, never used for selection.
+        ordered = sorted(filenames)
+        held = set(ordered[::8])
+        splits = {
+            "train": [n for n in ordered if n not in held],
+            "validation": [n for n in ordered if n in held],
+            "test": [n for n in ordered if n in held],
+        }
+    elif "split_protocol" in meta:
+        raise ValueError(f"Unknown split_protocol {meta['split_protocol']!r}")
     else:
         splits = {"train": [], "validation": [], "test": []}
         for i, name in enumerate(filenames):
@@ -113,6 +125,8 @@ def load_dataset(root, downscale=1):
             "ssim": "Gaussian 11x11 sigma=1.5 valid population covariance",
         },
     }
+    if "split_protocol" in meta:
+        protocol["split_protocol"] = meta["split_protocol"]
     protocol_id = hashlib.sha256(json.dumps(protocol, sort_keys=True).encode()).hexdigest()
     return {
         "root": root,

@@ -1,0 +1,20 @@
+{"approved": true,
+ "issues": [
+  {"severity":"minor","file":"plugin/ss_gaussianspa/density.py","where":"after_backward ordering","problem":"z/u update, hard prune and sampling run after the optimizer step (official: before, on pre-step opacity).","evidence":"official train_opacity.py updates optimizingSpa and prunes inside the no_grad block before gradients.optimizer.step(); plugin runs after step","fix":"None needed; one Adam step per 50, already listed as fidelity gap 2/3."},
+  {"severity":"minor","file":"plugin/ss_gaussianspa/__init__.py","where":"make_method spec","problem":"40000-step schedule is not pinned in the MethodSpec; it relies on --steps 40000 from the bench request / CLI. A default run would train fewer steps with ADMM window still at 15200-25200.","evidence":"bench_request.json steps=40000; no steps in _make","fix":"Document or assert steps>=25200+ at run time."},
+  {"severity":"minor","file":"paper_results.json","where":"notes","problem":"Repo CSV counter LPIPS 0.193 vs paper 0.176 (and garden/bicycle within 0.003) is not listed among the CSV-vs-paper discrepancies; LPIPS gap on counter may be a metric-package difference.","evidence":"source/code/results/MipNeRF360/counter.csv","fix":"Add to notes."},
+  {"severity":"minor","file":"plan.md","where":"gap 6","problem":"Zero-importance tie behaviour (many Gaussians with imp==0): projection with thr=0 zeroes nothing, hard prune imp<=0 removes all zero-importance ones, so final count can fall well below (1-r2)N (garden smoke: 189200 vs 199994). Identical to official, so not a bug, but final #G may differ from paper 0.728M if the importance kernel's zero set differs.","evidence":"train_imp_score.py prune: mask=imp<=thr; prune_z_metrics_imp_score: indices=imp<thr","fix":"Compare admm rows/final N to the paper counts in the benchmark."}
+ ],
+ "equation_coverage": [
+  {"eq":"(11) penalty","status":"exact","code":"spa.py:penalty / losses.py (0.5*delta*||sigmoid(logit)-z+u||^2, sum, delta=5e-4=rho_lr; window step>15200, %50, <=25200 opacity / <25200 imp)"},
+  {"eq":"(15-16) z=prox(a+u)","status":"exact","code":"spa.py:project_opacity (thr=sort[int(r2N)-1], z=v*(v>thr)), project_importance (z=v, z[imp<thr]=0), identical incl. zero-importance edge"},
+  {"eq":"(17) u+=a-z","status":"exact","code":"spa.py:admm_step; first call at 15200 with u=0 and no update"},
+  {"eq":"hard prune 25200","status":"exact","code":"spa.py:hard_prune_mask opacity topk int((1-r2)N); imp <= sort[int(r2N)-1]; gsplat remove keeps survivor Adam state"},
+  {"eq":"15k sampling","status":"exact","code":"spa.py:sampling_count int(N(1-r1)), weights imp+1, no replacement; 20k CDF prune removed (density DEFAULTS drops simplify keys)"}
+ ],
+ "probe_assessment": [
+  {"probe":"spa-penalty/projection/admm-cycle/hard-prune/sampling","detects_removal":true,"why":"evidence/test.json reports 7/7 mutation detections (no u update, prox(a), no penalty, MS sampling count, no +1, no prune)"}
+ ],
+ "fidelity_gaps_confirmed": ["post-step ADMM/prune ordering","white background","presets from README not paper","importance kernel is copied MS kernel, not official rasterizer"],
+ "verified": {"lr_schedule":"means lr(it) <15000, lr(it-10000) after, max_steps 30000 clamped, SH +1 per 1000 after 15000: matches official update_learning_rate","imp_metric":"indoor default in DEFAULTS for all methods, matches scripts (accum_weights summed, imp[area_max==0]=0)","presets":"all 13 PRESETS match README table (truck = README 'trunk'); defaults r1/r2 0.5/0.8 opacity and 0.5/0.7 imp match train_*.sh","paper_results":"all M360 per-scene PSNR/SSIM/LPIPS/#G match supp Table; T&T/DB match supp; averages match; caveat: README presets are not stated by the paper but repo CSVs (counts, PSNR within 0.03 dB) agree with them"},
+ "summary":"No critical/major issues. ADMM penalty, projection, multiplier update, hard prune, 15k sampling and 40k LR schedule match official code operator by operator; only minor ordering/pinning notes."}

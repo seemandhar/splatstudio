@@ -1,0 +1,86 @@
+{
+ "approved": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "plan.md",
+   "where": "Fidelity gap 1 (plan.md:46-50) / Benchmark (plan.md:62-66); bench_request.json; state.json benchmark_target",
+   "problem": "The chosen benchmark (single-scale STST garden+counter) cannot test the paper's claim, and the reason given for dropping the headline multi-scale protocol is mostly wrong. Paper claim = anti-aliasing when pixel footprint changes; STST gains are within run-to-run noise: garden -0.02 vs 3DGS paper / +0.03 vs authors' retrained 3DGS*, counter +0.41 vs 3DGS paper but only +0.16 vs 3DGS*. The +0.41 is a cross-codebase comparison (3DGS row copied from the 3DGS paper), not a meaningful target; our gsplat baseline alone differs from 3DGS* by 0.2-0.8 dB.",
+   "evidence": "MTMT 360 is expressible natively. (a) Official train_ms.py = train.py on the union of trainCameras at scales [1,2,4,8] (train_ms.py:65-87). The scales are PIL-bicubic resizes of images_4/images_2 via loadCam round(W/s) (utils/camera_utils.py:35-37, general_utils.py:25), the same as mtmt_360.sh '-i images_4 -r 1'. (b) The low-res radii rescale is commented out (train_ms.py:209-211), and max_radii2D is a no-op anyway. (c) The only extra mechanism is --sample_more_highres (train_ms.py:153-156): with prob 0.3 the popped camera is replaced by a random x1 camera, so P(x1)=0.475 and P(x2)=P(x4)=P(x8)=0.175. (d) The runtime loader accepts per-frame w/h/fl/cx (splatstudio data.py:78-113) and explicit train/test filename splits (data.py:28-37). Per-view test metrics with frame names are written to test.json, so per-scale averages are trivial. The paper has a per-scene per-scale MTMT 360 table with a 3DGS row (supp. tables/360_multi_per.tex). Garden: 3DGS 26.16/28.54/29.13/28.66 (avg 28.12) vs Ours 27.13/29.53/31.20/32.19 (avg 30.01, +1.89). Counter: 3DGS 28.25/28.91/29.21/27.66 (avg 28.51) vs Ours 29.03/29.65/30.39/30.90 (avg 29.99, +1.48). The gain grows to +3.2..+3.5 dB at 1/8 res, which is exactly the mechanism under test. No STMT (train 1x, test other scales) table exists in the paper or supp. (grep of arxiv.tex/supp_arxiv.tex/paper.txt). stmt_360_r.sh (train -r 8 PIL on full-res, test -r 1/2/4/8 = zoom-in) has no reported numbers, so it cannot be a paper target. The mip-splatting reproduction (#26) evaluated STST only and has no multi-scale tool, so there is no precedent tool to reuse.",
+   "fix": "Make the primary benchmark MTMT Mip-NeRF 360 garden + counter. Build a dataset variant (e.g. 'mipnerf360-ms') from the native images_4/images_2 frames: for each frame, PIL Image.resize (bicubic) to (round(W/s), round(H/s)) for s in 1,2,4,8. Scale fl_x/fl_y by the actual w/W, set cx=w/2, cy=h/2 (the vendored rasterizer requires a centred principal point, raster.py check_centered). Use distinct file paths per scale and explicit splits: the llffhold8 test set at all 4 scales, train = the rest at all 4 scales. Approximate sample_more_highres by duplicating each x1 training frame as distinct files: 3 copies gives P(x1)=0.50 vs official 0.475; 19:7 weighting is exact. Record this as a fidelity gap. Train the gsplat baseline (classic 0.3-dilation 3DGS) on the same variant, with the same duplication, for the gain comparison. Report per-scale (1x/2x/4x/8x) and average PSNR/SSIM/LPIPS from per_view. Primary success criterion: the gain over our baseline vs the paper's gain over its 3DGS row (+1.89 garden, +1.48 counter, largest at 1/8). Keep STST garden+counter (existing baseline3dgs-mipnerf360-30000) only as a cheap secondary no-regression check, not as the claim test. Rewrite fidelity gap 1, which currently says MTMT is infeasible because of sample_more_highres and the radii rescale."
+  },
+  {
+   "severity": "minor",
+   "file": "paper_results.json",
+   "where": "datasets",
+   "problem": "Has no entry for the MTMT Mip-NeRF 360 per-scene per-scale numbers (supp. 360_multi_per.tex, with PSNR/SSIM/LPIPS for 3DGS and Ours) or for main Tab. 2 averages (Ours 27.50/28.99/30.35/31.21, avg 29.51; 3DGS 26.55/28.00/28.51/27.45, avg 27.63). These are needed for the recommended benchmark.",
+   "evidence": "All existing STST, T&T/DB and Blender entries were spot-checked against tables/360_single_per.tex, tandb_single_per.tex and scene_single_summary.tex and match, including the * rows (bicubic, 3DGS* retrained).",
+   "fix": "Add 'mipnerf360-multiscale' with per-scene per-scale PSNR/SSIM/LPIPS for Ours, 3DGS and Mip-Splatting from 360_multi_per.tex, plus the Tab. 2 averages."
+  },
+  {
+   "severity": "minor",
+   "file": "paper.md",
+   "where": "§4 Schedules (paper.md:79-81)",
+   "problem": "Says MTMT rescales radii by 800/W. In train_ms.py that rescale is commented out (train_ms.py:209-211). The 800/W rescale exists only in train.py:198-200 under the flag. 30 % x1 sampling is active in train_ms.py:153 (mtmt_360.sh passes --sample_more_highres).",
+   "evidence": "train_ms.py:151-156, 209-211",
+   "fix": "Correct the description: MTMT = union of 4 scales, without-replacement stack, 30 % random-x1 override, no radii rescale."
+  },
+  {
+   "severity": "minor",
+   "file": "paper.md",
+   "where": "§6 Protocol",
+   "problem": "Does not mention scripts/stmt_360_r.sh (train -r 8 PIL from full-res, test -r 1/2/4/8) or that no table reports it.",
+   "evidence": "source/code/scripts/stmt_360_r.sh; no STMT table in arxiv.tex/supp_arxiv.tex",
+   "fix": "Add one line so later iterations don't chase an STMT target."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_analytic_splatting/density.py",
+   "where": "after_backward",
+   "problem": "Densify/reset run after the optimizer step, but official runs them before it (train.py:205-226). At reset steps the step's opacity update is applied before the clamp instead of being skipped (the official reset creates a new param without grad). Already listed as gap 2, small.",
+   "evidence": "train.py:224-226 vs runtime.py:207-211",
+   "fix": "Keep it documented."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_analytic_splatting/probes.py",
+   "where": "forward_integral 'point' comparison",
+   "problem": "The '3DGS centre sample 42 %' error figure uses an undilated centre sample. Real 3DGS adds 0.3 px² dilation, so 42 % is not 3DGS's actual error. The pass criterion is still a valid mechanism check (kernel 2.5 % vs quadrature).",
+   "evidence": "reference.point_sample_2d uses cov2 without +0.3I",
+   "fix": "Label the figure 'undilated centre sample' in report.md, or add a dilated comparison."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_analytic_splatting/renderer.py",
+   "where": "DEFAULTS background",
+   "problem": "Black background (official) differs from the runtime and gsplat baseline convention (white). Harmless for fully-covered 360 JPEG scenes, but it would matter for a multi-scale Blender run (official white_background with RGBA).",
+   "evidence": "renderer.py DEFAULTS; CLAUDE.md white composite",
+   "fix": "If Blender is ever run, set background [1,1,1]."
+  }
+ ],
+ "equation_coverage": [
+  {"eq": "(3) 3DGS alpha blending, with g2D replaced", "status": "exact", "code": "csrc/cuda_rasterizer/forward.cu renderCUDA (vendored, byte-identical to source)"},
+  {"eq": "(7) conditioned logistic S(x)", "status": "exact", "code": "csrc/cuda_rasterizer/auxiliary.h approxCdf = 0.5tanh(0.5(1.6x+0.07x^3))+0.5"},
+  {"eq": "(8)-(9) 1D window integral", "status": "exact", "code": "forward.cu intU/intV"},
+  {"eq": "(11) eigen-rotation of pixel offset", "status": "exact", "code": "forward.cu preprocess (closed-form 2x2 eigen); verified vs torch.linalg.eigh reference, 3e-7"},
+  {"eq": "(12)-(13) 2*pi*s1*s2 * product of windows; no 0.3 dilation", "status": "exact", "code": "forward.cu; reference.window_integral_2d"},
+  {"eq": "supp. backward (dS/dx = (1.6+0.21x^2)S(1-S), eigen chain rule)", "status": "exact", "code": "backward.cu; autograd <=4.7e-6, FD <=1.5e-4 (re-run by reviewer)"},
+  {"eq": "loss L1 + 0.2 D-SSIM", "status": "exact", "code": "base photometric (runtime SSIM valid-conv difference, CLAUDE.md)"},
+  {"eq": "3DGS ADC + Mip-Splatting-coef opacity reset", "status": "exact", "code": "density.py _densify / reset_opacity; filters.py (matches gaussian_model.py:188-226, 431-453, 642-765, train.py:195-226)"}
+ ],
+ "probe_assessment": [
+  {"probe": "analytic-forward-integral", "detects_removal": true, "why": "Independent float64 Eq.13, using eigh and not the kernel's closed form. Reviewer re-run: rel 3.4e-7 / 3.5e-7 / 6.9e-7. Small case: kernel 2.49 % vs quadrature, undilated centre sample 42 %. A centre-sample kernel or one with 0.3 dilation fails the 2e-3 and 0.5x criteria."},
+  {"probe": "analytic-backward", "detects_removal": true, "why": "Float64 autograd of the independent reference, including a sub-pixel Gaussian, plus kernel FD. A wrong or missing derivative term in the logistic or eigen chain would exceed 1e-3. Reviewer re-run max 4.7e-6 autograd, 1.5e-4 FD."},
+  {"probe": "analytic-logistic-cdf", "detects_removal": true, "why": "Checks |S-Phi| <5e-4 and analytic dS/dx. Requires the cubic term to matter (plain logistic error >10x). CPU and reference-side only, so it does not test the kernel; the forward probe covers that."},
+  {"probe": "analytic-density-schedule", "detects_removal": true, "why": "Checks 100-step cadence, clone/split counts, that a 500 px-radius Gaussian is not pruned (no screen-size prune), reset = min(o, 0.01/coef) with at least one value >0.0101 (plain 3DGS reset would fail), and no densify at 15000."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Vendored rasterizer byte-identical to source/code/submodules/diff-gaussian-rasterization (all .cu/.h/ext.cpp/vec_math.h; glm minus test/). Python wrapper arg order and backward tuple order match the official __init__.py.",
+  "max_radii2D quirk confirmed: densification_postfix (gaussian_model.py:640) zeroes max_radii2D on every clone/split call, so big_points_vs (l.757) never fires. Omitting the screen-size prune is correct. big_points_ws only when size_threshold is set (iteration > 3000) is correct.",
+  "Opacity reset = logit(min(o*coef, 0.01)/coef) with the Mip-Splatting coef while the filter is not rendered (gaussian_model.py:431-453). The 3D filter is recomputed after densify_and_prune at every densify step, so the value used at reset steps 3000/6000/9000/12000 equals the plugin's recompute. Log-space evaluation is equivalent.",
+  "Densify after optimizer step; random-with-replacement sampling; runtime SSIM/LPIPS/white-bg conventions.",
+  "Ours + 3D filter variant not ported (not the main row).",
+  "If MTMT is adopted: sample_more_highres can only be approximated by frame duplication (P(x1) 0.50 vs 0.475 with 3 copies)."
+ ],
+ "summary": "Implementation fidelity is high. Reviewer GPU checks reproduced all builder claims: kernel vs float64 Eq.13 3e-7; 2.5 % vs pixel quadrature vs 42 % for an undilated centre sample; gradients <=5e-6 autograd and 1.5e-4 FD; 4/4 tests pass. Density, the reset quirk and the loss match official train.py/gaussian_model.py. The one major issue is the benchmark. STST garden/counter gains (+0.03/+0.16 vs 3DGS*, and the +0.41 counter gain is against copied 3DGS-paper numbers) are below run noise and cannot show anti-aliasing. The headline MTMT Mip-NeRF 360 protocol is reachable with a dataset conversion: per-frame resolutions and explicit splits are already supported, the radii rescale is commented out in train_ms.py, and the 30 % x1 sampling can be approximated by duplicating x1 frames. The paper has per-scene per-scale MTMT numbers with a 3DGS row (garden +1.89, counter +1.48 avg, ~+3.5 at 1/8). No STMT table exists in the paper. Recommend MTMT-360 garden+counter, per-scale, vs a gsplat baseline trained on the same multi-scale data, with STST as a secondary no-regression check."
+}

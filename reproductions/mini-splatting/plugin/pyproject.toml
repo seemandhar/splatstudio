@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-mini-splatting"
+version = "0.1.0"
+description = "Mini-Splatting (arXiv 2403.14166) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+mini-splatting = "ss_mini_splatting:method"
+mini-splatting-indoor = "ss_mini_splatting:indoor"
+mini-splatting-d = "ss_mini_splatting:densified"
+
+[tool.setuptools.packages.find]
+include = ["ss_mini_splatting*"]
+
+[tool.setuptools.package-data]
+ss_mini_splatting = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

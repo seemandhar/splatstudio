@@ -1,0 +1,35 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_eagles/decoders.py", "where": "ACTIVE slot / EaglesRenderer.active_bank",
+   "problem": "Process-global bank is never cleared (not on bake, not on failed run). A later EaglesRenderer.render in the same process on a different run's params (same q_* field names) while a stale un-baked bank is active would silently decode with the wrong decoders and render at the stale progressive scale if grad is enabled. Not reachable via ss-train/ss-eval (fresh process; runtime has no resume; initialize overwrites ACTIVE; baked bank is bypassed).",
+   "evidence": "decoders.ACTIVE set in density.initialize only; renderer.active_bank checks only bank.baked and field names",
+   "fix": "Clear ACTIVE on bake and on exception, or bind the bank to the params dict identity / a weakref and ignore it for other params."},
+  {"severity": "minor", "file": "plugin/ss_eagles/density.py", "where": "after_backward at step==total_steps",
+   "problem": "Runtime takes the latent optimizer step and the decoder step also at the final step; official skips the optimizer step at iteration == iterations. One-step difference, negligible.",
+   "evidence": "official train_eval.py:253 `if iteration < opt.iterations`", "fix": "None needed; optionally document."},
+  {"severity": "minor", "file": "paper_results.json", "where": "mipnerf360.method.average",
+   "problem": "Transcription of supp. Table 2 is faithful, but the paper's own Average row is not the mean of its per-scene rows (PSNR 27.23 vs mean 27.19, storage 54 MB vs mean 59.9 MB). Compare per-scene, not against the average, for the storage target.",
+   "evidence": "recomputed from per_scene: psnr 27.186, storage 59.889, gaussians 1.326M", "fix": "Add a note in paper_results.json."},
+  {"severity": "minor", "file": "plugin/ss_eagles/density.py", "where": "DEFAULTS.base.reset_every",
+   "problem": "gsplat DefaultStrategy also runs its own reset_opa on the mirrored base `opacities` at multiples of 2500. It is harmless only because _mirror() overwrites it afterwards in the same call (and the opacities optimizer has no gradients); worth an explicit comment/probe.",
+   "evidence": "after_backward: strategy.step_post_backward then events then _mirror()", "fix": "Set base reset_every above total_steps or keep the mirror-after-events invariant under test."}
+ ],
+ "equation_coverage": [
+  {"eq": "(1) a = D(STE(q))", "status": "exact", "code": "decoders.py:decode_latent (round STE, div=1, shift, DFT for SH with (1,45) scale, (N,15,3) reshape)"},
+  {"eq": "supp. latent init D^-1 / lr scaling / norm", "status": "exact", "code": "decoders.py:DecoderLayer.invert, initial_latents, latent_lr (SH zeros; rot min-norm lstsq; opa (x-b)/(S+1e-6); lr=base*scale/||S||_F for shN,rot, 0.05 opacity)"},
+  {"eq": "(3) influence sum alpha*T", "status": "exact", "code": "csrc/influence.cu (atomicAdd vs official racy +=; gsplat alpha clamp 0.999)"},
+  {"eq": "size()", "status": "exact", "code": "codec.py:paper_size_bits (per-dim Shannon, 32 b per decoder param incl. dft and div, 9 floats per Gaussian)"},
+  {"eq": "progressive cosine 0.3->1", "status": "exact", "code": "density.py:resize_scale (total=int(0.7*30001)=21000)"}
+ ],
+ "probe_assessment": [
+  {"probe": "decoder-ste / latent-init-lr / opacity-reset", "detects_removal": true, "why": "compare against independent round(q)S+b, identity-quat/logit(0.1) decode, and zeroed Adam moments"},
+  {"probe": "influence-kernel / influence-prune", "detects_removal": true, "why": "CUDA vs per-pixel torch compositing; exact <=quantile set; new rows W=0"},
+  {"probe": "codec-bake", "detects_removal": true, "why": "bank-free render of baked fields must equal training-time decoded render"},
+  {"probe": "progressive-schedule / schedule", "detects_removal": true, "why": "boundary values and event steps vs official formulas"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Yaml quantize_params *_ldecs_lr / *_lr_scaling are dead: arguments/__init__.py QuantizeParams has no such attributes (PrefixParamGroup only reads keys it defines); OptimizationParams defaults ldecs_lr=1e-4 and lr_scaling=1.0 are what GaussianModelSQ.training_setup uses = supp. Table 1. Claim VERIFIED. ent_lambda=0, noise_freq=0, use_gumbel=0 so STE-only is exact.",
+  "Optimizer step precedes densification (runtime order); white background; random view sampling; gsplat rasterizer; K*s instead of same-FoV W'/W focal (sub-pixel); atomic influence; range coder vs torchac -- all documented in plan.md",
+  "Mip360 average row in the paper is inconsistent with its per-scene rows"
+ ],
+ "summary": "No critical or major issues. Verified against official source: latent dims 16/8/1, DFT(16->45, scale (1,45)) / sq decoders, std 0.0005/0.01/0.5, shift on, eps 1e-15, decoder LR 1e-4; latent init by inversion; LR 0.000125/||S||, 0.001/||S||, 0.05; STE round during training; renderer uses decoded attributes; progressive schedule and F.interpolate target; densify 125 from 500 to 18000 (gsplat grow/prune, same thresholds), opacity reset every 2500 (<18000), influence prune 15% every 5100 below 27000 with new Gaussians at 0 (row order of gsplat dup/split verified); encode->decode->bake equals evaluated model; size formula equals GaussianModelSQ.size(). paper_results.json matches supp. Tables 2-4 (all per-scene rows checked for Mip360, T&T, DB). Unit tests: 6 passed."}

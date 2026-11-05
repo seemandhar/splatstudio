@@ -1,0 +1,7 @@
+{"method": "atomgs", "module": "ss_atomgs",
+ "components": ["atomgs-raster (renderer)", "atomgs-density (density)", "atomgs-photometric (loss)", "edge-aware-normal (loss)"],
+ "fields": [],
+ "probes": ["feature-raster", "normal-from-depth", "edge-aware-normal", "ms-ssim", "atomize", "atom-proliferation", "init-schedules"],
+ "contributions": ["atomized-proliferation", "edge-aware-normal-loss", "feature-rasterizer", "ms-ssim-photometric"],
+ "fidelity_gaps": ["optimizer step before density ops", "view sampling with replacement", "SH degree +1 step offset", "runtime SSIM/LPIPS implementation", "resolution protocol assumed images_4/2", "baseline uses gsplat+white bg vs Inria kernel+black bg", "no DTU/mesh eval"],
+ "feasible_natively": true}

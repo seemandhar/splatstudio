@@ -1,0 +1,47 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_stopthepop/raster.py", "where": "VANILLA (lines ~36-43); used by __init__.py:global_control",
+   "problem": "VANILLA is labelled 'configs/vanilla.json' but is not it: official vanilla.json has rect_bounding=true, tight_opacity_bounding=true, load_balancing=true; plugin has all false (it is the README default config). Image is unchanged, but radii differ, so the control's densification visibility differs (reviewer check: radii>0 19787 vs 19654, sort entries 566,839 vs 276,980 on the culling fixture). report.md and __init__.py docstring repeat the wrong claim.",
+   "evidence": "source/code/configs/vanilla.json vs raster.py VANILLA; VANILLA == vanilla.json -> False",
+   "fix": "Add VANILLA_JSON = exact configs/vanilla.json for stopthepop-global; keep the all-false dict under another name (e.g. UNBOUNDED) for the culling probe baseline; fix report/docstrings."},
+  {"severity": "minor", "file": "plugin/ss_stopthepop/probes.py", "where": "schedule",
+   "problem": "The docstring says 'no screen-size prune', but the probe never tests it: radii are fixed at 5 px and there is no max_radii2D path. Removing the inert-prune behaviour, e.g. by adding a 20 px prune, would still pass.",
+   "evidence": "probes.py schedule(): out() radii=5; no large-radius case",
+   "fix": "Add a case at step >3000 with radii > 20 and assert no prune, or drop the claim."},
+  {"severity": "minor", "file": "plugin/ss_stopthepop/probes.py", "where": "culling",
+   "problem": "HIER culling invariance uses a mean-abs threshold of 2e-3, which is loose; the GLOBAL check uses max. A localized culling error would pass.",
+   "evidence": "d_hier_tc/d_hier_nc use .abs().mean(); measured 5.7e-8 / 6.9e-5",
+   "fix": "Also bound the max diff, or tighten the mean to ~1e-4."},
+  {"severity": "minor", "file": "report.md", "where": "Verification table",
+   "problem": "Backward rel error is reported as ≤8e-7, but the reviewer re-run gives opac_logit 1.08e-6. This is still far below the 5e-3 threshold.",
+   "evidence": "ss-verify re-run: perpixel rel_err ndc 8.7e-7, opac 1.08e-6, sh0 7.9e-7",
+   "fix": "Report ~1e-6."},
+  {"severity": "minor", "file": "report.md", "where": "Fidelity gaps #1/#2",
+   "problem": "Two details are missing from the gaps. (1) In the official loop, optimizer.step() at densify/reset iterations is effectively a no-op for the replaced tensors (fresh Parameters, grad None), whereas the runtime steps all params and then densifies. (2) The SH degree goes up one step later ((s-1)//1000 vs iteration%1000 before render).",
+   "evidence": "source/code/train.py densify_and_prune then optimizer.step; runtime.py:198",
+   "fix": "Mention in gap 1 (negligible)."}
+ ],
+ "equation_coverage": [
+  {"eq": "(1) t_opt per-ray blend depth", "status": "exact", "code": "csrc (vendored unmodified, diff -rq clean vs source/rasterizer @ d8cad09); probes.py:topt"},
+  {"eq": "§3.3-3.4 hierarchical resort (PTD_MAX, 64/8/4) + culling", "status": "exact", "code": "csrc + raster.py HIERARCHICAL == configs/hierarchical.json"},
+  {"eq": "§3.5 sorted backward", "status": "exact", "code": "csrc backward; raster.py:_Rasterize (arg order matches diff_gaussian_rasterization/__init__.py)"},
+  {"eq": "3DGS loss (1-0.2)L1 + 0.2(1-SSIM)", "status": "exact", "code": "base photometric (runtime SSIM valid conv: documented)"},
+  {"eq": "3DGS ADC densify/prune/reset, opacity decay", "status": "exact", "code": "density.py:InriaDensity (matches gaussian_model.py incl. max_radii2D zeroing at L352 -> inert 20px prune)"}
+ ],
+ "probe_assessment": [
+  {"probe": "stopthepop-topt", "detects_removal": true, "why": "Kernel images must match the Eq.(1)-ordered float64 reference (1e-7). They must also differ by >0.05 from the d·(μ−o) and global-z ablations; the measured gap is 0.57."},
+  {"probe": "stopthepop-perpixel-order", "detects_removal": true, "why": "HIER/PPX_FULL match the per-pixel reference (4.8e-7) and GLOBAL matches the global-z reference (4.8e-7). The fixture gap is 0.54, so a mean-position sort fails."},
+  {"probe": "stopthepop-backward", "detects_removal": true, "why": "Sorted-reference autograd gradients match (~1e-6). Global-order gradients are 0.24–0.71 off and the probe requires >0.05."},
+  {"probe": "stopthepop-popping", "detects_removal": true, "why": "Requires GLOBAL max ≥5× HIER max and HIER smooth. Re-run: GLOBAL 0.047 vs HIER 0.003. If sorting were removed, HIER would equal GLOBAL and fail. This is a proxy, not FLIP_t."},
+  {"probe": "stopthepop-culling", "detects_removal": true, "why": "Checks that sort entries drop and the image is invariant. The HIER invariance check uses a mean-abs threshold, so it is loose (minor)."},
+  {"probe": "stopthepop-schedule", "detects_removal": true, "why": "Covers densify cadence, the reset at 3000, the world prune after 3000 and the decay cadence. It does not cover the inert screen-size prune (minor)."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Rasterizer vendored unmodified: diff -rq vs source/rasterizer (git d8cad09, the 859b11b submodule pointer) shows only build/packaging files and glm docs/tests missing; JIT load with the same sources plus -O3.",
+  "Paper 'Ours' = final hierarchical rasterizer without opacity decay (supp. per_scene_360_psnr; Table 2/4 split rows). Released configs/hierarchical.json has tile_based_culling=false, while paper config (A) has it on. Speed only; the probe shows the image is unchanged.",
+  "full_eval.py: mipnerf360 outdoor -i images_4, indoor -i images_2, no -r. Native garden is 1297x840 (images_4) and counter is 1558x1038 (images_2), both <1.6K so no auto-rescale. Protocol matches baseline3dgs-mipnerf360-30000.",
+  "paper_results.json per-scene PSNR/SSIM/LPIPS for Ours and 3DGS match the supp. tables (spot-checked all PSNR and LPIPS, plus several SSIM). Indoor/outdoor averages recompute to 30.62/24.60. Targets: garden 27.16 vs 27.24, counter 28.59 vs 28.98.",
+  "train.py settings match: 30k iterations, 3DGS LRs (runtime state.py), densify 500/15000/100 with grad 2e-4, min opacity 0.005, world prune 0.1·extent when s>3000, reset every 3000, opacity_decay default 0, black background (official default, no -w).",
+  "Runtime gaps as documented: step-before-densify, sampling with replacement, SSIM valid conv, LPIPS package, SH step timing; the FLIP_t popping metric is not reproduced."
+ ],
+ "summary": "Faithful port. The official sorted CUDA rasterizer is vendored byte-identical and used for training and evaluation with the exact hierarchical.json, which is the config behind the paper's headline 'Ours' rows. Density reproduces the official ADC operation by operation, including the inert screen-size prune and the opacity-decay option (default off, which is correct for the targets). Targets and resolution protocol are correct. The reviewer re-ran ss-verify on GPU 2 and all StopThePop probes pass with the reported margins; 5 unit tests pass. The only real defect is that the stopthepop-global control does not use configs/vanilla.json as claimed: its bounding flags differ, which changes radii and therefore densification stats. That matters only if the control is used to isolate the sorting effect. Approved for benchmark."}

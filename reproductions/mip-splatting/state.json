@@ -1,0 +1,30 @@
+{
+ "paper": "Mip-Splatting: Alias-free 3D Gaussian Splatting",
+ "slug": "mip-splatting",
+ "plan_id": 26,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "arxiv": "2311.16493",
+ "custom_cuda": false,
+ "official_code_commit": "1ecf7d5",
+ "baseline_exp": "baseline3dgs-mipnerf360-30000",
+ "plugin_freeze_sha": "5e99735025a51ba8",
+ "bench_exp": "mip-splatting-mipnerf360",
+ "history": [
+  {
+   "event": "bench crash at opacity reset (fp32 coef underflow -> NaN); fixed in log space; relaunched"
+  }
+ ],
+ "headline": "3 scenes: −0.17/−0.33/−0.19 dB after PIL-protocol iteration; gain over 3DGS ≥ paper",
+ "iterations": {
+  "i0": "runs/mip-splatting-mipnerf360",
+  "i1": "runs/mip-splatting-i1-pilr (PIL-resized full-res, outdoor)"
+ }
+}

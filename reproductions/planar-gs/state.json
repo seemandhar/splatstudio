@@ -1,0 +1,11 @@
+{
+ "paper": "Planar Gaussian Splatting",
+ "slug": "planar-gs",
+ "plan_id": 65,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "blocked"
+ },
+ "outcome": "blocked",
+ "blocked_reason": "No NVS PSNR reported; only plane-instance segmentation (VOI/RI/SC) on ScanNetv2 (licence-gated, scenes partly unnamed, GT planes via PlanarRecon pipeline) and Replica (scenes unnamed); no official code; key hyper-parameters (eps_B, eps_z, eta, loss weights) unspecified."
+}

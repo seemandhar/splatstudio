@@ -1,0 +1,13 @@
+{
+ "method": "mip-splatting",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": ""
+}

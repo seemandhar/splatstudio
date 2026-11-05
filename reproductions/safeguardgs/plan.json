@@ -1,0 +1,27 @@
+{
+  "method": "safeguardgs",
+  "module": "ss_safeguardgs",
+  "components": [
+    {"name": "sg-renderer", "kind": "renderer", "factory": "ss_safeguardgs.renderer:create_renderer"},
+    {"name": "sg-density", "kind": "density", "factory": "ss_safeguardgs.density:create_density",
+     "config": {"prune_steps": [20000], "top_k": 1, "score_function": 36, "selection": "tile",
+                "p_dist_coef": 1.0, "c_dist_coef": 1.0}},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [],
+  "probes": ["sg-topk-kernel", "sg-color-score", "sg-prune-schedule"],
+  "contributions": [
+    {"id": "C1", "name": "pixel-level-rank-pruning", "probes": ["sg-topk-kernel", "sg-color-score"]},
+    {"id": "C2", "name": "color-weighted-score", "probes": ["sg-color-score", "sg-topk-kernel"]},
+    {"id": "C3", "name": "prune-schedule", "probes": ["sg-prune-schedule"]}
+  ],
+  "fidelity_gaps": [
+    "official cross-tile slot race not reproduced",
+    "gsplat alpha numerics",
+    "images_4/images_2 vs 1600px auto-downscale",
+    "native runtime: white bg, sampling with replacement, density after optimizer step",
+    "gsplat baseline instead of authors' 3DGS",
+    "averages only -> all 9 mipnerf360 scenes"
+  ],
+  "feasible_natively": true
+}

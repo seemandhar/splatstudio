@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-deblurgs"
+version = "0.1.0"
+description = "DeblurGS (arXiv 2404.11358) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+deblurgs = "ss_deblurgs:method"
+deblurgs-nu0 = "ss_deblurgs:method_nu0"
+
+[tool.setuptools.packages.find]
+include = ["ss_deblurgs*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_deblurgs/pytorch3d_se3.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,51 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_taming_3dgs/density.py", "where": "densify() / smoke evidence",
+   "problem": "No evidence yet that the count reaches B at step ~15000; smoke runs stop at 2000 (0.72M vs target 1.24M, every candidate already cloned/split). The 2000-step shortfall is candidate-limited exactly like official densify_with_score, not a bug.",
+   "evidence": "official: budget=min(budget, n_clone+n_split+curr); clone/split budgets proportional; all candidates sampled when budget >= candidates. Plugin core.split_budgets/densify identical; smoke log shows clones==clone_candidates, splits==split_candidates at every call 600..2000. Candidate rate ~7-14% of N per call; target slope 77k*(1-c/145) per call decays to ~0, so the gap closes around call 25-35 (N~0.9-1.2M) and N tracks the curve afterwards (late cands ~5% of N >> slope).",
+   "fix": "Before the full benchmark, run garden to step ~6000-8000 (or watch history rows) and check count >= 0.98*target by call ~40; consider a train-log warning when count < 0.95*target after call 60."},
+  {"severity": "minor", "file": "plugin/ss_taming_3dgs/density.py", "where": "training dynamics vs gsplat baseline",
+   "problem": "Taming candidates run 2-27% below the stock gsplat baseline in the same smoke (148.6k vs 145.9k at 600, 292k vs 269k at 1000, 844k vs 717k at 2000) although the candidate rule/threshold/accumulation are identical to gsplat DefaultStrategy.",
+   "evidence": "Only differences are shN lr 2.5e-4 + 16-step batching, opacity lr 0.025 and score-guided sampling (picks all candidates anyway). Plausibly an optimization-trajectory effect, not verified.",
+   "fix": "Optional: A/B with sh_update_every=1 for 2000 steps to confirm the lag is the SH change; no code change required."},
+  {"severity": "minor", "file": "plugin/ss_taming_3dgs/density.py", "where": "after_backward ho_iteration",
+   "problem": "Runtime steps optimizers before after_backward, so opacity receives the step-15000 Adam update before the lr=0 freeze; official freezes before the step-15000 update (the update goes to the orphaned old Parameter).",
+   "evidence": "runtime.py: opt.step() then density.after_backward; train.py: modify_functions() then optimizer.step().",
+   "fix": "Negligible (one step); note in plan gaps (already covered by gap 4 in spirit)."},
+  {"severity": "minor", "file": "plugin/ss_taming_3dgs/core.py", "where": "edge_map / _cache_view",
+   "problem": "Edge map input is round()ed uint8; official get_edges uses ToPILImage on float -> mul(255).byte() (truncation). Also SH degree for the score render at step k*1000 is k-1 (runtime) vs k (official oneupSHdegree at the start of that iteration).",
+   "evidence": "taming_utils.get_edges; train.py line 96-97 vs runtime.py degree=min((step-1)//1000,3).",
+   "fix": "Optional: truncate instead of round when caching; effect on scores negligible."}
+ ],
+ "equation_coverage": [
+  {"eq": "(2) growth curve", "status": "exact", "code": "core.py:count_array (matches taming_utils.get_count_array; target = values[j+1], 144 calls at steps 600..14900 for interval 100; budget mode 28 calls 1000..14500, last idx clamps without crashing)"},
+  {"eq": "(3) saliency", "status": "exact", "code": "core.py:saliency (50*minmax(L1) + 50*minmax(FIND_EDGES), as get_loss_map; code weights, not paper 0.5/0.5)"},
+  {"eq": "(4)/Alg.1 score", "status": "exact", "code": "density.py:score + core.gaussian_terms/pixel_terms (weights equal train.py score_coefficients; 10 distinct random views; 50*P_i*(p+g); summed over views; visibility mask; median normalization over positives)"},
+  {"eq": "3.3 sampling/pruning", "status": "exact", "code": "density.py:densify (budget arithmetic, multinomial w/o replacement of score*mask, duplicate then split layout, 50% 1/(1e-6+score) pruning only for calls<27 with the official misaligned padding; world-size prune after 3000; screen-size prune correctly dropped because max_radii2D is zeroed in postfix)"},
+  {"eq": "3.4 high opacity", "status": "deviates", "code": "density.py:after_backward (freezes opacity like released code; paper says trainable abs activation; documented gap)"},
+  {"eq": "4.2 SH batching", "status": "exact", "code": "optim.py:IntervalAdam (sum 16 grads, Adam step at calls%16==0, drop on parameter replacement; lr shN 0.005/20, opacity 0.025)"}
+ ],
+ "probe_assessment": [
+  {"probe": "taming-stats-kernel", "detects_removal": true, "why": "compares kernel to brute-force per-pixel loop"},
+  {"probe": "taming-growth-curve", "detects_removal": true, "why": "independent parabola and exact landing on target; does not exercise the long-run catch-up from a candidate-limited start"},
+  {"probe": "taming-score", "detects_removal": true, "why": "independent re-implementation plus opacity ranking"},
+  {"probe": "taming-sampled-densify", "detects_removal": true, "why": "checks qualifiers, score preference, budget split, zero moments"},
+  {"probe": "taming-guided-prune", "detects_removal": true, "why": "subset-of-mask, <=50%, none after call 27"},
+  {"probe": "taming-high-opacity", "detects_removal": true, "why": "opacity moves before and is frozen after 15000"},
+  {"probe": "taming-sh-interval", "detects_removal": true, "why": "compares to Adam on summed grads and per-step Adam; checks drop on replacement"},
+  {"probe": "taming-schedule", "detects_removal": true, "why": "exact densify/reset steps"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Speed kernels not ported (timing only)",
+  "gsplat alpha clamp 0.999, opacity-aware radii, white background, valid SSIM, with-replacement view sampling",
+  "Score views limited to already-seen training views (~97% seen by step 600)",
+  "Optimizer-before-density step order",
+  "High opacity = code freeze, not paper's abs activation"
+ ],
+ "verified_clean": [
+  "BIG_BUDGETS, BUDGET_MULTIPLIERS identical to full_eval.py for all 13 scenes; SCENE_SFM_COUNTS equal len(points.npz) of every native scene (unique)",
+  "paper_results.json matches paper Table 1 (Ours #3DGS, Ours, 3DGS rows) and Table 2 truck 25.20/0.165, train 22.69/0.238",
+  "gradient accumulation (width/2, height/2 NDC scaling, radii>0, norm average, reset after each densify) identical to gsplat DefaultStrategy and official add_densification_stats",
+  "11 plugin tests pass; verify-taming-3dgs probes all passed"
+ ],
+ "summary": "No critical or major issues. The 0.72M vs 1.24M shortfall at step 2000 is faithful to official densify_with_score: the target is only an upper cap, min(target, candidates+current), and every candidate was already used. Growth should catch the decaying parabola by call ~30 and reach B at the end, but this is analytical; confirm with a longer garden run before the full benchmark."}

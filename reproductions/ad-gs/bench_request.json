@@ -1,0 +1,20 @@
+{
+  "method": "ad-gs",
+  "datasets": {"llff-fewview3": ["horns", "fortress", "room"]},
+  "steps": 10000,
+  "per_scene_reported": true,
+  "extra": "",
+  "baseline": {"method": "gsplat", "datasets": {"llff-fewview3": ["horns", "fortress", "room"]}, "steps": 10000,
+               "note": "Few-view gsplat baseline on the identical split/init (name suggestion baseline3dgs-llff-fewview3-10000). Paper's 3DGS row: horns 17.59, fortress 21.25, room 21.61 PSNR. Optionally also 30000 steps (3DGS default) since the paper does not state the 3DGS iteration count."},
+  "proposed_datasets_json_entry": {
+    "llff-fewview3": {
+      "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+      "native_root": "/home/sejain/datasets/llff/fewview3",
+      "scenes": {"horns": "images", "fortress": "images", "room": "images"},
+      "_doc": "FSGS/CoR-GS/AD-GS 3-view LLFF: explicit train/val/test lists in transforms.json (test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused images, never used for selection). Images: full-res images/ PIL-bicubic /4 -> 1008x756 PNG. Init: COLMAP 3.9.1 point_triangulator + patch_match_stereo/stereo_fusion on the 3 training views only. Built by reproductions/ad-gs/tools/prepare_llff_fewview.py (COLMAP env: conda env 'colmap'); NOT rebuildable by bench.py prepare (colmap_to_transforms.py would use all-view SfM points)."
+    }
+  },
+  "paper_reference": {"dataset": "llff-3view", "psnr": {"horns": 19.79, "fortress": 23.87, "room": 22.39}, "ssim": {"horns": 0.714, "fortress": 0.772, "room": 0.879}, "lpips": {"horns": 0.274, "fortress": 0.207, "room": 0.155}, "source": "paper_results.json"},
+  "recipe": "3dgs",
+  "notes": "Use --num-gaussians 10000000 (keep all MVS init points). ~0.2 s/step on a shared A6000 => ~35-40 min per scene. Evaluation background black (official) for ad-gs; gsplat baseline uses white."
+}

@@ -1,0 +1,407 @@
+{
+ "paper": "Compact 3D Gaussian Representation for Radiance Field",
+ "arxiv": "2311.13681",
+ "method_label": "Ours+PP (primary, evaluated) / Ours",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.03,
+     "ssim": 0.797,
+     "lpips": 0.247,
+     "storage_mb": 29.07
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.73,
+      "flowers": 20.89,
+      "garden": 26.72,
+      "stump": 26.31,
+      "treehill": 22.67,
+      "room": 30.88,
+      "counter": 28.63,
+      "kitchen": 30.48,
+      "bonsai": 31.98
+     },
+     "ssim": {
+      "bicycle": 0.722,
+      "flowers": 0.554,
+      "garden": 0.831,
+      "stump": 0.754,
+      "treehill": 0.637,
+      "room": 0.918,
+      "counter": 0.901,
+      "kitchen": 0.919,
+      "bonsai": 0.937
+     },
+     "lpips": {
+      "bicycle": 0.284,
+      "flowers": 0.399,
+      "garden": 0.158,
+      "stump": 0.28,
+      "treehill": 0.363,
+      "room": 0.209,
+      "counter": 0.206,
+      "kitchen": 0.13,
+      "bonsai": 0.193
+     },
+     "storage_mb": {
+      "bicycle": 42.42,
+      "flowers": 32.05,
+      "garden": 43.26,
+      "stump": 33.83,
+      "treehill": 39.08,
+      "room": 15.01,
+      "counter": 15.22,
+      "kitchen": 24.39,
+      "bonsai": 16.4
+     },
+     "gaussians": {
+      "bicycle": 2221689,
+      "flowers": 1525598,
+      "garden": 2209609,
+      "stump": 1732089,
+      "treehill": 2006446,
+      "room": 529136,
+      "counter": 536672,
+      "kitchen": 1131168,
+      "bonsai": 601048
+     }
+    }
+   },
+   "method_no_pp": {
+    "average": {
+     "psnr": 27.08,
+     "ssim": 0.798,
+     "lpips": 0.247,
+     "storage_mb": 48.82,
+     "gaussians": 1388162
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.77,
+      "flowers": 20.89,
+      "garden": 26.81,
+      "stump": 26.46,
+      "treehill": 22.65,
+      "room": 30.88,
+      "counter": 28.71,
+      "kitchen": 30.48,
+      "bonsai": 32.08
+     },
+     "ssim": {
+      "bicycle": 0.723,
+      "flowers": 0.556,
+      "garden": 0.832,
+      "stump": 0.757,
+      "treehill": 0.638,
+      "room": 0.919,
+      "counter": 0.902,
+      "kitchen": 0.919,
+      "bonsai": 0.939
+     },
+     "lpips": {
+      "bicycle": 0.286,
+      "flowers": 0.399,
+      "garden": 0.161,
+      "stump": 0.278,
+      "treehill": 0.363,
+      "room": 0.209,
+      "counter": 0.205,
+      "kitchen": 0.131,
+      "bonsai": 0.193
+     },
+     "storage_mb": {
+      "bicycle": 62.99,
+      "flowers": 51.15,
+      "garden": 62.78,
+      "stump": 54.66,
+      "treehill": 59.33,
+      "room": 34.21,
+      "counter": 34.34,
+      "kitchen": 44.45,
+      "bonsai": 35.44
+     },
+     "gaussians": {
+      "bicycle": 2221689,
+      "flowers": 1525598,
+      "garden": 2209609,
+      "stump": 1732089,
+      "treehill": 2006446,
+      "room": 529136,
+      "counter": 536672,
+      "kitchen": 1131168,
+      "bonsai": 601048
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.46,
+     "ssim": 0.812,
+     "lpips": 0.222,
+     "storage_mb": 746.03,
+     "gaussians": 3161131
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.1,
+      "flowers": 21.33,
+      "garden": 27.25,
+      "stump": 26.66,
+      "treehill": 22.53,
+      "room": 31.5,
+      "counter": 29.11,
+      "kitchen": 31.53,
+      "bonsai": 32.16
+     },
+     "ssim": {
+      "bicycle": 0.747,
+      "flowers": 0.588,
+      "garden": 0.856,
+      "stump": 0.769,
+      "treehill": 0.635,
+      "room": 0.925,
+      "counter": 0.914,
+      "kitchen": 0.932,
+      "bonsai": 0.946
+     },
+     "lpips": {
+      "bicycle": 0.244,
+      "flowers": 0.361,
+      "garden": 0.122,
+      "stump": 0.243,
+      "treehill": 0.346,
+      "room": 0.198,
+      "counter": 0.184,
+      "kitchen": 0.117,
+      "bonsai": 0.181
+     },
+     "storage_mb": {
+      "bicycle": 1350.78,
+      "flowers": 805.94,
+      "garden": 1331.33,
+      "stump": 1073.6,
+      "treehill": 819.08,
+      "room": 350.14,
+      "counter": 276.52,
+      "kitchen": 411.76,
+      "bonsai": 295.08
+     },
+     "gaussians": {
+      "bicycle": 5723640,
+      "flowers": 3414994,
+      "garden": 5641235,
+      "stump": 4549202,
+      "treehill": 3470681,
+      "room": 1483653,
+      "counter": 1171684,
+      "kitchen": 1744761,
+      "bonsai": 1250329
+     }
+    }
+   },
+   "baseline_3dgs_original_paper": {
+    "average": {
+     "psnr": 27.21,
+     "ssim": 0.815,
+     "lpips": 0.214
+    }
+   },
+   "source": "Table 1 (tab:qual1); supp. Table tab:per_360"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.32,
+     "ssim": 0.831,
+     "lpips": 0.202,
+     "storage_mb": 20.86
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.62,
+      "truck": 25.02
+     },
+     "ssim": {
+      "train": 0.792,
+      "truck": 0.87
+     },
+     "lpips": {
+      "train": 0.24,
+      "truck": 0.163
+     },
+     "storage_mb": {
+      "train": 19.07,
+      "truck": 22.64
+     }
+    }
+   },
+   "method_no_pp": {
+    "average": {
+     "psnr": 23.32,
+     "ssim": 0.831,
+     "lpips": 0.201,
+     "storage_mb": 39.43
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.56,
+      "truck": 25.07
+     },
+     "ssim": {
+      "train": 0.792,
+      "truck": 0.871
+     },
+     "lpips": {
+      "train": 0.24,
+      "truck": 0.163
+     },
+     "storage_mb": {
+      "train": 37.29,
+      "truck": 41.57
+     },
+     "gaussians": {
+      "train": 710434,
+      "truck": 962158
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.71,
+     "ssim": 0.845,
+     "lpips": 0.178,
+     "storage_mb": 432.26
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.07,
+      "truck": 25.35
+     },
+     "ssim": {
+      "train": 0.812,
+      "truck": 0.878
+     },
+     "lpips": {
+      "train": 0.208,
+      "truck": 0.148
+     },
+     "storage_mb": {
+      "train": 255.82,
+      "truck": 608.7
+     }
+    }
+   },
+   "source": "Table 1; supp. Table tab:per_td"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.73,
+     "ssim": 0.9,
+     "lpips": 0.258,
+     "storage_mb": 23.82
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.16,
+      "playroom": 30.3
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.257,
+      "playroom": 0.259
+     },
+     "storage_mb": {
+      "drjohnson": 28.43,
+      "playroom": 19.21
+     }
+    }
+   },
+   "method_no_pp": {
+    "average": {
+     "psnr": 29.79,
+     "ssim": 0.901,
+     "lpips": 0.258,
+     "storage_mb": 43.21
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.26,
+      "playroom": 30.32
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.902
+     },
+     "lpips": {
+      "drjohnson": 0.258,
+      "playroom": 0.258
+     },
+     "storage_mb": {
+      "drjohnson": 47.98,
+      "playroom": 38.45
+     },
+     "gaussians": {
+      "drjohnson": 1339005,
+      "playroom": 778353
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.46,
+     "ssim": 0.9,
+     "lpips": 0.247,
+     "storage_mb": 663.32
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.06,
+      "playroom": 29.87
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.901
+     },
+     "lpips": {
+      "drjohnson": 0.247,
+      "playroom": 0.247
+     },
+     "storage_mb": {
+      "drjohnson": 773.61,
+      "playroom": 553.03
+     }
+    }
+   },
+   "source": "Table 2 (tab:qual2); supp. Table tab:per_td"
+  }
+ },
+ "storage_breakdown_mipnerf360_avg_mb": {
+  "ours": {
+   "position": 8.3,
+   "opacity": 2.8,
+   "scale": 6.3,
+   "rotation": 6.3,
+   "hash": 25.2,
+   "mlp": 0.016,
+   "total": 48.8
+  },
+  "ours_pp": {
+   "position": 8.3,
+   "opacity": 1.2,
+   "scale": 5.9,
+   "rotation": 6.2,
+   "hash": 7.4,
+   "mlp": 0.016,
+   "total": 29.1
+  },
+  "source": "Table tab:size"
+ },
+ "notes": "baseline_3dgs = 3DGS* retrained by the authors with the same configuration (A100); the 3DGS paper row is baseline_3dgs_original_paper. Storage MB = 1e6 bytes by the official final_prune formula (Ours+PP excludes Huffman tables). Official repo CSVs give smaller w/ PP sizes (npz files after the Aug-2024 Morton-sort update); the paper's numbers are used here."
+}

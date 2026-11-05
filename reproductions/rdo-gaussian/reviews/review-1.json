@@ -1,0 +1,49 @@
+{
+ "approved": false,
+ "issues": [
+  {"severity": "major", "file": "paper_results.json; paper.md sec.6/7.4; plan.md gap 3; plugin/README.md; plugin/ss_rdo_gaussian/density.py (evaluate option)",
+   "where": "evaluation-protocol claim",
+   "problem": "The claim that official render.py renders fp32 positions / unquantised opacity from the saved PLY is wrong for commit 710ebab8. render.py -> Scene(load_iteration=-1) -> Scene.__init__ takes the 'if self.loaded_iter: print(\"Load bitstream!\"); self.gaussians.decode(model_path/bitstream)' branch, never load_ply. GaussianModel.decode reads position.npz (fp16 -> fp32), dequantises 8-bit opacity (q*step+min in logit domain), and takes codebook rows for scale/rot/dc/SH. The paper CSV numbers (metrics.py after render.py) are therefore computed on the DECODED bitstream. The PLY written by scene.save at 30000 is not read by render.py. Only the in-training 'Evaluating test' print at iteration 30000 (before the apply/encode block) is fp32/unquantised, and it also renders with STE masks.",
+   "evidence": "source/code/scene/__init__.py: 'if self.loaded_iter: print(\"Load bitstream!\"); self.gaussians.decode(os.path.join(self.model_path, \"bitstream\"))'; render.py render_sets uses Scene(dataset, gaussians, load_iteration=iteration); train.py calls training_report before the 'Apply mask' block.",
+   "fix": "Correct the paper_results.json note, paper.md sec.6/7.4, plan.md gap 3 and README. Keep evaluate='decoded' as the primary and only paper-matching mode. Rename or drop evaluate='official' (it mirrors no official evaluation; keep at most as an fp32-xyz/unquantised-opacity ablation). Remove the '<=0.05 dB expected' excuse from the gap list."}
+ ],
+ "minor_issues_note": "see entries below",
+ "equation_coverage": [
+  {"eq": "(2)-(4) Gaussian mask STE", "status": "exact", "code": "renderer.py:ste_mask, rdo_attributes (scale and opacity times hard mask; bitmask = sigmoid>0.1)"},
+  {"eq": "(5) L_GS", "status": "exact", "code": "renderer.py: soft.mean() over all N; losses.py weight 0.0005"},
+  {"eq": "(6)-(7) SH masks", "status": "exact", "code": "renderer.py: per-degree STE expanded 3/5/7; shn*hard; lr 0.05"},
+  {"eq": "(8) L_SH", "status": "exact", "code": "renderer.py: mean over GS-kept rows of the [Nk,15,3] soft mask (official sh_soft_mask[gs_bitmask]); weight 0.005"},
+  {"eq": "(9)-(10) ECVQ", "status": "exact", "code": "bank.py:assign/quantize (unsquared cdist + log2pmf/lambda, log(1e-9) clamp only when grad is required), renderer.py STE"},
+  {"eq": "(11) L_rate / L_VQ", "status": "exact", "code": "renderer.py: sum bits/lambda_k /N /55 and sum ||x_hat-x||_2 /N /55 (code, not paper squared form)"},
+  {"eq": "(12) photometric", "status": "exact", "code": "splatstudio photometric loss 0.8 L1 + 0.2 D-SSIM"},
+  {"eq": "(13) total", "status": "exact", "code": "losses.py four weighted terms, weight 1/1/0.0005/0.005"},
+  {"eq": "sec.3.3 encode", "status": "exact", "code": "codec.py + density.py:_encode (removal, mask, remove_negatives, rate-constrained assign, shmask_sort with 8 boundaries, shrink, fp16, 8-bit logit opacity, rANS 16-bit)"}
+ ],
+ "probe_assessment": [
+  {"probe": "gs-mask-ste / sh-mask-ste", "detects_removal": true, "why": "independent-chain gradient and exact-zero coefficient checks fail if STE or masking is removed"},
+  {"probe": "ecvq", "detects_removal": true, "why": "independent argmin loop, rate on/off, /N/55 normalisation, grad routing"},
+  {"probe": "kmeans-reactivate", "detects_removal": true, "why": "compares to independent Lloyd loop and checks only p<=1e-5 codewords are revived"},
+  {"probe": "schedule", "detects_removal": "partly", "why": "drives the real after_backward but stubs base density, _kmeans and _encode; it checks event steps and LR but not that the real k-means runs on the 15000 state or that the renderer honours render_step (minor)"},
+  {"probe": "encode-decode / rans-codec", "detects_removal": true, "why": "bytes round-trip, independent sort/boundaries, sizes from np.savez on disk, independent CDF port"},
+  {"probe": "rd-losses", "detects_removal": true, "why": "zero before activation and weight x term after"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Runtime Adam step at step 30000 (official skips the last step): negligible.",
+  "White-background compositing and random view sampling with replacement (official: black background, shuffled epoch sampling): shared runtime gap, small.",
+  "gsplat DefaultStrategy densification instead of the official Inria densify: Gaussian counts will differ from the paper (baseline-level gap, not RDO-specific).",
+  "k-means and reactivation RNG differ from the official seeds.",
+  "Empty rANS stream for an attribute with zero symbols is an extension; the official code would assert (only reachable in short smoke runs)."
+ ],
+ "minor": [
+  {"severity": "minor", "file": "plugin/ss_rdo_gaussian/density.py", "where": "DEFAULTS patch_size 65536", "problem": "Official arguments default is 16384; run_real_world.sh passes 65536, so the plan is right. Patch size does not change results.", "fix": "none"},
+  {"severity": "minor", "file": "plugin/ss_rdo_gaussian/probes.py", "where": "schedule", "problem": "Stubs _kmeans/_encode/base; integration of the real k-means at the 15000 state is not probed.", "fix": "optional: add a small-N integration probe through the real runtime hooks"},
+  {"severity": "minor", "file": "plugin/ss_rdo_gaussian/density.py", "where": "scale.clamp_min(1e-12).log()", "problem": "The official decode takes log of the codeword directly. Zero codewords are essentially unreachable after remove_negatives (1e-8).", "fix": "none"}
+ ],
+ "evaluation_mode_judgement": {
+  "primary": "decoded (evaluate='decoded', the plugin default)",
+  "reason": "Official render.py decodes the bitstream, so the fp16 positions and 8-bit opacity are part of the paper numbers.",
+  "estimated_difference_decoded_vs_fp32": "Positions: fp16 half-ulp is about 4.9e-4 x |x|, i.e. about 2e-3 to 5e-3 at |x| of 5 to 10 (typical Mip-NeRF 360 COLMAP extents), sub-pixel for most views. Opacity: 8 bits over the logit range gives a step of about 0.08 logit, so under 1% relative error. Expected 0.01-0.05 dB, possibly slightly above 0.05 dB on outdoor scenes with far-from-origin foreground (bicycle, stump, treehill). This is an estimate, not measured: the smoke run has no fp32 comparison. It is moot for matching the paper because the official numbers include it."
+ },
+ "paper_results_check": "Per-scene PSNR/SSIM/LPIPS/size/Gaussian counts match App. Tab. A.6/A.7 and results/MipNeRF360/*.csv (size_bytes/1e6; baseline row equals the highest-rate row). Averages 27.05 / 0.802 / 0.239 / 23.46 and the rate-point averages equal Tab. A.3. T&T and DB per-scene and average values equal Tab. A.1/A.2/A.5 (means re-computed and consistent). 3DGS baseline rows match. Only the 'notes' string about official evaluation is wrong (see the major issue).",
+ "summary": "No critical issues. Gaussian mask, three SH masks (STE, lr 0.01/0.05, thresholds 0.1, L_SH over GS-kept rows), the six ECVQ codebooks and attribute split (3/4/3/9/15/21), unsquared L2 assignment, softmax entropy models, k-means init at 15001, reactivation 16000-20000 at p<=1e-5, rate-constrained assignment from 20001, the 10-step index refresh with a global cache, the x0.1 milestone after 12000 VQ steps, the /N/55 weights and the encode/decode path all match the official code operator by operator. Size = sum of the five official files / 1e6. The one major issue is the incorrect claim that the official evaluation is fp32/unquantised: render.py decodes the bitstream, so decoded is the correct primary mode, and the 'official' option and docs should be corrected."
+}

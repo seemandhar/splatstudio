@@ -1,0 +1,62 @@
+{
+ "method": "mip-splatting",
+ "module": "ss_mip_splatting",
+ "components": [
+  {
+   "name": "mip-gsplat",
+   "kind": "renderer",
+   "factory": "ss_mip_splatting.renderer:create_renderer",
+   "config": {
+    "kernel_size_2d": 0.1
+   }
+  },
+  {
+   "name": "mip-density",
+   "kind": "density",
+   "factory": "ss_mip_splatting.density:create_density",
+   "config": {
+    "filter_coef": 0.2,
+    "near": 0.2,
+    "frustum_margin": 0.15,
+    "filter_interval": 100,
+    "densify_until": 15000,
+    "total_steps": 30000,
+    "opacity_reset_every": 3000
+   }
+  },
+  {
+   "name": "photometric",
+   "kind": "loss",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [
+  {
+   "name": "filter_3d",
+   "shape": [],
+   "learning_rate": 0.0,
+   "initial_value": 0.0
+  }
+ ],
+ "probes": [
+  "filter3d-frequency-bound",
+  "filter3d-convolution",
+  "mip-filter-2d",
+  "filter-aware-reset",
+  "filter-schedule",
+  "single-reset",
+  "camera-hook",
+  "renderer-gradient (hook-aware replacement)"
+ ],
+ "contributions": [
+  "3d-smoothing-filter",
+  "2d-mip-filter"
+ ],
+ "fidelity_gaps": [
+  "G2 images_4/_2 vs PIL-resized full-res",
+  "G3 shared runtime differences",
+  "G5 principal point from K"
+ ],
+ "feasible_natively": true,
+ "custom_cuda": false
+}

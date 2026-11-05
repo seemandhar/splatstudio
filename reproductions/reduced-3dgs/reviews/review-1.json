@@ -1,0 +1,53 @@
+{
+ "approved": false,
+ "issues": [
+  {"severity": "major", "file": "plugin/ss_reduced_3dgs/shcull.py", "where": "colour_statistics (transmittance weights) via renderer.render / kernels.transmittance_stats",
+   "problem": "Official SH culling feeds the RAW LOGIT opacity (self._opacity) to the rasterizer when computing transmittance statistics; the plugin uses sigmoid opacities. In the official run, any Gaussian with logit<=0 (opacity<=0.5) never blends (alpha=logit*exp(power)<1/255), so touched=0, wSum=0, variance/wSum=NaN->0 and distances NaN->0: it is culled to 0 bands (DC=(mean-0.5)/C0 with mean=0) and the band-distance test passes trivially. Gaussians with logit>0 are weighted with alpha=min(0.99, logit*g). The plugin's statistics are the mathematically intended ones, but not those that produced the paper's 89%/0.1%/2.7%/8.2% 0/1/2/3-band split and the 102 MB (SH-cull) / 29 MB numbers, so band fractions and MB will likely come out larger than the paper.",
+   "evidence": "source/code/scene/gaussian_model.py:738-753 passes `self._opacity` (not get_opacity) to calculate_colours_variance; reduced_3dgs.cu:calculateColourVariance forwards opacity.data<float>() straight into Rasterizer::forward (con_o.w, forward.cu:~542 alpha=min(0.99,con_o.w*exp(power))). plugin kernels.transmittance_stats uses info['opacities'] (activated).",
+   "fix": "Add a cfg flag (default on for full_final) that renders the statistics pass with opacity := logit (raw `opacities` param) and the 0.99 alpha clamp, and keeps the NaN->0 handling; keep the sigmoid variant as an ablation. In the benchmark log band_fractions and compare to the paper's 89/0.1/2.7/8.2 split before trusting MB. Verify by a tiny diff run, not by running official code."},
+  {"severity": "major", "file": "plugin/ss_reduced_3dgs/shcull.py", "where": "colour_statistics, West variance update (lines ~68-72)",
+   "problem": "Official variance uses an aliased mean_old: `auto mean_old = mean;` shares storage, then mean.index_put_ updates it in place, so the variance line computes T*(c-mean_new)*(c-mean_new), not West's T*(c-mean_old)*(c-mean_new). Official variance is therefore smaller by factor (1 - Tbar/wSum) (exactly 0 for the first present view), so the official std<0.04 test culls more Gaussians to 0 bands than the plugin (which clones mean_old, i.e. the textbook West update). paper.md Section 2 describes it as plain West.",
+   "evidence": "reduced_3dgs.cu: `auto mean_old = mean;` ... mean.index_put_({present}, mean_old... + coefficient*(colour-mean_old)); variance.index_put_({present}, variance + T*(colour-mean_old)*(colour-mean)) vs shcull.py `mean_old = mean.clone()`.",
+   "fix": "Replicate the official arithmetic under the same flag: var[p] += t_bar[p]*(colour[p]-mean[p])**2 using the updated mean. Add a probe where the two differ (>=2 views with differing colours) so deleting the replication fails."},
+  {"severity": "minor", "file": "evidence/smoke-1.eval.log", "where": "ss-eval evidence",
+   "problem": "The only direct ss-eval attempt on a decoded run failed with 'SDK, plugin, or renderer source changed since training' (smoke-1.eval.json is just the error). Decoded-model evaluation is evidenced only via runtime.evaluate on smoke-compressed-2 and codec_check.py, which is the same code path but not the CLI. Logic itself is sound: encode->PLY bytes->decode replaces params at step==total_steps and the checkpoint stores the decoded params.",
+   "evidence": "evidence/smoke-1.eval.log last line; evidence/smoke-compressed-2/test.json (22.97 dB decoded).",
+   "fix": "After the first full run, run ss-eval on the unmodified plugin and record PSNR equal to validation/test.json and report_size.py MB."},
+  {"severity": "minor", "file": "plugin/ss_reduced_3dgs/density.py", "where": "schedule_events / encode",
+   "problem": "If ss-train steps != total_steps (30000) encode silently never runs and the run reports uncompressed numbers.",
+   "evidence": "report_size.py exits with 'no encode step ran' only afterwards.",
+   "fix": "Raise/print a loud warning in initialize or at the last step when encode is on but steps != total_steps."},
+  {"severity": "minor", "file": "plugin/ss_reduced_3dgs/density.py", "where": "event order",
+   "problem": "Density ops (mercy, dead prune) run after the optimizer step; official runs them before it. SH degree increments at step 1001 vs official 1000. Documented gap, negligible.",
+   "evidence": "runtime.py:206-211; train.py:86-87,146-150.", "fix": "none required."},
+  {"severity": "minor", "file": "plugin/ss_reduced_3dgs/redundancy.py", "where": "min_pixel_footprint",
+   "problem": "Frustum test and footprint use the real K (principal point, fx/fy) in pixel space; official uses symmetric NDC from FoV. Differences only for off-centre principal points / fx!=fy; gsplat tile radius and 0.999 alpha clamp vs 0.99 in the transmittance kernel (documented).",
+   "evidence": "redundancy.py:30-40 vs transformCentersNDCCUDA.", "fix": "optional."}
+ ],
+ "equation_coverage": [
+  {"eq": "Eq.(1)-(2) colour mean/std with transmittance weights", "status": "deviates", "code": "shcull.py:colour_statistics (official aliasing + logit-opacity quirks not replicated)"},
+  {"eq": "band distance d_q, 6*sqrt(3)/255, q in {2,1}", "status": "exact", "code": "shcull.py:cull_sh_bands"},
+  {"eq": "Sec 4.1 redundancy score (sphere vs 30-NN ellipsoid, min propagation)", "status": "exact", "code": "redundancy.py:redundancy_scores"},
+  {"eq": "Sec 4.1 mercy rule (median of candidates, 3% quantile capped 0.05, threshold max(mu+sigma,3))", "status": "exact", "code": "redundancy.py:mercy_mask"},
+  {"eq": "opacity L1 0.001 on visible mean", "status": "exact", "code": "losses.py:OpacityL1"},
+  {"eq": "SH sparsity lambda/(45V)*sign on active bands, lambda=0.1", "status": "exact", "code": "losses.py:SHSparsity"},
+  {"eq": "Sec 4.3 256-entry K-means codebooks (spaces, tol, init, empty->0), half floats, PLY layout, decode", "status": "exact", "code": "codec.py"},
+  {"eq": "memory_results MiB formula", "status": "exact", "code": "codec.py:paper_memory_bytes"}
+ ],
+ "probe_assessment": [
+  {"probe": "schedule", "detects_removal": true, "why": "Compared with an independent transcription of train.py conditions (mercy steps incl. reset skipping, dead prune >=15k, cull 15k, encode 30k)."},
+  {"probe": "redundancy-score", "detects_removal": true, "why": "O(N^2) reference of the official CUDA incl. min propagation and footprint."},
+  {"probe": "transmittance-stats", "detects_removal": true, "why": "Per-pixel torch compositing reference, but only with activated opacity; cannot catch the official logit-opacity input."},
+  {"probe": "sh-band-culling", "detects_removal": true, "why": "Synthetic 0/1/3-band Gaussians; encodes the intended semantics, so it would not flag the two official quirks."},
+  {"probe": "codec-roundtrip", "detects_removal": true, "why": "K-means tie/empty rules, PLY encode->decode, float16, size formula vs PLY length (44.77 vs 44.76 MB)."},
+  {"probe": "sh-sparsity-gradient / opacity-l1-gradient", "detects_removal": true, "why": "Analytic gradient comparison on visible/active coefficients."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "density ops after optimizer step",
+  "gsplat numerics (alpha clamp 0.999, tile lists) vs Inria rasterizer",
+  "white background, with-replacement sampling, no 20-px screen prune (shared runtime)",
+  "decoded +-inf codebook entries clamped to +-65504 (render-identical)",
+  "official SH-cull statistics quirks (logit opacity input, aliased variance) not replicated -> expect fewer 0-band Gaussians and larger MB than the paper"
+ ],
+ "summary": "Pruning schedule/score/mercy rule, opacity L1, SH sparsity gradient, per-Gaussian degree masking, K-means codec, PLY layout, decode path and MB formula all match the official full_final code. paper_results.json matches Tables 7-9 and the 3DGS* rows (averages recomputed: 27.10/27.42 PSNR, 29/744 MB, 14/412, 18/630). Two major issues: the plugin's SH-cull colour statistics follow the textbook definition rather than the official code, which feeds raw logit opacity to the rasterizer and has an aliased-mean variance bug; both change which Gaussians drop to 0/1/2 bands and therefore the band split and MB. Fix with an official-quirk flag, then check band fractions against the paper's 89/0.1/2.7/8.2 in the benchmark."
+}

@@ -1,0 +1,47 @@
+{
+  "paper": "DN-Splatter: Depth and Normal Priors for Gaussian Splatting and Meshing",
+  "slug": "dn-splatter",
+  "plan_id": 63,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (major fixed: dn-splatter-splatfacto control; 5 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "built (benchmark pending)",
+  "arxiv": "2403.17822",
+  "official_code_commit": "97588b4",
+  "method": "dn-splatter",
+  "methods": [
+    "dn-splatter",
+    "dn-splatter-splatfacto",
+    "dn-splatter-rgb"
+  ],
+  "custom_cuda": false,
+  "dataset": "mushroom-vr_room",
+  "benchmark_target": "MuSHRoom vr_room PSNR 26.8 (Table 4), Splatfacto 26.6",
+  "smoke": {
+    "scene": "vr_room",
+    "steps": 2000,
+    "psnr_within": 22.64,
+    "psnr_cross": 20.95,
+    "rgb_control_within": 23.29,
+    "rgb_control_cross": 21.41
+  },
+  "data": {
+    "raw": "~/datasets/mushroom/raw/vr_room_x",
+    "native": "~/datasets/mushroom/native/vr_room"
+  },
+  "extra_deps": {
+    "omnidata_ckpt": "~/models/omnidata/omnidata_dpt_normal_v2.ckpt sha256 38db3f7d952f48f900f0b32d6cce6749e41641045ebc5713cf29618f54aff3bb",
+    "omnidata_tools": "~/models/omnidata/pylib (0.0.23, no deps)",
+    "timm": "~/models/dpt/pylib",
+    "open3d/sklearn": "~/models/dtueval-pylib"
+  },
+  "control": "dn-splatter-splatfacto",
+  "bench_exps": [
+    "dn-splatter-vr_room"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+ "approved": false,
+ "issues": [
+  {"severity": "major", "file": "plugin/ss_hac/renderer.py", "where": "visible_anchors / _render_train / _render_decoded (plan.md fidelity gap 2)",
+   "problem": "Anchor prefilter is only camera-space z>0.2. Official prefilter_voxel calls the Scaffold fork's rasterizer.visible_filter, which keeps an anchor only if its own scales[:, :3] footprint gets radii>0, i.e. in frustum AND its projected tile rect is non-empty (off-screen anchors are dropped). plan.md says 'same as markVisible', which is wrong for this repo.",
+   "evidence": "official gaussian_renderer/__init__.py:prefilter_voxel -> visible_filter; submodules/diff-gaussian-rasterization forward.cu filter_preprocess returns early when (rect_max-rect_min) area == 0. Plugin keeps all anchors with z>0.2.",
+   "fix": "Add the same test: project the anchor, compute the 3-sigma radius from exp(scaling[:, :3]) (identity rotation) and keep it only if the clamped tile rect is non-empty. Use it in both train and decoded render, so anchor_demon, opacity_accum and the prune and grow statistics match, and decoded eval matches official visibility. Or measure the effect and document it."},
+  {"severity": "major", "file": "plan.md; paper.md; paper_results.json", "where": "Fidelity gap 1 ('paper's 3DGS/Scaffold rows share its protocol, so compare deltas')",
+   "problem": "Asserted as fact but not supported. paper_results.json notes only say 'likely taken from Scaffold-GS's paper'. The Scaffold-GS rows have integer-rounded sizes (copied numbers, not rerun by HAC). The 3DGS rows differ from the 3DGS paper (27.49 vs 27.21). HAC says only that it follows Scaffold-GS. HAC's own rows are 1.6K width (width capped at 1600 in the loader). Our protocol is images_4 for outdoor scenes (~1.2K wide) and images_2 for indoor scenes, so absolute numbers and deltas are confounded.",
+   "evidence": "paper.md 'Baselines in the paper'; paper_results.json notes; source/code/utils/camera_utils.py 1600 cap; CLAUDE.md data table.",
+   "fix": "Mark the shared-protocol claim as an unverified assumption. Judge fidelity against the HAC rows and against our own Scaffold-GS/gsplat baseline on the same images, not the paper's 3DGS/Scaffold-GS rows. If feasible, add a 1.6K-width conversion for Mip-NeRF360."},
+  {"severity": "minor", "file": "plugin/ss_hac/renderer.py", "where": "_rasterize near_plane=0.01",
+   "problem": "Official culls Gaussians at z<=0.2 (in_frustum) inside the rasterizer. gsplat here culls at 0.01, so neural Gaussians between 0.01 and 0.2 are rendered.",
+   "evidence": "forward.cu in_frustum vs rasterization(near_plane=0.01)", "fix": "near_plane=0.2"},
+  {"severity": "minor", "file": "plugin/ss_hac/renderer.py; density.py", "where": "white background; last-step optimizer; update order",
+   "problem": "White background vs official black (mip360). The runtime steps field Adam at step 30000 and before densification; official skips the optimizer at iteration==iterations and densifies first. All three are documented gaps with small effect.",
+   "evidence": "train.py: bg 0 unless white_background; 'if iteration < opt.iterations: optimizer.step()'", "fix": "None required. Keep them recorded as gaps."},
+  {"severity": "minor", "file": "plugin/ss_hac/density.py", "where": "initialize / lr_table",
+   "problem": "offset and mask LRs scale with spatial_lr_scale = the runtime scene_scale. This equals 3DGS cameras_extent only with --recipe 3dgs. The default recipe uses a point-cloud quantile, and --num-gaussians defaults to 10000, so a plain ss-train silently subsamples SfM to ~10k anchors. Nothing in the plugin guards this.",
+   "evidence": "runtime.py:144-154; evidence/smoke-1/config.json uses recipe 3dgs, num_gaussians 1e7",
+   "fix": "Assert or warn in initialize when scene_scale does not match the camera extent, or when len(points) was truncated. State the required flags in bench_request.json."},
+  {"severity": "minor", "file": "plugin/ss_hac/renderer.py; plan.md", "where": "hac_blob transport and size reporting",
+   "problem": "The evaluated tensors are exactly the official decoded model: dequantized anchors, feat, scaling and offsets from the arithmetic-coded streams, decoded masks, fp32 MLPs. Only the anchors with a non-empty mask are kept, as in official. The size follows the official bit formula (16-bit anchors, +96/+64 bits per stream, fp32 MLPs including the context MLP). But the runtime's resources.checkpoint_bytes (~150 MB) and validation.json carry no HAC size. The real size lives only in checkpoint density_state.hac.encoded. The blob decode relies on row order and the first-row magic, with no checksum.",
+   "evidence": "density.py:bake vs gaussian_model.py conduct_encoding/decoding; evidence/test.json", "fix": "Write size_mb into a results file or table so the benchmark cannot report checkpoint_bytes. Add a blob checksum or length-vs-rows check."},
+  {"severity": "minor", "file": "plugin/ss_hac/probes.py", "where": "training-phases / neural-gaussians / bake-eval",
+   "problem": "Probes would not catch an off-by-one at steps 3000/3001 or 10000/10001, a wrong 5% sample, a wrong lambda_e or lambda_m, or a wrong visibility filter. The neural-gaussians reference is a re-implementation by the same author, and bake-eval checks self-consistency between the baked render and a fresh render, not equivalence with official decode. The rate probe checks only that the estimate exists and is attached.",
+   "evidence": "probes.py:303-352, 355-401", "fix": "Assert the phase at exact boundary steps, the sampled fraction ~5%, the loss value for a fixed bits tensor (lambda_e*(b+hash/denom) + 5e-4*mean(sigmoid)), and the filtered anchor set."},
+  {"severity": "minor", "file": "paper_results.json", "where": "notes / source",
+   "problem": "Table labels disagree with the PDF text. The notes say supp. Table E (mip360), I (3DGS) and J (Scaffold-GS). The PDF text shows Table C (HAC mip360), D (T&T), E (DB), G (3DGS) and H (Scaffold-GS). The numbers are correct; only the labels are off.",
+   "evidence": "source/paper.txt lines ~1040-1262", "fix": "Correct the labels."}
+ ],
+ "equation_coverage": [
+  {"eq": "(2) hash-grid context f^h -> mu,sigma", "status": "exact", "code": "model.py:Mix3D2DEncoding/HACBank.context"},
+  {"eq": "(3-4) adaptive Q = Q0(1+tanh r), Q0 = 1/0.001/0.2", "status": "exact", "code": "model.py:HACBank.context"},
+  {"eq": "(5-6) Gaussian CDF bits, STE noise, 5% sample, mask rate", "status": "exact", "code": "renderer.py:_rate, model.py:gaussian_bits"},
+  {"eq": "(7) L = L1/SSIM + 0.004*(bit_per_param + L_hash/denom) + 5e-4*mean(sigmoid(mask)) + 0.01*scaling reg", "status": "exact", "code": "losses.py (SSIM valid conv by runtime)"},
+  {"eq": "Scaffold decode (feat 50, 10 offsets x3, scaling 6, mask, opacity>0, view-dependent [feat, dir, dist])", "status": "exact", "code": "renderer.py:neural_gaussians"},
+  {"eq": "anchor growing/pruning, LR schedules, phases (3000/10000/15000, pause [3000,4000))", "status": "exact", "code": "density.py; model.py:expon_lr"},
+  {"eq": "visible_filter prefilter", "status": "deviates", "code": "renderer.py:visible_anchors"}
+ ],
+ "probe_assessment": [
+  {"probe": "hash-grid", "detects_removal": true, "why": "compares the CUDA grid against an independent torch reference, values and gradients"},
+  {"probe": "entropy-model", "detects_removal": true, "why": "erf formula check"},
+  {"probe": "codec-roundtrip", "detects_removal": true, "why": "lossless decode and size within 2% of entropy"},
+  {"probe": "neural-gaussians", "detects_removal": true, "why": "per-anchor loop reference; same-author reference, no visibility check"},
+  {"probe": "anchor-density", "detects_removal": true, "why": "voxel placement, prune and Adam alignment"},
+  {"probe": "training-phases", "detects_removal": false, "why": "no exact boundary steps, no sample fraction, no lambda value, no loss-weight check"},
+  {"probe": "bake-eval", "detects_removal": true, "why": "catches a missing blob or an un-baked state; does not compare to an official decode"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "resolution 1.6K vs images_4/images_2", "gsplat vs Scaffold rasterizer", "white vs black background",
+  "random-with-replacement views", "SSIM valid conv", "optimizer order and last step", "hac_blob transport",
+  "codec same CUDA coder as official (not torchac)"
+ ],
+ "summary": "No critical issues. Anchor representation, MLPs, view-dependent inputs, opacity>0 threshold, growing/pruning, LR schedules, three phases, hash grid, entropy model, rate loss (0.004, 5e-4 mask term, 5% sample), encode/decode/bake and size formula match the official code at 110dcf0a. Evaluated tensors are the official decoded model, and the reported size follows the official bitstream formula. paper_results.json matches the HAC per-scene tables (lambdas 0.004-0.0005), the 3DGS and Scaffold-GS rows for Mip360/T&T/DB, and the averages. Two major issues remain: the anchor prefilter is not the official visible_filter, and the 'same 1.6K protocol' claim for the paper's 3DGS/Scaffold-GS rows is an unverified assumption stated as fact. Evidence is a 2000-step compressed smoke only; no 30k run has verified fidelity."
+}

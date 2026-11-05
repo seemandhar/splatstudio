@@ -1,0 +1,49 @@
+{
+ "approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_c3dgs/density.py", "where": "compress/set_learning_rates (fine-tune loss)",
+   "problem": "Fine-tune renders over a white background (runtime convention) whereas the official finetune.py uses black for Mip-NeRF360 (cfg_args white_background=False); sensitivity pass correctly uses black.",
+   "evidence": "finetune.py: bg_color = [1,1,1] if dataset.white_background else [0,0,0]; plan.md gap 2",
+   "fix": "Already listed as a fidelity gap; keep it in report.md. Not closable without changing the shared runtime."},
+  {"severity": "minor", "file": "plugin/ss_c3dgs/density.py", "where": "encode (step 35000)",
+   "problem": "The runtime Adam steps opacity at step 35000 (official skips the last optimizer step). The npz therefore stores opacity one Adam step (lr 0.05 on the logit) past the last rendered/observed state, quantised with the observer qparams from the previous forward. Plan.md calls this negligible; it is a legitimate extra training step but is not what the bank rendered.",
+   "evidence": "finetune.py: 'if iteration < max_iter: optimizer.step()'; events(): bank_step only for step < total_steps, but runtime steps all per-field optimizers",
+   "fix": "Optionally restore the pre-step opacity (snapshot at step 34999 end) or zero the opacity LR at step 35000 so the stored model equals the last rendered model."},
+  {"severity": "minor", "file": "plugin/ss_c3dgs/codec.py", "where": "decode_npz rotation",
+   "problem": "Decoded rotation is normalize(Q(normalize(r))) while the fake-quantised model that trained/evaluated in official compress.py renders normalize(FQ(r)) (raw r). Slightly different rounding; acknowledged in plan gap 6.",
+   "evidence": "gaussian_model.py get_rotation = normalize(rotation_qa(_rotation)) vs save_npz quantising normalize(_rotation)",
+   "fix": "None needed; this mirrors the official saved file, which is the model users load."},
+  {"severity": "minor", "file": "plugin/ss_c3dgs/probes.py", "where": "sensitivity_oracle shape part",
+   "problem": "The shape-sensitivity oracle is computed with the same gsplat rasterizer, so it cannot catch a symmetric-covariance gradient convention error (official CUDA backward doubles off-diagonal terms).",
+   "evidence": "I checked independently: finite difference of E w.r.t. each of the 6 covariance entries (symmetric perturbation) matches autograd through to_full_cov (e.g. [7328,-3882,0,4917,0,0] vs FD [7822,-3964,0,5082,0,0], fp32 noise, no factor 2 off).",
+   "fix": "Optionally add that finite-difference check to the probe."},
+  {"severity": "minor", "file": "plugin/ss_c3dgs/vq.py", "where": "nearest / vq_features",
+   "problem": "Mini-batch sampling uses a seeded CUDA generator and index_add_ instead of CPU randint and torch_scatter; codebook init/assignments are statistically identical but not bit-identical to official.",
+   "evidence": "compression/vq.py uses torch.randint on CPU and scatter(reduce='sum')",
+   "fix": "None; already listed as gap 8."}
+ ],
+ "equation_coverage": [
+  {"eq": "sensitivity S(p)=1/sum P_i * sum_i |dE_i/dp|, E=sum RGB, unclamped colours, black bg", "status": "exact", "code": "sensitivity.py:compute"},
+  {"eq": "zero colour-sensitivity pruning (amax over 48 SH coeffs > prune_threshold 0)", "status": "exact", "code": "density.py:compress"},
+  {"eq": "sensitivity-weighted k-means centroid + EMA 0.8, uniform init, trace renorm for covariance", "status": "exact", "code": "vq.py:update/vq_features"},
+  {"eq": "kept vectors beta_c=6e-7 (SH), beta_g=3e-6 (normalised covariance) appended to codebook", "status": "exact", "code": "density.py:compress + vq.join_features"},
+  {"eq": "shape = eigh of normalised covariance -> rotation + scale, per-Gaussian eta=exp(log eta)", "status": "exact", "code": "vq.py:extract_rot_scale; bank.py:attributes"},
+  {"eq": "QA fine-tune 5000 steps, LRs 0.0025/0.000125/0.005/0.005/0.001 (opacity 0.05 runtime), means frozen, codebook grads summed via index backward, eps 1e-15", "status": "exact", "code": "bank.py; density.py:set_learning_rates"},
+  {"eq": "Morton sort + official npz layout + size = bytes/2^20", "status": "exact", "code": "codec.py:encode_npz; quant.py:morton_order"}
+ ],
+ "probe_assessment": [
+  {"probe": "sensitivity-oracle", "detects_removal": true, "why": "negative-colour Gaussians would be zero if clamped; abs-vs-sum gap asserted; independent W*Y_k oracle; invisible Gaussian must be 0"},
+  {"probe": "vq-official", "detects_removal": true, "why": "brute-force argmin, explicit EMA formula, trace renorm and exact kept vectors"},
+  {"probe": "qa-codebook", "detects_removal": true, "why": "8-bit grid, STE grad, codebook grad = sum of per-Gaussian grads, LR groups"},
+  {"probe": "codec-roundtrip", "detects_removal": true, "why": "decoded render vs bank render, size vs real savez_compressed, Morton shrinks coherent scene"},
+  {"probe": "pipeline", "detects_removal": true, "why": "zero-sensitivity pruning, bank active, means frozen, codebooks move, decode replaces params"},
+  {"probe": "schedule", "detects_removal": true, "why": "event boundaries at 30000/35000 and run-length guard"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Base model is our gsplat 3DGS, not the 3DGS authors' released models: compare deltas (paper -0.20/-0.43/-0.22 dB on bicycle/garden/counter; checked 25.171-24.970, 27.179-26.746, 28.888-28.671)",
+  "Fine-tune background white vs black in official mip360 runs",
+  "Opacity Adam step at step 35000; random-with-replacement view sampling; gsplat vs official rasteriser; scatter via index_add_",
+  "Smoke run (1500+500 steps) kept 23.6%/26.2% of colour/shape vectors, so codebooks were 130k/144k entries; thresholds are only meaningful after 30k training, so the keep fractions and size on the real 35k run must be reported against the paper's ~28.8 MB average"
+ ],
+ "summary": "No critical or major issues. Checked against official compress.py, finetune.py, compression/vq.py, scene/gaussian_model.py and utils/splats.py: sensitivity (SH dc/rest + normalised covariance times eta^2, unclamped colours, black bg, per-view abs grad, pixel normalisation, quantiser call order), prune at importance>0, 4096 codebooks with beta_c 6e-7 / beta_g 3e-6 and kept vectors appended, decay 0.8, 100/800 iterations, batches 2^18/2^20, fine-tune LRs, frozen means (spatial_lr_scale=0 in official), 4999 bank optimizer steps, FakeQuantize qint8 per attribute, half positions, npz keys/dtypes, Morton sort and size all match. Steps 1-30000 reuse the baseline recipe (means LR rescaled to a 30000-step schedule, same density). paper_results.json matches the supplementary Mip360/T&T/DB tables, 3DGS rows and the garden ablation exactly. 7 unit tests pass, ss-inspect clean. Remaining items are minor and already documented."
+}

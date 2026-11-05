@@ -1,0 +1,17 @@
+{
+  "paper": "AtomGS: Atomizing Gaussian Splatting for High-Fidelity Radiance Field",
+  "slug": "atomgs",
+  "plan_id": 66,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (approved, 6 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "built",
+  "bench_exps": [
+    "atomgs-mipnerf360"
+  ]
+}

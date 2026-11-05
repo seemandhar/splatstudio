@@ -1,0 +1,140 @@
+{
+ "paper": "Revising Densification in Gaussian Splatting",
+ "arxiv": "2404.06109",
+ "method_label": "Ours, 3DGS",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.611,
+     "ssim": 0.822,
+     "lpips": 0.223
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.353,
+      "bonsai": 32.478,
+      "counter": 29.121,
+      "flowers": 21.302,
+      "garden": 27.622,
+      "kitchen": 31.884,
+      "room": 31.902,
+      "stump": 26.806,
+      "treehill": 22.025
+     },
+     "ssim": {
+      "bicycle": 0.782,
+      "bonsai": 0.944,
+      "counter": 0.909,
+      "flowers": 0.625,
+      "garden": 0.872,
+      "kitchen": 0.93,
+      "room": 0.922,
+      "stump": 0.789,
+      "treehill": 0.623
+     },
+     "lpips": {
+      "bicycle": 0.193,
+      "bonsai": 0.231,
+      "counter": 0.24,
+      "flowers": 0.288,
+      "garden": 0.109,
+      "kitchen": 0.147,
+      "room": 0.271,
+      "stump": 0.211,
+      "treehill": 0.321
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.447,
+     "ssim": 0.817,
+     "lpips": 0.25
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.184,
+      "bonsai": 32.04,
+      "counter": 28.926,
+      "flowers": 21.649,
+      "garden": 27.332,
+      "kitchen": 31.382,
+      "room": 31.395,
+      "stump": 26.681,
+      "treehill": 22.435
+     },
+     "ssim": {
+      "bicycle": 0.769,
+      "bonsai": 0.94,
+      "counter": 0.907,
+      "flowers": 0.609,
+      "garden": 0.867,
+      "kitchen": 0.927,
+      "room": 0.916,
+      "stump": 0.778,
+      "treehill": 0.636
+     },
+     "lpips": {
+      "bicycle": 0.228,
+      "bonsai": 0.254,
+      "counter": 0.256,
+      "flowers": 0.357,
+      "garden": 0.12,
+      "kitchen": 0.154,
+      "room": 0.286,
+      "stump": 0.237,
+      "treehill": 0.358
+     }
+    }
+   },
+   "source": "Table 1 (averages, 27.61/27.45) and supp. Table 'scene-res' (per scene, mean of 5 runs)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.93,
+     "ssim": 0.853,
+     "lpips": 0.187
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.44,
+     "ssim": 0.845,
+     "lpips": 0.212
+    }
+   },
+   "source": "Table 2 (averages only)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.5,
+     "ssim": 0.904,
+     "lpips": 0.305
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.54,
+     "ssim": 0.902,
+     "lpips": 0.311
+    }
+   },
+   "source": "Table 3 (averages only)"
+  }
+ },
+ "ablations_mipnerf360_psnr": {
+  "3dgs": 27.45,
+  "3dgs+OC": 27.65,
+  "3dgs+GC": 27.35,
+  "3dgs+OR": 27.48,
+  "ours": 27.61,
+  "ours-OC": 27.04,
+  "ours-GC": 27.54,
+  "ours-OR": 27.28
+ },
+ "notes": "Baseline rows are the authors' own 3DGS re-implementation (5-run means), not the 3DGS paper. LPIPS values are the 'corrected' LPIPS (higher than 3DGS-code values). Primitive cap = baseline's count. Mip-Splatting variant (Ours, Mip-Splatting) not targeted."
+}

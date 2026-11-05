@@ -1,0 +1,85 @@
+{
+  "per_scene": {
+    "bicycle": {
+      "fregs": 24.70930404663086,
+      "gsplat": 24.788531188964843,
+      "fregs_gaussians": 7304028,
+      "gsplat_gaussians": 9248662
+    },
+    "flowers": {
+      "fregs": 21.57761218331077,
+      "gsplat": 21.582186178727582,
+      "fregs_gaussians": 4611758,
+      "gsplat_gaussians": 5745443
+    },
+    "garden": {
+      "fregs": 26.882506132125854,
+      "gsplat": 27.117833932240803,
+      "fregs_gaussians": 6542688,
+      "gsplat_gaussians": 7671090
+    },
+    "stump": {
+      "fregs": 26.176795721054077,
+      "gsplat": 26.243075489997864,
+      "fregs_gaussians": 6189689,
+      "gsplat_gaussians": 6599727
+    },
+    "treehill": {
+      "fregs": 22.264703644646538,
+      "gsplat": 22.24943584865994,
+      "fregs_gaussians": 6341477,
+      "gsplat_gaussians": 6999775
+    },
+    "room": {
+      "fregs": 29.490925275362454,
+      "gsplat": 30.982903553889347,
+      "fregs_gaussians": 3077176,
+      "gsplat_gaussians": 2331579
+    },
+    "counter": {
+      "fregs": 28.801322174072265,
+      "gsplat": 29.019415410359702,
+      "fregs_gaussians": 2474361,
+      "gsplat_gaussians": 1761242
+    },
+    "kitchen": {
+      "fregs": 30.196319702693394,
+      "gsplat": 30.125664247785295,
+      "fregs_gaussians": 3104483,
+      "gsplat_gaussians": 2278994
+    },
+    "bonsai": {
+      "fregs": 31.911296019683014,
+      "gsplat": 31.964753537564665,
+      "fregs_gaussians": 3170605,
+      "gsplat_gaussians": 1937375
+    }
+  },
+  "psnr": {
+    "ours_fregs": 26.89008721106436,
+    "ours_gsplat": 27.119311043132225,
+    "paper_fregs": 27.85,
+    "paper_3dgs": 27.21,
+    "abs_gap": -0.9599127889356431,
+    "ours_improvement": -0.22922383206786634,
+    "paper_improvement": 0.6400000000000006
+  },
+  "ssim": {
+    "ours_fregs": 0.7998443790881155,
+    "ours_gsplat": 0.8097322116155622,
+    "paper_fregs": 0.826,
+    "paper_3dgs": 0.815,
+    "abs_gap": -0.026155620911884503,
+    "ours_improvement": -0.009887832527446738,
+    "paper_improvement": 0.01100000000000001
+  },
+  "lpips": {
+    "ours_fregs": 0.27765808200866443,
+    "ours_gsplat": 0.2547717002068662,
+    "paper_fregs": 0.209,
+    "paper_3dgs": 0.214,
+    "abs_gap": 0.06865808200866444,
+    "ours_improvement": 0.02288638180179825,
+    "paper_improvement": -0.0050000000000000044
+  }
+}

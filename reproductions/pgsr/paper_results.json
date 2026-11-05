@@ -1,0 +1,37 @@
+{
+  "paper": "PGSR: Planar-based Gaussian Splatting for Efficient and High-Fidelity Surface Reconstruction",
+  "arxiv": "2406.06521",
+  "method_label": "PGSR",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.25, "ssim": 0.833, "lpips": 0.178},
+        "indoor": {"psnr": 30.36, "ssim": 0.934, "lpips": 0.147},
+        "outdoor": {"psnr": 24.76, "ssim": 0.752, "lpips": 0.203}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.24, "ssim": 0.803, "lpips": 0.246},
+        "indoor": {"psnr": 30.99, "ssim": 0.926, "lpips": 0.199},
+        "outdoor": {"psnr": 24.24, "ssim": 0.705, "lpips": 0.283}
+      },
+      "source": "main Table tab:view_eval (tables/view_eval.tex); averages only (indoor 4 / outdoor 5 / all 9)"
+    },
+    "dtu_chamfer_mm": {
+      "method": {"average": {"chamfer": 0.52},
+                 "per_scene": {"chamfer": {"scan24": 0.36, "scan37": 0.57, "scan40": 0.38, "scan55": 0.33, "scan63": 0.78, "scan65": 0.58, "scan69": 0.50, "scan83": 1.08, "scan97": 0.63, "scan105": 0.59, "scan106": 0.46, "scan110": 0.54, "scan114": 0.30, "scan118": 0.38, "scan122": 0.34}}},
+      "source": "main Table tab:dtu_result (tables/dtu_new.tex); full-view DTU (2DGS preprocessing)"
+    },
+    "tnt_f1": {
+      "method": {"average": {"f1": 0.52},
+                 "per_scene": {"f1": {"Barn": 0.66, "Caterpillar": 0.44, "Courthouse": 0.20, "Ignatius": 0.81, "Meetingroom": 0.33, "Truck": 0.66}}},
+      "source": "main Table tab:tnt (tables/tnt_new.tex)"
+    },
+    "tnt_ablation_psnr": {
+      "method": {"average": {"psnr": 26.73},
+                 "per_scene": {"psnr": {"Barn": 29.2, "Caterpillar": 26.81, "Courthouse": 23.48, "Ignatius": 26.48, "Meetingroom": 27.72, "Truck": 26.66}}},
+      "source": "supp. Table tab:detailed_tnt_psnr (TnT surface-reconstruction scenes, not the 3DGS tandt split)"
+    }
+  },
+  "notes": "Mip-NeRF 360 3DGS row is the 3DGS paper's numbers as listed in PGSR's table. Paper gain over 3DGS: indoor -0.63, outdoor +0.52, all +0.01 dB. README Code_V1.0 DTU numbers (mean 0.47) are better than the paper (0.52); paper v2 row = README 'Remove ICP'."
+}

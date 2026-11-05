@@ -1,0 +1,16 @@
+{
+ "method": "revising-densification",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "room"
+  ],
+  "tandt": [
+   "truck",
+   "train"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": ""
+}

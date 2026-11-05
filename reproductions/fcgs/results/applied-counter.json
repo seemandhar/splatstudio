@@ -1,0 +1,44 @@
+{
+ "run": "runs/baseline3dgs-mipnerf360-30000/gsplat/mipnerf360-counter",
+ "scene": "counter",
+ "split": "test",
+ "gaussians": 1215973,
+ "results": [
+  {
+   "lambda": 0.0001,
+   "metrics": {
+    "psnr": 28.816451644897462,
+    "ssim": 0.9060625155766805,
+    "lpips": 0.2623517195383708
+   },
+   "codec": {
+    "lambda": 0.0001,
+    "gaussians": 1215973,
+    "steps": 2,
+    "xyz_coder_used": "octree",
+    "size_MB": 23.80826187133789,
+    "size_MB_breakdown": {
+     "xyz": 2.735210418701172,
+     "mask": 0.1441783905029297,
+     "fea": 1.4629955291748047,
+     "fea_main": 1.4444570541381836,
+     "fea_hyp": 0.018538475036621094,
+     "feq": 11.613077163696289,
+     "feq_main": 11.606073379516602,
+     "feq_hyp": 0.0070037841796875,
+     "geo": 7.852800369262695,
+     "geo_main": 7.843498229980469,
+     "geo_hyp": 0.009302139282226562
+    },
+    "size_MB_attributes_only": 21.07305145263672,
+    "bitstream_disk_bytes": 24964774,
+    "mask_rate": 0.4988482474528628,
+    "encode_seconds": 72.025166654028,
+    "decode_seconds": 74.22142163477838,
+    "roundtrip_max_abs_error": 0.0,
+    "uncompressed_ply_MB": 287.59127044677734
+   },
+   "seconds": 159.01594132650644
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-fatesgs"
+version = "0.1.0"
+description = "FatesGS (arXiv 2501.04628) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+fatesgs = "ss_fatesgs:method"
+fatesgs-2dgs = "ss_fatesgs:method_2dgs"
+
+[project.scripts]
+fatesgs-dtu-eval = "ss_fatesgs.dtu:main"
+
+[tool.setuptools.packages.find]
+include = ["ss_fatesgs*"]
+
+[tool.setuptools.package-data]
+ss_fatesgs = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.h", "csrc/*.md", "csrc/cuda_rasterizer/*", "csrc/third_party/glm/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_fatesgs/vismvsnet.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,50 @@
+{
+ "approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_compact_3dgs/renderer.py", "where": "_rasterize / render_train (R-VQ rotations) and render_decoded",
+   "problem": "gsplat normalises quaternions; the official diff-gaussian-rasterization does not (forward.cu/backward.cu: `glm::vec4 q = rot;// / glm::length(rot)`). Official R-VQ rotations (sum of 6 codes) and the decoded test-time rotations are therefore used un-normalised in the covariance.",
+   "evidence": "official render(): rotations = pc.vq_rot(...) / pc._rotation passed raw; gsplat rasterization() normalises. Effect is O(R-VQ residual error) in |q|-1, so small.",
+   "fix": "Document as gap G10; optionally quantify |q|-1 on a decoded checkpoint. No code change is needed unless |q| deviates by more than a few percent."},
+  {"severity": "minor", "file": "plugin/ss_compact_3dgs/hashgrid.py, model.py", "where": "fp32 hash grid and MLP vs tcnn fp16 (G3)",
+   "problem": "tcnn keeps fp32 master params but runs the grid and MLP in fp16 (`params.to(half)`, loss_scale 128, fp16 param grads). Here everything is fp32. With Adam eps=1e-15, fp16 gradient underflow in tcnn zeroes dust gradients that fp32 turns into full-lr steps. This can change the hash-value distribution (|theta|>0.1 pruning, Huffman size) and PSNR slightly. The gap is listed but not bounded.",
+   "evidence": "source/tcnn/modules.py Module.forward / _module_function_backward; Adam(eps=1e-15) in density.build_optimizer.",
+   "fix": "If the benchmark misses the PP storage (hash 7.4 MB target) or PSNR, emulate it cheaply: cast features and params through half in forward and flush grads via (g*128).half()/128 before Adam. Report hash-pruned fraction vs the paper."},
+  {"severity": "minor", "file": "evidence/smoke-2/test.json, probes.py:bake_eval", "where": "ss-eval == decoded-model claim",
+   "problem": "`test_equals_validation` is not evidence of ss-eval fidelity. Validation at step 30000 already runs the baked render_decoded path, so both numbers use the same code. The real guard is the bake_eval probe (fresh bank-free render == baked render; baked feature == bank.features(dec['means'], dec['hash'])). That check holds by construction: positions are frozen and fp16-rounded, and the contraction is the same fp32 function. It is correct, but the probe never compares the live-bank render with decoded weights against the baked render.",
+   "evidence": "Official precompute(): contract(xyz.half()) then recolor(...). Plugin bake: bank.features(dec['means'], dec['hash']) with dec['means'] fp16->fp32. Identical inputs, so ss-eval == querying the decoded grid at render time.",
+   "fix": "Optional extra probe: set bank.hash.params to dec['hash'] and bank.mlp to dec['mlp'] (live path, no mask/R-VQ) and assert equality with the baked render."},
+  {"severity": "minor", "file": "density.py", "where": "after_backward order at step == total_steps (G4)",
+   "problem": "The runtime applies the per-Gaussian Adam step at step 30000 before the final prune/encode (official skips every optimizer step there). The displacement is at most lr_final*extent (1.6e-6*extent) per parameter; it is mostly erased by fp16 rounding of xyz. Negligible.",
+   "evidence": "train.py: `if iteration < opt.iterations: optimizer.step()`; runtime.py steps all optimizers unconditionally.",
+   "fix": "None needed."}
+ ],
+ "equation_coverage": [
+  {"eq": "(1) STE mask", "status": "exact", "code": "renderer.py:straight_through_mask (eps 0.01, sg on indicator minus sigma)"},
+  {"eq": "(2) s_hat, o_hat", "status": "exact", "code": "renderer.py:render_train (scales*mask, sigmoid(o)*mask)"},
+  {"eq": "(3) mask loss", "status": "exact", "code": "losses.py:create_mask_loss (5e-4 * mean sigmoid, same as train.py)"},
+  {"eq": "(4)-(5) R-VQ", "status": "exact", "code": "model.py:ResidualVQ/VQStage, active for step > 29000, 6x64, kmeans 1 iter, residual -= q.detach()"},
+  {"eq": "(6) codebook loss", "status": "exact", "code": "model.py:VQStage.forward (in-place Adam 1e-4 on mse(Z[i], x.detach()), re-quantise, STE; matches vq-pytorch 1.8.1)"},
+  {"eq": "(7)-(8) colour field and contraction", "status": "exact", "code": "model.py:contract_to_unisphere, color_sh0; hashgrid.py + csrc/hashgrid.cu (tcnn grid_scale/resolution/offsets/prime hash; 6,299,960x2 params)"},
+  {"eq": "(9) total loss", "status": "exact", "code": "photometric + mask-loss; L_r, L_s via in-place codebook optimiser, as in the official code"},
+  {"eq": "PP encode/decode (final_prune, post_quant, Huffman)", "status": "exact", "code": "codec.py (dahuffman from_frequencies port with EOF, min/max before prune, formulas = final_prune); Morton sort omitted (size-neutral)"}
+ ],
+ "probe_assessment": [
+  {"probe": "volume-mask", "detects_removal": true, "why": "Compares the render with masked Gaussians dropped, the analytic STE gradient, the mask-loss gradient and the prune schedule against an independent reference."},
+  {"probe": "hash-grid", "detects_removal": true, "why": "An independent int64 torch implementation checks values and param gradients. I re-read the tcnn grid.h/common_device.h logic: scale, resolution, offsets, dense-vs-hash condition and primes all agree."},
+  {"probe": "neural-color", "detects_removal": true, "why": "Checks colour against an independent C0*MLP(...)+0.5 reference, including the 2d-1 SH quirk (matches tcnn sh_enc and the official feed of [-1,1] directions)."},
+  {"probe": "rvq", "detects_removal": true, "why": "Mutation tested per test.json (rvq_iter=0 now fails); checks the independent loop, STE gradient factor L and the in-place Adam step."},
+  {"probe": "net-schedule", "detects_removal": true, "why": "The lr closed form is replayed against the torch ChainedScheduler. The prune-event comparison is a re-derived official loop; it duplicates intent but is independent code."},
+  {"probe": "bake-eval", "detects_removal": true, "why": "Fresh bank-free render == baked render after a checkpoint round trip, decode identity, size formulas. Weak spot: see issue 3, since the live-vs-baked comparison is by construction."},
+  {"probe": "huffman-codec", "detects_removal": true, "why": "Code lengths match both the dahuffman port and a textbook cost, and encode/decode is lossless. The dahuffman port is identical to deps/dahuffman-0.4.1 from_frequencies."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "G1 white background, view sampling and SSIM come from the shared runtime (official black bg)",
+  "G2 gsplat rasterizer vs diff-gaussian-rasterization (also no quaternion normalisation in the official one, see issue 1)",
+  "G3 fp32 vs tcnn fp16 compute (see issue 2)",
+  "G4 optimizer-step order and the step-30000 step (negligible)",
+  "G6 hash features and MLP carried into ss-eval through Gaussian-owned fields: verified exact for the decoded model, since positions are frozen after decode",
+  "G7 tcnn MLP padding: 8192 params, effective bias via padded ones; xavier init on padded shapes matches tcnn initialize_xavier_uniform",
+  "paper_results.json: Mip-NeRF 360 per-scene PSNR/SSIM/LPIPS/storage/#Gaussians for 3DGS*, Ours, Ours+PP match supp. tab:per_360 exactly (checked programmatically); T&T and DB values for 3DGS*/Ours/Ours+PP match tab:per_td; all averages equal the per-scene means within rounding. Only omission: baseline #Gaussians for T&T/DB."
+ ],
+ "summary": "No critical or major issues. The volume mask (STE on scale and opacity, eps 0.01, lambda 5e-4, mask lr 0.01, init 1.0, prune at 500<it<15000 every 100 and every 1000 from 15000, final prune) matches the official code. The hash grid matches tcnn (16x2, 2^19, base 16, scale 1.447; level table, hashing and SH-at-(2d-1) verified against source/tcnn), and positions are contracted and detached as in the official render. The MLP matches (2x64 ReLU, no bias, 8192 padded params; net Adam lr 0.01 eps 1e-15, closed-form ChainedScheduler, no step at 30000). R-VQ matches (6x64, last 1000 steps, 1-iter K-means, in-place Adam 1e-4, L-fold STE). Encode/decode/replace and the storage formulas match final_prune. ss-eval renders the decoded model exactly: baked features are hash(contract(fp16 xyz)) from the decoded 8-bit pruned table, as in precompute(). Residual risks are the unbounded fp16-vs-fp32 tcnn difference and the unnormalised quaternions in the official rasterizer, both minor."
+}

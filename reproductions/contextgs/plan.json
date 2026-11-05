@@ -1,0 +1,7 @@
+{"method": "contextgs", "module": "ss_contextgs",
+ "components": ["cgs-renderer", "cgs-density", "photometric", "cgs-scaling-reg", "cgs-rate"],
+ "fields": ["cgs_feat[50]", "cgs_offset[10,3]", "cgs_scaling[6]", "cgs_mask[10,1]", "cgs_hyper[12]", "cgs_blob[8]"],
+ "probes": ["entropy-model", "factorized-prior", "level-partition", "context-model", "codec-roundtrip", "neural-gaussians", "visibility-filter", "anchor-density", "training-phases", "bake-eval"],
+ "contributions": ["scaffold-anchors", "anchor-partitioning", "anchor-level-context", "hyperprior", "rate-objective-bitstream"],
+ "fidelity_gaps": ["gsplat vs Scaffold rasterizer (visible_filter re-implemented)", "white background", "runtime view sampling/SSIM", "update order", "cgs_blob global-state transport", "HAC CUDA coder instead of torchac/compressai rANS", "mip360 voxel size only", "run guards / total_steps", "1.6K data via mipnerf360-1600"],
+ "feasible_natively": true}

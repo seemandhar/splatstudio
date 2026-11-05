@@ -1,0 +1,7 @@
+{"method": "octree-gs", "module": "ss_octree_gs",
+ "components": ["ogs-renderer", "ogs-density", "photometric", "ogs-scaling-reg"],
+ "fields": ["ogs_feat", "ogs_offset", "ogs_scaling", "ogs_level", "ogs_extra_level", "ogs_blob"],
+ "probes": ["octree-init", "lod-selection", "progressive-training", "neural-gaussians", "visibility-filter", "anchor-growing", "blob-eval"],
+ "contributions": ["lod-anchors", "lod-selection", "lod-anchor-control", "progressive-training"],
+ "fidelity_gaps": ["gsplat rasterizer + re-implemented visible_filter", "white background", "random view sampling / valid SSIM", "Adam before density update", "exact 3-NN init", "blob transport", "mip360 preset only", "run guards", "mipnerf360-1600 data; baseline 30k", "code choices over paper (round LOD, adaptive tau_v, next-level growth always, update_until 25000)"],
+ "feasible_natively": true}

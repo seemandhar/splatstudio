@@ -1,0 +1,78 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "plugin/ss_efficientgs/density.py; evidence/smoke-1, smoke-baseline",
+      "where": "_accumulate / _densify (Eq. 6, tau_s=0.0007); 2k-step Gaussian count",
+      "problem": "The 1.59x count at 2k steps (1,343,768 vs 845,827; +56.7k at the first densify at step 600 vs +9.8k for the baseline) is not shown to be faithful. The code matches the official path (see fidelity_gaps_confirmed), so this is not a code bug I can find. But no evidence separates 'expected early growth of S_g at tau=0.0007' from a scale error. The paper's only count evidence is 30k storage (Table 4: SD-only 544MB vs 742MB = 0.73x), and nothing reproduced here touches that regime.",
+      "evidence": "Official backward.cu:666-671 adds sqrt(dL_dx^2+dL_dy^2) per pixel (dL_dx includes ddelx_dx=0.5*W) into dL_dmean2D.z. add_densification_stats accumulates grad[:,2:3] over visible views and denom+=1. The plugin kernel does the same (NDC scale, summed over pixels, divided by the visible-view count). Triangle inequality gives S_g >= E_g per view, with equality only when no pixel gradients cancel, so at tau 3.5x higher than 0.0002 more Gaussians can pass early, while the count is expected to fall below 3DGS only after accumulated clone/split and the 15k/18k/21k top-K prunes. Evidence runs: smoke-1 (efficientgs, no prune within 2k) 1.34M vs gsplat baseline 0.85M; smoke-1 also has lower PSNR (22.73 vs 23.04) at 2k. Runs use downscale=1 (full-res garden), whereas the paper/3DGS protocol uses images_4/images_2.",
+      "fix": "Before the 30k benchmark, run two cheap diagnostics at the benchmark resolution: (a) selective=False with grad_threshold=0.0007 and selective=True with grad_threshold=0.0002, to separate threshold effect from statistic effect; (b) log the mean/quantiles of S_g/E_g at step 600 and the fraction of visible Gaussians above tau_s. Then require the 30k efficientgs run to land near 0.73x of the baseline Gaussian count before GP (Table 4 SD row) and ~0.35x after GP (259MB) before accepting. A 2k count by itself neither proves nor refutes the method."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_efficientgs/density.py",
+      "where": "DEFAULTS['weight_after_T'] (Eq. 7)",
+      "problem": "Default weight is alpha*T_after (official forward.cu: T = test_T before weight = alpha*T), which is alpha_i(1-alpha_i)prod_{j<i}(1-alpha_j). That differs from paper Eq. 7 (alpha_i * prod_{j<i}(1-alpha_j)). The choice is right for matching official numbers, and the plan documents it. But the (1-alpha) factor demotes near-opaque Gaussians, so gsplat's 0.999 alpha cap vs the official 0.99 cap changes the weights of exactly these Gaussians (alpha(1-alpha) = 1e-3 vs 1e-2), contrary to the 'negligible' claim in fidelity gap 2.",
+      "evidence": "forward.cu:416-495 vs paper Eq. 7; kernel egs_stats_kernel uses alpha*next_T and min(0.999, ...).",
+      "fix": "State this as a known deviation in paper_results/README, and have the benchmark include a weight_after_T=False run, or clamp alpha at 0.99 inside egs_stats only (the rendered image is unaffected by the stats kernel), to isolate the effect on the prune count."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_efficientgs/csrc/egs_raster.cu",
+      "where": "egs_gradnorm_kernel pass 2 buffer = C_total - A",
+      "problem": "gsplat computes the 'behind' colour buffer by a back-to-front accumulation. Here it is obtained by float32 subtraction C_total - A, which loses precision when alpha->0.999 (ra = 1/(1-alpha) ~ 1e3 amplifies ~1e-7*C error to ~1e-4). The error acts only on near-saturated front Gaussians, but the probe (rel tol 1e-3, 8 Gaussians, 20x16 px) cannot detect it.",
+      "evidence": "kernel lines computing v_alpha with (C0 - A0) * ra.",
+      "fix": "Accumulate C and A in double or Kahan form, or walk back-to-front as gsplat does. Optionally add a probe case with alpha clamped near 0.999."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_efficientgs/density.py",
+      "where": "reset_opa / background",
+      "problem": "Runtime composites over white and never does the official reset_opacity at iteration==densify_from_iter (500), which the official code applies only when dataset.white_background. Mip-NeRF360/T&T/DB official runs use a black background, so S_g differs slightly through the bg_dot_dpixel term. This is shared with the baseline and is already listed as fidelity gap 1, but it may bias the early S_g counts discussed above.",
+      "evidence": "train.py:436-440 and backward.cu:~660 (bg term).",
+      "fix": "Note it in the gap list and, if cheap, run the diagnostic above with a black background."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_efficientgs/probes.py",
+      "where": "egs-sparse-sh, egs-schedule",
+      "problem": "Probes check the selection with sparse_rate=0 (top-1 only) and the schedule constants, but no probe covers (a) the official tie rule (lw >= thr, so ties at 0 select everything when more than 80% of Gaussians have lw=0), (b) sh_order alignment through the whole after_backward path (prune at 18000 after increment at 18000, clone/split before 15000), or (c) that a full after_backward(15999/16999/17999) fires the increment end to end. The smoke-schedule log shows consistent histograms (e.g. sum of deg0..3 equals n after prune), so behaviour is correct in evidence, but nothing would fail in CI if the event ordering regressed.",
+      "evidence": "probes.sparse_sh calls d._sparse_increment directly; schedule() only checks sparse_steps and the 15499 allocation.",
+      "fix": "Add an after_backward-driven test with a stub renderer, or assert in a probe on the smoke-schedule events (increment before prune at the same step, sum of the histogram equals n)."
+    },
+    {
+      "severity": "minor",
+      "file": "paper_results.json",
+      "where": "datasets",
+      "problem": "All reported numbers match the LaTeX tables (Table 1: Mip360 27.38/0.817/0.216 vs 3DGS* 27.48/0.812/0.222 vs 3DGS-paper 27.21/0.815/0.214; T&T 23.45/0.837/0.197, 23.64/0.844/0.178, 23.14/0.841/0.183; DB 29.63/0.903/0.251, 29.54/0.900/0.247, 29.41/0.903/0.243; ablation Table 4; Mill19 Table 2). Omitted: T&T/DB train/fps/storage columns (e.g. Ours 8m05s/439/33MB, 14m27s/401/40MB; 3DGS* 433MB, 661MB), Tables 5-6 (TopK, sparse-rate/random), Foothill-Town Table 3, and the rest of the compared methods. The Mip360 'resources' block labels the method columns by dataset-average only.",
+      "evidence": "ijcai24.tex lines 373-384, 487-526.",
+      "fix": "Add Tables 5-6 and the T&T/DB resource numbers: the plugin exposes top_k and sparse_rate/sparse_way, so those ablations are benchmarkable, and the storage ratios are the paper's main claim."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(5) E_g", "status": "exact", "code": "density.py:_accumulate (selective=False; grad scaled by W/2,H/2 then norm, like gsplat/3DGS)"},
+    {"eq": "(6) S_g", "status": "exact", "code": "csrc/egs_raster.cu:egs_gradnorm_kernel + density.py:_accumulate; sum over pixels of the NDC norm, / visible-view count, tau_s=0.0007 compared with >=, no pixel-count normalisation, as the official code (see minor numerics issues)"},
+    {"eq": "(7) weight", "status": "deviates", "code": "egs_stats_kernel weight_after_T=True follows the official alpha*T_after, not the paper's alpha*T_before (documented)"},
+    {"eq": "(8) top-K dominance", "status": "exact", "code": "egs_stats_kernel + density.py:_prune; strict > insertion, K=1, view_num=1, steps 15000/18000/21000 after the densify block; densify stops at 15000"},
+    {"eq": "(9) d_k / SOI", "status": "exact", "code": "egs_stats_kernel pix_loss path (sum over channels of |render-gt|*weight, summed over all train views) + core.sparse_increment_mask (k=int(n*r_s), thr=lw[argsort(-lw)[k]], >=) + core.increment_orders (cap 3); steps 16000/17000/18000"}
+  ],
+  "probe_assessment": [
+    {"probe": "egs-gradnorm-kernel", "detects_removal": true, "why": "compares to a brute-force per-pixel autograd of a pure-torch blend, plus Sum = gsplat means2d.grad and a cancellation fixture (S >> |sum|). Cannot see the float32 cancellation noise near alpha=0.999."},
+    {"probe": "egs-selective-densify", "detects_removal": true, "why": "threshold sits between E_g and S_g so reverting to E_g or a no-op gives count 1 instead of 2"},
+    {"probe": "egs-stats-kernel", "detects_removal": true, "why": "flags and lw checked against an independent torch blend for K=1,2 and both weight conventions"},
+    {"probe": "egs-topk-prune", "detects_removal": true, "why": "auxiliary Gaussian survives at K=2, removed at K=1; a no-op prune fails"},
+    {"probe": "egs-sparse-sh", "detects_removal": true, "why": "per-Gaussian colours equal gsplat spherical_harmonics at each degree, zero gradient on masked bands, selection picks the wrong-coloured Gaussian. Tie semantics and end-to-end event ordering are not tested."},
+    {"probe": "egs-schedule", "detects_removal": true, "why": "event constants, shN lr and the 15500 reset are asserted, but it does not execute the increment or prune events through after_backward"}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Densify path equals official: stats accumulate from step 1 and reset at each densify; first densify at 600; clone = high & max_scale <= 0.01*extent, split = high & larger; split scale/1.6 with 2 children; opacity<0.005 prune; world-size prune 0.1*extent after step>3000; the max_radii2D screen-size prune is inert in the official code (verified: densification_postfix re-zeroes max_radii2D); opacity reset every 3000 for min(o, 0.01) without resetting stats.",
+    "S_g = sum over pixels of the NDC norm of the per-pixel position gradient, averaged over visible views (loss = 0.8*L1_mean + 0.2*(1-SSIM), both implementations); there is no normalisation by pixel count, and tau_s=0.0007 is compared in the same NDC units as 3DGS tau=0.0002. v_alpha from raw_alpha.grad reproduces the official bg_dot_dpixel term for white bg.",
+    "Top-K prune schedule 15000/18000/21000 (official prune_way p4; the paper text says once after 15500, the code deviates and the plugin follows the code); weight and sum over all training cameras as official; Gaussians with count<1 removed.",
+    "Sparse SH: allocation at 15500 via after_backward(15499) = official iteration 15500 (shN zeroed, Adam state cleared, sh_order zeroed); increments at 16000/17000/18000; +1 degree for lw >= lw[argsort(-lw)[int(0.2n)]]; cap 3; shN lr 0.0025/5.",
+    "Renderer masks SH bands via a [N,k] band mask on shN (bands per coefficient 3/5/7 verified) with a single spherical_harmonics call at the max active degree; the masked-band gradient is exactly zero, so Adam never moves them, as official computeColorFromSH(idx, sparse_degree[idx]). Before 15500 shN gets no gradient, so Adam has no state, equivalent to the official unallocated f_rest.",
+    "sh_order alignment: gsplat ops duplicate/split/remove treat every ParameterDict entry generically (split puts the 2 children after the retained ones for all params, so sh_order stays aligned with means), and the smoke-schedule histograms sum to n after prune. The 18000 order (increment at start of 18000, prune at its end) matches official.",
+    "Kernel numerics follow gsplat (0.999 cap, sigma<0 skip, 1/255 alpha floor, T<=1e-4 stop, +0.5 pixel centres, 16x16 tiles, gsplat intersection lists), while official uses a 0.99 cap and strict '<1e-4'. gradnorm uses the gsplat backward formula, so clamped alphas get zero gradient (as gsplat; the official 3DGS backward does not zero them)."
+  ],
+  "summary": "No critical issue and no code defect found in S_g, top-K prune, sparse SH or the sh_order handling; they match the official code (Eq. 7 deviates by choice). The 1.59x count at 2k is consistent with the definition: S_g >= E_g per view, tau_s is 3.5x tau_pos, and the paper only claims a count reduction at 30k (SD-only 0.73x of 3DGS storage), so I can neither call it a bug nor confirm it faithful from 2k data alone. The major issue is this missing diagnostic: a 30k (or at least a same-threshold ablation) count comparison is needed before trusting the reproduction. Minor items: alpha*T_after plus the 0.999 cap, float32 cancellation in the kernel buffer, white-bg S_g, probe gaps, paper_results omissions. All paper_results.json numbers match the paper tables."
+}

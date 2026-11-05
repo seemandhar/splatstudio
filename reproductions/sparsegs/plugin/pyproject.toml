@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-sparsegs"
+version = "0.1.0"
+description = "SparseGS (arXiv 2312.00206) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy", "scipy"]
+
+[project.entry-points."splatstudio.methods"]
+sparsegs = "ss_sparsegs:method"
+sparsegs-3dgs = "ss_sparsegs:method_3dgs"
+sparsegs-paperprune = "ss_sparsegs:method_paperprune"
+sparsegs-tuned6667 = "ss_sparsegs:method_tuned"
+
+[tool.setuptools.packages.find]
+include = ["ss_sparsegs*"]
+
+[tool.setuptools.package-data]
+ss_sparsegs = ["csrc/*"]
+
+[tool.ruff]
+line-length = 110

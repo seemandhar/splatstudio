@@ -1,0 +1,86 @@
+{
+  "_doc": "Published per-scene test metrics at 30K iterations used to calibrate the native runtime. Source: 3DGS (Kerbl et al. 2023) supplementary per-scene tables. Only PSNR is listed per scene; averages are the paper's main-table values.",
+  "3dgs": {
+    "citation": "https://arxiv.org/abs/2308.04079",
+    "mipnerf360": {
+      "psnr": {
+        "bicycle": 25.246,
+        "flowers": 21.52,
+        "garden": 27.41,
+        "stump": 26.55,
+        "treehill": 22.49,
+        "room": 30.632,
+        "counter": 28.7,
+        "kitchen": 30.317,
+        "bonsai": 31.98
+      },
+      "average": {
+        "psnr": 27.21,
+        "ssim": 0.815,
+        "lpips": 0.214
+      }
+    },
+    "tandt": {
+      "psnr": {
+        "truck": 25.187,
+        "train": 21.097
+      },
+      "average": {
+        "psnr": 23.14,
+        "ssim": 0.841,
+        "lpips": 0.183
+      }
+    },
+    "db": {
+      "psnr": {
+        "drjohnson": 28.766,
+        "playroom": 30.044
+      },
+      "average": {
+        "psnr": 29.41,
+        "ssim": 0.903,
+        "lpips": 0.243
+      }
+    },
+    "mipnerf360-edgs": {
+      "psnr": {
+        "bicycle": 25.246,
+        "flowers": 21.52,
+        "garden": 27.41,
+        "stump": 26.55,
+        "treehill": 22.49,
+        "room": 30.632,
+        "counter": 28.7,
+        "kitchen": 30.317,
+        "bonsai": 31.98
+      },
+      "average": {
+        "psnr": 27.21,
+        "ssim": 0.815,
+        "lpips": 0.214
+      }
+    },
+    "tandt-edgs": {
+      "psnr": {
+        "truck": 25.187,
+        "train": 21.097
+      },
+      "average": {
+        "psnr": 23.14,
+        "ssim": 0.841,
+        "lpips": 0.183
+      }
+    },
+    "db-edgs": {
+      "psnr": {
+        "drjohnson": 28.766,
+        "playroom": 30.044
+      },
+      "average": {
+        "psnr": 29.41,
+        "ssim": 0.903,
+        "lpips": 0.243
+      }
+    }
+  }
+}

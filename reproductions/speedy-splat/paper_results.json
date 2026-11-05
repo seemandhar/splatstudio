@@ -1,0 +1,64 @@
+{
+  "paper": "Speedy-Splat: Fast 3D Gaussian Splatting with Sparse Pixels and Sparse Primitives",
+  "arxiv": "2412.00578",
+  "method_label": "+Hard Pruning (full Speedy-Splat = SnugBox + AccuTile + Soft Pruning + Hard Pruning, cumulative rows)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 26.94, "ssim": 0.782, "lpips": 0.296, "compression_x": 10.6, "fps_speedup_x": 6.51, "train_speedup_x": 1.45},
+        "per_scene": {
+          "psnr": {"bicycle": 24.78, "bonsai": 31.29, "counter": 28.28, "flowers": 21.21, "garden": 26.70, "kitchen": 29.91, "room": 30.99, "stump": 26.79, "treehill": 22.51},
+          "ssim": {"bicycle": 0.704, "bonsai": 0.927, "counter": 0.878, "flowers": 0.561, "garden": 0.815, "kitchen": 0.894, "room": 0.905, "stump": 0.765, "treehill": 0.590},
+          "lpips": {"bicycle": 0.333, "bonsai": 0.231, "counter": 0.260, "flowers": 0.419, "garden": 0.213, "kitchen": 0.198, "room": 0.260, "stump": 0.288, "treehill": 0.463},
+          "fps": {"bicycle": 662, "bonsai": 978, "counter": 842, "flowers": 825, "garden": 640, "kitchen": 809, "room": 942, "stump": 724, "treehill": 957},
+          "fps_speedup_x": {"bicycle": 9.25, "bonsai": 4.87, "counter": 5.94, "flowers": 5.02, "garden": 7.03, "kitchen": 6.90, "room": 6.73, "stump": 5.12, "treehill": 6.93},
+          "train_minutes": {"bicycle": 19.7, "bonsai": 16.0, "counter": 17.7, "flowers": 17.5, "garden": 20.3, "kitchen": 18.7, "room": 16.9, "stump": 17.1, "treehill": 16.9}
+        }
+      },
+      "accutile_only": {
+        "average": {"psnr": 27.57, "ssim": 0.814, "lpips": 0.221, "compression_x": 0.99, "fps_speedup_x": 1.99},
+        "per_scene": {
+          "psnr": {"bicycle": 25.13, "bonsai": 32.42, "counter": 29.13, "flowers": 21.43, "garden": 27.33, "kitchen": 31.65, "room": 31.68, "stump": 26.80, "treehill": 22.58},
+          "fps": {"bicycle": 168, "bonsai": 413, "counter": 330, "flowers": 285, "garden": 155, "kitchen": 221, "room": 315, "stump": 248, "treehill": 272}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.55, "ssim": 0.814, "lpips": 0.222},
+        "per_scene": {
+          "psnr": {"bicycle": 25.10, "bonsai": 32.42, "counter": 29.14, "flowers": 21.41, "garden": 27.31, "kitchen": 31.49, "room": 31.66, "stump": 26.78, "treehill": 22.62},
+          "ssim": {"bicycle": 0.747, "bonsai": 0.948, "counter": 0.916, "flowers": 0.589, "garden": 0.857, "kitchen": 0.933, "room": 0.927, "stump": 0.770, "treehill": 0.636},
+          "lpips": {"bicycle": 0.244, "bonsai": 0.183, "counter": 0.185, "flowers": 0.359, "garden": 0.122, "kitchen": 0.118, "room": 0.200, "stump": 0.242, "treehill": 0.346},
+          "fps": {"bicycle": 71, "bonsai": 201, "counter": 142, "flowers": 164, "garden": 91, "kitchen": 117, "room": 140, "stump": 141, "treehill": 138},
+          "train_minutes": {"bicycle": 31.9, "bonsai": 20.4, "counter": 24.1, "flowers": 24.1, "garden": 32.3, "kitchen": 27.8, "room": 23.7, "stump": 24.1, "treehill": 24.2}
+        }
+      },
+      "resolution": "official train.py -r -1: images/ downscaled to width 1600 (README: higher resolution than 3D-GS full_eval.py) -> our mipnerf360-1600 protocol",
+      "source": "supp. tables breakout_psnr/ssim/lpips/fps/train_time (generated/*.tex); averages main Table (generated/main_metric_table.tex)"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.45, "ssim": 0.821, "lpips": 0.241, "compression_x": 10.1, "fps_speedup_x": 6.30, "train_speedup_x": 1.58},
+        "per_scene": {"psnr": {"train": 21.71, "truck": 25.20}, "ssim": {"train": 0.773, "truck": 0.868}, "lpips": {"train": 0.291, "truck": 0.191}, "fps": {"train": 1392, "truck": 1149}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.70, "ssim": 0.849, "lpips": 0.178},
+        "per_scene": {"psnr": {"train": 22.01, "truck": 25.40}, "ssim": {"train": 0.815, "truck": 0.883}, "lpips": {"train": 0.208, "truck": 0.147}, "fps": {"train": 200, "truck": 185}}
+      },
+      "source": "supp. Table main_metric_tnt and breakout tables"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 29.32, "ssim": 0.887, "lpips": 0.311, "compression_x": 11.1, "fps_speedup_x": 7.46, "train_speedup_x": 1.57},
+        "per_scene": {"psnr": {"drjohnson": 28.50, "playroom": 30.14}, "ssim": {"drjohnson": 0.882, "playroom": 0.892}, "lpips": {"drjohnson": 0.313, "playroom": 0.308}, "fps": {"drjohnson": 1122, "playroom": 1277}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.09, "ssim": 0.886, "lpips": 0.288},
+        "per_scene": {"psnr": {"drjohnson": 28.18, "playroom": 30.00}, "ssim": {"drjohnson": 0.880, "playroom": 0.891}, "lpips": {"drjohnson": 0.291, "playroom": 0.284}, "fps": {"drjohnson": 126, "playroom": 172}}
+      },
+      "source": "supp. Table main_metric_db and breakout tables"
+    }
+  },
+  "all_scenes": {"gaussians_baseline_M": 2.93, "gaussians_method_M": 0.28, "compression_x": 10.6, "fps_baseline": 134, "fps_method": 898, "train_minutes_baseline": 23.2, "train_minutes_method": 15.7, "source": "Table our_raw_numbers (average over all 13 scenes)"},
+  "notes": "Baseline = authors' own 3D-GS runs with the same pipeline (official resolution -r -1, black background), average of 3 runs; FPS measured with CUDA events around the forward rasterizer on an RTX A5000. Per-scene Gaussian counts are not reported (only the 13-scene average 2.93M -> 0.28M and per-dataset compression factors)."
+}

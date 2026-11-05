@@ -1,0 +1,57 @@
+{
+  "paper": "Octree-GS: Towards Consistent Real-time Rendering with LOD-Structured 3D Gaussians",
+  "arxiv": "2403.17898",
+  "method_label": "Our-Scaffold-GS",
+  "iterations": 40000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 28.05, "ssim": 0.819, "lpips": 0.214, "gaussians_k": 657, "mem_mb": 139.6},
+        "per_scene": {
+          "psnr": {"bicycle": 25.24, "bonsai": 33.76, "counter": 30.19, "flowers": 21.46, "garden": 27.67, "kitchen": 31.84, "room": 32.51, "stump": 26.63, "treehill": 23.13},
+          "ssim": {"bicycle": 0.755, "bonsai": 0.955, "counter": 0.925, "flowers": 0.595, "garden": 0.861, "kitchen": 0.933, "room": 0.936, "stump": 0.766, "treehill": 0.641},
+          "lpips": {"bicycle": 0.235, "bonsai": 0.164, "counter": 0.169, "flowers": 0.347, "garden": 0.116, "kitchen": 0.115, "room": 0.172, "stump": 0.250, "treehill": 0.360},
+          "gaussians_k": {"bicycle": 653, "bonsai": 631, "counter": 409, "flowers": 675, "garden": 1475, "kitchen": 777, "room": 374, "stump": 549, "treehill": 372},
+          "mem_mb": {"bicycle": 216.0, "bonsai": 133.5, "counter": 83.2, "flowers": 198.3, "garden": 236.3, "kitchen": 88.7, "room": 83.5, "stump": 141.9, "treehill": 104.4}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.54, "ssim": 0.815, "lpips": 0.216, "gaussians_k": 937, "mem_mb": 786.7},
+        "per_scene": {
+          "psnr": {"bicycle": 25.10, "bonsai": 32.19, "counter": 29.22, "flowers": 21.57, "garden": 27.45, "kitchen": 31.62, "room": 31.53, "stump": 26.70, "treehill": 22.46},
+          "ssim": {"bicycle": 0.747, "bonsai": 0.947, "counter": 0.917, "flowers": 0.600, "garden": 0.861, "kitchen": 0.932, "room": 0.926, "stump": 0.773, "treehill": 0.636},
+          "lpips": {"bicycle": 0.243, "bonsai": 0.178, "counter": 0.179, "flowers": 0.345, "garden": 0.114, "kitchen": 0.117, "room": 0.196, "stump": 0.231, "treehill": 0.335},
+          "gaussians_k": {"bicycle": 1453, "bonsai": 402, "counter": 530, "flowers": 907, "garden": 2030, "kitchen": 1034, "room": 358, "stump": 932, "treehill": 785}
+        }
+      },
+      "scaffold_gs": {
+        "average": {"psnr": 27.90, "ssim": 0.815, "lpips": 0.220, "gaussians_k": 666, "mem_mb": 197.5},
+        "per_scene": {"psnr": {"bicycle": 25.19, "bonsai": 33.22, "counter": 29.99, "flowers": 21.40, "garden": 27.48, "kitchen": 31.77, "room": 32.30, "stump": 26.67, "treehill": 23.08}}
+      },
+      "source": "Table 1 (tab:real_q) averages; supplementary Tables (PSNR/SSIM/LPIPS/#GS/Mem for all Mip-NeRF360 scenes)"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 24.68, "ssim": 0.866, "lpips": 0.153, "gaussians_k": 443, "mem_mb": 88.5},
+        "per_scene": {"psnr": {"truck": 26.24, "train": 23.11}, "ssim": {"truck": 0.894, "train": 0.838}, "lpips": {"truck": 0.122, "train": 0.184}, "gaussians_k": {"truck": 426, "train": 460}, "mem_mb": {"truck": 93.7, "train": 83.4}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.91, "ssim": 0.852, "lpips": 0.172, "gaussians_k": 765},
+        "per_scene": {"psnr": {"truck": 25.52, "train": 22.30}, "ssim": {"truck": 0.884, "train": 0.819}, "lpips": {"truck": 0.142, "train": 0.201}, "gaussians_k": {"truck": 876, "train": 653}}
+      },
+      "source": "Table 1; supplementary T&T table"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 30.49, "ssim": 0.912, "lpips": 0.241, "gaussians_k": 112, "mem_mb": 71.7},
+        "per_scene": {"psnr": {"drjohnson": 29.83, "playroom": 31.15}, "ssim": {"drjohnson": 0.909, "playroom": 0.914}, "lpips": {"drjohnson": 0.237, "playroom": 0.245}, "gaussians_k": {"drjohnson": 124, "playroom": 100}, "mem_mb": {"drjohnson": 92.46, "playroom": 50.91}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.46, "ssim": 0.903, "lpips": 0.242, "gaussians_k": 398},
+        "per_scene": {"psnr": {"drjohnson": 29.09, "playroom": 29.83}, "ssim": {"drjohnson": 0.900, "playroom": 0.905}, "lpips": {"drjohnson": 0.242, "playroom": 0.241}, "gaussians_k": {"drjohnson": 472, "playroom": 324}}
+      },
+      "source": "Table 1; supplementary DeepBlending table"
+    }
+  },
+  "notes": "Numbers from the TPAMI/arXiv v3+ LaTeX (2024-10 e-print). #GS(k) = average rendered neural Gaussians per view. Baselines (3D-GS, Scaffold-GS) were retrained by the authors at 40k iterations; official mip360 protocol is images/ resized to width 1600 (-r -1), black background, llffhold 8."
+}

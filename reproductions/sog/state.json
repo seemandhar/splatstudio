@@ -1,0 +1,47 @@
+{
+ "paper": "Compact 3D Scene Representation via Self-Organizing Gaussian Grids",
+ "slug": "sog",
+ "plan_id": 40,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "arxiv": "2312.13299",
+ "official_code_commit": "5f2b360abf496af560ded8ddc13157a601dade32",
+ "method": "sog",
+ "custom_cuda": false,
+ "bench_request": "bench_request.json",
+ "dependencies": {
+  "plas": "git+https://github.com/fraunhoferhhi/PLAS.git@782a3ae8adf5223ece31aa4ea97fc5e66931180a (pip --no-deps into splatstudio env)",
+  "imagecodecs": "2023.9.18 + numpy 1.26.4 in isolated --target dir reproductions/sog/codec_env (plugin/install_codec_env.sh); incompatible with env numpy 2.2.6",
+  "kornia": "0.8.2 (already in env)"
+ },
+ "plugin_freeze_sha": "356909644029a2b9",
+ "bench_exps": [
+  "sog-mipnerf360"
+ ],
+ "pass_criterion": "per-scene PSNR vs official results/*.csv (decoded models) within \u00b10.5; also report \u0394 vs our gsplat baseline and paper averages 27.64 (paper) / 27.08 (csv)",
+ "headline": "SOG decoded JPEG XL model, Mip-NeRF360 30k: PSNR vs official results CSV bicycle 24.53/24.54 (-0.01), garden 26.91/27.03 (-0.12), counter 28.51/28.46 (+0.05); vs our gsplat -0.39/+0.02/-0.34 dB; size 61.06/53.20, 82.26/83.49, 18.56/17.62 MB (+14.8/-1.5/+5.3%, tracking Gaussian count 3.36M/4.45M/1.01M; bytes/Gaussian within 4%). Paper v2 avg 27.64 is pre-fix; CSV avg 27.08 is the decoded-model target.",
+ "results": {
+  "bicycle": {
+   "psnr": 24.533,
+   "size_mb": 61.059,
+   "gaussians": 3363556
+  },
+  "garden": {
+   "psnr": 26.913,
+   "size_mb": 82.265,
+   "gaussians": 4447881
+  },
+  "counter": {
+   "psnr": 28.506,
+   "size_mb": 18.561,
+   "gaussians": 1006009
+  }
+ }
+}

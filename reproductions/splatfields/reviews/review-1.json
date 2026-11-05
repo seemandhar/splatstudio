@@ -1,0 +1,50 @@
+{"approved": false,
+ "issues": [
+  {"severity": "major", "file": "plugin/ss_splatfields/density.py", "where": "SplatFieldsDensity.after_backward / Stage1Density.after_backward; BASE refine_stop_iter=45000",
+   "problem": "At step 40000 (a refine step: 40000 % 100 == 0, < 45000) clone/split/prune runs before the bake and before the checkpoint/validation/ss-eval. The evaluated splat set therefore contains freshly cloned/split children that no gradient step has seen (clones sit exactly on their parents, so identical network outputs are stacked and alpha is doubled), plus parents removed by split.",
+   "evidence": "Official train.py saves point_cloud and deform weights (saving_iterations) BEFORE the 'Densification' block of the same iteration and skips the optimizer step at the last iteration; the densify at 40000 is then discarded, so render.py evaluates the anchor set after the 39900 refine. Plugin runs step_post_backward(step=40000) then bake(). Stage 1 has the same issue and its final cloud also feeds stage 2.",
+   "fix": "Skip refinement at the final step: set refine_stop_iter to 40000 for both stages (gsplat returns for step >= refine_stop_iter, so 39900 is the last refine, matching the official saved model), or skip step_post_backward when step == total_steps and bake first. Update test_splatfields.py:77 and the schedule probes."},
+  {"severity": "minor", "file": "plugin/ss_splatfields/density.py", "where": "BASE reset_every=3000 / _strategy",
+   "problem": "'No opacity reset' holds only because gsplat 1.5.3 has the precedence bug `if step % self.reset_every == 0 & step > 0` (parses as a chained comparison against `0 & step`, always False). reset_every must stay 3000 because gsplat's too-big pruning is gated on step > reset_every (official: iteration > opacity_reset_interval); the unused value is misleading and a gsplat upgrade would silently add resets.",
+   "evidence": "python: 3000 % 3000 == 0 & 3000 > 0 -> False. The 'schedule' and 'stage1-schedule' probes do detect a reset at 3000 (they fail on a fix of gsplat), so this is covered but fragile.",
+   "fix": "Comment the coupling in BASE and pin gsplat==1.5.3 in pyproject; keep the probes."},
+  {"severity": "minor", "file": "plugin/ss_splatfields/density.py", "where": "SplatFieldsDensity (total_steps 40000)",
+   "problem": "If ss-train --steps != 40000 the bake never happens (steps<40000) or happens mid-run (>40000), silently leaving garbage base fields (const opacity 0.1, black sh0) in the checkpoint that ss-eval renders. Only a note in bench_request.json guards this.",
+   "evidence": "density has no access to runtime steps; bake keyed only on cfg total_steps.",
+   "fix": "Fail loudly: in ss-eval-visible state/checkpoint mark baked flag, or have the renderer raise when the net is absent and the density state says not baked; or verify steps in bench wrapper."},
+  {"severity": "minor", "file": "plan.md", "where": "Data/protocol, fidelity gap 3",
+   "problem": "plan.md is stale: it says KMeans(n_init=10) with the RAS env (scikit-learn 1.8.0). The implemented and recorded selection is sklearn 1.0.2 default (official-like) via select_views.py. Code is right, doc is wrong.",
+   "evidence": "tools/views.json sklearn 1.0.2; re-running select_views.py in ~/models/venv-sklearn102 reproduces views.json exactly (checked).",
+   "fix": "Update plan.md to match."},
+  {"severity": "minor", "file": "runtime (splatstudio/losses.py, runtime.py)", "where": "ssim, SH degree schedule, float eval",
+   "problem": "Known runtime gaps: valid-conv SSIM vs official zero-padded SSIM in the training loss, SH degree schedule off by one step, float renders scored vs 8-bit renders in the official eval. Small effect (<~0.1 dB expected).",
+   "evidence": "losses.py:7-25; runtime.py degree=(step-1)//1000; official render.py to8b.",
+   "fix": "Document only (plan gaps 2, 5 already list two of them; add SSIM padding)."},
+  {"severity": "minor", "file": "bench_request.json / paper_results.json", "where": "scene subset",
+   "problem": "Only chair/hotdog/ficus are run; the paper averages (22.26 / 20.62 PSNR at 6 views, 25.80 / 25.29 at 12) are over all 8 scenes and cannot be compared with a 3-scene mean. Comparison must be per-scene (paper_results has per_scene) or the claim restricted.",
+   "evidence": "paper means = mean of 8 per-scene values (checked 178.08/8 = 22.26).",
+   "fix": "Report per-scene deltas and the paper 3-scene subset mean (chair, hotdog, ficus: SplatFields 24.49 vs 3DGS 22.05 at 6 views = +2.44 dB subset, not +1.64)."}
+ ],
+ "equation_coverage": [
+  {"eq": "supp A.2 mask loss lambda_2=0.1 (L1 on clamp(alpha))", "status": "exact", "code": "losses.py:create_mask/mask_l1"},
+  {"eq": "supp A.2 norm loss lambda_3=0.01 mean||p_hat||", "status": "exact", "code": "losses.py:create_norm"},
+  {"eq": "photometric 0.8 L1 + 0.2 (1-SSIM)", "status": "deviates", "code": "splatstudio.losses (valid-conv SSIM, minor)"},
+  {"eq": "(7) p_hat = x + D(PE6(x) (+) f), attrs from p_hat, scale = MLP + base, view-independent rgb", "status": "exact", "code": "network.py:SplatFieldsNet.forward"},
+  {"eq": "(6) tri-plane CNN 3x[16,160,160] from fixed 8x20x20 noise, zero-init residuals, refine MLP", "status": "exact", "code": "network.py:PlaneDecoder/TriPlane"},
+  {"eq": "Adam 8e-4->1.6e-6 over 40k, eps 1e-15, no lr delay", "status": "exact", "code": "density.py:lr / network.exp_lr"},
+  {"eq": "densify 500..45000 every 100, no reset, no screen-size prune", "status": "deviates", "code": "density.py (last-step refine before bake; see major issue)"}
+ ],
+ "probe_assessment": [
+  {"probe": "schedule / stage1-schedule", "detects_removal": true, "why": "actually steps through 3000 and asserts zero opacity change, checks LRs"},
+  {"probe": "bake", "detects_removal": true, "why": "network render vs baked-field render on CUDA, 1e-4"},
+  {"probe": "renderer-uses-fields / triplane-generator / splat-fields / mask-loss / norm-loss", "detects_removal": true, "why": "compare against independent formulas and gradient paths (spot-checked, 9 pytest tests pass)"},
+  {"probe": "final-step refine", "detects_removal": false, "why": "no probe checks that no densification occurs at step==total_steps; the major issue is untested"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Protocol verified against official code: KMeans(n, random_state=0) on the 100 scaled train camera centres only, sklearn 1.0.2 (re-run reproduces views.json); test = all 200 transforms_test views; 800x800 (official max_resolution 800 does not downscale); white background composite trunc(255*...); masks = PNG alpha (>0 for hull); hull 256^3 in [-1,1]^3 with official projection, 100k (official hull branch ignores max_num_pts 300000); val = 8 transforms_val views, never used for selection or training.",
+  "Camera: plugin uses an orthonormal c2w with scaled translation; the official view matrix carries a 1/ws scale on R, but J*W (and hence the 2D covariance and projection) is identical; only the 0.01 near plane differs by ws (negligible).",
+  "Stage 1: mask 0.1, densify through the whole run, no reset, LRs (means 8e-4->8e-6 over 30k then held, scales 0.005, quats 0.001, opa 0.05, sh 0.0025, shN/20), 3-NN init scales, opacity 0.1, extent = 1.1*max cam dist all match official, except the last-step densify.",
+  "Stage 2 from build_stage2.sh/make_stage2.py: stage-1 checkpoint means, official hull filter on train masks, random <=100k, base scales recomputed by 3-NN on the new cloud (as official create_from_pcd); anchors get no gradient (detach); official SplatFields stage run omits --is_static but n_frames=0 so the static branch is identical.",
+  "paper_results.json matches the LaTeX: Table 2 / supp C1 PSNR and C2 SSIM at 6 views (SplatFields 22.26/0.8662, 3DGS 20.62/0.8356, all 8 per-scene values) and 12 views; 'toy' = lego."
+ ],
+ "summary": "Protocol, stage-1 recipe, stage-2 architecture/LRs/losses and paper_results.json are faithful to the official code and tables. One major deviation: a clone/split/prune refine runs at step 40000 before the bake/eval (official saves before densifying and discards it), so evaluated splats include untrained duplicates; fix by stopping refinement at 40000 (refine_stop_iter) in both stages. Remaining items are minor (fragile no-reset dependence on a gsplat bug, silent no-bake if steps != 40000, stale plan.md, 3-scene mean not comparable to paper 8-scene mean)."}

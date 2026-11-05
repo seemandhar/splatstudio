@@ -1,0 +1,10 @@
+{"method": "speedy-splat", "module": "ss_speedysplat",
+ "components": [
+  {"name": "speedy-renderer", "kind": "renderer", "factory": "ss_speedysplat.renderer:create_renderer", "config": {"rasterizer": "speedy", "background": [0, 0, 0]}},
+  {"name": "speedy-density", "kind": "density", "factory": "ss_speedysplat.density:create_density", "config": {"prune": true, "soft_ratio": 0.8, "hard_ratio": 0.3, "prune_from": 6000, "prune_until": 30000, "prune_every": 3000}},
+  {"name": "photometric", "kind": "loss", "factory": "base"}],
+ "fields": [],
+ "probes": ["speedy-culling-exact", "speedy-score-kernel", "speedy-prune-schedule", "speedy-adc-schedule"],
+ "contributions": ["snugbox-accutile", "efficient-pruning-score", "soft-pruning", "hard-pruning", "3dgs-density-schedule"],
+ "fidelity_gaps": ["optimizer step before density control", "view sampling with replacement / SSIM valid conv / SH offset", "single seed vs 3-run mean", "GPU differs for speed numbers"],
+ "feasible_natively": true}

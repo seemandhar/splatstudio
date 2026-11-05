@@ -1,0 +1,36 @@
+{
+  "paper": "PGSR: Planar-based Gaussian Splatting for Efficient and High-Fidelity Surface Reconstruction",
+  "slug": "pgsr",
+  "plan_id": 58,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "report": "done (build)",
+    "review": "done (major = stale bench request fixed; 3 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "built (benchmark pending)",
+  "arxiv": "2406.06521",
+  "official_code_commit": "de24f1a",
+  "method": "pgsr",
+  "methods": [
+    "pgsr",
+    "pgsr-tnt"
+  ],
+  "custom_cuda": true,
+  "benchmark_target": "mipnerf360 all 9 scenes (paper: indoor 30.36 / outdoor 24.76 / all 27.25 PSNR, averages only)",
+  "smoke": {
+    "pgsr": 22.911,
+    "pgsr_early_reg": 22.424,
+    "baseline": 22.99,
+    "steps": 2000,
+    "scene": "garden"
+  },
+  "bench_exps": [
+    "pgsr-mipnerf360-pilr"
+  ],
+  "dataset": "mipnerf360-pilr",
+  "baseline": "baseline3dgs-mipnerf360-pilr-30000"
+}

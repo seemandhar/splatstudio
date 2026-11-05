@@ -34,6 +34,12 @@ def parser():
     train.add_argument("--max-gaussians", type=int, default=1000000)
     train.add_argument("--device", default="cuda:0")
     train.add_argument("--log-every", type=int, default=100)
+    train.add_argument(
+        "--recipe",
+        choices=["splatstudio", "3dgs"],
+        default="splatstudio",
+        help="3dgs: camera-extent scene scale and per-point 3-NN initial scales (paper protocol)",
+    )
     evaluate = sub.add_parser("eval")
     evaluate.add_argument("--run", required=True)
     evaluate.add_argument("--split", choices=["validation", "test"], default="test")

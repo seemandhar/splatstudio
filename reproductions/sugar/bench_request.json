@@ -1,0 +1,43 @@
+{
+ "method": "sugar",
+ "datasets": {
+  "mipnerf360-1920": [
+   "garden",
+   "bicycle",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "recipe": "3dgs",
+ "num_gaussians": 10000000,
+ "max_gaussians": 12000000,
+ "baseline": {
+  "method": "gsplat",
+  "exp": "baseline3dgs-mipnerf360-1920-30000",
+  "datasets": {
+   "mipnerf360-1920": [
+    "garden",
+    "bicycle",
+    "counter"
+   ]
+  },
+  "steps": 30000
+ },
+ "paper_reference": {
+  "label": "R-SuGaR-15K 1M (supp. per-scene PSNR)",
+  "psnr": {
+   "garden": 25.36,
+   "bicycle": 23.14,
+   "counter": 27.62
+  },
+  "paper_3dgs_row": {
+   "garden": 27.41,
+   "bicycle": 25.25,
+   "counter": 28.7
+  }
+ },
+ "notes": "Official code loads images/ at 3DGS -r -1 => width 1600 (mipnerf360-1600). One 30k run = 3DGS 7k + coarse sdf to 15k + mesh extraction (CPU Open3D from ~/models/sugar-pylib, appended to sys.path automatically; ~5-10 min) + 15k refinement with ~2M mesh-bound Gaussians. Smoke: 4000 steps in 19 min on a busy A6000, peak 3 GB at images_4. Compare delta vs 1600 baseline with paper delta vs its 3DGS row (-2.05/-2.11/-1.08 dB).",
+ "protocol_note": "Review-1 major: paper metrics are at max side 1920 (SuGaR load_gs_cameras, cameras.py:16/113-117), not 1600. Only the official vanilla 3DGS 7k stage (-r -1 = 1600) and mesh extraction use 1600; our single run uses 1920 throughout (gap)."
+}

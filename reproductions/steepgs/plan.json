@@ -1,0 +1,10 @@
+{"method": "steepgs", "module": "ss_steepgs",
+ "components": [
+  {"kind": "renderer", "name": "steepgs-renderer", "factory": "ss_steepgs.renderer:create_renderer", "provides": ["render.rgb", "gradient.screen.signed", "gradient.splitting.inv_cov"], "notes": "vendored official SteepGS/Inria CUDA rasterizer, JIT"},
+  {"kind": "density", "name": "steepgs-density", "factory": "ss_steepgs.density:create_density", "requires": ["gradient.screen.signed", "gradient.splitting.inv_cov"]},
+  {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["steepgs-dLdG", "steepgs-splitting-matrix", "steepgs-saddle-criterion", "steepgs-split-direction", "steepgs-schedule"],
+ "contributions": ["splitting-matrix (C1)", "saddle-criterion (C2)", "steepest-split-direction (C3)", "opacity-halving (C4, off in official code)"],
+ "fidelity_gaps": ["optimizer step before density (runtime order)", "view sampling with replacement / SSIM valid conv / SH switch one step later", "black background (official) vs runtime white convention", "paper-vs-code: opacity copied, clone both at +lr*v, split sign repeat quirk (code followed)"],
+ "feasible_natively": true}

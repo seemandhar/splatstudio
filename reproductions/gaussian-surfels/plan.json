@@ -1,0 +1,66 @@
+{
+ "method": "gaussian-surfels",
+ "module": "ss_gsurfels",
+ "representation": "surfel2d",
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "gsurfels-raster",
+   "factory": "ss_gsurfels.renderer:create_renderer",
+   "official_cuda": "vendored unmodified, JIT"
+  },
+  {
+   "kind": "density",
+   "name": "gsurfels-density",
+   "factory": "ss_gsurfels.density:create_density"
+  },
+  {
+   "kind": "loss",
+   "name": "gsurfels-photometric"
+  },
+  {
+   "kind": "loss",
+   "name": "gsurfels-mask"
+  },
+  {
+   "kind": "loss",
+   "name": "gsurfels-consistency"
+  },
+  {
+   "kind": "loss",
+   "name": "gsurfels-normal-prior"
+  },
+  {
+   "kind": "loss",
+   "name": "gsurfels-opacity"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "surfel-raster",
+  "consistency-formula",
+  "normal-prior-formula",
+  "opacity-formula",
+  "density-recipe",
+  "cutting-mesh"
+ ],
+ "contributions": [
+  "surfel-representation",
+  "depth-normal-consistency",
+  "normal-prior",
+  "opacity-loss",
+  "volumetric-cutting-meshing",
+  "optimisation-recipe"
+ ],
+ "fidelity_gaps": [
+  "with-replacement view sampling (visibility-prune window adapted)",
+  "optimizer step before density",
+  "mono*=mask compounding not replicated",
+  "uint8 masked images",
+  "SH degree +1 step later",
+  "seed",
+  "final-step optimizer skip",
+  "Poisson threads / knn backend"
+ ],
+ "feasible_natively": true
+}

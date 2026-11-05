@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-fcgs"
+version = "0.1.0"
+description = "FCGS (Chen et al., ICLR 2025) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "plyfile"]
+
+[project.entry-points."splatstudio.methods"]
+fcgs = "ss_fcgs:method"
+fcgs-lowrate = "ss_fcgs:method_lowrate"
+fcgs-smoke = "ss_fcgs:smoke"
+
+[tool.setuptools.packages.find]
+include = ["ss_fcgs*"]
+
+[tool.setuptools.package-data]
+ss_fcgs = ["csrc/*.md", "csrc/*/*.cu", "csrc/*/*.cpp", "csrc/*/*.h"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_fcgs/fcgs_model.py", "ss_fcgs/entropy_models.py", "ss_fcgs/encodings_cuda.py", "ss_fcgs/grid_utils.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

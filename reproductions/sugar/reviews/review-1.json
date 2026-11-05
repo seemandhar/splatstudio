@@ -1,0 +1,89 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "paper.md / report.md / bench_request.json (protocol), plugin unaffected",
+      "where": "Sec. 6 Protocol: 'resolution=-1 on images/ => width 1600 (gs_model.py:30, camera_utils.py:25)'",
+      "problem": "The official coarse, refinement and metrics stages do not use the 3DGS loader for images. GaussianSplattingWrapper (gs_model.py:132) calls SuGaR's own load_gs_cameras (sugar_scene/cameras.py:15-16, 106-117), which reads <scene>/images and downsizes so that max(H,W) = 1920 (max_img_size=1920, image_resolution=1). Only the vanilla 3DGS 7k stage (gaussian_splatting/train.py, -r -1) is at 1600 px, and so is mesh extraction (load_gt_images=False, so the cameras.json sizes from the 1600-px 3DGS run are used, cameras.py:120-129). The paper's SuGaR PSNRs (metrics.py:166-172, load_gt_images=True) are therefore at 1920x1244 (garden), 1920x1276 (bicycle) and 1920x1280 (counter), not 1600 px. The planned mipnerf360-1600 benchmark and its 1600 baseline do not match the paper's evaluation resolution.",
+      "evidence": "cameras.py:16 'max_img_size=1920'; cameras.py:113-117 'if max(orig_h, orig_w) > max_img_size: downscale_factor = max/max_img_size'; GSCamera takes image_width/height from the loaded GT image (cameras.py:193-196). images/ sizes: garden 5187x3361, bicycle 4946x3286, counter 3115x2076, so all are capped at 1920. Paper text gives no resolution.",
+      "fix": "Either build a mipnerf360-1920 protocol (images/ resized with PIL to max side 1920, llffhold8) with a matching gsplat baseline and benchmark there, or keep the 1600 run but correct paper.md/report.md/bench_request.json. In that case label it off-protocol resolution and list as a fidelity gap that official 3DGS-7k and extraction run at 1600 while coarse/refine/eval run at 1920 (not expressible as one native run). Expect absolute PSNR at 1920 to be somewhat lower than at 1600."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sugar/density.py, geometry.py",
+      "where": "level_set_cloud (density.py:403-409), level_set_points (geometry.py:322-336)",
+      "problem": "Not literally the official use_gaussian_depth branch. The official branch renders un-normalized depth sum(w z) + T*(-1) and drops pixels with depth<0 (sugar_model.py:1938-1950, 1960-1961). The port uses alpha-normalized expected depth with alpha>0.5. The paper used the default branch (use_gaussian_depth_for_surface_levels=False, coarse_mesh.py), which is the PyTorch3D first-surface z-buffer of 2-sigma diamonds with neighbours knn_idx[g*]. Likely effect is small: there are enough points (smoke 9.9M/10M), the +-3 sigma search absorbs part of it, and refinement re-optimizes. Semi-transparent and layered regions can still give a different or noisier mesh.",
+      "evidence": "sugar_model.py:1938-1947 (bg_color -1, no normalisation) vs geometry.py:323 'valid = alpha > alpha_min' + out['depth'] = accumulated/alpha",
+      "fix": "Describe it in report.md as 'gsplat-depth variant inspired by the use_gaussian_depth branch', not as equal to it. Optional: mask depth<0 on accumulated-(1-alpha) to match the branch exactly."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sugar/density.py",
+      "where": "after_backward at coarse_start",
+      "problem": "Adam moments from the 3DGS stage carry into coarse SuGaR. The official code builds a fresh SuGaROptimizer at it 7000 (coarse_sdf.py:427). Undocumented.",
+      "evidence": "coarse_sdf.py:416-427 new Adam(eps=1e-15); port keeps runtime optimizers",
+      "fix": "Optionally clear optimizer state at step coarse_start; otherwise list as a fidelity gap."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sugar/density.py",
+      "where": "level_set_cloud colours",
+      "problem": "Level-point and initial vertex colours come from a white-background render, while the official render uses bg None (black) (coarse_mesh.py, rgb render bg_color=None). This only affects the initial sh0 of the refinement.",
+      "evidence": "density.py:405 out['rgb'] includes +(1-a)",
+      "fix": "Use render[...,:3] without the background term, or document."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "fidelity gaps",
+      "problem": "Undocumented: official train_full_pipeline.py:121-127 runs the 3DGS 7k stage without --eval, so test views are trained on. The paper's metrics used separate original-3DGS checkpoints (configs/metrics/scenes.json). The port's train-only 3DGS stage is the correct, honest choice and should be stated as such.",
+      "evidence": "gaussian_splatting/arguments/__init__.py:56 eval=False default",
+      "fix": "Add one line to report.md."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sugar/losses.py",
+      "where": "sdf_terms:72",
+      "problem": "Background max_z is detached, while the official point_depth.max() carries gradient. Negligible.",
+      "evidence": "coarse_sdf.py:579-583",
+      "fix": "None needed."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sugar/density.py",
+      "where": "stage boundary 7000",
+      "problem": "Off-by-one versus the official code. The official 7k checkpoint is saved before the 7000th optimizer step (gaussian_splatting/train.py:109 vs 128), and coarse then runs iterations 7000..15000 (8001 steps, coarse_sdf.py:469). The port runs 7000 3DGS steps and then 7001..15000. Negligible.",
+      "evidence": "coarse_sdf.py:468-481",
+      "fix": "None needed."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(1) density d(p)", "status": "exact", "code": "geometry.py:neighbour_density (rho=1/16 code form, 16-NN incl. self, d>=1 -> d/sg(d))"},
+    {"eq": "(5)-(7) SDF f = beta*sqrt(-2 log d)", "status": "exact", "code": "geometry.py:sdf_values (beta='average' mode, offset 0; sqrt floor 1e-12 documented)"},
+    {"eq": "(8) R = mean |f - |f_hat||", "status": "exact", "code": "losses.py:create_sdf (/(E/10), clamp 10E, weight 0.2, proj z>znear, bilinear border lookup)"},
+    {"eq": "(10) R_Norm", "status": "exact", "code": "losses.py:create_normal (official 'better normal' weights, detached, sign-aligned, weight 0.2)"},
+    {"eq": "opacity entropy", "status": "exact", "code": "losses.py:create_entropy (7000<it<9000, visible, 0.1)"},
+    {"eq": "level set lambda=0.3 + normals -grad d", "status": "deviates", "code": "geometry.py:level_set_points (depth source differs, see issue 2)"},
+    {"eq": "Poisson fg/bg + decimation + snapping", "status": "exact", "code": "mesh.py:poisson_mesh"},
+    {"eq": "bound Gaussian parameterisation (supp.)", "status": "exact", "code": "geometry.py:bound_gaussians (R0 face normal, R1/R2 complex rotation of v0-v1, scales (E/1e6,s1,s2), barycentre)"},
+    {"eq": "normal consistency", "status": "exact", "code": "geometry.py:normal_consistency / edge_face_pairs (PyTorch3D form, 0.1)"}
+  ],
+  "probe_assessment": [
+    {"probe": "sdf-field", "detects_removal": true, "why": "independent covariance-inverse recomputation of d, f and R; plane-distance analytic case"},
+    {"probe": "normal-regularizer", "detects_removal": true, "why": "independent per-sample loop; tilted > coplanar; gradient to quats"},
+    {"probe": "level-set", "detects_removal": true, "why": "analytic lambda offset s*sqrt(-2 ln(0.3/a)) and normal direction (re-run on GPU 4: max_z_err 2.9e-4)"},
+    {"probe": "poisson-mesh", "detects_removal": true, "why": "sphere radius, triangle target, vertex snapping"},
+    {"probe": "mesh-binding", "detects_removal": true, "why": "Rodrigues reference rotation, scales, vertex gradient, fold vs flat consistency, LR values"},
+    {"probe": "stage-schedule", "detects_removal": true, "why": "entropy window, prune count, SDF start, 1 Gaussian/face, vertex motion, fresh-renderer checkpoint render diff (re-run on GPU 4: 0.0)"}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Schedule verified against the official sdf pipeline: train_full_pipeline.py runs 3DGS --iterations 7000, then train.py -i 7000. Coarse densify_until 0 with no opacity reset; entropy 7000<it<9000; prune <0.5 at start of 9001 (port: after step 9000, same); SDF/normal it>9000; KNN 16 at 7001 and every 500 and after prune; coarse ends at 15000; extraction; refine 15000 its (--refinement_time long, R-SuGaR-15K).",
+    "1M: train.py -v 1e6 is the quadric-decimation triangle target for each of fg and bg, so about 1M vertices total. The port matches (decimation_target 1e6 per part; smoke 823k verts / 1.61M faces).",
+    "Code-over-paper values match the official code: density_factor 1/16, sdf normalisation E/10 with clamp 10E, 1M samples x 1.5 sigma, close threshold 2 sigma, vertex LR 1.6e-4*10E/sqrt(1e6) -> 1.6e-6*... over 30k from refine it 1, thickness E/1e6, refine opacity 0.1, SH warm-up +1 per 1000, rot2d lr 1e-3, Adam eps 1e-15.",
+    "Screen-size prune: no SuGaR stage has one (coarse and refine have no densification). The 3DGS stage uses gsplat DefaultStrategy with refine_scale2d_stop_iter=0 (default), so no screen-size prune. This matches the inert official behaviour (gaussian_splatting/scene/gaussian_model.py:347 zeroes max_radii2D in densification_postfix). The world-size prune is active only after 3000 in both.",
+    "Eval renders the refined mesh-bound model: base fields are synced every refine step. Smoke validation (live mesh renderer) PSNR 22.4351 equals ss-eval test PSNR 22.4351; probe diff 0.0.",
+    "White background, sampling with replacement, gsplat rasterizer with straight-through alpha cap, and SSIM/LPIPS implementation differences are as listed in the report."
+  ],
+  "summary": "The SuGaR mechanisms (R, R_Norm, entropy and pruning, level-set plus Poisson extraction, mesh-bound refinement) and every schedule boundary and hyper-parameter match the official sdf pipeline closely. The probes are mechanism-level, and eval provably renders the refined model. The one blocking problem is the benchmark protocol: the official SuGaR coarse, refine and evaluation load images/ capped at max side 1920 (sugar_scene/cameras.py), not 1600, so the paper's numbers are at about 1920x1250. Either build a 1920 protocol plus baseline, or label the 1600 benchmark as off-protocol. The level-set depth source is a variant, not an exact copy of the official use_gaussian_depth branch (and the paper used the PyTorch3D default); the likely PSNR effect is small, so it should only be documented accurately."
+}

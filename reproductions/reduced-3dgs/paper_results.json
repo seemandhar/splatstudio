@@ -1,0 +1,319 @@
+{
+ "paper": "Reducing the Memory Footprint of 3D Gaussian Splatting",
+ "arxiv": null,
+ "venue": "Proc. ACM CGIT (I3D) 7(1), 2024, doi:10.1145/3651282",
+ "method_label": "Ours (full_final config)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "ssim": 0.809,
+     "psnr": 27.1,
+     "lpips": 0.226,
+     "mem_MB": 29
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.06,
+      "flowers": 21.44,
+      "garden": 27.03,
+      "stump": 26.68,
+      "treehill": 22.44,
+      "room": 30.95,
+      "counter": 28.54,
+      "kitchen": 30.52,
+      "bonsai": 31.26
+     },
+     "ssim": {
+      "bicycle": 0.761,
+      "flowers": 0.598,
+      "garden": 0.854,
+      "stump": 0.776,
+      "treehill": 0.631,
+      "room": 0.913,
+      "counter": 0.898,
+      "kitchen": 0.917,
+      "bonsai": 0.932
+     },
+     "lpips": {
+      "bicycle": 0.221,
+      "flowers": 0.346,
+      "garden": 0.119,
+      "stump": 0.219,
+      "treehill": 0.337,
+      "room": 0.228,
+      "counter": 0.213,
+      "kitchen": 0.136,
+      "bonsai": 0.216
+     },
+     "gaussians_M": {
+      "bicycle": 2.41,
+      "flowers": 1.61,
+      "garden": 2.36,
+      "stump": 2.5,
+      "treehill": 1.81,
+      "room": 0.56,
+      "counter": 0.5,
+      "kitchen": 0.84,
+      "bonsai": 0.52
+     },
+     "mem_MB": {
+      "bicycle": 48.0,
+      "flowers": 35.0,
+      "garden": 47.0,
+      "stump": 48.0,
+      "treehill": 37.0,
+      "room": 10.0,
+      "counter": 11.0,
+      "kitchen": 18.0,
+      "bonsai": 10.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.813,
+     "psnr": 27.42,
+     "lpips": 0.217,
+     "mem_MB": 744
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.1,
+      "flowers": 21.44,
+      "garden": 27.28,
+      "stump": 26.6,
+      "treehill": 22.44,
+      "room": 31.44,
+      "counter": 28.98,
+      "kitchen": 31.27,
+      "bonsai": 32.21
+     },
+     "ssim": {
+      "bicycle": 0.763,
+      "flowers": 0.604,
+      "garden": 0.863,
+      "stump": 0.771,
+      "treehill": 0.633,
+      "room": 0.917,
+      "counter": 0.906,
+      "kitchen": 0.925,
+      "bonsai": 0.94
+     },
+     "lpips": {
+      "bicycle": 0.212,
+      "flowers": 0.338,
+      "garden": 0.108,
+      "stump": 0.216,
+      "treehill": 0.327,
+      "room": 0.221,
+      "counter": 0.202,
+      "kitchen": 0.127,
+      "bonsai": 0.206
+     },
+     "gaussians_M": {
+      "bicycle": 6.05,
+      "flowers": 3.63,
+      "garden": 5.77,
+      "stump": 4.75,
+      "treehill": 3.8,
+      "room": 1.53,
+      "counter": 1.2,
+      "kitchen": 1.79,
+      "bonsai": 1.25
+     },
+     "mem_MB": {
+      "bicycle": 1362.0,
+      "flowers": 816.0,
+      "garden": 1298.0,
+      "stump": 1068.0,
+      "treehill": 854.0,
+      "room": 345.0,
+      "counter": 269.0,
+      "kitchen": 403.0,
+      "bonsai": 281.0
+     }
+    }
+   },
+   "source": "Table 7 (per-scene), Table 1/2 (average, all 9 scenes)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "ssim": 0.84,
+     "psnr": 23.57,
+     "lpips": 0.188,
+     "mem_MB": 14
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.22,
+      "train": 21.93
+     },
+     "ssim": {
+      "truck": 0.874,
+      "train": 0.805
+     },
+     "lpips": {
+      "truck": 0.155,
+      "train": 0.222
+     },
+     "gaussians_M": {
+      "truck": 0.85,
+      "train": 0.5
+     },
+     "mem_MB": {
+      "truck": 16.0,
+      "train": 12.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.844,
+     "psnr": 23.66,
+     "lpips": 0.178,
+     "mem_MB": 412
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.41,
+      "train": 21.91
+     },
+     "ssim": {
+      "truck": 0.878,
+      "train": 0.81
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.208
+     },
+     "gaussians_M": {
+      "truck": 2.58,
+      "train": 1.08
+     },
+     "mem_MB": {
+      "truck": 580.0,
+      "train": 243.0
+     }
+    }
+   },
+   "source": "Table 8, Table 1"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "ssim": 0.902,
+     "psnr": 29.63,
+     "lpips": 0.249,
+     "mem_MB": 18
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.21,
+      "playroom": 30.05
+     },
+     "ssim": {
+      "drjohnson": 0.901,
+      "playroom": 0.904
+     },
+     "lpips": {
+      "drjohnson": 0.249,
+      "playroom": 0.249
+     },
+     "gaussians_M": {
+      "drjohnson": 1.25,
+      "playroom": 0.77
+     },
+     "mem_MB": {
+      "drjohnson": 23.0,
+      "playroom": 13.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.899,
+     "psnr": 29.47,
+     "lpips": 0.247,
+     "mem_MB": 630
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.03,
+      "playroom": 29.9
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.247,
+      "playroom": 0.247
+     },
+     "gaussians_M": {
+      "drjohnson": 3.27,
+      "playroom": 2.33
+     },
+     "mem_MB": {
+      "drjohnson": 736.0,
+      "playroom": 523.0
+     }
+    }
+   },
+   "source": "Table 9, Table 1"
+  }
+ },
+ "ablation_table1": {
+  "mipnerf360": {
+   "baseline": 27.42,
+   "+point_culling": 27.43,
+   "+sh_culling": 27.18,
+   "+quantisation": 27.1,
+   "mem_MB": {
+    "baseline": 744,
+    "+point_culling": 339,
+    "+sh_culling": 102,
+    "+quantisation": 29
+   }
+  },
+  "tandt": {
+   "baseline": 23.66,
+   "+point_culling": 23.69,
+   "+sh_culling": 23.62,
+   "+quantisation": 23.57,
+   "mem_MB": {
+    "baseline": 412,
+    "+point_culling": 154,
+    "+sh_culling": 49,
+    "+quantisation": 14
+   }
+  },
+  "db": {
+   "baseline": 29.47,
+   "+point_culling": 29.57,
+   "+sh_culling": 29.67,
+   "+quantisation": 29.63,
+   "mem_MB": {
+    "baseline": 630,
+    "+point_culling": 224,
+    "+sh_culling": 62,
+    "+quantisation": 18
+   }
+  }
+ },
+ "table4_half_float": {
+  "mipnerf360": {
+   "kmeans_only": {
+    "psnr": 27.17,
+    "mem_MB": 38
+   },
+   "kmeans+half": {
+    "psnr": 27.1,
+    "mem_MB": 29
+   }
+  }
+ },
+ "notes": "Not on arXiv (I3D 2024 / PACMCGIT). baseline_3dgs = '3DGS*' = authors' rerun of the public 3DGS code (footnote 2). Mem is computed by generate_results.py:memory_results (analytic byte count, MiB = 2^20 bytes): (3P xyz @4B, or 2B half) + colour (P0+4P1+9P2+16P3)*3 bytes + 256*16*4 + rest 8P bytes + 256*8*4. Baseline Mem = P*59*4 bytes (bicycle 6.05M -> 1362 MiB). Evaluated model = decoded point_cloud_quantised_half.ply (render.py --models quantised_half). Paper's Mip-NeRF360 average includes all 9 scenes. gaussians_M = #Prim in millions."
+}

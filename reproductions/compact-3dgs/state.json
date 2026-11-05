@@ -1,0 +1,19 @@
+{
+ "paper": "Compact 3D Gaussian Representation for Radiance Field",
+ "slug": "compact-3dgs",
+ "plan_id": 43,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "plugin_freeze_sha": "e239360d8f953554",
+ "bench_exps": [
+  "compact-3dgs-mipnerf360"
+ ],
+ "headline": "Decoded Ours+PP within 0.5 dB on 3/3 mip360 scenes (bicycle 24.63/24.73, garden 26.35/26.72, bonsai 31.94/31.98); delta vs gsplat -0.29/-0.55/+0.05 vs paper vs 3DGS* -0.37/-0.53/-0.18. Storage Ours+PP 53.99/43.35/19.67 MB vs paper 42.42/43.26/16.40 (7-35% more Gaussians). Gaps: fp32 vs tcnn fp16, white bg/gsplat, update order, global state via fields; no G-PCC (paper uses fp16 positions)."
+}

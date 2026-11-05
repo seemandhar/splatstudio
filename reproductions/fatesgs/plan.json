@@ -1,0 +1,7 @@
+{"method": "fatesgs", "module": "ss_fatesgs",
+ "components": ["fatesgs-surfel (renderer, vendored 2DGS CUDA)", "fatesgs-density", "photometric", "surfel-reg", "depth-rank", "depth-smooth", "feature"],
+ "fields": [],
+ "probes": ["rank-formula", "smooth-formula", "feature-consistency", "surfel-renderer", "density-recipe"],
+ "contributions": ["C1 patch depth ranking", "C2 edge-aware depth smoothness", "C3 multi-level multi-view feature alignment", "2DGS backbone + official recipe"],
+ "fidelity_gaps": ["view sampling with replacement", "densify after optimizer step", "rotation init", "CD on 3 scans only", "NVS protocol not reproduced", "little-overlap set not attempted"],
+ "feasible_natively": true}

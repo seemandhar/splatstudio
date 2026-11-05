@@ -1,0 +1,59 @@
+{
+  "paper": "FreGS: 3D Gaussian Splatting with Progressive Frequency Regularization",
+  "slug": "fregs",
+  "plan_id": 27,
+  "args": {
+    "datasets": [
+      "mipnerf360"
+    ],
+    "scenes": "all",
+    "steps": 30000,
+    "tolerance": 0.3,
+    "iterations": 2
+  },
+  "stages": {
+    "setup": "done",
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "review": "done (3 rounds)",
+    "calibrate_weights": "done",
+    "verify": "done",
+    "test": "done",
+    "calibrate_threshold": "done"
+  },
+  "iteration": 1,
+  "history": [
+    {
+      "stage": "review",
+      "rounds": [
+        {
+          "n": 1,
+          "major": 3,
+          "minor": 4
+        },
+        {
+          "n": 2,
+          "major": 2,
+          "minor": 2
+        }
+      ]
+    },
+    {
+      "iteration": 1,
+      "changes": [
+        "runtime opacity reset (gsplat 1.5.3 bug fix)",
+        "wrapped phase difference (Eq. 6 ambiguity)"
+      ],
+      "exp": "fregs-i1-mipnerf360",
+      "baseline": "baseline3dgs-mipnerf360-30000",
+      "i0": "26.89 vs 27.85"
+    }
+  ],
+  "outcome": "not-matched",
+  "baseline_exp": "baseline-mipnerf360-30000",
+  "arxiv": "2403.06908",
+  "plugin_freeze_sha": "584086850f7c35ff",
+  "headline": "27.12 vs 27.85 (−0.73) after 1 iteration; Δ vs our 3DGS −0.16 vs paper +0.64",
+  "plugin_freeze_sha_i1": "b31803aa6ebfc654"
+}

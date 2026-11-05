@@ -1,0 +1,293 @@
+{
+ "paper": "PUP 3D-GS: Principled Uncertainty Pruning for 3D Gaussian Splatting",
+ "arxiv": "2406.10219",
+ "method_label": "Ours (PUP 3D-GS, 90% = 80% then 50%)",
+ "iterations": 40000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 26.67,
+     "ssim": 0.7862,
+     "lpips": 0.2719
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.72,
+      "bonsai": 30.64,
+      "counter": 28.0,
+      "flowers": 20.86,
+      "garden": 26.23,
+      "kitchen": 29.83,
+      "room": 31.03,
+      "stump": 26.3,
+      "treehill": 22.39
+     },
+     "ssim": {
+      "bicycle": 0.727,
+      "bonsai": 0.9261,
+      "counter": 0.8917,
+      "flowers": 0.5548,
+      "garden": 0.8189,
+      "kitchen": 0.9128,
+      "room": 0.9152,
+      "stump": 0.757,
+      "treehill": 0.6248
+     },
+     "lpips": {
+      "bicycle": 0.2965,
+      "bonsai": 0.2281,
+      "counter": 0.2297,
+      "flowers": 0.4211,
+      "garden": 0.1997,
+      "kitchen": 0.1545,
+      "room": 0.2278,
+      "stump": 0.2836,
+      "treehill": 0.4062
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.47,
+     "ssim": 0.8123,
+     "lpips": 0.2216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.09,
+      "bonsai": 32.25,
+      "counter": 29.11,
+      "flowers": 21.34,
+      "garden": 27.28,
+      "kitchen": 31.57,
+      "room": 31.51,
+      "stump": 26.55,
+      "treehill": 22.56
+     },
+     "ssim": {
+      "bicycle": 0.7467,
+      "bonsai": 0.9457,
+      "counter": 0.914,
+      "flowers": 0.5875,
+      "garden": 0.8558,
+      "kitchen": 0.9317,
+      "room": 0.9255,
+      "stump": 0.7687,
+      "treehill": 0.6352
+     },
+     "lpips": {
+      "bicycle": 0.2442,
+      "bonsai": 0.1811,
+      "counter": 0.1838,
+      "flowers": 0.3602,
+      "garden": 0.1225,
+      "kitchen": 0.1165,
+      "room": 0.1973,
+      "stump": 0.2429,
+      "treehill": 0.346
+     }
+    }
+   },
+   "source": "v3 Table 2 (averages, 90% = 80%+50%); supp. Tables psnr_scenes/ssim_scenes/lpips_scenes (per scene)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 22.72,
+     "ssim": 0.8013,
+     "lpips": 0.2441
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.03,
+      "truck": 24.4
+     },
+     "ssim": {
+      "train": 0.76,
+      "truck": 0.8541
+     },
+     "lpips": {
+      "train": 0.2967,
+      "truck": 0.1916
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.77,
+     "ssim": 0.8458,
+     "lpips": 0.1777
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.1,
+      "truck": 25.43
+     },
+     "ssim": {
+      "train": 0.8134,
+      "truck": 0.8782
+     },
+     "lpips": {
+      "train": 0.2077,
+      "truck": 0.1476
+     }
+    }
+   },
+   "source": "v3 Table 2 (averages, 90% = 80%+50%); supp. Tables psnr_scenes/ssim_scenes/lpips_scenes (per scene)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 28.85,
+     "ssim": 0.881,
+     "lpips": 0.3015
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.0,
+      "playroom": 29.71
+     },
+     "ssim": {
+      "drjohnson": 0.8762,
+      "playroom": 0.8861
+     },
+     "lpips": {
+      "drjohnson": 0.3067,
+      "playroom": 0.2963
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 28.98,
+     "ssim": 0.8816,
+     "lpips": 0.2859
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.15,
+      "playroom": 29.81
+     },
+     "ssim": {
+      "drjohnson": 0.8778,
+      "playroom": 0.8854
+     },
+     "lpips": {
+      "drjohnson": 0.2895,
+      "playroom": 0.2823
+     }
+    }
+   },
+   "source": "v3 Table 2 (averages, 90% = 80%+50%); supp. Tables psnr_scenes/ssim_scenes/lpips_scenes (per scene)"
+  }
+ },
+ "pipeline_stages_mipnerf360_mean": {
+  "source": "v3 Table 1",
+  "3dgs": {
+   "psnr": 27.47,
+   "ssim": 0.8123,
+   "lpips": 0.2216
+  },
+  "prune80": {
+   "psnr": 21.0,
+   "ssim": 0.7075,
+   "lpips": 0.3075
+  },
+  "prune80_refine": {
+   "psnr": 26.97,
+   "ssim": 0.7991,
+   "lpips": 0.2444
+  },
+  "prune50": {
+   "psnr": 22.63,
+   "ssim": 0.7021,
+   "lpips": 0.3316
+  },
+  "prune50_refine": {
+   "psnr": 26.67,
+   "ssim": 0.7862,
+   "lpips": 0.2719
+  }
+ },
+ "ablations_mipnerf360_mean": {
+  "one_round_90_10k": {
+   "psnr": 26.12,
+   "ssim": 0.7761,
+   "lpips": 0.2807
+  },
+  "patch2": {
+   "psnr": 26.46
+  },
+  "patch8": {
+   "psnr": 26.53
+  },
+  "with_rotation": {
+   "psnr": 26.79
+  },
+  "rgb_sensitivity": {
+   "psnr": 26.4
+  }
+ },
+ "v1_88p44": {
+  "source": "arXiv v1 Tables 2/6/8 (66% then 66% = 88.44%)",
+  "mipnerf360_average": {
+   "psnr": 26.83,
+   "ssim": 0.792,
+   "lpips": 0.268
+  },
+  "tandt_average": {
+   "psnr": 23.03,
+   "ssim": 0.807,
+   "lpips": 0.2453
+  },
+  "per_scene": {
+   "psnr": {
+    "bicycle": 24.99,
+    "bonsai": 30.62,
+    "counter": 28.11,
+    "flowers": 21.09,
+    "garden": 26.66,
+    "kitchen": 29.99,
+    "room": 31.13,
+    "stump": 26.39,
+    "treehill": 22.52,
+    "train": 21.32,
+    "truck": 24.73,
+    "drjohnson": 27.63,
+    "playroom": 29.58
+   },
+   "lpips": {
+    "bicycle": 0.287,
+    "bonsai": 0.2304,
+    "counter": 0.2323,
+    "flowers": 0.4196,
+    "garden": 0.1859,
+    "kitchen": 0.1569,
+    "room": 0.2271,
+    "stump": 0.2784,
+    "treehill": 0.4016,
+    "train": 0.2981,
+    "truck": 0.1925,
+    "drjohnson": 0.3316,
+    "playroom": 0.299
+   }
+  },
+  "baseline_3dgs_per_scene_psnr": {
+   "bicycle": 25.09,
+   "bonsai": 32.25,
+   "counter": 29.11,
+   "flowers": 21.34,
+   "garden": 27.28,
+   "kitchen": 31.57,
+   "room": 31.51,
+   "stump": 26.55,
+   "treehill": 22.56,
+   "train": 22.1,
+   "truck": 25.43,
+   "drjohnson": 28.15,
+   "playroom": 29.81
+  }
+ },
+ "notes": "baseline_3dgs = the authors' own pretrained 3D-GS models (same models used for LightGaussian comparison), not the 3DGS paper numbers. 90% pruning; 30k pretrain + 2x5k fine-tune. v3 per-scene SSIM table is identical to v1's (possibly not updated). Black background, 3DGS metrics.py LPIPS-VGG."
+}

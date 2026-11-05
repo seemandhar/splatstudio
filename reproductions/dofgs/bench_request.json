@@ -1,0 +1,14 @@
+{"method": "dofgs",
+ "methods": ["dofgs", "dofgs-bl-m001", "dofgs-nobl", "gsplat"],
+ "datasets": {"deblurnerf-real": ["cake", "caps", "tools"]},
+ "steps": 40000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "method_per_scene": {
+  "deblurnerf-real/cake": "dofgs",
+  "deblurnerf-real/caps": "dofgs-nobl",
+  "deblurnerf-real/tools": "dofgs-bl-m001"},
+ "baseline": {"method": "gsplat", "datasets": {"deblurnerf-real": ["cake", "caps", "tools"]},
+              "steps": 40000, "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000"},
+ "baseline_needed": "gsplat on the same deblurnerf-real scenes (cake, caps, tools) with identical args; no shared baseline exists. Paper's comparison row is Mip-Splatting: cake 21.75, caps 21.62, tools 23.80.",
+ "notes": "Per-scene methods are the official config_real_<scene>.yaml groups (ss_dofgs/variants.py): cake -> dofgs (band_limit true, lambda_mk 0.002), caps -> dofgs-nobl (band_limit false: no Mip 3D filter, plain opacity reset; lambda_mk 0.001), tools -> dofgs-bl-m001 (band_limit true, lambda_mk 0.001); lambda_reg = 0.1 lambda_mk. Other scenes: daisy -> dofgs; cisco, sausage, seal -> dofgs-bl-m001; cupcake, cups -> dofgs-nobl. Paper protocol is 40k iterations; headline = final 40k state (a 15k checkpoint may be reported only as a labelled diagnostic). tools needs its 4 missing COLMAP sparse files first (Drive rate limit); if unavailable, run cake+caps and report as a subset. First dofgs job JIT-compiles the DOF CUDA kernel."}

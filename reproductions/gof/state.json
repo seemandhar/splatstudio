@@ -1,0 +1,41 @@
+{
+  "paper": "Gaussian Opacity Fields: Efficient Adaptive Surface Reconstruction in Unbounded Scenes",
+  "slug": "gof",
+  "plan_id": 57,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "report": "done",
+    "review": "done (major = bench cap fixed; 6 minors)",
+    "benchmark": "done"
+  },
+  "outcome": "matched (absolute; indoor gain over 3DGS not reproduced)",
+  "arxiv": "2404.10772",
+  "official_code_commit": "5245b20",
+  "custom_cuda": true,
+  "method": "gof",
+  "benchmark_target": "mipnerf360 all 9 scenes (paper: outdoor 24.82 / indoor 30.79 PSNR, group averages only)",
+  "smoke": {
+    "gof": 22.25,
+    "baseline": 22.99,
+    "steps": 2000,
+    "scene": "garden"
+  },
+  "bench_exps": [
+    "gof-mipnerf360"
+  ],
+  "result": {
+    "outdoor": 24.73,
+    "indoor": 30.36,
+    "paper": {
+      "outdoor": 24.82,
+      "indoor": 30.79
+    },
+    "gain_vs_ours": {
+      "outdoor": 0.34,
+      "indoor": -0.53
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+ "paper": "A Hierarchical 3D Gaussian Representation for Real-Time Rendering of Very Large Datasets",
+ "slug": "hierarchical-3dgs",
+ "plan_id": 74,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done"
+ },
+ "outcome": null
+}

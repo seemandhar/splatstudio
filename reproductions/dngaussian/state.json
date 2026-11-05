@@ -1,0 +1,29 @@
+{
+  "paper": "DNGaussian: Optimizing Sparse-View 3D Gaussian Radiance Fields with Global-Local Depth Normalization",
+  "slug": "dngaussian",
+  "plan_id": 51,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (major fixed: after_backward boundary probe)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "method": "dngaussian",
+  "dataset": "llff-fewview3-r8-dng",
+  "plugin_freeze_sha": "a7a65bbfabb9d3f8",
+  "bench_exps": [
+    "dngaussian-llff-r8"
+  ],
+  "result": {
+    "mean_psnr": 18.93,
+    "paper": 19.12,
+    "control_3dgs_dagger": [
+      16.52,
+      16.46
+    ]
+  }
+}

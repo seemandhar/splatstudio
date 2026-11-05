@@ -1,0 +1,21 @@
+{
+ "paper": "Mini-Splatting2: Building 360 Scenes within Minutes via Aggressive Gaussian Densification",
+ "slug": "mini-splatting2",
+ "plan_id": 29,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "plugin_freeze_sha": "c8cd1051b8e8a001",
+ "bench_exps": [
+  "mini-splatting2-mipnerf360",
+  "mini-splatting2-indoor-mipnerf360",
+  "mini-splatting2-indoor-db"
+ ],
+ "headline": "5 scenes: mean gap −0.21 dB (4/5 within ±0.5; garden −0.56)"
+}

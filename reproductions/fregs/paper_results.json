@@ -1,0 +1,28 @@
+{
+  "paper": "FreGS: 3D Gaussian Splatting with Progressive Frequency Regularization",
+  "arxiv": "2403.06908",
+  "method_label": "FreGS(Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.85, "ssim": 0.826, "lpips": 0.209}},
+      "baseline_3dgs": {"average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214}},
+      "source": "Table 1 (averages only; no per-scene tables exist in the arXiv v2 source, no supplementary)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.96, "ssim": 0.849, "lpips": 0.178}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183}},
+      "source": "Table 1 (averages only)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.93, "ssim": 0.904, "lpips": 0.240}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243}},
+      "source": "Table 1 (averages only; Sec 4.1 text mentions only Mip-NeRF360 and T&T, yet Table 1 has a Deep Blending column)"
+    }
+  },
+  "ablation": {
+    "mipnerf360": {"Base": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214}, "Base+FR": {"psnr": 27.63, "ssim": 0.818, "lpips": 0.213}, "Base+FR+FA": {"psnr": 27.85, "ssim": 0.826, "lpips": 0.209}},
+    "tandt": {"Base": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183}, "Base+FR": {"psnr": 23.76, "ssim": 0.844, "lpips": 0.181}, "Base+FR+FA": {"psnr": 23.96, "ssim": 0.849, "lpips": 0.178}}
+  },
+  "notes": "Baseline 3DGS row equals the numbers in the 3DGS paper (27.21/0.815/0.214 etc.), not retrained per-scene. Paper says FreGS is trained with a similar number of Gaussians as 3DGS by raising the densification gradient threshold. Per-scene numbers are NOT available anywhere in the paper (the supplementary X_suppl is commented out of main.tex). LPIPS net not stated."
+}

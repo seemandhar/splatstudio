@@ -1,0 +1,20 @@
+{
+  "method": "dngaussian",
+  "datasets": {"llff-fewview3-r8-dng": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]},
+  "steps": 6000,
+  "per_scene_reported": false,
+  "extra": "",
+  "recipe": "3dgs",
+  "baseline": {"method": "dngaussian-3dgs", "datasets": {"llff-fewview3-r8-dng": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]}, "steps": 6000,
+               "note": "Protocol-matched baseline = paper's 3DGS-dagger row (same hyper-parameters + neural colour renderer, no depth passes): 16.46 PSNR / 0.440 SSIM / 0.401 LPIPS. Compare our gain with the paper's +2.66 dB (19.12 vs 16.46)."},
+  "paper_reference": {"dataset": "llff-3view", "average": {"psnr": 19.12, "ssim": 0.591, "lpips": 0.294}, "baseline_3dgs_dagger": {"psnr": 16.46, "ssim": 0.440, "lpips": 0.401}, "baseline_3dgs": {"psnr": 15.52, "ssim": 0.408, "lpips": 0.405}, "source": "paper_results.json (Table 1); averages only, all 8 scenes"},
+  "proposed_datasets_json_entry": {
+    "llff-fewview3-r8-dng": {
+      "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+      "native_root": "/home/sejain/datasets/llff/fewview3-r8-dng",
+      "scenes": {"fern": "images", "flower": "images", "fortress": "images", "horns": "images", "leaves": "images", "orchids": "images", "room": "images", "trex": "images"},
+      "_doc": "DNGaussian 3-view LLFF (official scripts/run_llff.sh): images/ (hard links) and transforms.json (byte copy) of llff-fewview3-r8 (same split: test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused; 504x378 PIL bicubic /8). Differs from llff-fewview3-r8 in init and sidecar: points.npz = official --rand_pcd (np.random.seed(0); uniform box from the bbox of the FULL LLFF sparse/0/points3D.bin: int(max extent*50) points in [20th-smallest, +1.3 extent]); dng_depth.npz = MiDaS v3 DPT_Hybrid (dpt_hybrid_384.pt, sha256 501f0c75...) depth of the 3 TRAINING views only (official get_depth_map_for_llff_dtu.py: full-res -> dpt_transform -> bicubic to H/8xW/8 -> uint16 min-max; target 255 - png/255), keyed by the native viewmat, plus the official 180-pose spiral camera centres (CreateLLFFSpiral) for near-camera pruning. Built by reproductions/dngaussian/tools/prepare_dng_llff.py (PYTHONPATH=~/models/dpt/pylib for timm 0.6.12, MiDaS repo in ~/models/dpt/midas_repo); NOT rebuildable by bench.py prepare."
+    }
+  },
+  "notes": "--steps must be 6000 (= density total_steps: final clean_views + bake); any multiple of 1000 bakes for ss-eval. First use JIT-compiles the CUDA encoders (~3 min, cached in ~/.cache/torch_extensions). ~0.2 s/step on a busy shared A6000 => ~20 min per scene; peak memory ~0.3 GB. Uses the depth sidecar via ss-train --data (bench.py passes it). No per-scene numbers exist (paper, supp., README), so the comparison is the 8-scene average. Official README: PSNR unstable across runs (random init); consider 2-3 seeds via --extra '--seed N' if GPU time allows."
+}

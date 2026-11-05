@@ -1,0 +1,14 @@
+{
+ "method": "fcgs",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Paper per-scene (official results/*.csv), decoded PSNR / size MiB: highrate (fcgs, lambda 1e-4) bicycle 24.954/106.0, garden 27.200/120.2, counter 29.074/23.4; lowrate (fcgs-lowrate, 16e-4) 24.771/59.1, 26.847/61.3, 28.758/13.0. steps must stay 30000 (= fcgs-density total_steps). ss-eval measures the decoded model; size via `tools/ssenv python reproductions/fcgs/plugin/report_size.py <run>` (size_MB = paper formula, MiB). Check xyz_coder_used: 'octree' = tmc3 absent, substitute lossless xyz coder. Cheaper complementary evaluation (paper protocol = compress an existing 30K 3DGS): `plugin/apply_fcgs.py --run runs/baseline3dgs-mipnerf360-30000/gsplat/mipnerf360-<scene> --lmd 1e-4 --lmd 16e-4 --out ...` (done for garden: evidence/offline-garden.json). Optional variant: fcgs-lowrate on the same scenes. CUDA extensions already JIT-built (~16 min first time)."
+}

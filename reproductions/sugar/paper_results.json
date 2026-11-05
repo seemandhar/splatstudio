@@ -1,0 +1,41 @@
+{
+  "paper": "SuGaR: Surface-Aligned Gaussian Splatting for Efficient 3D Mesh Reconstruction and High-Quality Mesh Rendering",
+  "arxiv": "2311.12775",
+  "method_label": "R-SuGaR-15K (1M vertices)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.27, "ssim": 0.820, "lpips": 0.253},
+        "per_scene": {
+          "psnr": {"garden": 25.36, "kitchen": 29.56, "room": 30.03, "bicycle": 23.14, "counter": 27.62, "bonsai": 30.51, "stump": 24.70},
+          "ssim": {"garden": 0.775, "kitchen": 0.908, "room": 0.909, "bicycle": 0.640, "counter": 0.891, "bonsai": 0.932, "stump": 0.683},
+          "lpips": {"garden": 0.220, "kitchen": 0.165, "room": 0.246, "bicycle": 0.345, "counter": 0.234, "bonsai": 0.221, "stump": 0.338}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 28.69, "ssim": 0.870, "lpips": 0.182},
+        "per_scene": {"psnr": {"garden": 27.41, "kitchen": 30.32, "room": 30.63, "bicycle": 25.25, "counter": 28.70, "bonsai": 31.98, "stump": 26.55}}
+      },
+      "variants": {
+        "R-SuGaR-2K_1M": {"psnr": {"garden": 23.56, "kitchen": 26.15, "room": 27.68, "bicycle": 21.80, "counter": 24.62, "bonsai": 26.70, "stump": 23.56}, "average": {"psnr": 24.87, "ssim": 0.776, "lpips": 0.304}},
+        "R-SuGaR-7K_1M": {"psnr": {"garden": 25.06, "kitchen": 28.96, "room": 29.57, "bicycle": 22.86, "counter": 26.92, "bonsai": 29.47, "stump": 24.55}, "average": {"psnr": 26.77, "ssim": 0.813, "lpips": 0.263}},
+        "R-SuGaR-15K_200K": {"psnr": {"garden": 25.29, "kitchen": 29.38, "room": 29.95, "bicycle": 22.91, "counter": 27.47, "bonsai": 30.42, "stump": 24.55}}
+      },
+      "source": "main Table 1 (averages over 7 scenes; avg of supp. per-scene 1M R-SuGaR-15K = 27.27 confirms Table 1 = 1M); per-scene: supp. Tables (nvs_psnr/ssim/lpips_details), 1M vertices rows"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 21.58, "ssim": 0.795, "lpips": 0.219},
+                 "per_scene": {"psnr": {"train": 20.50, "truck": 22.67}, "ssim": {"train": 0.764, "truck": 0.827}, "lpips": {"train": 0.260, "truck": 0.178}}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183}},
+      "source": "supp. Table (nvs_metrics_tandt) and per-scene supp. tables, 1M R-SuGaR-15K"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.41, "ssim": 0.893, "lpips": 0.267},
+                 "per_scene": {"psnr": {"playroom": 30.12, "drjohnson": 28.71}, "ssim": {"playroom": 0.898, "drjohnson": 0.889}, "lpips": {"playroom": 0.261, "drjohnson": 0.273}}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.242}},
+      "source": "supp. Table (nvs_metrics_db) and per-scene supp. tables, 1M R-SuGaR-15K"
+    }
+  },
+  "notes": "baseline_3dgs rows are the 3DGS paper's own numbers (images_4/images_2 protocol), while SuGaR's official pipeline loads images/ at 3DGS's default -r -1 (width 1600). Mip-NeRF 360 is evaluated on 7 scenes (flowers, treehill excluded). Paper results use the 'sdf' regularization for Mip-NeRF 360 (README)."
+}

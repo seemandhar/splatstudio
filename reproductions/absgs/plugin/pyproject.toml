@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-absgs"
+version = "0.1.0"
+description = "AbsGS (arXiv 2404.10484) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+absgs = "ss_absgs:method"
+absgs-0008 = "ss_absgs:absgs_0008"
+absgs-noreset = "ss_absgs:absgs_noreset"
+
+[tool.setuptools.packages.find]
+include = ["ss_absgs*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

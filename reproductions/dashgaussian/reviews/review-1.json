@@ -1,0 +1,46 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_dashgaussian/link.py + renderer.py", "where": "LINK / Renderer.render",
+   "problem": "Renderer-density coupling is a module-global singleton (last DashDensity constructed wins) and 'training' is inferred from torch.is_grad_enabled(). Cannot misfire in the supported flows (ss-train builds once; end-of-train measure() and ss-eval are no_grad and ss-eval's fresh build has schedule_active=False; final scale is 1 after 27000), and before_backward raises on any size/scale desync. It could mis-scale a grad-enabled render in the same process after a second build or concurrent runs.",
+   "evidence": "link.py Link.attach in DashDensity.__init__; renderer.py scale = LINK.training_scale() if torch.is_grad_enabled() else 1; density.before_backward guard",
+   "fix": "Optional hardening: have density.before_backward be the only consumer (already guarded), and reset LINK.density=None at end of training or when a new density is built while another is active; never run two trainings interleaved in one process."},
+  {"severity": "minor", "file": "plugin/ss_dashgaussian/density.py", "where": "set_training_cameras",
+   "problem": "Dataset identity is cross-checked only through train-view count, W/H, K and viewmat. The dataset protocol_id/sha is not compared with the runtime's, and no probe has a negative case (mismatched root/downscale raises; test frames are never read as images). Data root comes from sys.argv if config 'data' is unset, so a non-ss-train launcher fails loudly (RuntimeError) rather than silently.",
+   "evidence": "density.py: names = dataset['splits']['train']; allclose(K), allclose(viewmat) per view; no dataset['protocol_id'] check; probes.py has no negative reload test",
+   "fix": "Optional: also verify the reloaded splits['train'] list equals the runtime list by name via a hash, and add a probe that a differing downscale or a test-frame name raises."},
+  {"severity": "minor", "file": "paper_results.json", "where": "datasets.db.baseline_3dgs.average.time_min",
+   "problem": "17.27 matches paper Table 1/2 (Deep Blending 3DGS row) but the mean of the supplementary Table 8 per-scene times (19.47, 17.27) is 18.37. The paper is internally inconsistent; the value 17.27 coincides with the playroom time.",
+   "evidence": "tables_and_figures/table2_enhanceBackbone.tex:25 and table1_mainResult.tex:23 give 17.27; table8_scenewise_db.tex gives 19.47/17.27",
+   "fix": "Annotate in paper_results.json that Table 2 reports 17.27 while Table 8 per-scene mean is 18.37; compare speed-ups per scene, not via that average."},
+  {"severity": "minor", "file": "plugin/ss_dashgaussian/density.py", "where": "DEFAULTS total_steps",
+   "problem": "total_steps (position-LR horizon, 30000) is a fixed config value, not tied to the ss-train --steps; only matters for non-30000 runs (benchmarks use 30000).",
+   "evidence": "density.py DEFAULTS['total_steps']", "fix": "Document; compressed smoke runs must pass it explicitly."},
+  {"severity": "minor", "file": "plugin/ss_dashgaussian/density.py", "where": "runtime-level deviations",
+   "problem": "Shared runtime differences vs official (white background so the official white-bg opacity reset at step 500 is absent; random view sampling with replacement; valid-conv SSIM; gsplat rasterizer) are inherited, not introduced by the plugin. Bench must use --recipe 3dgs --num-gaussians 10000000 because P_fin = 6*P_init depends on the SfM point count (README line 55 states this; bench_request.json 'extra' is empty so bench.py defaults must supply it).",
+   "evidence": "runtime.initial_points caps points at --num-gaussians (default 10000); CLAUDE.md protocol note", "fix": "Confirm the bench run command includes --num-gaussians 10000000 before launching."}
+ ],
+ "equation_coverage": [
+  {"eq": "(2)-(3) window significance / r_m (a=4, max 8)", "status": "exact", "code": "schedule.py:window_significance, solve_scale, build_schedule"},
+  {"eq": "supp. (6)-(7) level scales and begin steps (log modulation)", "status": "exact", "code": "schedule.py:build_schedule"},
+  {"eq": "inverse-square interpolation + int() floor", "status": "exact", "code": "schedule.py:res_scale (stateless equivalent of official next_i loop)"},
+  {"eq": "(4) primitive schedule, code form exponent 2 - it/densify_until, cap 0.2", "status": "exact", "code": "schedule.py:densify_rate"},
+  {"eq": "(5) momentum max(M, int(0.98 M + min(1e6, P_add)))", "status": "exact", "code": "schedule.py:update_momentum; density.after_backward (rate computed before momentum update, as official)"},
+  {"eq": "supp. 7.2 position LR hold then log-linear", "status": "exact", "code": "schedule.py:position_lr/lr_decay_from; density.update_lr (step+1 == official update at iteration start)"},
+  {"eq": "supp. 7.1 antialiased bilinear GT downsample", "status": "exact", "code": "losses.py:downsample_target (size= with floor equals scale_factor+recompute_scale_factor)"}
+ ],
+ "probe_assessment": [
+  {"probe": "dash-reso-schedule", "detects_removal": true, "why": "analytic white-noise and grid-search references; const mode differs"},
+  {"probe": "dash-render-scale", "detects_removal": true, "why": "compares to gsplat with hand-scaled K and checks no_grad is full res"},
+  {"probe": "dash-target-downsample", "detects_removal": true, "why": "PIL bilinear reference"},
+  {"probe": "dash-primitive-schedule / dash-topk-densify / dash-lr-schedule", "detects_removal": true, "why": "independent formulas and exact top-k/prune-first checks"},
+  {"probe": "dash-cycle", "detects_removal": true, "why": "runs runtime.train so the train-split reload path is exercised, but there is no negative test for it (minor gap)"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Training-split-only reload: names = dataset['splits']['train'] from splatstudio.data.load_dataset (same llffhold8 protocol and downscale as runtime; test/validation images are loaded into RAM by load_dataset but never read or passed to the scheduler; FFT sees only train images). Per-view K/viewmat/size cross-check raises on any mismatch. Nothing from test images reaches training.",
+  "Schedule numerics match official schedule_utils.py line by line (centre (h+1)//2, int(h/r)//2 half-window, 64-step bisection, per-view min r_m, mean spectrum, begins via ln ratios).",
+  "Render size floor(H/r) with K row scaled by w/W, h/H equals official fixed tan(fov) + render_size; principal point scales to w/2 for centred cx. Densify gradient normalised by reduced width/height as 3DGS.",
+  "densify_until 27000 with refine at 600..26900 and opacity reset at 3000..24000 (inside step<27000) match train_dash.py/full_eval.py --dash; prune-first, top-k clone/split, no screen-size pruning, P_add = count(grads>=thr) after prune, as official.",
+  "Evaluation (measure) runs under no_grad and always at full resolution; ss-eval builds a fresh inactive link.",
+  "paper_results.json: every per-scene and average value for 3DGS and 3DGS +Ours (PSNR, SSIM, LPIPS, time, N_GS) matches supplementary Tables 7, 8, 9 and the recomputed averages, with the single Table 2 vs Table 8 time inconsistency noted above."
+ ],
+ "summary": "No critical or major issues. Training-image reload is train-split-only with the runtime's load_dataset/llffhold8/downscale and a strict camera cross-check; schedules, loss, renderer scaling, densification, momentum, LR and reset/densify horizons match the official code. Only minor hardening and documentation items remain."}

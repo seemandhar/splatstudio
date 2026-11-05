@@ -1,0 +1,88 @@
+{
+ "paper": "RaDe-GS: Rasterizing Depth in Gaussian Splatting",
+ "arxiv": "2406.01467",
+ "method_label": "Ours",
+ "iterations": 30000,
+ "code_commit": "2d4bc087f1b4bd62c96054fbe89d273490526b81",
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "groups": {
+     "outdoor": {
+      "scenes": [
+       "bicycle",
+       "flowers",
+       "garden",
+       "stump",
+       "treehill"
+      ],
+      "psnr": 25.17,
+      "ssim": 0.764,
+      "lpips": 0.199
+     },
+     "indoor": {
+      "scenes": [
+       "room",
+       "counter",
+       "kitchen",
+       "bonsai"
+      ],
+      "psnr": 30.74,
+      "ssim": 0.928,
+      "lpips": 0.165
+     }
+    },
+    "average": {}
+   },
+   "baseline_3dgs": {
+    "groups": {
+     "outdoor": {
+      "psnr": 24.64,
+      "ssim": 0.731,
+      "lpips": 0.234
+     },
+     "indoor": {
+      "psnr": 30.41,
+      "ssim": 0.92,
+      "lpips": 0.189
+     }
+    },
+    "average": {}
+   },
+   "source": "Table 3 (table/mipnerf-360.tex), outdoor/indoor averages only"
+  },
+  "dtu": {
+   "method": {
+    "average": {
+     "chamfer": 0.68
+    },
+    "per_scene": {
+     "chamfer": {
+      "24": 0.46,
+      "37": 0.73,
+      "40": 0.33,
+      "55": 0.38,
+      "63": 0.79,
+      "65": 0.75,
+      "69": 0.76,
+      "83": 1.19,
+      "97": 1.22,
+      "105": 0.62,
+      "106": 0.7,
+      "110": 0.78,
+      "114": 0.36,
+      "118": 0.68,
+      "122": 0.47
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "chamfer": 1.96
+    }
+   },
+   "source": "Table 1 (table/dtu.tex), 30K iterations, half resolution"
+  }
+ },
+ "notes": "Mip-NeRF 360 3DGS/GOF/Mip-Splatting rows are copied from GOF's Table 4 (images_4 outdoor / images_2 indoor). No per-scene NVS numbers. TnT F1 table (table/tnt.tex) not transcribed: no mesh evaluation in this port. NeRF-Synthetic Table 4 not used (dataset protocol not in bench.py)."
+}

@@ -1,0 +1,49 @@
+{
+  "paper": "AGS-Mesh: Adaptive Gaussian Splatting and Meshing with Geometric Priors for Indoor Room Reconstruction Using Smartphones",
+  "slug": "ags-mesh",
+  "plan_id": 64,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (major fixed: control = dn-splatter-splatfacto; minors fixed/documented)",
+    "benchmark": "running"
+  },
+  "outcome": "built (benchmark pending)",
+  "arxiv": "2411.19271",
+  "official_code_commit": "97588b4 (maturk/dn-splatter main, ags-mesh method)",
+  "method": "ags-mesh",
+  "methods": [
+    "ags-mesh",
+    "ags-mesh-rgb"
+  ],
+  "custom_cuda": false,
+  "dataset": "mushroom (6 rooms)",
+  "benchmark_target": "MuSHRoom 6-room average within 24.83 / cross 22.24 (Splatfacto 24.47 / 21.66)",
+  "smoke": {
+    "scene": "vr_room",
+    "steps": 2000,
+    "schedule": "compressed",
+    "psnr_within": 23.24,
+    "psnr_cross": 21.58,
+    "rgb_control_within": 23.29,
+    "rgb_control_cross": 21.41
+  },
+  "reused_from_dn_splatter": [
+    "density.py",
+    "sidecar.py (extended)",
+    "renderer.py (extended)",
+    "probes: density_recipe, sidecar_init, gaussian_normals, scale_loss",
+    "tools/prepare_mushroom.py (unchanged copy)",
+    "vr_room dnsplat sidecar"
+  ],
+  "infeasible": [
+    "ScanNet++ (licence; mesh-only anyway)",
+    "mesh metrics / IsoOctree meshing (not implemented)"
+  ],
+  "bench_exps": [
+    "ags-mesh-mushroom",
+    "splatfacto-mushroom"
+  ]
+}

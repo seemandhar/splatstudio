@@ -1,0 +1,26 @@
+{
+  "method": "dn-splatter",
+  "module": "ss_dnsplatter",
+  "controls": ["dn-splatter-rgb"],
+  "components": [
+    {"name": "dn-render", "kind": "renderer", "factory": "ss_dnsplatter.renderer:create_renderer"},
+    {"name": "splatfacto-density", "kind": "density", "factory": "ss_dnsplatter.density:create_density"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"},
+    {"name": "dn-depth", "kind": "loss", "factory": "ss_dnsplatter.losses:create_depth"},
+    {"name": "dn-normal", "kind": "loss", "factory": "ss_dnsplatter.losses:create_normal"},
+    {"name": "dn-scale", "kind": "loss", "factory": "ss_dnsplatter.losses:create_scale"}
+  ],
+  "fields": [],
+  "probes": ["depth-loss", "normal-loss", "scale-loss", "gaussian-normals", "splatfacto-density", "sidecar-init"],
+  "contributions": ["C1 gradient-aware depth loss", "C2 normals from Gaussian geometry", "C3 mono normal L1 + TV", "C4 scale loss", "C5 sensor-depth init with oriented flat Gaussians"],
+  "fidelity_gaps": [
+    "gsplat 1.5.3 vs 1.0.0",
+    "TSDF init re-generated (seeded); zero-kNN -inf log-scales mapped to -1e4",
+    "LPIPS-VGG vs torchmetrics AlexNet",
+    "Table 4 eval split ambiguous",
+    "view sampling with replacement",
+    "no meshing / mesh metrics",
+    "single per-scene target (vr_room)"
+  ],
+  "feasible_natively": true
+}

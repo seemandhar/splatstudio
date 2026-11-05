@@ -1,0 +1,12 @@
+{"method": "gaussianspa", "module": "ss_gaussianspa",
+ "methods": ["gaussianspa", "gaussianspa-imp", "gaussianspa-<scene> (13 README presets)"],
+ "components": [
+  {"kind": "renderer", "name": "spa-renderer", "factory": "ss_gaussianspa.renderer:create_renderer"},
+  {"kind": "density", "name": "spa-density", "factory": "ss_gaussianspa.density:create_density"},
+  {"kind": "loss", "name": "photometric", "factory": "built-in"},
+  {"kind": "loss", "name": "spa-penalty", "factory": "ss_gaussianspa.losses:create_penalty"}],
+ "fields": [{"name": "spa_z", "shape": [], "lr": 0.0, "init": 0.0}, {"name": "spa_u", "shape": [], "lr": 0.0, "init": 0.0}],
+ "probes": ["spa-penalty", "spa-projection", "spa-admm-cycle", "spa-hard-prune", "spa-sampling", "ms-stats-kernel", "ms-depth-midpoint", "ms-blur-split", "ms-depth-reinit", "ms-schedule"],
+ "contributions": ["admm-optimizing-step", "sparsifying-projection", "multiplier-update", "hard-prune", "pipeline (Mini-Splatting stages + GaussianSpa sampling, 40k)"],
+ "fidelity_gaps": ["inherited Mini-Splatting runtime gaps (white bg, view sampling, step order, metrics)", "z/u update and hard prune after the optimizer step", "per-scene presets from README table"],
+ "feasible_natively": true}

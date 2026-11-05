@@ -1,0 +1,1835 @@
+{
+ "run": "runs/baseline3dgs-tandt-30000/gsplat/tandt-truck",
+ "scene": "truck",
+ "split": "test",
+ "gaussians": 2494648,
+ "sh_degree": 3,
+ "views": 32,
+ "gpu": {
+  "name": "NVIDIA RTX A6000",
+  "nvidia_smi": "0, GPU-14734709-631c-e2ab-0d34-2b3c5bbc46be, 5 %, 35127 MiB\n1, GPU-568c411f-8cf8-7d21-8dfa-dd943593a6d1, 100 %, 43806 MiB\n2, GPU-ca69e17b-1578-5b96-047a-8a639a442907, 98 %, 22848 MiB\n3, GPU-dbef473d-c336-d95e-7abf-c930eb2803c1, 99 %, 20777 MiB\n4, GPU-44565be0-1a2c-06ee-5e58-8af754f32339, 97 %, 42586 MiB\n5, GPU-58f906f1-2dec-d64f-4520-fac3e9928326, 100 %, 41749 MiB\n6, GPU-f6cf008c-5100-9096-2221-9a51855dd3d2, 100 %, 30857 MiB\n7, GPU-207aaf4b-9034-2ecf-0d53-b62c0678fb4e, 100 %, 38781 MiB"
+ },
+ "repeats": 10,
+ "timing_note": "same-GPU back-to-back medians on a shared RTX A6000; absolute ms are not comparable with the paper's RTX 3090 / A100 numbers",
+ "quality": {
+  "gsplat": {
+   "psnr": 25.20878916978836,
+   "ssim": 0.8805279675871134,
+   "lpips": 0.17858012625947595
+  },
+  "flashgs": {
+   "psnr": 25.230872988700867,
+   "ssim": 0.8797888439148664,
+   "lpips": 0.1784562454558909
+  },
+  "3dgs": {
+   "psnr": 25.208919167518616,
+   "ssim": 0.8806940354406834,
+   "lpips": 0.17900098115205765
+  },
+  "gsplat_uint8_trunc": {
+   "psnr": 25.207005858421326,
+   "ssim": 0.8799930978566408,
+   "lpips": 0.17671162961050868
+  }
+ },
+ "parity_mean": {
+  "flashgs_vs_gsplat": 45.669044971466064,
+  "pairs_flashgs": 1679777.28125,
+  "edge_wrap_tiles": 0,
+  "flashgs_vs_3dgs": 46.40997898578644,
+  "flashgs_vs_3dgs_uint8_trunc": 47.2411789894104,
+  "3dgs_vs_gsplat": 58.46588146686554,
+  "pairs_3dgs": 4284686.25
+ },
+ "parity_min_psnr": {
+  "flashgs_vs_gsplat": 37.97365188598633,
+  "flashgs_vs_3dgs": 45.487876892089844,
+  "flashgs_vs_3dgs_uint8_trunc": 46.313941955566406,
+  "3dgs_vs_gsplat": 38.42510223388672
+ },
+ "parity_per_view": [
+  {
+   "frame": "images/000001.jpg",
+   "flashgs_vs_gsplat": 46.598060607910156,
+   "pairs_flashgs": 1843070,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.20344543457031,
+   "flashgs_vs_3dgs_uint8_trunc": 46.825565338134766,
+   "3dgs_vs_gsplat": 50.47578430175781,
+   "pairs_3dgs": 4218986
+  },
+  {
+   "frame": "images/000009.jpg",
+   "flashgs_vs_gsplat": 45.676719665527344,
+   "pairs_flashgs": 1869527,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.717201232910156,
+   "flashgs_vs_3dgs_uint8_trunc": 46.44624328613281,
+   "3dgs_vs_gsplat": 61.36656951904297,
+   "pairs_3dgs": 4426470
+  },
+  {
+   "frame": "images/000017.jpg",
+   "flashgs_vs_gsplat": 45.42803955078125,
+   "pairs_flashgs": 1912838,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.487876892089844,
+   "flashgs_vs_3dgs_uint8_trunc": 46.313941955566406,
+   "3dgs_vs_gsplat": 62.08721923828125,
+   "pairs_3dgs": 4964995
+  },
+  {
+   "frame": "images/000025.jpg",
+   "flashgs_vs_gsplat": 40.28347396850586,
+   "pairs_flashgs": 1286551,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.471370697021484,
+   "flashgs_vs_3dgs_uint8_trunc": 47.45082092285156,
+   "3dgs_vs_gsplat": 40.70860290527344,
+   "pairs_3dgs": 3957135
+  },
+  {
+   "frame": "images/000033.jpg",
+   "flashgs_vs_gsplat": 37.97365188598633,
+   "pairs_flashgs": 1815561,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.92279052734375,
+   "flashgs_vs_3dgs_uint8_trunc": 46.79469299316406,
+   "3dgs_vs_gsplat": 38.42510223388672,
+   "pairs_3dgs": 5192613
+  },
+  {
+   "frame": "images/000041.jpg",
+   "flashgs_vs_gsplat": 44.01132583618164,
+   "pairs_flashgs": 1662745,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.59004211425781,
+   "flashgs_vs_3dgs_uint8_trunc": 47.48493576049805,
+   "3dgs_vs_gsplat": 46.82407760620117,
+   "pairs_3dgs": 4283841
+  },
+  {
+   "frame": "images/000049.jpg",
+   "flashgs_vs_gsplat": 45.64987564086914,
+   "pairs_flashgs": 1586241,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.75135803222656,
+   "flashgs_vs_3dgs_uint8_trunc": 46.66565704345703,
+   "3dgs_vs_gsplat": 61.493492126464844,
+   "pairs_3dgs": 4267508
+  },
+  {
+   "frame": "images/000057.jpg",
+   "flashgs_vs_gsplat": 45.94600296020508,
+   "pairs_flashgs": 1905295,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.993309020996094,
+   "flashgs_vs_3dgs_uint8_trunc": 46.62800598144531,
+   "3dgs_vs_gsplat": 63.58795166015625,
+   "pairs_3dgs": 4900286
+  },
+  {
+   "frame": "images/000065.jpg",
+   "flashgs_vs_gsplat": 46.425437927246094,
+   "pairs_flashgs": 1874026,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.461143493652344,
+   "flashgs_vs_3dgs_uint8_trunc": 47.27677917480469,
+   "3dgs_vs_gsplat": 63.45670700073242,
+   "pairs_3dgs": 4625172
+  },
+  {
+   "frame": "images/000073.jpg",
+   "flashgs_vs_gsplat": 46.29402160644531,
+   "pairs_flashgs": 1544192,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.34761428833008,
+   "flashgs_vs_3dgs_uint8_trunc": 47.14307403564453,
+   "3dgs_vs_gsplat": 63.066650390625,
+   "pairs_3dgs": 4026645
+  },
+  {
+   "frame": "images/000081.jpg",
+   "flashgs_vs_gsplat": 46.569252014160156,
+   "pairs_flashgs": 1480968,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.60659408569336,
+   "flashgs_vs_3dgs_uint8_trunc": 47.433773040771484,
+   "3dgs_vs_gsplat": 63.22727966308594,
+   "pairs_3dgs": 3459985
+  },
+  {
+   "frame": "images/000089.jpg",
+   "flashgs_vs_gsplat": 45.936927795410156,
+   "pairs_flashgs": 1705643,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.684974670410156,
+   "flashgs_vs_3dgs_uint8_trunc": 46.63252258300781,
+   "3dgs_vs_gsplat": 55.7711067199707,
+   "pairs_3dgs": 4361297
+  },
+  {
+   "frame": "images/000097.jpg",
+   "flashgs_vs_gsplat": 45.81281280517578,
+   "pairs_flashgs": 1775669,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.89645767211914,
+   "flashgs_vs_3dgs_uint8_trunc": 46.671695709228516,
+   "3dgs_vs_gsplat": 61.7879524230957,
+   "pairs_3dgs": 4428169
+  },
+  {
+   "frame": "images/000105.jpg",
+   "flashgs_vs_gsplat": 46.254154205322266,
+   "pairs_flashgs": 1812628,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.29396438598633,
+   "flashgs_vs_3dgs_uint8_trunc": 47.04780960083008,
+   "3dgs_vs_gsplat": 63.30500793457031,
+   "pairs_3dgs": 4058873
+  },
+  {
+   "frame": "images/000113.jpg",
+   "flashgs_vs_gsplat": 45.79743194580078,
+   "pairs_flashgs": 1788340,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.85350036621094,
+   "flashgs_vs_3dgs_uint8_trunc": 46.84722900390625,
+   "3dgs_vs_gsplat": 62.084327697753906,
+   "pairs_3dgs": 3883386
+  },
+  {
+   "frame": "images/000121.jpg",
+   "flashgs_vs_gsplat": 45.757781982421875,
+   "pairs_flashgs": 1707918,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 45.79125213623047,
+   "flashgs_vs_3dgs_uint8_trunc": 46.779483795166016,
+   "3dgs_vs_gsplat": 62.91042709350586,
+   "pairs_3dgs": 3694827
+  },
+  {
+   "frame": "images/000129.jpg",
+   "flashgs_vs_gsplat": 46.568397521972656,
+   "pairs_flashgs": 1623670,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.61085510253906,
+   "flashgs_vs_3dgs_uint8_trunc": 47.447853088378906,
+   "3dgs_vs_gsplat": 61.78459548950195,
+   "pairs_3dgs": 3583088
+  },
+  {
+   "frame": "images/000137.jpg",
+   "flashgs_vs_gsplat": 44.86157989501953,
+   "pairs_flashgs": 1567145,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.28459548950195,
+   "flashgs_vs_3dgs_uint8_trunc": 47.225868225097656,
+   "3dgs_vs_gsplat": 52.4372673034668,
+   "pairs_3dgs": 4272039
+  },
+  {
+   "frame": "images/000145.jpg",
+   "flashgs_vs_gsplat": 46.126930236816406,
+   "pairs_flashgs": 1565547,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.11909484863281,
+   "flashgs_vs_3dgs_uint8_trunc": 47.042842864990234,
+   "3dgs_vs_gsplat": 52.76096725463867,
+   "pairs_3dgs": 4618737
+  },
+  {
+   "frame": "images/000153.jpg",
+   "flashgs_vs_gsplat": 46.82063293457031,
+   "pairs_flashgs": 1616938,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.849700927734375,
+   "flashgs_vs_3dgs_uint8_trunc": 47.5203742980957,
+   "3dgs_vs_gsplat": 63.52321243286133,
+   "pairs_3dgs": 4681846
+  },
+  {
+   "frame": "images/000161.jpg",
+   "flashgs_vs_gsplat": 47.802146911621094,
+   "pairs_flashgs": 1471949,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 47.82518768310547,
+   "flashgs_vs_3dgs_uint8_trunc": 48.53030776977539,
+   "3dgs_vs_gsplat": 64.61268615722656,
+   "pairs_3dgs": 3955359
+  },
+  {
+   "frame": "images/000169.jpg",
+   "flashgs_vs_gsplat": 45.58660888671875,
+   "pairs_flashgs": 1614906,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.098995208740234,
+   "flashgs_vs_3dgs_uint8_trunc": 46.96438217163086,
+   "3dgs_vs_gsplat": 49.51222229003906,
+   "pairs_3dgs": 4449447
+  },
+  {
+   "frame": "images/000177.jpg",
+   "flashgs_vs_gsplat": 47.058189392089844,
+   "pairs_flashgs": 1678215,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 47.13904571533203,
+   "flashgs_vs_3dgs_uint8_trunc": 48.0941162109375,
+   "3dgs_vs_gsplat": 62.82664489746094,
+   "pairs_3dgs": 4231813
+  },
+  {
+   "frame": "images/000185.jpg",
+   "flashgs_vs_gsplat": 46.956695556640625,
+   "pairs_flashgs": 1571726,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 47.02034378051758,
+   "flashgs_vs_3dgs_uint8_trunc": 48.11729049682617,
+   "3dgs_vs_gsplat": 63.100162506103516,
+   "pairs_3dgs": 3771552
+  },
+  {
+   "frame": "images/000193.jpg",
+   "flashgs_vs_gsplat": 47.74767303466797,
+   "pairs_flashgs": 1478362,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 47.83759689331055,
+   "flashgs_vs_3dgs_uint8_trunc": 48.85852813720703,
+   "3dgs_vs_gsplat": 62.86316680908203,
+   "pairs_3dgs": 3798655
+  },
+  {
+   "frame": "images/000201.jpg",
+   "flashgs_vs_gsplat": 46.16508102416992,
+   "pairs_flashgs": 1678466,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.19343185424805,
+   "flashgs_vs_3dgs_uint8_trunc": 46.961463928222656,
+   "3dgs_vs_gsplat": 61.925575256347656,
+   "pairs_3dgs": 3911582
+  },
+  {
+   "frame": "images/000209.jpg",
+   "flashgs_vs_gsplat": 46.61323928833008,
+   "pairs_flashgs": 1651748,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.71373748779297,
+   "flashgs_vs_3dgs_uint8_trunc": 47.53155517578125,
+   "3dgs_vs_gsplat": 61.747589111328125,
+   "pairs_3dgs": 4638572
+  },
+  {
+   "frame": "images/000217.jpg",
+   "flashgs_vs_gsplat": 42.872222900390625,
+   "pairs_flashgs": 1601124,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 47.325279235839844,
+   "flashgs_vs_3dgs_uint8_trunc": 48.14800262451172,
+   "3dgs_vs_gsplat": 42.37808609008789,
+   "pairs_3dgs": 4657178
+  },
+  {
+   "frame": "images/000225.jpg",
+   "flashgs_vs_gsplat": 45.98312759399414,
+   "pairs_flashgs": 2082319,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.04324722290039,
+   "flashgs_vs_3dgs_uint8_trunc": 46.5927734375,
+   "3dgs_vs_gsplat": 62.75294494628906,
+   "pairs_3dgs": 5332736
+  },
+  {
+   "frame": "images/000233.jpg",
+   "flashgs_vs_gsplat": 47.14887237548828,
+   "pairs_flashgs": 1646089,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 47.18986892700195,
+   "flashgs_vs_3dgs_uint8_trunc": 47.88699722290039,
+   "3dgs_vs_gsplat": 63.06637191772461,
+   "pairs_3dgs": 4407913
+  },
+  {
+   "frame": "images/000241.jpg",
+   "flashgs_vs_gsplat": 46.52532958984375,
+   "pairs_flashgs": 1698051,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.595149993896484,
+   "flashgs_vs_3dgs_uint8_trunc": 47.45563507080078,
+   "3dgs_vs_gsplat": 62.79922866821289,
+   "pairs_3dgs": 4344303
+  },
+  {
+   "frame": "images/000249.jpg",
+   "flashgs_vs_gsplat": 46.15774154663086,
+   "pairs_flashgs": 1635406,
+   "edge_wrap_tiles": 0,
+   "flashgs_vs_3dgs": 46.20030212402344,
+   "flashgs_vs_3dgs_uint8_trunc": 46.89750671386719,
+   "3dgs_vs_gsplat": 62.239227294921875,
+   "pairs_3dgs": 3704952
+  }
+ ],
+ "quality_seconds": 10.697404253296554,
+ "speed": {
+  "native": {
+   "resolution": [
+    979,
+    546
+   ],
+   "vs_gsplat": {
+    "avg_ms": {
+     "flashgs": 2.757787499576807,
+     "gsplat": 8.888180524110794
+    },
+    "max_ms": {
+     "flashgs": 4.375920057296753,
+     "gsplat": 10.123680114746094
+    },
+    "avg_speedup": 3.3172542437243977,
+    "max_speedup": 4.220333643503146,
+    "min_speedup": 2.1805663623487033,
+    "ratio_of_avg_times": 3.2229388687397846
+   },
+   "per_view": [
+    {
+     "frame": "images/000001.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.0365920066833496,
+      "gsplat": 9.005568027496338,
+      "3dgs": 5.588479995727539
+     },
+     "pairs": {
+      "flashgs": 1843070,
+      "3dgs": 4218986
+     }
+    },
+    {
+     "frame": "images/000009.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.9999359846115112,
+      "gsplat": 9.07417631149292,
+      "3dgs": 5.62171196937561
+     },
+     "pairs": {
+      "flashgs": 1869527,
+      "3dgs": 4426470
+     }
+    },
+    {
+     "frame": "images/000017.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.628048062324524,
+      "gsplat": 8.992144107818604,
+      "3dgs": 5.796864032745361
+     },
+     "pairs": {
+      "flashgs": 1912838,
+      "3dgs": 4964995
+     }
+    },
+    {
+     "frame": "images/000025.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 1.9608800411224365,
+      "gsplat": 8.275568008422852,
+      "3dgs": 4.884576082229614
+     },
+     "pairs": {
+      "flashgs": 1286551,
+      "3dgs": 3957135
+     }
+    },
+    {
+     "frame": "images/000033.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.535823941230774,
+      "gsplat": 8.963520050048828,
+      "3dgs": 5.82859206199646
+     },
+     "pairs": {
+      "flashgs": 1815561,
+      "3dgs": 5192613
+     }
+    },
+    {
+     "frame": "images/000041.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.582016110420227,
+      "gsplat": 8.634368419647217,
+      "3dgs": 5.354496002197266
+     },
+     "pairs": {
+      "flashgs": 1662745,
+      "3dgs": 4283841
+     }
+    },
+    {
+     "frame": "images/000049.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.381168007850647,
+      "gsplat": 8.675727844238281,
+      "3dgs": 5.286400079727173
+     },
+     "pairs": {
+      "flashgs": 1586241,
+      "3dgs": 4267508
+     }
+    },
+    {
+     "frame": "images/000057.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.4483519792556763,
+      "gsplat": 9.878015995025635,
+      "3dgs": 6.301568031311035
+     },
+     "pairs": {
+      "flashgs": 1905295,
+      "3dgs": 4900286
+     }
+    },
+    {
+     "frame": "images/000065.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.569216012954712,
+      "gsplat": 9.251327991485596,
+      "3dgs": 6.31603217124939
+     },
+     "pairs": {
+      "flashgs": 1874026,
+      "3dgs": 4625172
+     }
+    },
+    {
+     "frame": "images/000073.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.264032006263733,
+      "gsplat": 8.33894395828247,
+      "3dgs": 4.6826560497283936
+     },
+     "pairs": {
+      "flashgs": 1544192,
+      "3dgs": 4026645
+     }
+    },
+    {
+     "frame": "images/000081.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.5073280334472656,
+      "gsplat": 9.019904136657715,
+      "3dgs": 5.2551679611206055
+     },
+     "pairs": {
+      "flashgs": 1480968,
+      "3dgs": 3459985
+     }
+    },
+    {
+     "frame": "images/000089.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.4857600927352905,
+      "gsplat": 8.721407890319824,
+      "3dgs": 5.281280040740967
+     },
+     "pairs": {
+      "flashgs": 1705643,
+      "3dgs": 4361297
+     }
+    },
+    {
+     "frame": "images/000097.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.4518399238586426,
+      "gsplat": 8.737231731414795,
+      "3dgs": 5.6140642166137695
+     },
+     "pairs": {
+      "flashgs": 1775669,
+      "3dgs": 4428169
+     }
+    },
+    {
+     "frame": "images/000105.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.1819359064102173,
+      "gsplat": 9.305888175964355,
+      "3dgs": 5.8076159954071045
+     },
+     "pairs": {
+      "flashgs": 1812628,
+      "3dgs": 4058873
+     }
+    },
+    {
+     "frame": "images/000113.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.6976640224456787,
+      "gsplat": 9.707151889801025,
+      "3dgs": 6.34828782081604
+     },
+     "pairs": {
+      "flashgs": 1788340,
+      "3dgs": 3883386
+     }
+    },
+    {
+     "frame": "images/000121.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 4.375920057296753,
+      "gsplat": 9.54198408126831,
+      "3dgs": 6.220288038253784
+     },
+     "pairs": {
+      "flashgs": 1707918,
+      "3dgs": 3694827
+     }
+    },
+    {
+     "frame": "images/000129.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.305471897125244,
+      "gsplat": 9.290751934051514,
+      "3dgs": 5.7532799243927
+     },
+     "pairs": {
+      "flashgs": 1623670,
+      "3dgs": 3583088
+     }
+    },
+    {
+     "frame": "images/000137.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.253664016723633,
+      "gsplat": 8.36137580871582,
+      "3dgs": 5.051903963088989
+     },
+     "pairs": {
+      "flashgs": 1567145,
+      "3dgs": 4272039
+     }
+    },
+    {
+     "frame": "images/000145.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.252287983894348,
+      "gsplat": 8.630735874176025,
+      "3dgs": 5.606335878372192
+     },
+     "pairs": {
+      "flashgs": 1565547,
+      "3dgs": 4618737
+     }
+    },
+    {
+     "frame": "images/000153.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.6428959369659424,
+      "gsplat": 8.97382402420044,
+      "3dgs": 5.334431886672974
+     },
+     "pairs": {
+      "flashgs": 1616938,
+      "3dgs": 4681846
+     }
+    },
+    {
+     "frame": "images/000161.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.811519980430603,
+      "gsplat": 8.596479892730713,
+      "3dgs": 4.911616086959839
+     },
+     "pairs": {
+      "flashgs": 1471949,
+      "3dgs": 3955359
+     }
+    },
+    {
+     "frame": "images/000169.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.158576011657715,
+      "gsplat": 8.428400039672852,
+      "3dgs": 5.086719989776611
+     },
+     "pairs": {
+      "flashgs": 1614906,
+      "3dgs": 4449447
+     }
+    },
+    {
+     "frame": "images/000177.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.5660159587860107,
+      "gsplat": 8.778751850128174,
+      "3dgs": 5.144592046737671
+     },
+     "pairs": {
+      "flashgs": 1678215,
+      "3dgs": 4231813
+     }
+    },
+    {
+     "frame": "images/000185.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.1532959938049316,
+      "gsplat": 9.01529598236084,
+      "3dgs": 5.263360023498535
+     },
+     "pairs": {
+      "flashgs": 1571726,
+      "3dgs": 3771552
+     }
+    },
+    {
+     "frame": "images/000193.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.652672052383423,
+      "gsplat": 8.41267204284668,
+      "3dgs": 5.079519987106323
+     },
+     "pairs": {
+      "flashgs": 1478362,
+      "3dgs": 3798655
+     }
+    },
+    {
+     "frame": "images/000201.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.966480016708374,
+      "gsplat": 8.877568244934082,
+      "3dgs": 5.119488000869751
+     },
+     "pairs": {
+      "flashgs": 1678466,
+      "3dgs": 3911582
+     }
+    },
+    {
+     "frame": "images/000209.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.1043200492858887,
+      "gsplat": 8.502240180969238,
+      "3dgs": 5.262847900390625
+     },
+     "pairs": {
+      "flashgs": 1651748,
+      "3dgs": 4638572
+     }
+    },
+    {
+     "frame": "images/000217.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.1068800687789917,
+      "gsplat": 8.32153606414795,
+      "3dgs": 5.053855895996094
+     },
+     "pairs": {
+      "flashgs": 1601124,
+      "3dgs": 4657178
+     }
+    },
+    {
+     "frame": "images/000225.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 3.775999903678894,
+      "gsplat": 10.123680114746094,
+      "3dgs": 7.021984100341797
+     },
+     "pairs": {
+      "flashgs": 2082319,
+      "3dgs": 5332736
+     }
+    },
+    {
+     "frame": "images/000233.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.2203840017318726,
+      "gsplat": 8.328703880310059,
+      "3dgs": 4.894144058227539
+     },
+     "pairs": {
+      "flashgs": 1646089,
+      "3dgs": 4407913
+     }
+    },
+    {
+     "frame": "images/000241.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.3075839281082153,
+      "gsplat": 8.51148796081543,
+      "3dgs": 5.080960035324097
+     },
+     "pairs": {
+      "flashgs": 1698051,
+      "3dgs": 4344303
+     }
+    },
+    {
+     "frame": "images/000249.jpg",
+     "width": 979,
+     "height": 546,
+     "ms": {
+      "flashgs": 2.8646399974823,
+      "gsplat": 9.145344257354736,
+      "3dgs": 5.600768089294434
+     },
+     "pairs": {
+      "flashgs": 1635406,
+      "3dgs": 3704952
+     }
+    }
+   ],
+   "vs_3dgs": {
+    "avg_ms": {
+     "flashgs": 2.757787499576807,
+     "3dgs": 5.482934013009071
+    },
+    "max_ms": {
+     "flashgs": 4.375920057296753,
+     "3dgs": 7.021984100341797
+    },
+    "avg_speedup": 2.036592836536864,
+    "max_speedup": 2.5009731300980564,
+    "min_speedup": 1.4214811872263495,
+    "ratio_of_avg_times": 1.98816406769936
+   },
+   "pair_reduction_vs_3dgs": 0.6079579266159804
+  },
+  "1080p": {
+   "resolution": [
+    1920,
+    1071
+   ],
+   "vs_gsplat": {
+    "avg_ms": {
+     "flashgs": 2.8141675144433975,
+     "gsplat": 10.249342530965805
+    },
+    "max_ms": {
+     "flashgs": 3.5665600299835205,
+     "gsplat": 11.09331226348877
+    },
+    "avg_speedup": 3.6773531040681946,
+    "max_speedup": 4.492586492351197,
+    "min_speedup": 3.0737503056423088,
+    "ratio_of_avg_times": 3.642051327208565
+   },
+   "per_view": [
+    {
+     "frame": "images/000001.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.047312021255493,
+      "gsplat": 10.613247871398926,
+      "3dgs": 9.930752277374268
+     },
+     "pairs": {
+      "flashgs": 2987710,
+      "3dgs": 9886732
+     }
+    },
+    {
+     "frame": "images/000009.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.2336959838867188,
+      "gsplat": 10.669056415557861,
+      "3dgs": 10.48576021194458
+     },
+     "pairs": {
+      "flashgs": 3059474,
+      "3dgs": 10645274
+     }
+    },
+    {
+     "frame": "images/000017.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.006976008415222,
+      "gsplat": 10.86630392074585,
+      "3dgs": 11.693135738372803
+     },
+     "pairs": {
+      "flashgs": 3241056,
+      "3dgs": 12454533
+     }
+    },
+    {
+     "frame": "images/000025.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.225152015686035,
+      "gsplat": 9.996687889099121,
+      "3dgs": 10.47756814956665
+     },
+     "pairs": {
+      "flashgs": 2352352,
+      "3dgs": 10777880
+     }
+    },
+    {
+     "frame": "images/000033.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.8568960428237915,
+      "gsplat": 10.762240409851074,
+      "3dgs": 11.983872413635254
+     },
+     "pairs": {
+      "flashgs": 3264561,
+      "3dgs": 13665071
+     }
+    },
+    {
+     "frame": "images/000041.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.703871965408325,
+      "gsplat": 10.322800159454346,
+      "3dgs": 10.502560138702393
+     },
+     "pairs": {
+      "flashgs": 2881964,
+      "3dgs": 10896293
+     }
+    },
+    {
+     "frame": "images/000049.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.637824058532715,
+      "gsplat": 10.364399909973145,
+      "3dgs": 10.560111999511719
+     },
+     "pairs": {
+      "flashgs": 2782205,
+      "3dgs": 10947760
+     }
+    },
+    {
+     "frame": "images/000057.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.26963210105896,
+      "gsplat": 10.781599998474121,
+      "3dgs": 10.904079914093018
+     },
+     "pairs": {
+      "flashgs": 3318536,
+      "3dgs": 12308735
+     }
+    },
+    {
+     "frame": "images/000065.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.235408067703247,
+      "gsplat": 10.266048431396484,
+      "3dgs": 10.344831943511963
+     },
+     "pairs": {
+      "flashgs": 3149423,
+      "3dgs": 11281507
+     }
+    },
+    {
+     "frame": "images/000073.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.4338719844818115,
+      "gsplat": 9.798624038696289,
+      "3dgs": 9.41051197052002
+     },
+     "pairs": {
+      "flashgs": 2752808,
+      "3dgs": 10506456
+     }
+    },
+    {
+     "frame": "images/000081.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.5620479583740234,
+      "gsplat": 9.741695880889893,
+      "3dgs": 8.164736270904541
+     },
+     "pairs": {
+      "flashgs": 2427255,
+      "3dgs": 8275626
+     }
+    },
+    {
+     "frame": "images/000089.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.740112066268921,
+      "gsplat": 10.216928005218506,
+      "3dgs": 9.9486722946167
+     },
+     "pairs": {
+      "flashgs": 2869440,
+      "3dgs": 10738859
+     }
+    },
+    {
+     "frame": "images/000097.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.725376009941101,
+      "gsplat": 10.206192016601562,
+      "3dgs": 10.024960041046143
+     },
+     "pairs": {
+      "flashgs": 2956439,
+      "3dgs": 10915789
+     }
+    },
+    {
+     "frame": "images/000105.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.9977279901504517,
+      "gsplat": 10.395936012268066,
+      "3dgs": 9.132944107055664
+     },
+     "pairs": {
+      "flashgs": 2896759,
+      "3dgs": 9391596
+     }
+    },
+    {
+     "frame": "images/000113.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.337631940841675,
+      "gsplat": 10.379216194152832,
+      "3dgs": 8.769472122192383
+     },
+     "pairs": {
+      "flashgs": 2796983,
+      "3dgs": 8677697
+     }
+    },
+    {
+     "frame": "images/000121.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.2357760667800903,
+      "gsplat": 9.945967674255371,
+      "3dgs": 8.47761583328247
+     },
+     "pairs": {
+      "flashgs": 2680220,
+      "3dgs": 8263395
+     }
+    },
+    {
+     "frame": "images/000129.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.9418879747390747,
+      "gsplat": 10.10982370376587,
+      "3dgs": 8.670080184936523
+     },
+     "pairs": {
+      "flashgs": 2598950,
+      "3dgs": 8212479
+     }
+    },
+    {
+     "frame": "images/000137.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.511296033859253,
+      "gsplat": 10.076672077178955,
+      "3dgs": 10.405888080596924
+     },
+     "pairs": {
+      "flashgs": 2719274,
+      "3dgs": 11055134
+     }
+    },
+    {
+     "frame": "images/000145.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.6019840240478516,
+      "gsplat": 10.497536182403564,
+      "3dgs": 11.611648082733154
+     },
+     "pairs": {
+      "flashgs": 2763874,
+      "3dgs": 12158565
+     }
+    },
+    {
+     "frame": "images/000153.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.749936103820801,
+      "gsplat": 10.388751983642578,
+      "3dgs": 10.52723217010498
+     },
+     "pairs": {
+      "flashgs": 3132208,
+      "3dgs": 12953919
+     }
+    },
+    {
+     "frame": "images/000161.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.694656014442444,
+      "gsplat": 9.595375537872314,
+      "3dgs": 8.985088348388672
+     },
+     "pairs": {
+      "flashgs": 2765712,
+      "3dgs": 10683368
+     }
+    },
+    {
+     "frame": "images/000169.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.473471999168396,
+      "gsplat": 10.04534387588501,
+      "3dgs": 10.396671772003174
+     },
+     "pairs": {
+      "flashgs": 2916764,
+      "3dgs": 11830874
+     }
+    },
+    {
+     "frame": "images/000177.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.9972479343414307,
+      "gsplat": 10.299792289733887,
+      "3dgs": 9.896959781646729
+     },
+     "pairs": {
+      "flashgs": 2886552,
+      "3dgs": 10769764
+     }
+    },
+    {
+     "frame": "images/000185.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.896896004676819,
+      "gsplat": 10.139135837554932,
+      "3dgs": 8.65177583694458
+     },
+     "pairs": {
+      "flashgs": 2679301,
+      "3dgs": 9304208
+     }
+    },
+    {
+     "frame": "images/000193.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.5400320291519165,
+      "gsplat": 9.795503616333008,
+      "3dgs": 9.136640071868896
+     },
+     "pairs": {
+      "flashgs": 2705397,
+      "3dgs": 10018787
+     }
+    },
+    {
+     "frame": "images/000201.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.9107199907302856,
+      "gsplat": 10.264448165893555,
+      "3dgs": 9.428991794586182
+     },
+     "pairs": {
+      "flashgs": 2781144,
+      "3dgs": 9387551
+     }
+    },
+    {
+     "frame": "images/000209.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.5861120223999023,
+      "gsplat": 10.358240127563477,
+      "3dgs": 11.198880195617676
+     },
+     "pairs": {
+      "flashgs": 2994096,
+      "3dgs": 12349341
+     }
+    },
+    {
+     "frame": "images/000217.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.3782559633255005,
+      "gsplat": 10.065248012542725,
+      "3dgs": 10.378223896026611
+     },
+     "pairs": {
+      "flashgs": 2991804,
+      "3dgs": 12625355
+     }
+    },
+    {
+     "frame": "images/000225.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 3.5665600299835205,
+      "gsplat": 11.09331226348877,
+      "3dgs": 11.586560249328613
+     },
+     "pairs": {
+      "flashgs": 3573701,
+      "3dgs": 13135394
+     }
+    },
+    {
+     "frame": "images/000233.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.510848045349121,
+      "gsplat": 9.82161569595337,
+      "3dgs": 9.694064140319824
+     },
+     "pairs": {
+      "flashgs": 3001940,
+      "3dgs": 11761349
+     }
+    },
+    {
+     "frame": "images/000241.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.6859359741210938,
+      "gsplat": 10.147936344146729,
+      "3dgs": 9.66644811630249
+     },
+     "pairs": {
+      "flashgs": 3025944,
+      "3dgs": 11258329
+     }
+    },
+    {
+     "frame": "images/000249.jpg",
+     "width": 1920,
+     "height": 1071,
+     "ms": {
+      "flashgs": 2.7582080364227295,
+      "gsplat": 9.953280448913574,
+      "3dgs": 8.51262378692627
+     },
+     "pairs": {
+      "flashgs": 2645874,
+      "3dgs": 8709841
+     }
+    }
+   ],
+   "vs_3dgs": {
+    "avg_ms": {
+     "flashgs": 2.8141675144433975,
+     "3dgs": 9.986230060458183
+    },
+    "max_ms": {
+     "flashgs": 3.5665600299835205,
+     "3dgs": 11.983872413635254
+    },
+    "avg_speedup": 3.5907241628652713,
+    "max_speedup": 4.708697687037044,
+    "min_speedup": 2.6199636990697313,
+    "ratio_of_avg_times": 3.548555659606254
+   },
+   "pair_reduction_vs_3dgs": 0.7322527112610493
+  },
+  "4k": {
+   "resolution": [
+    3840,
+    2142
+   ],
+   "vs_gsplat": {
+    "avg_ms": {
+     "flashgs": 4.509176526218653,
+     "gsplat": 16.3797544836998
+    },
+    "max_ms": {
+     "flashgs": 5.371903896331787,
+     "gsplat": 18.094079971313477
+    },
+    "avg_speedup": 3.6410268957079146,
+    "max_speedup": 4.2040405371728635,
+    "min_speedup": 3.3092833387435614,
+    "ratio_of_avg_times": 3.63253786771477
+   },
+   "per_view": [
+    {
+     "frame": "images/000001.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.834464073181152,
+      "gsplat": 16.689072608947754,
+      "3dgs": 27.01107120513916
+     },
+     "pairs": {
+      "flashgs": 6403214,
+      "3dgs": 30572152
+     }
+    },
+    {
+     "frame": "images/000009.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.9095680713653564,
+      "gsplat": 16.750591278076172,
+      "3dgs": 28.635600090026855
+     },
+     "pairs": {
+      "flashgs": 6683372,
+      "3dgs": 33489243
+     }
+    },
+    {
+     "frame": "images/000017.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 5.056368112564087,
+      "gsplat": 17.382400512695312,
+      "3dgs": 33.6212158203125
+     },
+     "pairs": {
+      "flashgs": 7311058,
+      "3dgs": 40221769
+     }
+    },
+    {
+     "frame": "images/000025.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 3.966976046562195,
+      "gsplat": 16.67732810974121,
+      "3dgs": 31.353343963623047
+     },
+     "pairs": {
+      "flashgs": 5648350,
+      "3dgs": 36358259
+     }
+    },
+    {
+     "frame": "images/000033.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.930495977401733,
+      "gsplat": 18.094079971313477,
+      "3dgs": 34.97969627380371
+     },
+     "pairs": {
+      "flashgs": 7737039,
+      "3dgs": 45048281
+     }
+    },
+    {
+     "frame": "images/000041.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.558704137802124,
+      "gsplat": 16.778112411499023,
+      "3dgs": 30.053855895996094
+     },
+     "pairs": {
+      "flashgs": 6625321,
+      "3dgs": 35412431
+     }
+    },
+    {
+     "frame": "images/000049.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.545536041259766,
+      "gsplat": 16.87654399871826,
+      "3dgs": 30.386176109313965
+     },
+     "pairs": {
+      "flashgs": 6408786,
+      "3dgs": 35517449
+     }
+    },
+    {
+     "frame": "images/000057.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 5.047296047210693,
+      "gsplat": 17.306111335754395,
+      "3dgs": 30.989248275756836
+     },
+     "pairs": {
+      "flashgs": 7631632,
+      "3dgs": 39406260
+     }
+    },
+    {
+     "frame": "images/000065.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.6494879722595215,
+      "gsplat": 16.046048164367676,
+      "3dgs": 28.857759475708008
+     },
+     "pairs": {
+      "flashgs": 6944815,
+      "3dgs": 35429087
+     }
+    },
+    {
+     "frame": "images/000073.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.241408109664917,
+      "gsplat": 15.873535633087158,
+      "3dgs": 27.4836483001709
+     },
+     "pairs": {
+      "flashgs": 6535961,
+      "3dgs": 34574185
+     }
+    },
+    {
+     "frame": "images/000081.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 3.8553600311279297,
+      "gsplat": 14.706687927246094,
+      "3dgs": 22.399871826171875
+     },
+     "pairs": {
+      "flashgs": 5308498,
+      "3dgs": 25939039
+     }
+    },
+    {
+     "frame": "images/000089.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.440992116928101,
+      "gsplat": 16.253439903259277,
+      "3dgs": 28.271103858947754
+     },
+     "pairs": {
+      "flashgs": 6450741,
+      "3dgs": 34384352
+     }
+    },
+    {
+     "frame": "images/000097.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.560352087020874,
+      "gsplat": 16.041983604431152,
+      "3dgs": 28.613120079040527
+     },
+     "pairs": {
+      "flashgs": 6570942,
+      "3dgs": 34955880
+     }
+    },
+    {
+     "frame": "images/000105.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.3613600730896,
+      "gsplat": 15.64467191696167,
+      "3dgs": 24.579055786132812
+     },
+     "pairs": {
+      "flashgs": 6106661,
+      "3dgs": 28742296
+     }
+    },
+    {
+     "frame": "images/000113.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.382207870483398,
+      "gsplat": 15.457280158996582,
+      "3dgs": 23.269375801086426
+     },
+     "pairs": {
+      "flashgs": 5791313,
+      "3dgs": 26064662
+     }
+    },
+    {
+     "frame": "images/000121.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.315999984741211,
+      "gsplat": 14.990335941314697,
+      "3dgs": 22.235648155212402
+     },
+     "pairs": {
+      "flashgs": 5596824,
+      "3dgs": 24869700
+     }
+    },
+    {
+     "frame": "images/000129.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.184576034545898,
+      "gsplat": 15.624703884124756,
+      "3dgs": 23.10915184020996
+     },
+     "pairs": {
+      "flashgs": 5518148,
+      "3dgs": 25052151
+     }
+    },
+    {
+     "frame": "images/000137.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.33456015586853,
+      "gsplat": 16.30771255493164,
+      "3dgs": 30.58678436279297
+     },
+     "pairs": {
+      "flashgs": 6265105,
+      "3dgs": 36462989
+     }
+    },
+    {
+     "frame": "images/000145.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.485631942749023,
+      "gsplat": 17.18729591369629,
+      "3dgs": 33.65367889404297
+     },
+     "pairs": {
+      "flashgs": 6425244,
+      "3dgs": 40166034
+     }
+    },
+    {
+     "frame": "images/000153.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.8889758586883545,
+      "gsplat": 17.860544204711914,
+      "3dgs": 31.946608543395996
+     },
+     "pairs": {
+      "flashgs": 7932448,
+      "3dgs": 43930481
+     }
+    },
+    {
+     "frame": "images/000161.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.166144132614136,
+      "gsplat": 15.820799827575684,
+      "3dgs": 26.951695442199707
+     },
+     "pairs": {
+      "flashgs": 6824938,
+      "3dgs": 35676535
+     }
+    },
+    {
+     "frame": "images/000169.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.431856155395508,
+      "gsplat": 16.466943740844727,
+      "3dgs": 30.728191375732422
+     },
+     "pairs": {
+      "flashgs": 6974894,
+      "3dgs": 39398399
+     }
+    },
+    {
+     "frame": "images/000177.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.457855939865112,
+      "gsplat": 15.997424125671387,
+      "3dgs": 28.504063606262207
+     },
+     "pairs": {
+      "flashgs": 6558179,
+      "3dgs": 34871903
+     }
+    },
+    {
+     "frame": "images/000185.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.236783981323242,
+      "gsplat": 15.52236795425415,
+      "3dgs": 24.658432006835938
+     },
+     "pairs": {
+      "flashgs": 6170202,
+      "3dgs": 29849870
+     }
+    },
+    {
+     "frame": "images/000193.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.301728010177612,
+      "gsplat": 16.334335327148438,
+      "3dgs": 27.01310443878174
+     },
+     "pairs": {
+      "flashgs": 6552692,
+      "3dgs": 33142523
+     }
+    },
+    {
+     "frame": "images/000201.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.535808086395264,
+      "gsplat": 16.43160057067871,
+      "3dgs": 26.24163246154785
+     },
+     "pairs": {
+      "flashgs": 6111694,
+      "3dgs": 29450056
+     }
+    },
+    {
+     "frame": "images/000209.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.63155198097229,
+      "gsplat": 17.15056037902832,
+      "3dgs": 33.35628700256348
+     },
+     "pairs": {
+      "flashgs": 7142233,
+      "3dgs": 41152545
+     }
+    },
+    {
+     "frame": "images/000217.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.5501439571380615,
+      "gsplat": 16.572863578796387,
+      "3dgs": 31.415311813354492
+     },
+     "pairs": {
+      "flashgs": 7406503,
+      "3dgs": 42668240
+     }
+    },
+    {
+     "frame": "images/000225.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 5.371903896331787,
+      "gsplat": 17.777152061462402,
+      "3dgs": 32.56985664367676
+     },
+     "pairs": {
+      "flashgs": 8050611,
+      "3dgs": 41576981
+     }
+    },
+    {
+     "frame": "images/000233.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.489727973937988,
+      "gsplat": 16.18995189666748,
+      "3dgs": 28.77336025238037
+     },
+     "pairs": {
+      "flashgs": 7257189,
+      "3dgs": 39151630
+     }
+    },
+    {
+     "frame": "images/000241.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.474368095397949,
+      "gsplat": 16.302736282348633,
+      "3dgs": 28.213696479797363
+     },
+     "pairs": {
+      "flashgs": 7101597,
+      "3dgs": 36750305
+     }
+    },
+    {
+     "frame": "images/000249.jpg",
+     "width": 3840,
+     "height": 2142,
+     "ms": {
+      "flashgs": 4.095455884933472,
+      "gsplat": 15.036927700042725,
+      "3dgs": 23.38043212890625
+     },
+     "pairs": {
+      "flashgs": 5691546,
+      "3dgs": 26942192
+     }
+    }
+   ],
+   "vs_3dgs": {
+    "avg_ms": {
+     "flashgs": 4.509176526218653,
+     "3dgs": 28.557564944028854
+    },
+    "max_ms": {
+     "flashgs": 5.371903896331787,
+     "3dgs": 34.97969627380371
+    },
+    "avg_speedup": 6.331533789677564,
+    "max_speedup": 7.903587920777602,
+    "min_speedup": 5.15191108290647,
+    "ratio_of_avg_times": 6.333210682256639
+   },
+   "pair_reduction_vs_3dgs": 0.8104793534247278
+  }
+ },
+ "gpu_after": {
+  "name": "NVIDIA RTX A6000",
+  "nvidia_smi": "0, GPU-14734709-631c-e2ab-0d34-2b3c5bbc46be, 90 %, 42085 MiB\n1, GPU-568c411f-8cf8-7d21-8dfa-dd943593a6d1, 100 %, 43806 MiB\n2, GPU-ca69e17b-1578-5b96-047a-8a639a442907, 98 %, 22906 MiB\n3, GPU-dbef473d-c336-d95e-7abf-c930eb2803c1, 100 %, 27778 MiB\n4, GPU-44565be0-1a2c-06ee-5e58-8af754f32339, 86 %, 39136 MiB\n5, GPU-58f906f1-2dec-d64f-4520-fac3e9928326, 100 %, 43697 MiB\n6, GPU-f6cf008c-5100-9096-2221-9a51855dd3d2, 100 %, 30143 MiB\n7, GPU-207aaf4b-9034-2ecf-0d53-b62c0678fb4e, 100 %, 38781 MiB"
+ }
+}

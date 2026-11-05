@@ -1,0 +1,49 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_sog/density.py", "where": "after_backward / runtime order",
+   "problem": "Runtime steps Adam before after_backward, so the optimizer also steps on densify/sort iterations and at step 30000; official skips nothing on densify/sort steps but skips the step at 30000 (train.py:`if iteration < iterations`) and runs sort/compress before the step.",
+   "evidence": "official train.py optimizer step is after densify+sort; runtime.py steps first. Already listed as fidelity gap 1 in plan.md.",
+   "fix": "None needed (shared baseline gap); keep reporting it."},
+  {"severity": "minor", "file": "bench_request.json", "where": "notes (per-scene deltas)",
+   "problem": "Per-scene 'vs 3DGS paper' deltas (-0.71/-0.38/-0.24 dB) mix the CSV (official 3DGS code, black background, decoded models) with 3DGS-paper numbers; our protocol is white background / valid-SSIM, so absolute PSNR is not comparable to the CSV.",
+   "evidence": "protocol.background=white in smoke config.json; official dataset.white_background=false.",
+   "fix": "Define the pass criterion up front as (our SOG - our baseline3dgs) per scene vs (CSV SOG - published 3DGS per scene), plus size within a few percent and Gaussian count within ~10%; report both CSV (27.08) and v2-table (27.64) averages."},
+  {"severity": "minor", "file": "evidence/", "where": "test evidence",
+   "problem": "Only a 2000-step garden smoke run exists. The 30000-step path (14 densifications, 30 PLAS sorts at ~4M Gaussians, 12M cap, final encode of a ~2084^2 grid with a 45-channel JXL) is unexercised; decoded_vs_trained PSNR and size at full scale are unknown.",
+   "evidence": "results/ empty; smoke-1 size 4.4 MB at 315,844 Gaussians.",
+   "fix": "Benchmark run is the check; watch memory/time of PLAS and the shN JXL encode on garden."},
+  {"severity": "minor", "file": "plugin/ss_sog/density.py", "where": "LogSpaceStrategy._grow_gs",
+   "problem": "gsplat densification uses grad > thr where official uses >=, and gsplat accumulates per-visible-view grad norms scaled by W/2 (equivalent to 3DGS NDC grads). Negligible but not bit-identical.",
+   "evidence": "gsplat default.py _grow_gs vs official densify_and_clone/split.",
+   "fix": "none"}
+ ],
+ "equation_coverage": [
+  {"eq": "prune to largest square (top-S^2 opacity, original order kept)", "status": "exact", "code": "sorting.py:prune_to_square"},
+  {"eq": "PLAS sort (keys xyz-activated + DC raw + exp(scale), global standardize, weights 1/1/1, shuffle, improvement_break 1e-4, init + every 1000 > 500)", "status": "exact", "code": "sorting.py:sort_features/sort_indices; density.py:schedule_events"},
+  {"eq": "joint permutation of params, Adam exp_avg/exp_avg_sq, gsplat state", "status": "exact", "code": "sorting.py:permute"},
+  {"eq": "(smoothness) Huber(blur(detached grid), grid), kernel 5, sigma 3, circular-x then reflect-y, raw (non-activated, non-normalized) opacity w1 / rotation w10 over sum 11, lambda 1", "status": "exact", "code": "losses.py:neighborloss_2d/neighbor_terms"},
+  {"eq": "(log positions) sign(x)log1p|x| stored, inverse in renderer, init converted, split children sampled in world space with R*S*n and mapped back, scale/1.6", "status": "exact", "code": "renderer.py; density.py:split_world"},
+  {"eq": "densification every 1000 in (500,15000), thr 7e-5, prune opa<0.1, percent_dense 0.1, no reset, no size prune", "status": "exact", "code": "density.py:DEFAULTS + gsplat DefaultStrategy (reset_every 1e9 disables size prune and reset)"},
+  {"eq": "quantization 14/-/5/6/6/6 bits, min-max round(x*2^q)/2^q, fixed normalize ranges, JXL level 101 (xyz,rest,scale,rot,opa) / 100 (DC)", "status": "exact", "code": "codec.py:EXPERIMENT/prepare"},
+  {"eq": "decode replaces all six evaluated parameters; size = sum of jxl + csv + yml / 1e6", "status": "exact", "code": "density.py:_encode; codec.py:encode_decode; report_size.py"}
+ ],
+ "probe_assessment": [
+  {"probe": "grid-sort", "detects_removal": true, "why": "asserts permuted params, exp_avg and grad2d equal pre[idx], and neighbour distance drops 2.25 -> 0.20"},
+  {"probe": "neighbor-loss", "detects_removal": true, "why": "independent conv/Huber reference for value and gradient, detach and weight checks"},
+  {"probe": "log-xyz", "detects_removal": true, "why": "naive render differs by 0.85; split children compared to world-space formula"},
+  {"probe": "codec-roundtrip", "detects_removal": true, "why": "decoded lossless grids compared to independent quantize/normalize formula; sorted vs shuffled size"},
+  {"probe": "schedule", "detects_removal": true, "why": "checks strategy attributes and event steps, though the event list partly restates schedule_events"},
+  {"probe": "decoded-eval", "detects_removal": true, "why": "params equal decoded grids, opacities show 6-bit levels, fresh render matches"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Adam step order / step at 30000 (runtime)",
+  "white background, random-with-replacement view sampling, no position-LR delay (runtime, shared with baseline)",
+  "gsplat > vs >= densify threshold",
+  "metadata csv/yml bytes may differ by a few bytes",
+  "no 30000-step run yet"
+ ],
+ "judgments": {
+  "a_csv_targets": "Justified. The official README (2024-09-16) says the CSVs are decoded-model metrics computed with the original 3DGS code and fix the earlier W&B numbers that omitted quantization/compression loss (and Dr Johnson attribution); sizes agree with the paper (40.28 vs 40.3 MB). They are the right reference for an eval-on-decoded-model reproduction. Caveats: v2 Table 1 (27.64) is pre-fix and stays the published claim, so report both; CSV came from black-background 3DGS-code rendering, so compare improvements over our own baseline rather than absolute PSNR.",
+  "b_codec_env": "Equivalent. Official environment.yml pins imagecodecs[all]==2023.9.18 with numpy<2 on py3.10; the target dir holds the same wheel (bundled libjxl 0.8.2, confirmed by probe evidence) and the worker calls imagecodecs.imwrite(file, array, level=level) exactly as compression/jpeg_xl.py, with default effort/distance, float32 C-contiguous arrays passed via lossless np.save/np.load. Quantize/normalize numerics run in numpy 2.2.6 in-process; I checked float32 scalar promotion (python float/int vs np.float32) gives the same float32 results as numpy 1.26 with pandas float64 scalars."
+ },
+ "summary": "No critical or major issues found. Pruning, PLAS keys/normalization/schedule, joint permutation, smoothness loss, log-xyz split, densification config, bit depths, JXL levels, decode replacement and size computation all match the official code @5f2b360. Remaining risk is only unexercised full-scale (30000-step) behaviour and shared runtime gaps."}

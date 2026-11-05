@@ -1,0 +1,44 @@
+{
+ "run": "runs/baseline3dgs-mipnerf360-30000/gsplat/mipnerf360-bicycle",
+ "scene": "bicycle",
+ "split": "test",
+ "gaussians": 6590201,
+ "results": [
+  {
+   "lambda": 0.0001,
+   "metrics": {
+    "psnr": 24.700699157714844,
+    "ssim": 0.7465354824066162,
+    "lpips": 0.2495802253484726
+   },
+   "codec": {
+    "lambda": 0.0001,
+    "gaussians": 6590201,
+    "steps": 7,
+    "xyz_coder_used": "gpcc",
+    "size_MB": 113.55882549285889,
+    "size_MB_breakdown": {
+     "xyz": 12.721534729003906,
+     "mask": 0.7511816024780273,
+     "fea": 10.23471736907959,
+     "fea_main": 10.109000205993652,
+     "fea_hyp": 0.1257171630859375,
+     "feq": 44.751933097839355,
+     "feq_main": 44.72352886199951,
+     "feq_hyp": 0.02840423583984375,
+     "geo": 45.09945869445801,
+     "geo_main": 45.04909610748291,
+     "geo_hyp": 0.050362586975097656
+    },
+    "size_MB_attributes_only": 100.83729076385498,
+    "bitstream_disk_bytes": 119075066,
+    "mask_rate": 0.6246047730562391,
+    "encode_seconds": 290.04974070750177,
+    "decode_seconds": 292.28510791808367,
+    "roundtrip_max_abs_error": 0.0,
+    "uncompressed_ply_MB": 1558.6565475463867
+   },
+   "seconds": 590.0128548778594
+  }
+ ]
+}

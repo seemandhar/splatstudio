@@ -1,0 +1,71 @@
+{
+ "method": "fatesgs",
+ "datasets": {
+  "dtu-fatesgs-23_24_33": [
+   "scan24",
+   "scan37",
+   "scan106"
+  ]
+ },
+ "steps": 15000,
+ "per_scene_reported": true,
+ "extra": "",
+ "recipe": "3dgs",
+ "primary_metric": "chamfer_mm (lower is better); PSNR from ss-eval on views 25/28 is informational only (no paper number for this split)",
+ "post_train": "CUDA_VISIBLE_DEVICES=<same gpu> PYTHONPATH=$HOME/models/dtueval-pylib /home/sejain/splatify/tools/ssenv fatesgs-dtu-eval --run <run> --data <data> --dtu /home/sejain/datasets/dtu_official/gt   # writes <run>/dtu_cd.json (TSDF + cull + DTUeval, ~3-5 min, CPU-heavy)",
+ "baseline": {
+  "method": "fatesgs-2dgs",
+  "datasets": {
+   "dtu-fatesgs-23_24_33": [
+    "scan24",
+    "scan37",
+    "scan106"
+   ]
+  },
+  "steps": 15000,
+  "note": "fatesgs-2dgs = the paper's ablation row 'none' (same pipeline without L_r/L_s/L_f). It is NOT the paper's separately-run 2DGS row (different settings, e.g. little-overlap 2.47 vs 2.52); compare to the 'none' row, 2DGS row only with that caveat."
+ },
+ "paper_reference": {
+  "dataset": "DTU 3-view large overlap (views 23,24,33)",
+  "source": "main Table 1 (paper_results.json)",
+  "chamfer_mm": {
+   "fatesgs": {
+    "scan24": 0.67,
+    "scan37": 1.94,
+    "scan106": 0.75,
+    "mean15": 0.92
+   },
+   "2dgs": {
+    "scan24": 1.26,
+    "scan37": 2.95,
+    "scan106": 1.93,
+    "mean15": 1.69
+   }
+  }
+ },
+ "proposed_datasets_json_entry": {
+  "dtu-fatesgs-23_24_33": {
+   "raw_root": "/home/sejain/datasets/dtu_fatesgs/extract",
+   "native_root": "/home/sejain/datasets/dtu_fatesgs/native",
+   "scenes": {
+    "scan24": "images",
+    "scan37": "images",
+    "scan40": "images",
+    "scan55": "images",
+    "scan63": "images",
+    "scan65": "images",
+    "scan69": "images",
+    "scan83": "images",
+    "scan97": "images",
+    "scan105": "images",
+    "scan106": "images",
+    "scan110": "images",
+    "scan114": "images",
+    "scan118": "images",
+    "scan122": "images"
+   },
+   "_doc": "FatesGS authors' DTU release (Google Drive folder 143jIT9DJN17gigp3uxBtqBv6UBdcO7Lm: DTU_TEST.zip, DTU_EVAL.zip, set_23_24_33_depth.zip). train = views 23,24,33 (RGB 777x581 per-channel PIL bicubic, alpha dropped), val = view 22, test = views 25,28 (from set_22_25_28); points.npz = dense/fused.ply; fatesgs.npz sidecar (Marigold depth, pairs, alpha masks) + images_full/ + dtu_eval/. Built by reproductions/fatesgs/tools/prepare_dtu.py; NOT rebuildable by bench.py prepare. GT for CD: /home/sejain/datasets/dtu_official/gt (official SampleSet ObsMask + Points/stl)."
+  }
+ },
+ "notes": "Paper iterations 15000 (density/reset schedule hard-coded to absolute steps; keep --steps 15000). First use JIT-compiles the 2DGS rasterizer (~2 min, cached). Smoke: 1900 steps in 112 s (fatesgs) / 280 s (2dgs control, busier GPU) => ~15-35 min/scene + ~3-5 min CD eval. Uses the sidecar via ss-train --data (bench.py passes it)."
+}

@@ -1,0 +1,45 @@
+{
+  "paper": "DOF-GS: Adjustable Depth-of-Field 3D Gaussian Splatting for Post-Capture Refocusing, Defocus Rendering and Blur Removal",
+  "arxiv": "2405.17351",
+  "method_label": "Ours",
+  "iterations": 40000,
+  "datasets": {
+    "deblurnerf-real-defocus": {
+      "method": {
+        "average": {"psnr": 24.12, "ssim": 0.7667},
+        "per_scene": {
+          "psnr": {"cake": 26.87, "caps": 24.63, "cisco": 20.84, "cupcake": 22.70, "cups": 25.98, "daisy": 23.48, "sausage": 19.11, "seal": 25.75, "tools": 27.73},
+          "ssim": {"cake": 0.8066, "caps": 0.7485, "cisco": 0.7399, "cupcake": 0.7542, "cups": 0.8261, "daisy": 0.7343, "sausage": 0.5737, "seal": 0.8135, "tools": 0.9033}
+        }
+      },
+      "baseline_mip_splatting": {
+        "average": {"psnr": 21.23, "ssim": 0.6292},
+        "per_scene": {
+          "psnr": {"cake": 21.75, "caps": 21.62, "cisco": 19.85, "cupcake": 21.26, "cups": 21.09, "daisy": 21.63, "sausage": 17.83, "seal": 22.27, "tools": 23.80},
+          "ssim": {"cake": 0.6268, "caps": 0.5355, "cisco": 0.6902, "cupcake": 0.6719, "cups": 0.6403, "daisy": 0.6181, "sausage": 0.4719, "seal": 0.6006, "tools": 0.8069}
+        }
+      },
+      "ablation_wo_detail_enhance": {"average": {"psnr": 23.36, "ssim": 0.7306}},
+      "source": "supp. Table (tab:real, tables/table_real_new.tex); averages Table tab:average; ablation tables/arxiv/table_ablation.tex",
+      "resolution": "600x400 (images/ downscaled x4)"
+    },
+    "deblurnerf-synthetic-defocus": {
+      "method": {
+        "average": {"psnr": 29.39, "ssim": 0.8914},
+        "per_scene": {
+          "psnr": {"cozyroom": 32.25, "factory": 29.56, "pool": 30.60, "tanabata": 27.46, "trolley": 27.11},
+          "ssim": {"cozyroom": 0.9345, "factory": 0.9057, "pool": 0.8348, "tanabata": 0.9080, "trolley": 0.8741}
+        }
+      },
+      "baseline_mip_splatting": {
+        "average": {"psnr": 23.73, "ssim": 0.7314},
+        "per_scene": {
+          "psnr": {"cozyroom": 29.83, "factory": 23.04, "pool": 19.78, "tanabata": 23.64, "trolley": 22.37},
+          "ssim": {"cozyroom": 0.8990, "factory": 0.7866, "pool": 0.4212, "tanabata": 0.8109, "trolley": 0.7393}
+        }
+      },
+      "source": "supp. Table tab:synthetic (tables/table_synthetic.tex)"
+    }
+  },
+  "notes": "No 3DGS row in the paper; the closest 3DGS-family baseline is Mip-Splatting retrained by the authors on the blurry inputs. No LPIPS reported. Metrics: skimage PSNR/SSIM. Paper does not evaluate on mipnerf360/tandt/db. README: original checkpoints lost; released re-trained models may differ."
+}

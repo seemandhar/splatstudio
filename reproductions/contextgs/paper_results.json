@@ -1,0 +1,348 @@
+{
+ "paper": "ContextGS: Compact 3D Gaussian Splatting with Anchor Level Context Model",
+ "arxiv": "2405.20721",
+ "method_label": "Ours (low-rate)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "size_mb": 12.68,
+     "psnr": 27.62,
+     "ssim": 0.808,
+     "lpips": 0.237
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.08,
+      "bonsai": 32.67,
+      "counter": 29.38,
+      "flowers": 21.31,
+      "garden": 27.32,
+      "kitchen": 31.28,
+      "room": 31.71,
+      "stump": 26.58,
+      "treehill": 23.29
+     },
+     "ssim": {
+      "bicycle": 0.738,
+      "bonsai": 0.946,
+      "counter": 0.912,
+      "flowers": 0.576,
+      "garden": 0.845,
+      "kitchen": 0.925,
+      "room": 0.923,
+      "stump": 0.762,
+      "treehill": 0.647
+     },
+     "lpips": {
+      "bicycle": 0.271,
+      "bonsai": 0.186,
+      "counter": 0.197,
+      "flowers": 0.377,
+      "garden": 0.148,
+      "kitchen": 0.131,
+      "room": 0.207,
+      "stump": 0.268,
+      "treehill": 0.349
+     },
+     "size_mb": {
+      "bicycle": 21.82,
+      "bonsai": 7.17,
+      "counter": 6.3,
+      "flowers": 16.71,
+      "garden": 18.78,
+      "kitchen": 7.0,
+      "room": 4.5,
+      "stump": 14.86,
+      "treehill": 17.0
+     }
+    }
+   },
+   "method_lambda_0.004": {
+    "average": {
+     "size_mb": 12.68,
+     "psnr": 27.62,
+     "ssim": 0.808,
+     "lpips": 0.237
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.08,
+      "bonsai": 32.67,
+      "counter": 29.38,
+      "flowers": 21.31,
+      "garden": 27.32,
+      "kitchen": 31.28,
+      "room": 31.71,
+      "stump": 26.58,
+      "treehill": 23.29
+     },
+     "ssim": {
+      "bicycle": 0.738,
+      "bonsai": 0.946,
+      "counter": 0.912,
+      "flowers": 0.576,
+      "garden": 0.845,
+      "kitchen": 0.925,
+      "room": 0.923,
+      "stump": 0.762,
+      "treehill": 0.647
+     },
+     "lpips": {
+      "bicycle": 0.271,
+      "bonsai": 0.186,
+      "counter": 0.197,
+      "flowers": 0.377,
+      "garden": 0.148,
+      "kitchen": 0.131,
+      "room": 0.207,
+      "stump": 0.268,
+      "treehill": 0.349
+     },
+     "size_mb": {
+      "bicycle": 21.82,
+      "bonsai": 7.17,
+      "counter": 6.3,
+      "flowers": 16.71,
+      "garden": 18.78,
+      "kitchen": 7.0,
+      "room": 4.5,
+      "stump": 14.86,
+      "treehill": 17.0
+     }
+    }
+   },
+   "method_lambda_0.0005": {
+    "average": {
+     "size_mb": 21.58,
+     "psnr": 27.72,
+     "ssim": 0.811,
+     "lpips": 0.231
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.97,
+      "bonsai": 32.93,
+      "counter": 29.6,
+      "flowers": 21.18,
+      "garden": 27.39,
+      "kitchen": 31.69,
+      "room": 32.03,
+      "stump": 26.56,
+      "treehill": 23.09
+     },
+     "ssim": {
+      "bicycle": 0.74,
+      "bonsai": 0.951,
+      "counter": 0.916,
+      "flowers": 0.571,
+      "garden": 0.851,
+      "kitchen": 0.931,
+      "room": 0.928,
+      "stump": 0.761,
+      "treehill": 0.645
+     },
+     "lpips": {
+      "bicycle": 0.263,
+      "bonsai": 0.182,
+      "counter": 0.19,
+      "flowers": 0.378,
+      "garden": 0.136,
+      "kitchen": 0.123,
+      "room": 0.196,
+      "stump": 0.263,
+      "treehill": 0.346
+     },
+     "size_mb": {
+      "bicycle": 38.09,
+      "bonsai": 12.43,
+      "counter": 10.67,
+      "flowers": 28.27,
+      "garden": 31.26,
+      "kitchen": 12.44,
+      "room": 8.09,
+      "stump": 24.22,
+      "treehill": 28.78
+     }
+    }
+   },
+   "method_high_rate_table1": {
+    "average": {
+     "psnr": 27.75,
+     "ssim": 0.811,
+     "lpips": 0.231,
+     "size_mb": 18.41
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.49,
+     "ssim": 0.813,
+     "lpips": 0.222,
+     "size_mb": 744.7
+    }
+   },
+   "scaffold_gs": {
+    "average": {
+     "psnr": 27.5,
+     "ssim": 0.806,
+     "lpips": 0.252,
+     "size_mb": 253.9
+    }
+   },
+   "hac": {
+    "average": {
+     "psnr": 27.53,
+     "ssim": 0.807,
+     "lpips": 0.238,
+     "size_mb": 15.26
+    }
+   },
+   "source": "Table 1 (averages), App. Table tab:sup_mip (per scene, low-rate lambda=0.004 / high-rate 0.0005); repo results/MipNeRF360/*.csv agree"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "size_mb": 7.05,
+     "psnr": 24.2,
+     "ssim": 0.852,
+     "lpips": 0.184
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.4,
+      "truck": 26.0
+     },
+     "ssim": {
+      "train": 0.818,
+      "truck": 0.885
+     },
+     "lpips": {
+      "train": 0.217,
+      "truck": 0.15
+     },
+     "size_mb": {
+      "train": 6.39,
+      "truck": 7.72
+     }
+    }
+   },
+   "method_lambda_0.0005": {
+    "average": {
+     "size_mb": 11.8,
+     "psnr": 24.29,
+     "ssim": 0.855,
+     "lpips": 0.176
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.53,
+      "truck": 26.05
+     },
+     "ssim": {
+      "train": 0.823,
+      "truck": 0.888
+     },
+     "lpips": {
+      "train": 0.208,
+      "truck": 0.143
+     },
+     "size_mb": {
+      "train": 10.55,
+      "truck": 13.06
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.69,
+     "ssim": 0.844,
+     "lpips": 0.178,
+     "size_mb": 431.0
+    }
+   },
+   "scaffold_gs": {
+    "average": {
+     "psnr": 23.96,
+     "ssim": 0.853,
+     "lpips": 0.177,
+     "size_mb": 86.5
+    }
+   },
+   "source": "Table 1, App. Table tab:sup_tant"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "size_mb": 3.45,
+     "psnr": 30.11,
+     "ssim": 0.907,
+     "lpips": 0.265
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.68,
+      "playroom": 30.53
+     },
+     "ssim": {
+      "drjohnson": 0.906,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.261,
+      "playroom": 0.269
+     },
+     "size_mb": {
+      "drjohnson": 3.94,
+      "playroom": 2.96
+     }
+    }
+   },
+   "method_lambda_0.0005": {
+    "average": {
+     "size_mb": 6.6,
+     "psnr": 30.39,
+     "ssim": 0.909,
+     "lpips": 0.258
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.86,
+      "playroom": 30.93
+     },
+     "ssim": {
+      "drjohnson": 0.909,
+      "playroom": 0.91
+     },
+     "lpips": {
+      "drjohnson": 0.249,
+      "playroom": 0.268
+     },
+     "size_mb": {
+      "drjohnson": 7.8,
+      "playroom": 5.41
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.42,
+     "ssim": 0.899,
+     "lpips": 0.247,
+     "size_mb": 663.9
+    }
+   },
+   "scaffold_gs": {
+    "average": {
+     "psnr": 30.21,
+     "ssim": 0.906,
+     "lpips": 0.254,
+     "size_mb": 66.0
+    }
+   },
+   "source": "Table 1, App. Table tab:sup_blending"
+  }
+ },
+ "notes": "Sizes in MiB (repo CSV bytes/2^20). Low-rate lambda_e=0.004 is the 'method' row. Main-table Mip360 high-rate (27.75/18.41) disagrees with App. table (27.72/21.58). 3DGS/Scaffold-GS rows are copied from prior papers (3DGS mip360 27.49 != 3DGS paper 27.21), protocol unverified; ContextGS's own rows use the 1.6K-width loader. No per-scene 3DGS rows in this paper."
+}

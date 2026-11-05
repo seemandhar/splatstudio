@@ -1,0 +1,16 @@
+{
+ "method": "flashgs",
+ "module": "ss_flashgs",
+ "components": [
+  {"name": "flashgs-renderer", "kind": "renderer", "factory": "ss_flashgs.renderer:create_renderer", "config": {"inference_backend": "flashgs", "tile": 16}, "note": "gsplat when grad enabled, vendored FlashGS kernels under no_grad"},
+  {"name": "adaptive-density", "kind": "density", "factory": "splatstudio.backends.gsplat:create_density", "note": "unchanged baseline"},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric", "note": "unchanged baseline"}
+ ],
+ "evaluation_tool": "plugin/apply_flashgs.py",
+ "fields": [],
+ "probes": ["flashgs-parity", "precise-intersection", "render-speed", "inference-switch", "state-transitions", "photometric-gradient", "renderer-gradient"],
+ "contributions": ["opacity-aware-precise-intersection", "adaptive-scheduling-and-pipelined-render", "render-only-integration"],
+ "fidelity_gaps": ["shared A6000 vs idle RTX 3090 timing", "test views instead of paper frame sets", "1080p/4K by intrinsics rescale", "gsplat-trained baseline models", "timing scope (forward only, cov3D precomputed for FlashGS)", "uint8 truncated output", "upstream right-edge empty-tile write bug counted not patched", "memory claim not measured", "MatrixCity/Rubble unavailable"],
+ "feasible_natively": true,
+ "feasibility_note": "Official release has no backward pass: FlashGS cannot train. Reproduced as a render-only evaluation renderer + tool on standard-trained models."
+}

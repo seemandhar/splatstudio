@@ -1,0 +1,8 @@
+{"method": "dngaussian", "module": "ss_dngaussian",
+ "components": ["dngaussian-renderer (renderer)", "dngaussian-density (density)", "photometric (loss)", "dngaussian-regularization (loss)"],
+ "fields": [{"name": "dng_geo", "shape": [64]}, {"name": "dng_mlp", "shape": [8]}],
+ "probes": ["state-transitions", "glnorm-formula", "hard-depth", "soft-depth", "depth-pass-step", "neural-color", "official-density", "photo-pass-losses", "dng-renderer-gradient"],
+ "contributions": ["hard-depth-regularization", "soft-depth-regularization", "global-local-depth-normalization", "neural-color-renderer", "official-training-recipe"],
+ "fidelity_gaps": ["gsplat vs ashawkey Inria rasterizer", "photometric-then-depth pass order per runtime step (hard pass of it 1 lost)", "photometric step before densify/prune (official drops it)", "random-with-replacement view sampling", "per-view eval near cull instead of union over eval cams", "runtime SSIM/LPIPS implementation", "NaN->0 for empty selections", "single seed; official README warns of PSNR instability", "MiDaS/timm versions"],
+ "feasible_natively": true,
+ "extra_methods": ["dngaussian-3dgs"]}

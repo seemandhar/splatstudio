@@ -1,0 +1,32 @@
+{
+  "paper": "RaDe-GS: Rasterizing Depth in Gaussian Splatting",
+  "slug": "radegs",
+  "plan_id": 59,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "report": "done (build)",
+    "review": "done (approved, 4 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "built (benchmark pending)",
+  "arxiv": "2406.01467",
+  "official_code_commit": "2d4bc087f1b4bd62c96054fbe89d273490526b81",
+  "method": "radegs",
+  "custom_cuda": true,
+  "benchmark_target": "mipnerf360 all 9 scenes (paper: outdoor 25.17 / indoor 30.74 PSNR, averages only)",
+  "smoke": {
+    "radegs": 22.188,
+    "radegs_reg_from_1000": 22.036,
+    "baseline": 22.993,
+    "steps": 2000,
+    "scene": "garden"
+  },
+  "dataset": "mipnerf360",
+  "baseline": "baseline3dgs-mipnerf360-30000",
+  "bench_exps": [
+    "radegs-mipnerf360"
+  ]
+}

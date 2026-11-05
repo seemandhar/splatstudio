@@ -1,0 +1,55 @@
+{
+ "approved": false,
+ "issues": [
+  {"severity": "major", "file": "plugin/ss_dngaussian/probes.py (depth_pass_step, official_density)", "where": "density.after_backward schedule",
+   "problem": "No probe exercises DNGaussianDensity.after_backward itself. depth_pass_step calls depth_pass() directly and only compares cfg constants (0/1000/3000); official_density calls densify_and_prune/near_prune/clean_views directly. The orchestration is therefore unprobed: nxt = step+1 offsets, the hard_depth_start/soft_depth_start gates, passing nxt (not step) as the smoothness iteration (> 3000), (step-1)%25==0 and step>2000 near cadence, clean at steps 1 and 6000, densify window (>500, %100, <6000), and bake at step==total. Deleting the soft call, or off-by-one-ing a gate, leaves every probe green.",
+   "evidence": "train_llff.py:80-131 (hard from it>0, soft it>1000, smoothness it>3000), 183-196 (clean/densify/near) vs density.py:after_backward; probes.py:depth_pass_step asserts only cfg values and that 'smooth' is absent at iteration 10 (never that it is present at 3001).",
+   "fix": "Add a CUDA probe that drives after_backward over a stub outputs/camera for steps {1,2,500,600,999,1000,1001,2000,2001,2002,2026,2999,3000,3001,5999,6000} and asserts the row keys: hard present for step>=1, soft only for step>=1001, 'smooth' in terms only for nxt>3000, near_pruned only when (step-1)%25==0 and step>2000, cleaned only at 1 and 6000, densify only at 600,700,...,5900, baked at 1000 multiples and 6000; plus a no-op-replacement check (hard_depth=False removes the 'hard' key)."},
+  {"severity": "minor", "file": "plugin/ss_dngaussian/density.py + runtime.py:208", "where": "iteration 6000 / iteration 1",
+   "problem": "Official skips every optimizer step at iteration 6000 (hard, soft and photometric, `if iteration < opt.iterations`) and does clean_views before any step at 1 and 6000. Runtime steps all photometric Adams before after_backward, so the final photometric Adam step (opacity lr 0.05) and the neural Adam step are applied at 6000 and the final clean runs after them; the depth passes of nxt=6000 (run from step 5999) are also stepped. Effect: one extra update, bake still equals the evaluated model because the bake is last in after_backward.",
+   "evidence": "train_llff.py:104-107,128-131,205-207; runtime.py:208-211",
+   "fix": "Document (already half-listed in plan gap 3). Optionally skip net_opt.step() at step==total; the runtime photometric step cannot be skipped from the plugin."},
+  {"severity": "minor", "file": "plugin/ss_dngaussian/renderer.py", "where": "baked eval path, eval_near",
+   "problem": "Official render.py --near 10 prunes the union of Gaussians within 10 of ANY eval camera before rendering all eval views; plugin culls only around the camera being rendered. Training prunes within 10 of the 180 spiral centres (max 2.5 from a real camera per prep.json) after step 2000, so few Gaussians differ, but it is not exact.",
+   "evidence": "render.py:99-106 vs renderer.py render(): keep = norm(means-center) >= eval_near",
+   "fix": "Keep as documented gap; or cull on min distance to the dataset's eval camera centres if the runtime ever exposes them."},
+  {"severity": "minor", "file": "plugin/ss_dngaussian/density.py", "where": "depth-pass pairing",
+   "problem": "Depth passes of iteration s+1 run on the camera of step s, the hard pass of iteration 1 is lost, and views are sampled with replacement. Equivalent in distribution; already in plan gaps 2 and 4.",
+   "evidence": "train_llff.py:63-70 vs density.after_backward step 3", "fix": "None needed."},
+  {"severity": "minor", "file": "paper_results.json", "where": "baseline_3dgs_dagger / other datasets",
+   "problem": "All stored values match the paper (Table 1 LLFF avg 19.12/0.294/0.591/0.132; 3DGS 15.52/0.405/0.408/0.209; 3DGS-dagger 16.46/0.401/0.440/0.192; Table 4/5/10 ablations; Table 11 6/9-view; DTU 18.91/0.176/0.790; Blender 24.305/0.886/0.088). Omitted but available: 3DGS-dagger at 6 views (21.09/0.229/0.699) and 9 views (23.21/0.176/0.785) and on DTU (14.74/0.249/0.672).",
+   "evidence": "source/paper.txt Table 1 and Table 11", "fix": "Optionally add the omitted dagger rows."},
+  {"severity": "minor", "file": "plugin/ss_dngaussian/__init__.py", "where": "dngaussian-3dgs",
+   "problem": "The paper defines 3DGS-dagger only as 'same hyperparameters and the neural color renderer'; no official script exists. The plugin variant keeps penalties, opacity-gated densification, cleaning and near pruning and removes only the hard/soft depth passes, which is the most literal reading but not verifiable. Because it still loads the sidecar for spiral centres, it is not a standalone baseline.",
+   "evidence": "paper.txt line 291, 635; __init__.py _build(depth=False)", "fix": "State the interpretation in the benchmark report."}
+ ],
+ "equation_coverage": [
+  {"eq": "(5) hard depth", "status": "exact", "code": "renderer.py:hard_depth (opacity 0.95, colours 1, scales/quats detached, gsplat D = sum T a z; matches render_for_depth)"},
+  {"eq": "(6) soft depth", "status": "exact", "code": "renderer.py:soft_depth (means/scales/quats detached, sigmoid(o); matches render_for_opa)"},
+  {"eq": "(7) local normalisation", "status": "exact", "code": "depth.py:local_loss/normalize (per-patch mean/std, eps 1e-2*std of the patch tensor, not detached)"},
+  {"eq": "(8) global normalisation", "status": "exact", "code": "depth.py:global_loss (patch mean, whole-map std detached)"},
+  {"eq": "(9) tolerance L2", "status": "exact", "code": "depth.py:margin_l2 (error_tolerance 0.00025, run_llff.sh)"},
+  {"eq": "(10) photometric", "status": "exact", "code": "losses.py:create_photometric (L1 + 0.2(1-SSIM same-pad), run_llff.sh lambda_dssim 0.2)"},
+  {"eq": "code-only penalties", "status": "exact", "code": "losses.py:penalties (shape 0.002, scale 0.001 default, opa 0.001, split 0.2)"},
+  {"eq": "neural colour renderer (Sec 3.4)", "status": "exact", "code": "neural.py:GridRenderer (16 lv x 2, res 16..512*bound, 2^19, sigma MLP 3x64 -> 1+64, SH4 + geo -> color MLP 2x64, sigmoid*1.002-0.001, bias-free, bound=max extent/2*1.2, centre=mean)"}
+ ],
+ "probe_assessment": [
+  {"probe": "glnorm-formula", "detects_removal": true, "why": "independent per-patch loop, affine invariance, tolerance, weights"},
+  {"probe": "hard-depth", "detects_removal": true, "why": "analytic splat centre depth = 0.95 z, only means get gradients"},
+  {"probe": "soft-depth", "detects_removal": true, "why": "analytic centre depth = sigmoid(o) z, only opacities get gradients"},
+  {"probe": "depth-pass-step", "detects_removal": false, "why": "tests depth_pass() in isolation and cfg constants; deleting the hard/soft call in after_backward or changing the gates is not detected (see major issue)"},
+  {"probe": "neural-color", "detects_removal": true, "why": "CUDA hash grid and SH4 vs torch reference, colour grad reaches means, bake == live, stale bake rejected"},
+  {"probe": "official-density", "detects_removal": true, "why": "exact clone/split/prune counts with opacity gating, LR values, near prune, clean_views; but calls the methods directly, not their schedule"},
+  {"probe": "photo-pass-losses", "detects_removal": true, "why": "independent SSIM and penalty values incl. NaN-free empty selection"},
+  {"probe": "dng-renderer-gradient", "detects_removal": true, "why": "net trained, SH unused, screen grad non-zero, black background"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "gsplat rasterizer instead of ashawkey/Inria (radius and opacity-aware culling); visibility compensated with inria_radii",
+  "pass ordering and camera pairing of depth passes; hard pass of iteration 1 lost",
+  "photometric/neural Adam step precedes densification and the final 6000 step is not skipped",
+  "per-view instead of union eval near-cull",
+  "random view sampling with replacement; runtime SSIM/LPIPS vs paper metrics; MiDaS master vs 2023 hub snapshot (same dpt_hybrid_384 weights, sha256 checked)",
+  "Verified faithful: random init (box from FULL points3D bounds via top-1/top-20 per axis, int(max extent*50) points, seed 0, xyz drawn before colours), DPT-Hybrid on 3 training views only at full-res input, bicubic to H/8xW/8, uint16 min-max PNG, target 255-png/255; 180-pose spiral construction equals CreateLLFFSpiral and camera centre = translation column; run_llff.sh hyper-parameters (grad 0.0013, tol 0.00025, scaling lr 0.003, pos lr 0.016->0.00016 over 5500 from 500 x camera extent, opacity gate 0.1, prune 0.01, no opacity reset, no screen-size prune); hard/soft gates 0/1000, smoothness >3000, weights 0.1/0.1/1; shared Adam state per field across passes as in the official single optimizer; bake at 6000 is the last operation of after_backward so it equals the evaluated model; 12 unit tests pass."
+ ],
+ "summary": "No critical issues; the implementation matches the official LLFF random-init recipe and paper_results.json matches the paper's average rows. One major (probe coverage of the after_backward schedule) blocks approval; the remaining items are minor, mostly already-documented rasterizer/ordering gaps. dngaussian-3dgs is a literal but unverifiable reading of the paper's 3DGS-dagger."
+}

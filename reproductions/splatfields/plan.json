@@ -1,0 +1,84 @@
+{
+ "method": "splatfields",
+ "module": "ss_splatfields",
+ "methods": [
+  "splatfields",
+  "splatfields-3dgs"
+ ],
+ "components": [
+  {
+   "name": "splatfields-renderer",
+   "kind": "renderer",
+   "factory": "ss_splatfields.renderer:create_renderer"
+  },
+  {
+   "name": "splatfields-density",
+   "kind": "density",
+   "factory": "ss_splatfields.density:create_density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss",
+   "factory": "splatstudio.losses:create_photometric"
+  },
+  {
+   "name": "mask",
+   "kind": "loss",
+   "factory": "ss_splatfields.losses:create_mask",
+   "config": {
+    "weight": 0.1
+   }
+  },
+  {
+   "name": "splat-norm",
+   "kind": "loss",
+   "factory": "ss_splatfields.losses:create_norm",
+   "config": {
+    "weight": 0.01
+   }
+  },
+  {
+   "name": "sf3dgs-renderer",
+   "kind": "renderer",
+   "factory": "ss_splatfields.renderer:create_plain_renderer",
+   "method": "splatfields-3dgs"
+  },
+  {
+   "name": "sf3dgs-density",
+   "kind": "density",
+   "factory": "ss_splatfields.density:create_stage1_density",
+   "method": "splatfields-3dgs"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "triplane-generator",
+  "splat-fields",
+  "renderer-uses-fields",
+  "bake",
+  "norm-loss",
+  "mask-loss",
+  "schedule",
+  "stage1-schedule"
+ ],
+ "contributions": [
+  "neural-splat-fields (C1)",
+  "triplane-cnn-prior (C2)",
+  "splat-norm-regularisation (C3)",
+  "mask-loss (protocol)",
+  "official-3dgs-stage (stage 1 / baseline)"
+ ],
+ "fidelity_gaps": [
+  "gsplat vs ingra14m rasterizer",
+  "float vs 8-bit PNG metrics",
+  "KMeans view choice under sklearn 1.0.2 (authors' version unknown)",
+  "per-Gaussian optimizer step before densification (stage 1)",
+  "SH schedule one-step offset",
+  "optimizer step on the last iteration",
+  "stage-1 stochasticity / authors' clouds unreleased",
+  "mask lookup via sidecar + argv (infrastructure)",
+  "4D branch and DTU protocol not ported"
+ ],
+ "feasible_natively": true,
+ "global_state": "network + Adam owned by the density in a process-local slot (eagles pattern), baked into base fields at total_steps; weights also stored in density_state"
+}

@@ -1,0 +1,60 @@
+{
+ "method": "dn-splatter",
+ "datasets": {
+  "mushroom-vr_room": [
+   "vr_room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe splatstudio --num-gaussians 10000000 --max-gaussians 12000000",
+ "eval_splits": [
+  "test",
+  "validation"
+ ],
+ "control": {
+  "method": "dn-splatter-splatfacto",
+  "datasets": {
+   "mushroom-vr_room": [
+    "vr_room"
+   ]
+  },
+  "steps": 30000,
+  "note": "paper baseline: vanilla ns-train splatfacto (eval/batch_run.py:186-207) on the same 1M sensor-depth points; isotropic log(mean 3-NN) scales + random quats, Splatfacto density + photometric loss, num_downscales 2 / resolution_schedule 3000. Paper Table 4 Splatfacto (L_rgb) 26.6 / .870."
+ },
+ "paper_reference": {
+  "vr_room": {
+   "psnr": 26.8,
+   "ssim": 0.879
+  },
+  "splatfacto_vr_room": {
+   "psnr": 26.6,
+   "ssim": 0.87
+  },
+  "source": "tables/ab_our_supervision_strat.tex (VR room, 30k). Headline = test split (42 test.txt frames, within): every single-number MuSHRoom NVS table uses the within value (main_sfm_init, ab_2dgs_vs_dn_splatter_mono_sensor caption). validation (186 short_capture frames, cross) is secondary. No union (not an official metric). Paper delta +0.2 dB / +0.009 SSIM is within run-to-run noise; a tie is a valid outcome."
+ },
+ "proposed_datasets_json_entry": {
+  "mushroom-vr_room": {
+   "raw_root": "/home/sejain/datasets/mushroom/raw/vr_room_x",
+   "native_root": "/home/sejain/datasets/mushroom/native",
+   "scenes": {
+    "vr_room": "images"
+   },
+   "_doc": "MuSHRoom iPhone vr_room (zenodo 10230733). transforms.json explicit splits: train 376 long_capture frames, test 42 test.txt frames (within), validation 186 short_capture frames (cross trajectory; reported, never used for selection). points.npz = 1M official-style TSDF sensor-depth points; dnsplat/ sidecar (sensor depth, Omnidata v2 normals sha256 38db3f7d..., init scales/quats). Built by reproductions/dn-splatter/tools/prepare_mushroom.py (PYTHONPATH=~/models/dtueval-pylib:~/models/dpt/pylib:~/models/omnidata/pylib); NOT rebuildable by bench.py prepare."
+  }
+ },
+ "notes": "ss-train must get --data (sidecar lookup). Keep --num-gaussians >= 1M (init check) and --recipe splatstudio (3dgs recipe runs a 1Mx1M kNN that can OOM; scales/means-LR are set by the plugin anyway). ~0.18 s/step on a busy A6000 at 2k steps (more Gaussians later) -> ~1.5-2.5 h; peak ~1.5 GB at 2k, expect several GB at 30k; ~6 GB host RAM for 604 full-res images. Paper reports per-scene PSNR only for vr_room (Table 4); the 6-scene Table 3 average needs 5 more rooms (same tool, ~1.2 GB download) if wanted.",
+ "min_free_gb": 10,
+ "headline_split": "test",
+ "ablation": {
+  "method": "dn-splatter-rgb",
+  "optional": true,
+  "datasets": {
+   "mushroom-vr_room": [
+    "vr_room"
+   ]
+  },
+  "steps": 30000,
+  "note": "priors-off ablation, NOT the paper baseline: DN-Splatter renderer/density, oriented flat init, full-res training, photometric loss only."
+ }
+}

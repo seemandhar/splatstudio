@@ -1,0 +1,74 @@
+{
+ "method": "compact-3dgs",
+ "module": "ss_compact_3dgs",
+ "components": [
+  {
+   "name": "compact-renderer",
+   "kind": "renderer"
+  },
+  {
+   "name": "compact-density",
+   "kind": "density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss"
+  },
+  {
+   "name": "mask-loss",
+   "kind": "loss"
+  }
+ ],
+ "fields": [
+  {
+   "name": "c3dgs_mask",
+   "shape": [],
+   "lr": 0.01,
+   "init": 1.0
+  },
+  {
+   "name": "c3dgs_feature",
+   "shape": [
+    32
+   ],
+   "lr": 1e-12,
+   "init": 0.0
+  },
+  {
+   "name": "c3dgs_blob",
+   "shape": [
+    8
+   ],
+   "lr": 1e-12,
+   "init": 0.0
+  }
+ ],
+ "probes": [
+  "hash-grid",
+  "neural-color",
+  "volume-mask",
+  "rvq",
+  "huffman-codec",
+  "net-schedule",
+  "bake-eval",
+  "train-render-gradient"
+ ],
+ "contributions": [
+  "volume-mask",
+  "neural-view-dependent-color",
+  "geometry-codebook",
+  "post-processing-storage"
+ ],
+ "fidelity_gaps": [
+  "white bg/view sampling/SSIM (runtime)",
+  "gsplat rasterizer",
+  "fp32 vs tcnn fp16 training",
+  "update order at densify / final step",
+  "A6000 vs A100",
+  "global state via c3dgs_blob/c3dgs_feature",
+  "tcnn MLP padding/init",
+  "bake at total_steps only",
+  "container uses canonical Huffman (same lengths)"
+ ],
+ "feasible_natively": true
+}

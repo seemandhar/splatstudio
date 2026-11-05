@@ -1,0 +1,86 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "plugin/ss_sparsegs/__init__.py",
+      "where": "PRUNE_STEP (lines 18-21, used at line 36); also plugin/README.md:23, paper.md:113, report.md:6",
+      "problem": "The floater-pruning schedule was moved from the paper's explicit setting to step 6667 based on test-split smoke results. The justification ('the README's 2/3 proportion') is also weaker than it is presented.",
+      "evidence": "Paper sec/4_experiments.tex:26 says 'Floater pruning is applied once after training completes', and 3_methods.tex:157 says 'at the end of training'. The official code has no default (prune_sched=[]), and the README's 20000-of-30000 is a 30k/-r 2 recipe that differs from the paper's 10k setting in other ways too. In the README run, pruning comes AFTER densification has stopped (densify_until_iter 18000 < 20000), followed by 10k steps of pure optimisation with densify_lag 1e6. At 6667/10000, densification is still active (until 18000) and an opacity reset still happens at 9000, so '2/3' does not reproduce the README's regime either. The choice was made from tools/prune_offline.py, which measures only the TEST split (evidence/smoke-c-noprune/prune_offline.json), on a 2k-step compressed smoke run that does not represent the 10k schedule. Pruning at 2/3 is still net-negative in the smoke run: official range 18.54 vs 18.90 without pruning (-0.37 dB), paper range 18.86 (-0.05 dB). The paper's ablation claims +0.28 dB. Under CLAUDE.md's honesty rules this is a schedule choice made on test images and must be labelled 'tuned'. plan.md:12 still says prune_step '=total 10000', which contradicts the code.",
+      "fix": "Either (a) make the default prune_step = TOTAL_STEPS (paper) and register the 6667 schedule as a separately named variant labelled 'tuned (chosen on garden test-split 2k smoke)', or (b) keep 6667 but label it 'tuned / deviation selected on test-split smoke' in README, report.md, paper.md and the MethodSpec description, AND add the paper-schedule variant (prune at 10000) to bench_request so both are reported. Correct the '2/3 like the README' wording: the README prunes after densification ends. Fix plan.md:12. If you re-justify the choice, use the validation split, never test."
+    },
+    {
+      "severity": "minor",
+      "file": "bench_request.json",
+      "where": "eval_splits / headline metric",
+      "problem": "Headline metric is not defined. The official metric set (metrics.py --exclude_path, render.py renders all cameras of the full scene) is ALL non-training images, i.e. test ∪ validation here. The plugin README presents test (llffhold8 minus train, 19-31 images) as the primary split.",
+      "evidence": "source/code/metrics.py:24-53 skips only the training filenames. render.py:78 renders scene.getTrainCameras() of the full (non-eval) scene. prepare_m360_sgs12.py:132-133 builds test = idx%8==0 minus train and val = the rest, so test ∪ val = the official set (verified).",
+      "fix": "State in bench_request/report that the paper-comparable number is the per-view-weighted mean over test ∪ validation (pool the per_view rows, do not average the two split means). Report test-only as the paper-text variant."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sparsegs/probes.py",
+      "where": "floater_prune, line 358",
+      "problem": "The C5 probe accepts pruning of up to 50% of the background wall. The measured paper-mode run removes 304 of 1200 wall Gaussians (25%), so a much more aggressive or wrong range (e.g. also removing Gaussians behind the mode) would still pass. For the default mode_range=official, the probe shows the floater is NOT removed (floaters_left 4, 8 wall Gaussians pruned). Only the index formula is checked for the default.",
+      "evidence": "ss-verify evidence: paper {pruned 308, floaters_left 0, walls_left 896}; official {pruned 8, floaters_left 4, walls_left 1192}.",
+      "fix": "Assert that no Gaussian strictly behind the mode at a flagged pixel is pruned in paper mode (compare against an independent per-pixel reference of the [first contributor, mode] set). State explicitly in the report that the default (official) range does not remove the synthetic floater."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sparsegs/density.py",
+      "where": "initialize (line 88)",
+      "problem": "CTX.seed uses the config seed (0), not the runtime run seed. CTX.draw_cfg is a module-global set at loss-factory time and is never reset between method builds in one process.",
+      "evidence": "context.py:273-315; losses.py:133,167",
+      "fix": "Seed from the run seed if exposed; reset draw_cfg in initialize or build it per method."
+    },
+    {
+      "severity": "minor",
+      "file": "paper.md",
+      "where": "§6 protocol",
+      "problem": "The official evaluation resolution is ambiguous and not recorded. The released zips contain full-resolution images (garden 5185x3359). The README trains with -r 2 (1/2 res, not 1/4) and renders without -r, so Inria's loader caps width at 1600 px. The paper says 1/4. Our 1/4 choice follows the paper text but should be listed as a fidelity gap.",
+      "evidence": "~/datasets/sparsegs/raw12/garden_12/images/DSC07989.JPG is 5185x3359; README training/render commands.",
+      "fix": "Add to the fidelity gaps."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_sparsegs/renderer.py",
+      "where": "Renderer.render (lines 262-268)",
+      "problem": "The sparsegs-3dgs control still runs the softmax-depth CUDA pass every training step (with_depth defaults to grad-enabled) although no loss uses it. Compute only, results unaffected.",
+      "evidence": "method_3dgs keeps sparsegs-renderer with no depth consumer.",
+      "fix": "Optional: config flag to skip the depth pass in the control."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(1) alpha-blended depth", "status": "exact", "code": "csrc/sgs_depth.cu:depth_fwd_kernel (AD/(AZ+1e-8), normalised as in official forward.cu)"},
+    {"eq": "(2) mode depth", "status": "exact", "code": "csrc/sgs_depth.cu:depth_fwd_kernel (first argmax of w)"},
+    {"eq": "(3) softmax-scaled depth", "status": "exact", "code": "csrc/sgs_depth.cu:depth_fwd_kernel (exp(beta(w-0.3)) shift cancels; log(D/Z+1e-8), Z:=1)"},
+    {"eq": "(4)-(5) limits", "status": "exact", "code": "probes.py:softmax_depth (beta->0 limit checked)"},
+    {"eq": "supp. A gradients", "status": "exact", "code": "csrc/sgs_depth.cu:depth_bwd_kernel (re-derived: dlogD/dalpha_k = T_k(e'_k d_k - SN_k/(1-a_k))/D - T_k(e'_k - SD_k/(1-a_k))/Z; matches autograd reference to 3e-6)"},
+    {"eq": "(6) local + global Pearson", "status": "deviates", "code": "losses.py:create_pearson (official numerics: random possibly-overlapping patches, unbiased std; the paper says non-overlapping; documented)"},
+    {"eq": "(7)-(8) SDS", "status": "exact", "code": "sds.py:train_step (matches guidance/sd_utils.py line by line; fixed t=20 for step_ratio 0.99)"},
+    {"eq": "(9)-(10) depth warp + masked loss", "status": "exact", "code": "context.py:forward_warp, losses.py:warp_photometric (banker's rounding, last-write-wins, cx=(W-1)/2, unmasked SSIM, as official)"},
+    {"eq": "supp. (12)-(14) warp cameras", "status": "deviates", "code": "context.py:warp_viewmats (exact Rodrigues and official sign; angles ±2.5° from code instead of the paper's ±1.5°/±3°; documented)"},
+    {"eq": "supp. B elliptic cylinder", "status": "deviates", "code": "context.py:Ellipse (official port; rotation orthonormalised, which affects only near-plane culling; documented)"},
+    {"eq": "supp. C Alg. 1 floater pruning", "status": "deviates", "code": "density.py:prune_floaters + prune_mark kernel (official calc_diff sign/normaliser and the official thread-rank index bug by default; paper range available; schedule deviates, see major issue)"}
+  ],
+  "probe_assessment": [
+    {"probe": "softmax-depth", "detects_removal": true, "why": "Independent float64 per-pixel reference for forward and all four input gradients, plus a softmax != log-alpha separation check at beta=5. Replacing it with alpha depth, or breaking the backward, fails. Measured rel. grad error <= 3e-6."},
+    {"probe": "pearson", "detects_removal": true, "why": "Compared with torch.corrcoef; affine/negation invariances; exact patch count; uncorrelated depth must give a high loss."},
+    {"probe": "warp", "detects_removal": true, "why": "Identity and known-shift warps, Rodrigues vs scipy with the official sign, masked-L1 formula, and Pearson skipped on warp steps."},
+    {"probe": "sds", "detects_removal": true, "why": "Stub UNet/VAE: the latent gradient must equal w(eps_hat - eps); fixed-timestep mapping; ellipse views look at the centre within the z bounds. Does not exercise the real SD weights (acceptable)."},
+    {"probe": "floater-prune", "detects_removal": true, "why": "A no-op pruner leaves the floater and fails the paper-mode check. But the tolerance (keep >= 50% of the wall) is loose, and in the default official mode the floater survives, so only the index formula is tested there (minor issue)."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Released 12-view data: 6 scenes (no room) vs the paper's 'seven'; training views are not llffhold8-compatible; test = llffhold8 minus train, val = other non-train (test ∪ val = official metrics.py set, verified)",
+    "Depth prior: BoostingMonocularDepth/LeReS (official code) instead of Marigold (paper text); 16-bit PNG quantisation",
+    "MVS initial cloud rebuilt with COLMAP from the 12 train views (the released points3D.bin is ~1 KB; no fused.ply shipped)",
+    "gsplat RGB rasterizer (alpha clamp 0.999, gradient drop above the clamp) vs Inria 0.99; depth pass uses the official 0.99",
+    "Runtime: views sampled with replacement, valid-conv SSIM in the photometric loss, optimizer step before density ops, SH upgrade one step later than Inria",
+    "Warp angles ±2.5° (code) vs four angles (paper)",
+    "Paper-vs-README hyper-parameters resolved toward the paper (10k, 0.15/0.15, patch 64, warp 0.05, SDS 5e-4, a=0.97, b=7.5); step_ratio 0.99 from README",
+    "Official pruning index bug reproduced by default (mode_range official); paper range in sparsegs-paperprune",
+    "Pruning schedule 6667 vs paper 'after training' (needs the 'tuned' label, see major issue)",
+    "Resolution: 1/4 for all scenes including indoor (paper text) vs README -r 2 / 1600-px render cap"
+  ],
+  "summary": "I checked the implementation against the official code operator by operator and it is faithful. The CUDA softmax/alpha/mode depth forward is identical to forward.cu, and I re-derived the backward independently; it matches an autograd reference to about 1e-6. Pearson, SDS, the warp (including banker's rounding and last-write-wins), warp cameras, ellipse sampling, the warp-render densification statistics, Inria density with min_opacity 0.05, the xyz lr over 30k steps, and the dip-test pruning (official calc_diff, percentile floor 80, power threshold -4, thread-rank index bug) all match. ss-verify passes all 8 probes; pytest 8/8. The dataset split matches the official metric set when test and validation are pooled. One major issue blocks approval: the floater-pruning step was moved from the paper's explicit 'once after training completes' to 6667, a choice made from TEST-split results of a 2k-step compressed smoke run. The 'README 2/3 proportion' rationale ignores that the README prunes after densification has stopped, and pruning is still net-negative at 2/3 in that smoke run. It must be labelled 'tuned' and the paper schedule benchmarked as well, or the default restored to the paper's step."
+}

@@ -1,0 +1,61 @@
+{
+ "method": "edgs",
+ "module": "ss_edgs",
+ "variants": [
+  "edgs",
+  "edgs-nosh"
+ ],
+ "components": [
+  {
+   "name": "gsplat",
+   "kind": "renderer",
+   "factory": "splatstudio.backends.gsplat:create_renderer"
+  },
+  {
+   "name": "edgs-density",
+   "kind": "density",
+   "factory": "ss_edgs.density:create_density",
+   "requires": []
+  },
+  {
+   "name": "photometric",
+   "kind": "loss",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "preprocessing": {
+  "command": "ss-edgs-init",
+  "module": "ss_edgs.preprocess",
+  "output": "~/datasets/edgs-init/<dataset>/<scene>"
+ },
+ "fields": [],
+ "probes": [
+  "edgs-triangulation",
+  "edgs-sampling",
+  "edgs-sh-fit",
+  "edgs-no-densify",
+  "edgs-roma-matching",
+  "state-transitions",
+  "photometric-gradient",
+  "renderer-gradient"
+ ],
+ "contributions": [
+  "C1 dense matching (RoMa)",
+  "C2 triangulation",
+  "C3 sampling distribution",
+  "C4 SH init",
+  "C5 densification-free optimization"
+ ],
+ "fidelity_gaps": [
+  "SH-init details inferred (code absent)",
+  "white bg / with-replacement sampling",
+  "RoMa match() OOB certainty zeroing",
+  "pixel-centre A coords",
+  "camera proximity frame",
+  "true principal point",
+  "means-LR override granularity",
+  "per-step prune logging overhead",
+  "train time excludes init"
+ ],
+ "feasible_natively": true
+}

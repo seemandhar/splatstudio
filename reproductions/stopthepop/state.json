@@ -1,0 +1,29 @@
+{
+  "paper": "StopThePop: Sorted Gaussian Splatting for View-Consistent Real-time Rendering",
+  "slug": "stopthepop",
+  "plan_id": 71,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 5 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "ready_for_benchmark",
+  "arxiv": "2402.00525",
+  "method": "stopthepop",
+  "official_code_commit": "859b11b (rasterizer d8cad09)",
+  "custom_cuda": true,
+  "benchmark_target": "mipnerf360 garden (27.16 vs paper 3DGS 27.24) + counter (28.59 vs 28.98) per scene vs baseline3dgs-mipnerf360-30000",
+  "smoke": {
+    "stopthepop": 23.19,
+    "global_control": 23.25,
+    "baseline": 23.02,
+    "steps": 2000,
+    "scene": "garden"
+  },
+  "bench_exps": [
+    "stopthepop-mipnerf360"
+  ]
+}

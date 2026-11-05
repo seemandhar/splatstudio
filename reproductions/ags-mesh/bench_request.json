@@ -1,0 +1,67 @@
+{
+ "method": "ags-mesh",
+ "datasets": {
+  "mushroom": [
+   "coffee_room",
+   "honka",
+   "kokko",
+   "sauna",
+   "computer",
+   "vr_room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "--recipe splatstudio --num-gaussians 10000000 --max-gaussians 12000000",
+ "eval_splits": [
+  "test",
+  "validation"
+ ],
+ "control": {
+  "method": "dn-splatter-splatfacto",
+  "note": "paper's Splatfacto row = vanilla ns-train splatfacto (isotropic kNN init, random quats, num_downscales=2); compare ags-mesh minus control vs paper +0.36 within / +0.58 cross"
+ },
+ "paper_reference": {
+  "average_6_scenes": {
+   "within_test": {
+    "psnr": 24.83,
+    "ssim": 0.8589,
+    "lpips": 0.1129
+   },
+   "cross_validation": {
+    "psnr": 22.24,
+    "ssim": 0.8054,
+    "lpips": 0.1589
+   }
+  },
+  "splatfacto_average": {
+   "within_test": {
+    "psnr": 24.47
+   },
+   "cross_validation": {
+    "psnr": 21.66
+   }
+  },
+  "source": "tables/main_table_nvs_mushroom.tex (6-scene average only); compare the full 6-room mean of test (within) and validation (cross)"
+ },
+ "proposed_datasets_json_entry": {
+  "mushroom": {
+   "native_root": "/home/sejain/datasets/mushroom/native",
+   "scenes": {
+    "coffee_room": "images",
+    "honka": "images",
+    "kokko": "images",
+    "sauna": "images",
+    "computer": "images",
+    "vr_room": "images"
+   },
+   "_doc": "MuSHRoom iPhone (zenodo 10230733). Splits: train long_capture minus test.txt; test = test.txt (within); validation = short_capture (cross). dnsplat/ sidecar (prepare_mushroom.py, copied from dn-splatter) + agsmesh/dnc_mask_u8.npy (prepare_dnc.py). NOT rebuildable by bench.py prepare; tools/prepare_rooms.sh <gpu> rooms..."
+  }
+ },
+ "notes": "ss-train must get --data (sidecar lookup). --recipe splatstudio (3dgs recipe kNN on 1M points can OOM; plugin sets scales/means LR). ~0.35 s/step on a busy A6000 at 2k steps -> ~2-4 h per room at 30k; ~6-8 GB host RAM for full-res images (sauna 814 frames). Same sidecars also let dn-splatter run the 6-room average.",
+ "min_free_gb": 10,
+ "ablation": {
+  "method": "ags-mesh-rgb",
+  "note": "priors-off ablation, NOT the paper baseline"
+ }
+}

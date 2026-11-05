@@ -1,0 +1,37 @@
+{
+  "paper": "SafeguardGS: 3D Gaussian Primitive Pruning While Avoiding Catastrophic Scene Destruction",
+  "arxiv": "2405.17793",
+  "method_label": "Prune_SG",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.073, "ssim": 0.7881, "lpips": 0.2688, "gaussians_k": 350.3, "compression": 0.889}},
+      "baseline_3dgs": {"average": {"psnr": 27.434, "ssim": 0.8120, "lpips": 0.2219, "gaussians_k": 3159.0}},
+      "efficientgs_top1": {"average": {"psnr": 27.074, "ssim": 0.7889, "lpips": 0.2674, "gaussians_k": 353.1}},
+      "source": "arXiv v2 Table 3 (method rows) / WACV Table 3 (adds 3DGS row); 9-scene average"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.060, "ssim": 0.8165, "lpips": 0.2298, "gaussians_k": 162.2, "compression": 0.911}},
+      "baseline_3dgs": {"average": {"psnr": 23.634, "ssim": 0.8448, "lpips": 0.1786, "gaussians_k": 1829.2}},
+      "source": "arXiv v2 Table 4 / WACV Table 3"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.420, "ssim": 0.8973, "lpips": 0.2634, "gaussians_k": 305.0, "compression": 0.891}},
+      "baseline_3dgs": {"average": {"psnr": 29.438, "ssim": 0.8993, "lpips": 0.2471, "gaussians_k": 2804.7}},
+      "source": "arXiv v2 Table 5 / WACV Table 3"
+    },
+    "nerf_synthetic": {
+      "method": {"average": {"psnr": 32.876, "ssim": 0.9657, "lpips": 0.0371, "gaussians_k": 33.8}},
+      "baseline_3dgs": {"average": {"psnr": 33.806, "ssim": 0.9696, "lpips": 0.0305, "gaussians_k": 288.7}},
+      "source": "WACV Table 3"
+    }
+  },
+  "topk_sweep_mipnerf360_sg36": {
+    "k": [1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    "psnr": [27.073, 27.148, 27.238, 27.225, 27.232, 27.346, 27.384, 27.439, 27.427, 27.438, 27.445, 27.492, 27.462, 27.492, 27.438],
+    "gaussians_k": [350.294, 412.105, 459.782, 498.216, 533.089, 662.526, 832.465, 948.367, 1043.723, 1120.808, 1186.437, 1251.024, 1303.052, 1349.590, 1396.247],
+    "source": "arXiv v2 Table 1 / WACV Table 2"
+  },
+  "per_scene_reported": false,
+  "notes": "Averages only (main paper and both supplementaries). 3DGS rows are the authors' own retrained vanilla 3DGS (WACV Table 3). Paper target delta vs 3DGS: mipnerf360 -0.361 dB, tandt -0.574 dB, db -0.018 dB."
+}

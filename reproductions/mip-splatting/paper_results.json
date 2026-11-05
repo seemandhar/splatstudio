@@ -1,0 +1,181 @@
+{
+ "paper": "Mip-Splatting: Alias-free 3D Gaussian Splatting",
+ "arxiv": "2311.16493",
+ "method_label": "Mip-Splatting (ours)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "protocol": "single-scale train / same-scale test; outdoor images_4, indoor images_2; llffhold8 (official scripts/run_mipnerf360.py, --eval -r factor, kernel_size 0.1)",
+   "method": {
+    "average": {
+     "psnr": 27.79,
+     "ssim": 0.827,
+     "lpips": 0.203
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.72,
+      "flowers": 21.93,
+      "garden": 27.76,
+      "stump": 26.94,
+      "treehill": 22.98,
+      "room": 31.74,
+      "counter": 29.16,
+      "kitchen": 31.55,
+      "bonsai": 32.31
+     },
+     "ssim": {
+      "bicycle": 0.78,
+      "flowers": 0.623,
+      "garden": 0.875,
+      "stump": 0.786,
+      "treehill": 0.655,
+      "room": 0.928,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.206,
+      "flowers": 0.331,
+      "garden": 0.103,
+      "stump": 0.209,
+      "treehill": 0.32,
+      "room": 0.192,
+      "counter": 0.179,
+      "kitchen": 0.113,
+      "bonsai": 0.173
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.7,
+     "ssim": 0.826,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.63,
+      "flowers": 21.77,
+      "garden": 27.7,
+      "stump": 26.87,
+      "treehill": 22.75,
+      "room": 31.69,
+      "counter": 29.08,
+      "kitchen": 31.56,
+      "bonsai": 32.29
+     },
+     "ssim": {
+      "bicycle": 0.777,
+      "flowers": 0.622,
+      "garden": 0.873,
+      "stump": 0.783,
+      "treehill": 0.652,
+      "room": 0.928,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.329,
+      "garden": 0.103,
+      "stump": 0.208,
+      "treehill": 0.318,
+      "room": 0.192,
+      "counter": 0.178,
+      "kitchen": 0.113,
+      "bonsai": 0.174
+     }
+    }
+   },
+   "baseline_3dgs_original_paper": {
+    "average": {
+     "psnr": 27.21,
+     "ssim": 0.815,
+     "lpips": 0.214
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.25,
+      "flowers": 21.52,
+      "garden": 27.41,
+      "stump": 26.55,
+      "treehill": 22.49,
+      "room": 30.63,
+      "counter": 28.7,
+      "kitchen": 30.32,
+      "bonsai": 31.98
+     },
+     "ssim": {
+      "bicycle": 0.771,
+      "flowers": 0.605,
+      "garden": 0.868,
+      "stump": 0.775,
+      "treehill": 0.638,
+      "room": 0.914,
+      "counter": 0.905,
+      "kitchen": 0.922,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.336,
+      "garden": 0.103,
+      "stump": 0.21,
+      "treehill": 0.317,
+      "room": 0.22,
+      "counter": 0.204,
+      "kitchen": 0.129,
+      "bonsai": 0.205
+     }
+    }
+   },
+   "baseline_3dgs_ewa": {
+    "average": {
+     "psnr": 27.77,
+     "ssim": 0.826,
+     "lpips": 0.206
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.64,
+      "flowers": 21.86,
+      "garden": 27.65,
+      "stump": 26.87,
+      "treehill": 22.91,
+      "room": 31.68,
+      "counter": 29.21,
+      "kitchen": 31.59,
+      "bonsai": 32.51
+     },
+     "ssim": {
+      "bicycle": 0.777,
+      "flowers": 0.62,
+      "garden": 0.871,
+      "stump": 0.784,
+      "treehill": 0.655,
+      "room": 0.927,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.213,
+      "flowers": 0.335,
+      "garden": 0.111,
+      "stump": 0.21,
+      "treehill": 0.325,
+      "room": 0.192,
+      "counter": 0.179,
+      "kitchen": 0.113,
+      "bonsai": 0.173
+     }
+    }
+   },
+   "source": "main Table 3 (tab/single_scale_360.tex, averages) and supp. Table (tab/normal_setting_360_supp.tex, per scene)"
+  }
+ },
+ "notes": "baseline_3dgs is the '3DGS*' row = 3DGS retrained by the Mip-Splatting authors; baseline_3dgs_original_paper are 3DGS's own published numbers. Paper improvement over 3DGS*: +0.09 dB mean PSNR (range -0.01..+0.23 per scene). Multi-scale (stmt / mtmt) and Blender protocols are out of scope."
+}

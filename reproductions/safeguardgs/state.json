@@ -1,0 +1,32 @@
+{
+  "paper": "SafeguardGS: 3D Gaussian Primitive Pruning While Avoiding Catastrophic Scene Destruction",
+  "slug": "safeguardgs",
+  "plan_id": 48,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "plugin_freeze_sha": "22975d847da77cfe",
+  "bench_exps": [
+    "safeguardgs-mipnerf360-1600"
+  ],
+  "baseline_exps": [
+    "baseline3dgs-mipnerf360-1600-30000",
+    "baseline3dgs-mipnerf360-1600b-30000"
+  ],
+  "protocol_note": "official 3DGS -r -1 auto: width 1600 PIL bicubic from full-res (mipnerf360-1600), all 9 scenes (averages only)",
+  "result": {
+    "mean_psnr": 26.87,
+    "paper": 27.07,
+    "mean_gaussians_k": 340,
+    "paper_k": 350.3,
+    "delta_vs_baseline": -0.4,
+    "paper_delta": -0.361
+  }
+}

@@ -1,0 +1,42 @@
+{
+ "method": "radegs",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "flowers",
+   "garden",
+   "stump",
+   "treehill",
+   "room",
+   "counter",
+   "kitchen",
+   "bonsai"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "--max-gaussians 20000000",
+ "baseline": "baseline3dgs-mipnerf360-30000",
+ "paper_target": {
+  "outdoor": {
+   "psnr": 25.17,
+   "ssim": 0.764,
+   "lpips": 0.199
+  },
+  "indoor": {
+   "psnr": 30.74,
+   "ssim": 0.928,
+   "lpips": 0.165
+  }
+ },
+ "paper_3dgs_row": {
+  "outdoor": {
+   "psnr": 24.64
+  },
+  "indoor": {
+   "psnr": 30.41
+  }
+ },
+ "min_free_gb": 36,
+ "notes": "Paper Table 3 reports outdoor/indoor averages only -> all 9 scenes. RaDe-GS has no Mip-NeRF 360 script at the pinned commit 2d4bc08; its table copies GOF's rows (GOF run_mipnerf360.py: -i images_4 outdoor / images_2 indoor = our mipnerf360 protocol), so mipnerf360 + baseline3dgs-mipnerf360-30000. Compare group averages and the gain over our gsplat baseline vs the paper gain over 3DGS (+0.53 outdoor / +0.33 indoor). GOF-style densification reaches ~1.9x gsplat's Gaussian count (GOF port needed 20M cap / 36 GB GPUs). First job JIT-compiles ss_radegs_raster (~70 s, cached). Regularisers start at step 15000. Alternative protocol if wanted: mipnerf360-1600 (official default -r -1 on full-res images)."
+}

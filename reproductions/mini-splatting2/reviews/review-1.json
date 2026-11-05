@@ -1,0 +1,48 @@
+{
+ "approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_mini_splatting2/renderer.py + link.py", "where": "MSv2Renderer.render / link.lookup",
+   "problem": "Training silently degrades to stock gsplat (full-res, no culling, no depth-colour cache) if the table lookup misses (params object copied/rewrapped by the runtime, or a training viewmat not matching within 1e-5). Nothing asserts that training frames resolve to a view index. Eval isolation itself is sound: test viewmats never match, evaluate() builds fresh params with no table, and cull/half_res are both off after 13000/3000 so even the in-process final measure() cannot be affected.",
+   "evidence": "renderer.py: k = None if table is None else table.view_index(...); no error path. link.py keys on id(params) with a weakref identity check.",
+   "fix": "In density.before_backward, raise if step <= 13000 and outputs.get('view_index') is None (every training frame must resolve). Also note duplicate viewmats (rigs) would map to the first match."},
+  {"severity": "minor", "file": "plugin/ss_mini_splatting2/density.py", "where": "DEFAULTS total_steps / culling_off",
+   "problem": "culling_off step (simp2+total)//2 = 13000 and the 30000-horizon LR are tied to cfg total_steps=18000, but the runtime's --steps is independent (tools/bench.py default is 30000). A run with another --steps silently gets the 18000 schedule (culling never switches off if steps < 13000; in-process measure on train views would then apply masks).",
+   "evidence": "core.events: step == (simp_iteration2 + total_steps)//2; runtime.train has no hook to pass steps to the density.",
+   "fix": "Document/enforce --steps 18000 (bench_request.json already sets 18000); optionally record steps mismatch in the report."},
+  {"severity": "minor", "file": "plan.md / report", "where": "fidelity gap 3",
+   "problem": "Official keeps half-res views after 3000 until the current shuffled stack empties (up to ~N more iterations); plugin switches exactly at 3001. Also official shuffles without replacement; plugin samples with replacement (runtime), so ~e^-(2000/N) views may be unseen at the depth reinit (fallback to rendered colours, counted in depth_views_fallback). Already listed as a gap; effect expected small.",
+   "evidence": "official train.py: viewpoint_stack refilled only when empty via getTrainCameras_warn_up(iteration<=3000).",
+   "fix": "None required; keep reporting depth_views_fallback per run."},
+  {"severity": "minor", "file": "paper_results.json", "where": "datasets.*.method.average",
+   "problem": "Dataset averages (27.33 / 23.14 / 30.08 PSNR) come from the main table and differ slightly from the mean of the appendix per-scene values (27.35 / 23.13 / 30.04). Per-scene values match the v1 Table 7 exactly (364/364 entries, incl. 3DGS, 3DGS-accel, MSv2-D, Mini-Splatting(-D) rows; johnson mapped to drjohnson).",
+   "evidence": "scripted comparison of paper_results.json against source/paper.txt Table 7: 0 mismatches.",
+   "fix": "For subset benchmarks (bicycle/garden/counter, drjohnson/playroom) compare to per-scene values, never to these dataset averages; mention the paper-internal rounding inconsistency."},
+  {"severity": "minor", "file": "plugin/ss_mini_splatting2/probes.py", "where": "half_res probe",
+   "problem": "Probe checks output shape and mean target colour but not that K is scaled consistently (FoV unchanged) or that eval views are not culled; a wrong K scale would pass. (Code review: scale_intrinsics scales fx,cx by w2/w and fy,cy by h2/h, equal to the official FoV-preserving camera; correct.)",
+   "evidence": "probes.py half_res asserts shapes and loss_target mean only.",
+   "fix": "Add an assertion that the half-res render of a point equals the full-res pixel position / 2 (projection check)."}
+ ],
+ "equation_coverage": [
+  {"eq": "Sec.4 critical Gaussians (argmax set, 0.99 CDF of sum w, Eq.3)", "status": "exact", "code": "density.py:_culling_with_clone / core.cdf_keep_mask (CDF taken over all N then indexed by ~prune, as official)"},
+  {"eq": "Sec.4 aggressive clone (MCMC N=2: a'=1-sqrt(1-a), s'=a/(2a'-a'^2/sqrt2) s)", "status": "exact", "code": "core.py:clone_values; density._clone (source overwritten, copy with zero moments, opacity clamp [0.0051,1-eps] after scale)"},
+  {"eq": "Eq.4 visibility culling (per-view 0.99 CDF mask, factor=count_vis/(count_rad+0.1), count_vis<=1 prune)", "status": "exact", "code": "density.py:_visibility_pass; renderer.py subset render; core.culling_factor"},
+  {"eq": "Sec.6.1 sparse Adam (Taming)", "status": "exact", "code": "optim.py; identical to official SparseGaussianAdam (lr*sqrt(1-b2^t)/(1-b1^t) folded into lr, no per-row bias correction, eps 1e-15, rows radii>0)"},
+  {"eq": "Depth reinit (num_depth=N before preserving prune, prob=1-T, opacity 0.1, identity quats, knn scales, fresh Adam, cull cleared)", "status": "exact", "code": "density.py:_depth_reinit/_reinit"},
+  {"eq": "Simplification 3000 (sampling 0.6 / MSv2-D importance prune) and 8000 (preserving 0.99 / importance prune)", "status": "exact", "code": "density.py:_simplify1/_simplify2; matches culling_with_interesction_sampling/preserving/importance_pruning incl. nnz-scaled sample count and +1e-6 CDF quirk"}
+ ],
+ "probe_assessment": [
+  {"probe": "msv2-critical-clone", "detects_removal": true, "why": "compares critical set and clone values to independent binomial MCMC reference; evidence shows vanilla-clone mutation fails"},
+  {"probe": "msv2-visibility-culling", "detects_removal": true, "why": "checks rasterised subset equals subset render and differs from full; renderer-ignoring-culling mutation fails per test.json"},
+  {"probe": "msv2-sparse-adam", "detects_removal": true, "why": "reference bias-corrected Adam on visible rows, untouched invisible rows; Adam-without-bias-correction mutation fails"},
+  {"probe": "msv2-half-res", "detects_removal": true, "why": "shape + target size would change if warm-up removed; does not verify K scaling (minor)"},
+  {"probe": "msv2-schedule", "detects_removal": true, "why": "asserts event steps from core.events (CPU); does not exercise after_backward dispatch, which the compressed-schedule smoke covers"},
+  {"probe": "msv2-depth-reinit", "detects_removal": true, "why": "count, surface proximity, GT colours, fresh Adam"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Optimizer step precedes density control (official skips the step on densify iterations because new params have no grad): negligible.",
+  "White background (runtime) vs official black; gsplat rasteriser (alpha clamp 0.999, 3-sigma radius) vs Taming rasteriser; valid-conv SSIM.",
+  "Random-with-replacement view sampling and exact switch to full res at 3001.",
+  "Evidence is smoke-only (2000-step real schedule and a compressed all-events run); no full 18000-step run exists yet, so match to paper PSNR is unverified."
+ ],
+ "summary": "Code-vs-official audit found no critical or major deviation. Verified against source/code @5ec9202: clone cadence (500..2750 step 250, skipping 2000, nested inside iteration<3000, 9 passes) and MCMC N=2 formula; event order at 1000/2000/3000; depth reinit at 2000 with num_depth taken before the preserving prune; simplification at 3000/8000 and the 0.99 CDF cut (including the official +1e-6 offset quirk); culling (masks recomputed with no culling during the pass, rows kept aligned through duplicate/split/remove, cleared at (8000+18000)//2=13000); sparse Adam identical to the official Taming-style wrapper (the gsplat fused kernel has no bias correction, so the folded lr is correct); half-res cameras scale K as the FoV-preserving official cameras and densify gradients use the rendered (half) width; SH degree 0 until 4000 via shN zeroing plus moment zeroing; opacity LR 0.025; position LR with 30000-step horizon overriding the runtime's 18000-horizon decay (set after opt.step, so the plugin value wins). The link side-channel cannot misapply masks to eval views (viewmat match only on training views, fresh params at evaluate(), culling/half-res already off at the end) but fails open silently in training; add a guard. paper_results.json per-scene values match the v1 Table 7 for all 364 entries. Remaining risk is empirical (no full run yet), not structural."
+}

@@ -1,0 +1,22 @@
+{
+  "method": "dropgaussian",
+  "datasets": {"llff-fewview3-r8": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]},
+  "steps": 10000,
+  "per_scene_reported": false,
+  "extra": "",
+  "recipe": "3dgs",
+  "ablation": {"method": "dropgaussian-nodrop", "datasets": {"llff-fewview3-r8": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]}, "steps": 10000,
+               "note": "Same pipeline with gamma=0 (paper Table 5 row 1: 19.22). This is the protocol-matched baseline; compare its gain with the paper's +1.54 dB (20.76 vs 19.22) or +1.34 dB (Table 5's 20.56)."},
+  "baseline": {"method": "gsplat", "datasets": {"llff-fewview3-r8": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]}, "steps": 10000,
+               "note": "Optional shared gsplat baseline, e.g. baseline3dgs-llff-fewview3-r8-10000. It uses gsplat defaults (tau 2e-4, white bg), so it is not the official DropGaussian setting."},
+  "paper_reference": {"dataset": "llff-3view", "average": {"psnr": 20.76, "ssim": 0.713, "lpips": 0.200}, "baseline_3dgs": {"psnr": 19.22, "ssim": 0.649, "lpips": 0.229}, "source": "paper_results.json (Table 1); averages only, all 8 scenes"},
+  "proposed_datasets_json_entry": {
+    "llff-fewview3-r8": {
+      "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+      "native_root": "/home/sejain/datasets/llff/fewview3-r8",
+      "scenes": {"fern": "images", "flower": "images", "fortress": "images", "horns": "images", "leaves": "images", "orchids": "images", "room": "images", "trex": "images"},
+      "_doc": "FSGS/CoR-GS/DropGaussian 3-view LLFF at the official -r 8 resolution: same split and init as llff-fewview3 (test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused). Images: full-res images/ PIL-bicubic /8 -> 504x378 PNG. Init: COLMAP 3.9.1 point_triangulator + patch_match_stereo/stereo_fusion on the 3 training views only (horns/fortress/room points.npz copied from llff-fewview3, since the cloud does not depend on resolution). Built by reproductions/ad-gs/tools/prepare_llff_fewview.py --downscale 8; NOT rebuildable by bench.py prepare."
+    }
+  },
+  "notes": "~0.12 s/step on a shared A6000 => ~20-25 min per scene. The paper reports no per-scene numbers, so the comparison must use the 8-scene average. Do not change the existing llff-fewview3 key."
+}

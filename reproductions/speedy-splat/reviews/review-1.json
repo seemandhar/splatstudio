@@ -1,0 +1,44 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plan.md", "where": "Implementation notes (SH degree)",
+   "problem": "Plan says the score render has a one-step SH offset at 6000/9000/12000. It doesn't: both the official code (oneupSHdegree at it%1000, so degree 3 from it 3000) and the runtime ((s-1)//1000 capped at 3) use degree 3 at every prune step.",
+   "evidence": "train.py:128-129; density.py:139; runtime.py:197",
+   "fix": "Drop the claimed offset from the plan and report. It has no effect on the code."},
+  {"severity": "minor", "file": "bench_request.json", "where": "optional_methods.speedy-splat-stock",
+   "problem": "The paper's 'Baseline' row comes from Inria 3D-GS code with a black background and the stock rasterizer. Our gsplat baseline differs (white background, gsplat kernels), so its Gaussian count is not the right denominator for the 10.6x compression. That 10.6x is also a dataset average, with no per-scene counts reported.",
+   "evidence": "paper_results.json notes; breakout_psnr.tex:6",
+   "fix": "Promote speedy-splat-stock (garden, counter) from optional to recommended. Report the PSNR drop and the count ratio against both the stock control and the gsplat 1600 baseline."},
+  {"severity": "minor", "file": "plugin/ss_speedysplat/density.py", "where": "after_backward ordering",
+   "problem": "The runtime applies step s's Adam update before densify, soft prune and opacity reset. Officially, densify and soft prune run before the step, and the rebuilt Parameters drop that step's gradients. Already listed as fidelity gap 1; the effect is at most one Adam step on each densify step.",
+   "evidence": "train.py:169-196 vs runtime.py:204-211",
+   "fix": "Keep it documented. It cannot be closed without a runtime change."},
+  {"severity": "minor", "file": "report.md", "where": "Benchmark request / targets",
+   "problem": "Our runtime's LPIPS is systematically higher than the paper's on 1600 px (counter: our gsplat 0.247 vs the paper's 3D-GS 0.185). Absolute LPIPS and SSIM are therefore not comparable to the paper.",
+   "evidence": "runs/baseline3dgs-mipnerf360-1600-30000/gsplat/mipnerf360-1600-counter/test.json; breakout_lpips.tex",
+   "fix": "Compare deltas against our baseline (paper: PSNR -0.61/-0.86, SSIM -0.042/-0.038, LPIPS +0.091/+0.075) rather than absolute values."}
+ ],
+ "equation_coverage": [
+  {"eq": "(6)-(8) alpha compositing", "status": "exact", "code": "csrc/speedy (vendored b38abb6, byte-identical to source submodule)"},
+  {"eq": "(9) 3-sigma radius", "status": "exact", "code": "csrc/stock (byte-identical to git show 59f5f77, parent of dd707c2 'Adds SnugBox and AccuTile')"},
+  {"eq": "(10)-(17) SnugBox", "status": "exact", "code": "csrc/speedy/cuda_rasterizer/auxiliary.h (vendored)"},
+  {"eq": "Alg.1 AccuTile", "status": "exact", "code": "csrc/speedy/cuda_rasterizer/auxiliary.h (vendored)"},
+  {"eq": "(18)-(23) score  sum_views sum_pix (o dL/dalpha)^2, L=image.sum(), black bg", "status": "exact", "code": "raster.py:speedy_scores (mirrors train.py:32-66; backward.cu:539,558)"},
+  {"eq": "soft prune 0.8 @6000/9000/12000 after ADC, before reset", "status": "exact", "code": "density.py:after_backward 122-131 (train.py:174-191)"},
+  {"eq": "hard prune 0.3 @15000..27000", "status": "exact", "code": "density.py:132-133 (train.py:203-210)"},
+  {"eq": "percentile rule score <= sort[int(r(N-1))]", "status": "exact", "code": "density.py:prune_mask (gaussian_model.py:405-410)"},
+  {"eq": "3D-GS ADC clone/split/prune, screen-size prune inert", "status": "exact", "code": "density.py:_densify (gaussian_model.py:389-401; max_radii2D zeroed in densification_postfix :347 before the :398 test)"}
+ ],
+ "probe_assessment": [
+  {"probe": "speedy-culling-exact", "detects_removal": true, "why": "Compares against an independent float64 unculled compositor (stock 3-sigma is 1.2e-2 off, so truncation is visible). Pair counts are checked against an independent exact ellipse-tile count and against the stock squares, so swapping in a 3-sigma rasterizer fails."},
+  {"probe": "speedy-score-kernel", "detects_removal": true, "why": "Compared with float64 autograd over 2 views. Summing before squaring is 174x off, a missing score is all zeros (fails), and a wrong bg term changes the reference."},
+  {"probe": "speedy-prune-schedule", "detects_removal": true, "why": "Checks the exact step list and kind, that the score render sees pre-reset opacity, the pruned count, that the top scores survive, that Adam moments stay aligned, and the tie rule."},
+  {"probe": "speedy-adc-schedule", "detects_removal": true, "why": "Checks the densify cadence 600..14900 (144 events), that the world-size prune starts only after 3000, and the reset to 0.01."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Runtime optimizer step precedes density control (official: densify/soft-prune before step, hard prune after) — one Adam step, negligible.",
+  "View sampling with replacement; SSIM valid conv; LPIPS from lpips package (vs lpipsPyTorch).",
+  "One seed vs paper mean of 3 runs.",
+  "FPS on shared A6000 through Python wrapper vs A5000; only ratios meaningful.",
+  "Protocol: official train.sh has no -i/-r, so the defaults apply (images/, resolution -1 → width 1600, camera_utils.py:25-39). README:31 explicitly says this is higher than 3D-GS full_eval.py (-i images_4/images_2, full_eval.py:43,46). Our w1600 data match exactly (garden 1600x1036, counter 1600x1066 = int(H/scale)). mipnerf360-1600 is the correct protocol."
+ ],
+ "summary": "Both rasterizers are vendored byte-identical: csrc/speedy matches the b38abb6 submodule, and csrc/stock matches git show 59f5f77 (the parent of the SnugBox commit). The score render, soft/hard schedule, percentile rule and ADC match the official train.py and gaussian_model.py. Scoring uses all training cameras at training resolution, a separate render pass with L=image.sum() on a black background, and the current params at active SH degree 3. The max_radii2D zeroing quirk (densification_postfix at gaussian_model.py:347) is real, so the screen-size prune is inert. pytest passes 4/4 and ss-verify reports declared_checks_passed. Protocol: mipnerf360-1600 vs baseline3dgs-mipnerf360-1600-30000 is correct: official train.sh uses the -r -1 default (width 1600), and the README says it differs from full_eval.py. The paper's 3D-GS numbers are consistent with this. Garden 27.31 is below the 3DGS paper's images_4 27.41 and its LPIPS of 0.122 is worse, the direction higher resolution produces; our own 1600 vs images_4 garden LPIPS moves the same way (0.153 vs 0.131). Counter 29.14 sits at nearly the same resolution as images_2 (1558 px). Targets verified in breakout_psnr.tex:6,11: garden 26.70 and counter 28.28 against a baseline of 27.31 and 29.14. Mip-NeRF 360 compression is 10.6x (main_metric_table.tex:18). Judge on the deltas, and add the speedy-splat-stock control for the count ratio. No critical or major issues."}

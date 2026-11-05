@@ -1,0 +1,58 @@
+{
+  "paper": "Compressed 3D Gaussian Splatting for Accelerated Novel View Synthesis",
+  "arxiv": "2401.02436",
+  "method_label": "Ours",
+  "iterations": 35000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 26.981, "ssim": 0.801, "lpips": 0.238, "size_MB": 28.803},
+        "per_scene": {
+          "psnr": {"bicycle": 24.970, "bonsai": 31.347, "counter": 28.671, "flowers": 21.152, "garden": 26.746, "kitchen": 30.262, "room": 31.138, "stump": 26.285, "treehill": 22.256},
+          "ssim": {"bicycle": 0.751, "bonsai": 0.930, "counter": 0.896, "flowers": 0.584, "garden": 0.844, "kitchen": 0.914, "room": 0.911, "stump": 0.757, "treehill": 0.620},
+          "lpips": {"bicycle": 0.240, "bonsai": 0.217, "counter": 0.215, "flowers": 0.358, "garden": 0.144, "kitchen": 0.140, "room": 0.231, "stump": 0.250, "treehill": 0.351},
+          "size_MB": {"bicycle": 47.147, "bonsai": 12.794, "counter": 13.789, "flowers": 31.140, "garden": 46.565, "kitchen": 18.874, "room": 15.033, "stump": 40.569, "treehill": 33.318},
+          "compression_ratio": {"bicycle": 30.761, "bonsai": 23.011, "counter": 20.977, "flowers": 27.619, "garden": 29.636, "kitchen": 23.211, "room": 25.068, "stump": 28.926, "treehill": 26.859}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.287, "ssim": 0.812, "lpips": 0.220, "size_MB": 795.263},
+        "per_scene": {
+          "psnr": {"bicycle": 25.171, "bonsai": 31.979, "counter": 28.888, "flowers": 21.448, "garden": 27.179, "kitchen": 30.713, "room": 31.341, "stump": 26.562, "treehill": 22.303},
+          "ssim": {"bicycle": 0.762, "bonsai": 0.938, "counter": 0.905, "flowers": 0.602, "garden": 0.861, "kitchen": 0.923, "room": 0.916, "stump": 0.770, "treehill": 0.631},
+          "lpips": {"bicycle": 0.216, "bonsai": 0.208, "counter": 0.204, "flowers": 0.341, "garden": 0.115, "kitchen": 0.130, "room": 0.223, "stump": 0.219, "treehill": 0.328},
+          "size_MB": {"bicycle": 1450.277, "bonsai": 294.415, "counter": 289.244, "flowers": 860.062, "garden": 1379.993, "kitchen": 438.099, "room": 376.853, "stump": 1173.522, "treehill": 894.903}
+        }
+      },
+      "source": "supp. Table results-mip (per scene); main Table 1 (average 26.981 / 0.801 / 0.238 / 28.80 MB)"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.343, "ssim": 0.832, "lpips": 0.194, "size_MB": 17.282},
+        "per_scene": {"psnr": {"train": 21.863, "truck": 24.823}, "ssim": {"train": 0.798, "truck": 0.867}, "lpips": {"train": 0.226, "truck": 0.161}, "size_MB": {"train": 13.249, "truck": 21.316}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.355, "ssim": 0.838, "lpips": 0.186, "size_MB": 421.906},
+        "per_scene": {"psnr": {"train": 21.770, "truck": 24.940}, "ssim": {"train": 0.805, "truck": 0.871}, "lpips": {"train": 0.217, "truck": 0.155}, "size_MB": {"train": 242.782, "truck": 601.030}}
+      },
+      "source": "supp. Table results-tnt (main Table 1 prints 23.324 / 23.36 for the averages)"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 29.381, "ssim": 0.898, "lpips": 0.253, "size_MB": 25.299},
+        "per_scene": {"psnr": {"drjohnson": 28.871, "playroom": 29.891}, "ssim": {"drjohnson": 0.895, "playroom": 0.900}, "lpips": {"drjohnson": 0.254, "playroom": 0.252}, "size_MB": {"drjohnson": 28.938, "playroom": 21.660}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.432, "ssim": 0.898, "lpips": 0.246, "size_MB": 703.772},
+        "per_scene": {"psnr": {"drjohnson": 28.938, "playroom": 29.926}, "ssim": {"drjohnson": 0.896, "playroom": 0.901}, "lpips": {"drjohnson": 0.248, "playroom": 0.244}, "size_MB": {"drjohnson": 805.358, "playroom": 602.186}}
+      },
+      "source": "supp. Table results-deep"
+    }
+  },
+  "ablation_garden": {
+    "source": "main Table ablation (garden)",
+    "rows": {"baseline": [27.179, 0.861, 0.115, 1379.99], "+pruning": [27.083, 0.856, 0.118, 1217.25], "+color_clustering": [25.941, 0.818, 0.178, 278.41], "+gaussian_clustering": [25.781, 0.811, 0.186, 164.15], "+qa_finetune": [26.746, 0.844, 0.144, 86.69], "+encode": [26.746, 0.844, 0.144, 58.40], "+morton_order": [26.746, 0.844, 0.144, 46.57]},
+    "columns": ["psnr", "ssim", "lpips", "size_MB"]
+  },
+  "notes": "Baseline rows are the 3DGS authors' released reconstructions (Kerbl et al.) evaluated by the c3dgs authors; the method compresses those models post hoc (sensitivity, clustering, 5000-step QA fine-tune, encode). Size = os.path.getsize(point_cloud.npz)/1024**2 (np.savez_compressed, Morton-sorted) in compress.py; 3DGS size = the 3DGS point_cloud.ply file size. 30000 3DGS iterations + 5000 fine-tune = 35000 total. Metrics: 3DGS metrics.py style (LPIPS-VGG); compress.py also reports metrics on the in-memory fake-quantized model."
+}

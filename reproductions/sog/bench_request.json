@@ -1,0 +1,8 @@
+{
+ "method": "sog",
+ "datasets": {"mipnerf360": ["bicycle", "garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Reference = official repo results/MipNeRF360/*.csv (ECCV-2024 release models, decompressed + evaluated with original 3DGS code; the arXiv v2 paper has dataset averages only). Decoded-model PSNR / Size MB (bytes/1e6) / #Gaussians: bicycle 24.54 / 53.20 / 2.89M, garden 27.03 / 83.49 / 4.34M, counter 28.46 / 17.62 / 0.96M. No per-scene 3DGS baseline is published by the authors (Table 1 average 3DGS 27.55 vs Ours 27.64 [v2, pre-fix]; CSV average 27.08); vs the 3DGS paper per scene: -0.71 / -0.38 / -0.24 dB. Our baseline: baseline3dgs-mipnerf360-30000. steps must stay 30000 (= sog-density total_steps) or the encode -> decode step does not run (checked at step 1). ss-eval measures the decoded model. Size: `tools/ssenv python reproductions/sog/plugin/report_size.py <run_dir>` (writes the .jxl files + metadata to <run>/compression/jxl_quant_sh and sums them like the official decompress.py; also printed as the 'encode' line of the training log). Needs reproductions/sog/codec_env (imagecodecs 2023.9.18, isolated numpy 1.26) and the `plas` package. PLAS sorting runs 30 times (init + every 1000 steps) and takes minutes per sort on a busy GPU at ~2-4M Gaussians: expect substantially longer wall-clock than gsplat."
+}

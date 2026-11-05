@@ -1,0 +1,366 @@
+{
+ "paper": "Mini-Splatting: Representing Scenes with a Constrained Number of Gaussians",
+ "arxiv": "2403.14166",
+ "method_label": "Mini-Splatting",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "ssim": 0.822,
+     "psnr": 27.34,
+     "lpips": 0.217
+    },
+    "gaussians_millions": 0.49,
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.15,
+      "flowers": 21.58,
+      "garden": 26.84,
+      "stump": 27.26,
+      "treehill": 22.72,
+      "room": 31.39,
+      "counter": 28.41,
+      "kitchen": 31.17,
+      "bonsai": 31.57
+     },
+     "ssim": {
+      "bicycle": 0.772,
+      "flowers": 0.626,
+      "garden": 0.847,
+      "stump": 0.806,
+      "treehill": 0.654,
+      "room": 0.921,
+      "counter": 0.904,
+      "kitchen": 0.926,
+      "bonsai": 0.94
+     },
+     "lpips": {
+      "bicycle": 0.225,
+      "flowers": 0.327,
+      "garden": 0.15,
+      "stump": 0.199,
+      "treehill": 0.312,
+      "room": 0.211,
+      "counter": 0.199,
+      "kitchen": 0.13,
+      "bonsai": 0.199
+     }
+    }
+   },
+   "method_d": {
+    "average": {
+     "ssim": 0.831,
+     "psnr": 27.51,
+     "lpips": 0.176
+    },
+    "gaussians_millions": 4.69,
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.55,
+      "flowers": 21.5,
+      "garden": 27.67,
+      "stump": 27.11,
+      "treehill": 22.13,
+      "room": 31.41,
+      "counter": 28.72,
+      "kitchen": 31.75,
+      "bonsai": 31.72
+     },
+     "ssim": {
+      "bicycle": 0.798,
+      "flowers": 0.642,
+      "garden": 0.878,
+      "stump": 0.804,
+      "treehill": 0.64,
+      "room": 0.928,
+      "counter": 0.913,
+      "kitchen": 0.934,
+      "bonsai": 0.946
+     },
+     "lpips": {
+      "bicycle": 0.158,
+      "flowers": 0.255,
+      "garden": 0.09,
+      "stump": 0.169,
+      "treehill": 0.262,
+      "room": 0.19,
+      "counter": 0.172,
+      "kitchen": 0.114,
+      "bonsai": 0.175
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.815,
+     "psnr": 27.47,
+     "lpips": 0.216
+    },
+    "gaussians_millions": 3.35,
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.19,
+      "flowers": 21.55,
+      "garden": 27.41,
+      "stump": 26.59,
+      "treehill": 22.47,
+      "room": 31.46,
+      "counter": 29.03,
+      "kitchen": 31.27,
+      "bonsai": 32.24
+     },
+     "ssim": {
+      "bicycle": 0.764,
+      "flowers": 0.605,
+      "garden": 0.867,
+      "stump": 0.772,
+      "treehill": 0.632,
+      "room": 0.919,
+      "counter": 0.909,
+      "kitchen": 0.927,
+      "bonsai": 0.942
+     },
+     "lpips": {
+      "bicycle": 0.21,
+      "flowers": 0.336,
+      "garden": 0.107,
+      "stump": 0.217,
+      "treehill": 0.325,
+      "room": 0.219,
+      "counter": 0.2,
+      "kitchen": 0.126,
+      "bonsai": 0.203
+     }
+    }
+   },
+   "baseline_3dgs_paper": {
+    "average": {
+     "ssim": 0.815,
+     "psnr": 27.21,
+     "lpips": 0.214
+    },
+    "gaussians_millions": 3.36,
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.25,
+      "flowers": 21.52,
+      "garden": 27.41,
+      "stump": 26.55,
+      "treehill": 22.49,
+      "room": 30.63,
+      "counter": 28.7,
+      "kitchen": 30.32,
+      "bonsai": 31.98
+     },
+     "ssim": {
+      "bicycle": 0.771,
+      "flowers": 0.605,
+      "garden": 0.868,
+      "stump": 0.775,
+      "treehill": 0.638,
+      "room": 0.914,
+      "counter": 0.905,
+      "kitchen": 0.922,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.336,
+      "garden": 0.103,
+      "stump": 0.21,
+      "treehill": 0.317,
+      "room": 0.22,
+      "counter": 0.204,
+      "kitchen": 0.129,
+      "bonsai": 0.205
+     }
+    }
+   },
+   "source": "Table 1 (averages); supplementary per-scene SSIM/PSNR/LPIPS table"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "ssim": 0.835,
+     "psnr": 23.18,
+     "lpips": 0.202
+    },
+    "gaussians_millions": 0.2,
+    "per_scene": {
+     "psnr": {
+      "truck": 25.09,
+      "train": 21.28
+     },
+     "ssim": {
+      "truck": 0.874,
+      "train": 0.796
+     },
+     "lpips": {
+      "truck": 0.159,
+      "train": 0.245
+     }
+    }
+   },
+   "method_d": {
+    "average": {
+     "ssim": 0.853,
+     "psnr": 23.23,
+     "lpips": 0.14
+    },
+    "gaussians_millions": 4.28,
+    "per_scene": {
+     "psnr": {
+      "truck": 25.43,
+      "train": 21.04
+     },
+     "ssim": {
+      "truck": 0.89,
+      "train": 0.817
+     },
+     "lpips": {
+      "truck": 0.1,
+      "train": 0.181
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.848,
+     "psnr": 23.66,
+     "lpips": 0.176
+    },
+    "gaussians_millions": 1.84,
+    "per_scene": {
+     "psnr": {
+      "truck": 25.43,
+      "train": 21.9
+     },
+     "ssim": {
+      "truck": 0.882,
+      "train": 0.814
+     },
+     "lpips": {
+      "truck": 0.146,
+      "train": 0.207
+     }
+    }
+   },
+   "baseline_3dgs_paper": {
+    "average": {
+     "ssim": 0.841,
+     "psnr": 23.14,
+     "lpips": 0.183
+    },
+    "gaussians_millions": 1.78,
+    "per_scene": {
+     "psnr": {
+      "truck": 25.19,
+      "train": 21.1
+     },
+     "ssim": {
+      "truck": 0.879,
+      "train": 0.802
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.218
+     }
+    }
+   },
+   "source": "Table 1 (averages); supplementary per-scene SSIM/PSNR/LPIPS table"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "ssim": 0.908,
+     "psnr": 29.98,
+     "lpips": 0.253
+    },
+    "gaussians_millions": 0.35,
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.47,
+      "playroom": 30.49
+     },
+     "ssim": {
+      "drjohnson": 0.904,
+      "playroom": 0.912
+     },
+     "lpips": {
+      "drjohnson": 0.257,
+      "playroom": 0.25
+     }
+    }
+   },
+   "method_d": {
+    "average": {
+     "ssim": 0.906,
+     "psnr": 29.88,
+     "lpips": 0.211
+    },
+    "gaussians_millions": 4.63,
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.32,
+      "playroom": 30.43
+     },
+     "ssim": {
+      "drjohnson": 0.905,
+      "playroom": 0.908
+     },
+     "lpips": {
+      "drjohnson": 0.218,
+      "playroom": 0.204
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.904,
+     "psnr": 29.54,
+     "lpips": 0.244
+    },
+    "gaussians_millions": 2.82,
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.12,
+      "playroom": 29.95
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.243
+     }
+    }
+   },
+   "baseline_3dgs_paper": {
+    "average": {
+     "ssim": 0.903,
+     "psnr": 29.41,
+     "lpips": 0.243
+    },
+    "gaussians_millions": 2.98,
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.77,
+      "playroom": 30.04
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.906
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.241
+     }
+    }
+   },
+   "source": "Table 1 (averages); supplementary per-scene SSIM/PSNR/LPIPS table"
+  }
+ },
+ "notes": "Table 1 (main) averages and supplementary Table (tables/appendix/quant_all.tex) per-scene numbers. baseline_3dgs = '3DGS*' row (retrained by the authors with the official 3DGS code); baseline_3dgs_paper = 3DGS's own published numbers. method_d = Mini-Splatting-D (densification only). 'johnson' in the paper = drjohnson. Mini-Splatting uses imp_metric=outdoor for Mip-NeRF360 outdoor scenes and T&T, indoor for Mip-NeRF360 indoor scenes and Deep Blending (official README). Supplementary Table 3 (dense init) lists a slightly different Mini-Splatting M360 average (27.22 PSNR, 0.48M), from a different run."
+}

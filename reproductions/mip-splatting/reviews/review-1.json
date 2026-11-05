@@ -1,0 +1,22 @@
+{"approved": true,
+ "issues": [
+  {"severity":"minor","file":"plugin/ss_mip_splatting/density.py","where":"after_backward ordering","problem":"Filter recompute/reset run after the optimizer step (runtime), whereas official runs them before optimizer.step() of the same iteration. Also gsplat near plane 0.01 vs official 0.2 culling; white vs black background.","evidence":"official train.py L156-172 vs runtime ordering; plan.md G3","fix":"None required; shared with baseline and documented."},
+  {"severity":"minor","file":"plugin/ss_mip_splatting/__init__.py","where":"FieldSpec filter_3d","problem":"lr=1e-8 (runtime needs >0); inert only because the value is used detached (grad None, Adam skips). If anything ever gave it a grad it would drift.","evidence":"filters.filtered_scales_opacities uses filter_3d.detach()","fix":"Optional: unit test asserting filter_3d.grad is None after a step."},
+  {"severity":"minor","file":"plugin/ss_mip_splatting/filters.py","where":"reset_logits","problem":"torch.logit(target/coef) could reach inf if sigmoid saturates to exactly 1.0 in fp32; official has the same behavior.","evidence":"official reset_opacity L310-325","fix":"Optional clamp to 1-1e-7."}
+ ],
+ "equation_coverage":[
+  {"eq":"(8) nu_k = max_n 1_n f_n/d_n, filter std sqrt(0.2)/nu","status":"exact","code":"filters.py:compute_filter_3d (min visible z, max focal_x, near 0.2, 15% margin, invisible fallback to max visible distance; matches compute_3D_filter L143-191)"},
+  {"eq":"(9) Sigma+f^2 I, opacity*sqrt(|Sigma|/|Sigma+f^2I|)","status":"exact","code":"filters.py:filtered_scales_opacities (sqrt(s^2+f^2); coef=sqrt(prod s^2/prod(s^2+f^2)) identical to get_scaling_with_3D_filter / get_opacity_with_3D_filter)"},
+  {"eq":"(10) 2D Mip filter","status":"exact","code":"renderer.py: gsplat antialiased, eps2d=0.1; gsplat add_blur compensation sqrt(det_orig/det_blur) equals forward.cu computeCov2D det_0/det_1 (up to 1e-6 guards)"},
+  {"eq":"filter-aware reset","status":"exact","code":"filters.py:reset_logits / density.py:reset_opacity (min(filtered,0.01)/coef, logit, Adam moments zeroed; single reset since gsplat 1.5 reset is broken and guarded)"},
+  {"eq":"schedule","status":"exact","code":"filters.py:is_filter_step/is_reset_step: init, step%100==0 in (500,15000) after densify, (15000,29900); reset step%3000==0, <15000; 15000 and >=29900 excluded as in train.py L156-172"}
+ ],
+ "probe_assessment":[
+  {"probe":"filter3d-frequency-bound","detects_removal":true,"why":"independent loop reference plus analytic value and invisible-point fallback"},
+  {"probe":"filter3d-convolution","detects_removal":true,"why":"compares to explicit covariance+det compensation and requires filtered != unfiltered"},
+  {"probe":"mip-filter-2d","detects_removal":true,"why":"analytic alpha with eps2d 0.1 distinguishes classic mode and 0.3"},
+  {"probe":"filter-aware-reset / filter-schedule / single-reset","detects_removal":true,"why":"check filtered opacity post-reset and exact step sets"}
+ ],
+ "fidelity_gaps_confirmed":["G2 image protocol (images_4/2 vs PIL resize)","G3 white background, near plane 0.01, alpha clamp, step ordering","densification: new Gaussians inherit parent filter_3d only transiently; recomputed immediately after the same step's grow/prune, matching official densify_and_prune then compute_3D_filter","test time uses stored params filter_3d plus eps2d 0.1 as official render(); last recompute at 29800 as official"],
+ "paper_results_check":"mipnerf360 per-scene PSNR/SSIM rows for Mip-Splatting and 3DGS*/EWA/3DGS spot-checked against source/paper.txt supplementary table: match.",
+ "summary":"Formula, recompute schedule, compensation, reset and test-time usage match official commit 1ecf7d5. Only minor shared-runtime deviations. Approved."}

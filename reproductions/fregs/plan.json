@@ -1,0 +1,84 @@
+{
+  "method": "fregs",
+  "module": "ss_fregs",
+  "paper": "arXiv 2403.06908 (FreGS, CVPR 2024)",
+  "feasible_natively": true,
+  "variants": {
+    "fregs": "Base+FR+FA with count-matched grow_grad2d (the method)",
+    "fregs-fr": "ablation Base+FR: anneal=False, same grow_grad2d",
+    "fregs-thr0002": "diagnostic: fregs with 3DGS grow_grad2d=0.0002",
+    "fregs-calib-g0003|g0004|g0005|g0006": "threshold calibration only (Gaussian-count matching, 15k steps, no image metrics read)"
+  },
+  "components": [
+    {"name": "gsplat", "kind": "renderer", "factory": "splatstudio.backends.gsplat:create_renderer",
+     "requires": ["state.gaussian3d", "camera.pinhole"],
+     "provides": ["render.rgb", "render.depth.expected_z", "gradient.screen.signed"],
+     "config": {"absgrad": false, "antialiased": false}, "status": "unchanged from baseline"},
+    {"name": "fregs-density", "kind": "density", "factory": "splatstudio.backends.gsplat:create_density",
+     "requires": ["gradient.screen.signed"], "provides": [],
+     "config": {"absgrad": false, "grow_grad2d": 0.0003},
+     "config_status": {"grow_grad2d": "calibrated (Gaussian-count matched vs gsplat baseline on bicycle/garden/room training logs); 0.0003 is the assumed pre-calibration default (~1.5x 3DGS 0.0002, Fig. 2 gradient ratio)"},
+     "notes": "Wraps gsplat DefaultStrategy; all other DefaultStrategy defaults (refine 500-15000/100, reset 3000) unchanged"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric",
+     "requires": ["render.rgb"], "provides": [], "config": {}, "status": "unchanged (L1 + 0.2 D-SSIM whole run, paper Sec 4.1)"},
+    {"name": "fregs-frequency", "kind": "loss", "factory": "ss_fregs.frequency:create_frequency_loss",
+     "requires": ["render.rgb"], "provides": [],
+     "config": {"w_l": 2e-6, "w_h": 2e-6, "d0_frac": 0.10, "t0": 3000, "t_end": 15000, "stop_iter": 15000,
+                "anneal": true, "mask": "ideal_circular", "radius_units": "index", "channels": "per_channel_sum",
+                "phase": "atan2_raw", "phase_eps": 1e-6, "normalization": "paper"},
+     "config_status": {
+       "w_l": "calibrated (train views): mean|d(L_photo+L_f)/drgb| = 1.7x photometric at step-1 state (Fig. 2, iter 0); median over 9 scenes; 2e-6 is a placeholder",
+       "w_h": "calibrated (train views): ratio 2.0 at t=T full band on baseline-checkpoint renders of training views (Fig. 2, 12k-15k over-recon); placeholder = w_l",
+       "d0_frac": "assumed (low band = global structure, ~0.8% of bins)",
+       "t0": "assumed (>500 densify start; first opacity reset / SH degree 3)",
+       "t_end": "assumed, bounded by paper (T <= 15000 since FR stops at 15000)",
+       "stop_iter": "paper (Sec 4.1)",
+       "anneal": "paper (FA); false = Base+FR ablation",
+       "mask": "assumed", "radius_units": "assumed (origin at (H/2,W/2), index units, D = corner radius)",
+       "channels": "assumed", "phase": "assumed (Eq. 6 literal, no wrap; arctan read as atan2)",
+       "phase_eps": "assumed (numerical safeguard, not in paper)", "normalization": "paper (1/sqrt(HW) * sum, unnormalized DFT)"}}
+  ],
+  "fields": [],
+  "probes": [
+    {"name": "freq-oracle", "function": "ss_fregs.probes:freq_oracle", "requires_cuda": false,
+     "measures": "L_f value and d L_f/d rgb vs independent float64 explicit-DFT-matrix oracle with independently built masks (steps <=T0 and in (T0,T), odd sizes); identical images => 0 loss/grad"},
+    {"name": "freq-annealing", "function": "ss_fregs.probes:freq_annealing", "requires_cuda": false,
+     "measures": "known-frequency sinusoid at D0<r*<D invisible for t<=T0 and while D_t<r*, visible once D_t>=r*; annulus bin counts vs independent count; low sinusoid visible at t=1; L_f==0 (graph-attached) at t=15001"},
+    {"name": "fregs-threshold", "function": "ss_fregs.probes:threshold", "requires_cuda": true,
+     "measures": "density spec grow_grad2d == calibrated > 0.0002, refine_stop_iter 15000; fixture with avg grad in (0.0002, grow_grad2d) does not grow, while base DefaultStrategy does"},
+    {"name": "fregs-gradient-gain", "function": "ss_fregs.probes:gradient_gain", "requires_cuda": true,
+     "measures": "tiny synthetic scene: mean|dL/drgb| and mean||dL/dmeans2d|| ratio (photometric+L_f vs photometric) > 1.2 (Fig. 2 mechanism)"}
+  ],
+  "contributions": [
+    {"name": "frequency-regularization", "paper": "Sec 3.2, Eq. 2-6", "component": "fregs-frequency", "probes": ["freq-oracle", "fregs-gradient-gain"]},
+    {"name": "frequency-annealing", "paper": "Sec 3.3 (D_t band, piecewise L_f) + Sec 4.1 stop at 15000", "component": "fregs-frequency", "probes": ["freq-annealing"]},
+    {"name": "count-matched-densification", "paper": "Sec 4.2, Table 1/2 captions (raised gradient threshold)", "component": "fregs-density", "probes": ["fregs-threshold"]}
+  ],
+  "calibration": [
+    {"what": "w_l, w_h", "data": "training views of all 9 mipnerf360 scenes only (step-1 state; baseline 30k checkpoint params)", "output": "evidence/weight_calibration.json", "label": "calibrated (Fig. 2 gradient ratios, train views)"},
+    {"what": "grow_grad2d", "data": "Gaussian count at step 15000 from training.jsonl, scenes bicycle/garden/room, grid 0.0003-0.0006; validation.json (aliases test) must not be read", "output": "evidence/threshold_calibration.json", "label": "calibrated (count matched, no image metrics)", "after": "w_l, w_h"}
+  ],
+  "benchmark": {
+    "primary": {"dataset": "mipnerf360", "scenes": "all 9", "steps": 30000, "recipe": "3dgs", "baseline_exp": "baseline-mipnerf360-30000",
+                "paper_delta": {"psnr": 0.64, "ssim": 0.011, "lpips": -0.005}},
+    "ablations_optional": {"fregs-fr": {"paper_delta_psnr_vs_base": 0.42}, "fregs-thr0002": "diagnostic"},
+    "extras_optional": {"tandt": {"paper_delta_psnr": 0.82}, "db": {"paper_delta_psnr": 0.52}},
+    "sensitivity": "only on a train-split hold-out, labelled tuned"
+  },
+  "unchanged_from_3dgs": ["gsplat renderer (classic, signed grad)", "photometric L1+0.2 D-SSIM", "DefaultStrategy except grow_grad2d", "base learning rates and means LR decay", "SH degree schedule", "30000 iterations", "recipe 3dgs init/scene scale"],
+  "plugin_files": ["plugin/pyproject.toml", "plugin/ss_fregs/__init__.py", "plugin/ss_fregs/frequency.py", "plugin/ss_fregs/probes.py", "plugin/ss_fregs/calibrate.py", "plugin/tests/test_frequency.py"],
+  "fidelity_gaps": [
+    {"id": "G1", "what": "w_l, w_h unknown; calibrated from Fig. 2 gradient ratios", "effect": "high", "closable": "if authors release values; train-hold-out sweep (tuned)"},
+    {"id": "G2", "what": "d0_frac=0.1, t0=3000, t_end=15000 assumed", "effect": "medium (FA worth +0.22 dB in ablation)", "closable": "same as G1"},
+    {"id": "G3", "what": "no 1/4-resolution warm-up for first 500 iterations", "why": "native runtime has no resolution schedule; a loss cannot change render resolution", "effect": "small; affects gsplat baseline and fregs equally (neither warms up), so the delta is unaffected", "closable": "runtime extension (trainer resolution schedule)"},
+    {"id": "G4", "what": "densify threshold calibrated by count matching on 3 scenes", "effect": "medium", "closable": "partly (all 9 scenes)"},
+    {"id": "G5", "what": "phase: raw atan2 difference, no wrap, amplitude-floor mask phase_eps", "effect": "medium", "closable": "sensitivity variant on train hold-out"},
+    {"id": "G6", "what": "ideal circular mask, index units, D = corner radius", "effect": "low-medium", "closable": "sensitivity only"},
+    {"id": "G7", "what": "per-channel FFT summed over channels", "effect": "low (absorbed by weight calibration)", "closable": "-"},
+    {"id": "G8", "what": "paper baseline row = 3DGS paper numbers, not retrained", "effect": "absolute comparison confounded; compare deltas", "closable": "-"},
+    {"id": "G9", "what": "native protocol differences (white bg, view sampling, valid SSIM, lpips VGG, gsplat rasterizer)", "effect": "small; equal for baseline and method", "closable": "_calibration study"},
+    {"id": "G10", "what": "single seed", "effect": "+-0.05-0.1 dB noise", "closable": "more seeds"},
+    {"id": "G11", "what": "L_f added as plain sum", "effect": "low", "closable": "-"},
+    {"id": "G12", "what": "only dataset averages published", "effect": "no per-scene diagnosis; all 9 scenes mandatory", "closable": "-"}
+  ]
+}

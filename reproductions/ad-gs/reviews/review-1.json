@@ -1,0 +1,45 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_ad_gs/renderer.py; evidence/smoke-1/config.json", "where": "eval_background black vs baseline white",
+   "problem": "Method evaluates on black (official, and what the paper's 3DGS/CoR-GS rows also use) but the gsplat baseline and the dataset protocol_id record 'background: white', so method-vs-gsplat deltas mix a protocol difference. Measured effect is negligible on full-coverage LLFF.",
+   "evidence": "Re-rendered smoke-1 horns test views from checkpoint.pt: PSNR black 17.935 vs white 17.972 (0.04 dB); mean alpha 0.999, 0.17% of pixels with alpha<0.9. Official train.py:135 / render.py:114 use black when white_background is False.",
+   "fix": "Keep black for paper comparison; also report the AD-GS 10k run under white (or run the baseline with black) and record the eval background in the result, so the comparison is explicit. Re-check alpha coverage on the 10k checkpoints (fortress/room have wider baselines)."},
+  {"severity": "minor", "file": "plugin/ss_ad_gs/density.py", "where": "set_training_cameras / depth_bounds",
+   "problem": "Pseudo-pose near/far are recomputed from percentiles of the initial cloud instead of the official poses_bounds.npy bounds, which prep.json already stores (train_bounds_poses_bounds_npy). Changes the focus distance (+6% on horns) and so every pseudo look-at.",
+   "evidence": "official pose_utils.py:320-366 uses view.bounds (poses_bounds.npy[idx,-2:]); plan.md gap 5.",
+   "fix": "Add a pseudo_bounds config (min/max over the 3 train views from prep.json) and use it when present."},
+  {"severity": "minor", "file": "splatstudio/runtime.py (not plugin)", "where": "SH schedule / view sampling / SSIM",
+   "problem": "Known runtime deviations: SH degree +1 every 1000 steps (official every 500, train.py:~180), views sampled with replacement (official pops a shuffled stack), valid-conv SSIM in L_ph/L_pseudo (official same-padding), optimizer step before densify.",
+   "evidence": "runtime.py degree = min((step-1)//1000,3); plan.md gaps 1-4.",
+   "fix": "Accept for the first benchmark; if the PSNR gap vs paper exceeds ~0.5 dB, ablate SH-500 first."},
+  {"severity": "minor", "file": "plugin/ss_ad_gs/probes.py", "where": "probe coverage",
+   "problem": "No probe covers the opacity-reset steps (3501/6501/9501, value 0.05, both fields), G2 clone-at-init equality with G1, or G2's own densification being driven by G2's own gradients.",
+   "evidence": "probes: alternating-densification, phase-gated-losses, edge-aware-depth, pseudo-view-consistency only.",
+   "fix": "Add a CPU probe asserting reset at 3501 (not 3500/3502) on both fields and partner params == main params after initialize."},
+  {"severity": "minor", "file": "splatstudio/runtime.py", "where": "end-of-train validation.json",
+   "problem": "train() reports on split 'validation' = the 33-51 unused non-test images; only ss-eval --split test gives the paper-protocol number. Easy to mis-report.",
+   "evidence": "runtime.py measure(..., 'validation'); transforms.json val_filenames = unused images.",
+   "fix": "Benchmark must read test.json from ss-eval, never validation.json."}
+ ],
+ "equation_coverage": [
+  {"eq": "(5) L_ph", "status": "exact", "code": "losses.py:photometric (valid-conv SSIM, known gap)"},
+  {"eq": "(6) L_pseudo", "status": "exact", "code": "losses.py:create_cotraining (other field detached, /(N-1)=1, low phase and step>=500, same random bg)"},
+  {"eq": "(7) L_ds + range", "status": "exact", "code": "losses.py:edge_aware_smoothness/depth_regularizer (GT-image edge weights, accumulated z, w*(Lds+0.001*-(max-min)))"},
+  {"eq": "(9) phase-gated total", "status": "exact", "code": "schedule.py:regularize; density.py thresholds per phase"}
+ ],
+ "probe_assessment": [
+  {"probe": "alternating-densification", "detects_removal": true, "why": "Checks schedule against independent formula and per-phase clone/prune counts on a fixture."},
+  {"probe": "phase-gated-losses", "detects_removal": true, "why": "Depth loss must be nonzero exactly at steps 1700,1799."},
+  {"probe": "edge-aware-depth", "detects_removal": true, "why": "Compared to a per-pixel loop plus finite-difference gradient."},
+  {"probe": "pseudo-view-consistency", "detects_removal": true, "why": "Requires G1 and G2 gradients from detached-target pseudo loss (CUDA)."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Few-view protocol verified: for fortress/horns/room transforms.json train/test lists equal an independent recomputation (test = sorted idx%8==0; train = round(linspace(0,len-1,3)) over the remainder, banker's rounding as in dataset_readers.py:349-360 and colmap_llff.py); val = remaining images, disjoint, covering all frames (42/62/41).",
+  "Resolution 1008x756 = round(4032/4) x round(3024/4); PIL bicubic matches official PILtoTorch resize; focal scaled, principal point centred like the official projection.",
+  "COLMAP init: colmap/images holds exactly the 3 training images in each scene, database built fresh, 3 'Processed file' entries; pipeline options identical to tools/colmap_llff.py; poses from the full-view sparse model as in the official code. Runtime scene extent uses train split only (3 cameras), like getNerfppNorm.",
+  "Densification: clone/split/FSGS-dist criterion/opacity prune, thresholds 5e-4/0.005 (warm), 5e-4/0.1 (low), 2e-4/0.005 (high), interval 100 from step>500, until <10000, N_W=1500, cycle 200, N_H=100 all match train.py:168-169,384-401 and gaussian_model.py; opacity reset min(op,0.05) at (s-501)%3000==0 matches train.py:412.",
+  "Co-training: G2 cloned after knn scales/LR scaling (same init as official), own Adam with eps 1e-15, own densification from its own main-view means2d grads, G1 evaluated (official gs0), own depth loss, pseudo target detached both ways.",
+  "Depth is accumulated z (forward.cu:361) via gsplat RGB+D; random per-iteration train bg shared across G1/G2/pseudo renders, black bg under no_grad.",
+  "paper_results.json llff-3view method and baseline_3dgs per-scene PSNR/SSIM/LPIPS and averages match main.tex Scene-wise LLFF 3-view table (AD-GS and 3DGS rows) exactly; averages recompute correctly."
+ ],
+ "summary": "No critical or major issues. Split, resolution, resampling and 3-view-only COLMAP init reproduce the official protocol; schedules, thresholds, resets, co-training and losses match the official code operator by operator. Black eval is the official protocol and costs/gains only ~0.04 dB on full-coverage LLFF (alpha 0.999 on smoke horns) but should be reported alongside a white eval or a black-eval baseline. Remaining deviations are minor (pseudo-pose bounds from percentiles, SH schedule, with-replacement view sampling, valid-conv SSIM)."}

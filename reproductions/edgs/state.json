@@ -1,0 +1,25 @@
+{
+ "paper": "EDGS: Eliminating Densification for Efficient Convergence of 3DGS",
+ "slug": "edgs",
+ "plan_id": 33,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done (2 majors fixed: SH residual ridge fit)",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "env": {
+  "matcher": "romatch 370117431ffc installed in splatstudio env (no separate env needed)",
+  "weights": "~/models/roma/"
+ },
+ "plugin_freeze_sha": "b36d85d0b83c4383",
+ "bench_exps": [
+  "edgs-mipnerf360-edgs",
+  "edgs-tandt-edgs",
+  "edgs-db-edgs"
+ ],
+ "headline": "7 scenes: mean \u22120.20 dB (6/7 within \u00b10.5); +0.22..+0.73 over 3DGS without densification"
+}

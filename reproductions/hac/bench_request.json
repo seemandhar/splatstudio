@@ -1,0 +1,3 @@
+{"method": "hac", "datasets": {"mipnerf360-1600": ["garden", "bicycle", "counter"]}, "steps": 30000,
+ "per_scene_reported": true, "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "notes": "lambda_e=0.004 (Table 1 low-rate). Required flags: --steps 30000 (bake at total_steps), --recipe 3dgs, --num-gaussians > SfM size (hac-density refuses otherwise). Voxel 0.001 / official mip360 settings apply unchanged to the 1600-wide conversion. After each run: tools/ssenv python reproductions/hac/plugin/report_size.py <run> -> <run>/hac_size.json (report size_mb.total, never checkpoint_bytes). Compare against paper_results.json mipnerf360.method_lambda_0.004 per-scene (HAC rows); the paper's 3DGS/Scaffold rows' protocol is unverified."}

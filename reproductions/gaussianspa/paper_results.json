@@ -1,0 +1,385 @@
+{
+ "paper": "GaussianSpa: An \u201cOptimizing-Sparsifying\u201d Simplification Framework for Compact and High-Quality 3D Gaussian Splatting",
+ "arxiv": "2411.06019",
+ "method_label": "GaussianSpa",
+ "iterations": 40000,
+ "protocol": "mipnerf360-1600: official scripts pass -s <scene> with default --resolution -1 and --images images, i.e. full-res images PIL-downscaled to width 1600 (all 9 M360 scenes; T&T/DB are below 1600 and stay native). Benchmark key for our runs: mipnerf360-1600.",
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.85,
+     "ssim": 0.825,
+     "lpips": 0.214,
+     "num_gaussians_M": 0.547
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.44,
+      "bonsai": 32.4,
+      "counter": 29.23,
+      "flowers": 21.75,
+      "garden": 27.26,
+      "kitchen": 32.03,
+      "room": 32.04,
+      "stump": 27.56,
+      "treehill": 22.94
+     },
+     "ssim": {
+      "bicycle": 0.769,
+      "bonsai": 0.947,
+      "counter": 0.919,
+      "flowers": 0.61,
+      "garden": 0.848,
+      "kitchen": 0.934,
+      "room": 0.933,
+      "stump": 0.808,
+      "treehill": 0.66
+     },
+     "lpips": {
+      "bicycle": 0.246,
+      "bonsai": 0.174,
+      "counter": 0.176,
+      "flowers": 0.329,
+      "garden": 0.151,
+      "kitchen": 0.117,
+      "room": 0.188,
+      "stump": 0.218,
+      "treehill": 0.329
+     },
+     "num_gaussians_M": {
+      "bicycle": 0.656,
+      "bonsai": 0.372,
+      "counter": 0.392,
+      "flowers": 0.674,
+      "garden": 0.728,
+      "kitchen": 0.423,
+      "room": 0.355,
+      "stump": 0.69,
+      "treehill": 0.637
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.45,
+     "ssim": 0.81,
+     "lpips": 0.22,
+     "num_gaussians_M": 3.11
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.13,
+      "bonsai": 32.19,
+      "counter": 29.11,
+      "flowers": 21.37,
+      "garden": 27.32,
+      "kitchen": 31.53,
+      "room": 31.59,
+      "stump": 26.73,
+      "treehill": 22.61
+     },
+     "ssim": {
+      "bicycle": 0.75,
+      "bonsai": 0.95,
+      "counter": 0.91,
+      "flowers": 0.59,
+      "garden": 0.86,
+      "kitchen": 0.93,
+      "room": 0.92,
+      "stump": 0.77,
+      "treehill": 0.64
+     },
+     "lpips": {
+      "bicycle": 0.24,
+      "bonsai": 0.18,
+      "counter": 0.18,
+      "flowers": 0.36,
+      "garden": 0.12,
+      "kitchen": 0.12,
+      "room": 0.2,
+      "stump": 0.24,
+      "treehill": 0.35
+     },
+     "num_gaussians_M": {
+      "bicycle": 5.31,
+      "bonsai": 1.25,
+      "counter": 1.17,
+      "flowers": 3.47,
+      "garden": 5.69,
+      "kitchen": 1.77,
+      "room": 1.5,
+      "stump": 4.42,
+      "treehill": 3.42
+     }
+    }
+   },
+   "mini_splatting": {
+    "average": {
+     "psnr": 27.4,
+     "ssim": 0.821,
+     "lpips": 0.219,
+     "num_gaussians_M": 0.559
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.21,
+      "bonsai": 31.73,
+      "counter": 28.53,
+      "flowers": 21.42,
+      "garden": 26.99,
+      "kitchen": 31.24,
+      "room": 31.44,
+      "stump": 27.35,
+      "treehill": 22.69
+     },
+     "ssim": {
+      "bicycle": 0.76,
+      "bonsai": 0.945,
+      "counter": 0.911,
+      "flowers": 0.616,
+      "garden": 0.842,
+      "kitchen": 0.929,
+      "room": 0.929,
+      "stump": 0.803,
+      "treehill": 0.652
+     },
+     "lpips": {
+      "bicycle": 0.247,
+      "bonsai": 0.18,
+      "counter": 0.184,
+      "flowers": 0.336,
+      "garden": 0.156,
+      "kitchen": 0.122,
+      "room": 0.193,
+      "stump": 0.219,
+      "treehill": 0.332
+     },
+     "num_gaussians_M": {
+      "bicycle": 0.646,
+      "bonsai": 0.36,
+      "counter": 0.408,
+      "flowers": 0.67,
+      "garden": 0.738,
+      "kitchen": 0.438,
+      "room": 0.394,
+      "stump": 0.717,
+      "treehill": 0.663
+     }
+    }
+   },
+   "source": "Table 1 (averages) + supp. Table MipAverAppendix (per scene)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.98,
+     "ssim": 0.852,
+     "lpips": 0.18,
+     "num_gaussians_M": 0.269
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.17,
+      "truck": 25.79
+     },
+     "ssim": {
+      "train": 0.815,
+      "truck": 0.888
+     },
+     "lpips": {
+      "train": 0.228,
+      "truck": 0.132
+     },
+     "num_gaussians_M": {
+      "train": 0.199,
+      "truck": 0.338
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.63,
+     "ssim": 0.85,
+     "lpips": 0.18,
+     "num_gaussians_M": 1.83
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.94,
+      "truck": 25.31
+     },
+     "ssim": {
+      "train": 0.81,
+      "truck": 0.88
+     },
+     "lpips": {
+      "train": 0.2,
+      "truck": 0.15
+     },
+     "num_gaussians_M": {
+      "train": 1.11,
+      "truck": 2.54
+     }
+    }
+   },
+   "mini_splatting": {
+    "average": {
+     "psnr": 23.45,
+     "ssim": 0.841,
+     "lpips": 0.186,
+     "num_gaussians_M": 0.319
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.78,
+      "truck": 25.13
+     },
+     "ssim": {
+      "train": 0.805,
+      "truck": 0.878
+     },
+     "lpips": {
+      "train": 0.231,
+      "truck": 0.141
+     },
+     "num_gaussians_M": {
+      "train": 0.287,
+      "truck": 0.352
+     }
+    }
+   },
+   "source": "Table 1 + supp. Table TanksTemplesAverAppendix"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.37,
+     "ssim": 0.914,
+     "lpips": 0.249,
+     "num_gaussians_M": 0.335
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.89,
+      "playroom": 30.84
+     },
+     "ssim": {
+      "drjohnson": 0.913,
+      "playroom": 0.916
+     },
+     "lpips": {
+      "drjohnson": 0.243,
+      "playroom": 0.254
+     },
+     "num_gaussians_M": {
+      "drjohnson": 0.45,
+      "playroom": 0.219
+     }
+    }
+   },
+   "method_compact": {
+    "average": {
+     "psnr": 30.33,
+     "ssim": 0.912,
+     "lpips": 0.254,
+     "num_gaussians_M": 0.256
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.82,
+      "playroom": 30.84
+     },
+     "ssim": {
+      "drjohnson": 0.909,
+      "playroom": 0.916
+     },
+     "lpips": {
+      "drjohnson": 0.254,
+      "playroom": 0.254
+     },
+     "num_gaussians_M": {
+      "drjohnson": 0.293,
+      "playroom": 0.219
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.42,
+     "ssim": 0.9,
+     "lpips": 0.25,
+     "num_gaussians_M": 2.78
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.77,
+      "playroom": 30.07
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.25,
+      "playroom": 0.25
+     },
+     "num_gaussians_M": {
+      "drjohnson": 3.26,
+      "playroom": 2.29
+     }
+    }
+   },
+   "mini_splatting": {
+    "average": {
+     "psnr": 30.05,
+     "ssim": 0.909,
+     "lpips": 0.254,
+     "num_gaussians_M": 0.397
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.37,
+      "playroom": 30.72
+     },
+     "ssim": {
+      "drjohnson": 0.904,
+      "playroom": 0.914
+     },
+     "lpips": {
+      "drjohnson": 0.261,
+      "playroom": 0.248
+     },
+     "num_gaussians_M": {
+      "drjohnson": 0.377,
+      "playroom": 0.417
+     }
+    }
+   },
+   "source": "Table 1 (two GaussianSpa rows) + supp. Table DeepBlendingAverAppendix"
+  }
+ },
+ "official_repo_csv": {
+  "note": "source/code/results/*/*.csv (official metrics.py, 'Baseline' submethod = released config). Within 0.03 dB of the paper table on bicycle/garden/counter/flowers/bonsai/room/treehill; differs on stump, train, truck, drjohnson, playroom (see notes).",
+  "mipnerf360": {
+   "bicycle": 25.4203,
+   "bonsai": 32.3221,
+   "counter": 29.2121,
+   "flowers": 21.7707,
+   "garden": 27.2727,
+   "kitchen": 32.0487,
+   "room": 31.9935,
+   "stump": 27.4264,
+   "treehill": 22.9973
+  },
+  "tandt": {
+   "train": 22.2736,
+   "truck": 25.7235
+  },
+  "db": {
+   "drjohnson": 29.7227,
+   "playroom": 30.5285
+  }
+ },
+ "notes": "3DGS rows are copied from EAGLES (3DGS paper-style numbers, not retrained). Mini-Splatting rows were retrained by the GaussianSpa authors with official code. GaussianSpa builds on Mini-Splatting's pipeline (same starting checkpoint); per-scene criterion (opacity vs imp_score) and prune ratios come from the official README table. Official repo CSVs differ slightly from the paper table for some scenes (stump 27.43 vs 27.56, kitchen 32.05 vs 32.03, truck 25.72 vs 25.79, train 22.27 vs 22.17, drjohnson 29.72 vs 29.89, playroom 30.53 vs 30.84)."
+}

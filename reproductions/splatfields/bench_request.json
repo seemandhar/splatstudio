@@ -1,0 +1,16 @@
+{
+ "method": "splatfields",
+ "datasets": {"blender-fewview6-sf": ["chair", "hotdog", "ficus"], "blender-fewview12-sf": ["chair", "hotdog", "ficus"]},
+ "steps": 40000,
+ "per_scene_reported": true,
+ "extra": "",
+ "two_stage": true,
+ "stages": [
+  {"stage": 1, "method": "splatfields-3dgs", "datasets": {"blender-fewview6": ["chair", "hotdog", "ficus"], "blender-fewview12": ["chair", "hotdog", "ficus"]}, "steps": 40000, "extra": "",
+   "compare_to": "paper_results.json datasets.blender-fewview{6,12}.baseline_3dgs"},
+  {"stage": "build", "command": "reproductions/splatfields/tools/build_stage2.sh <stage1-exp> 6 && reproductions/splatfields/tools/build_stage2.sh <stage1-exp> 12"},
+  {"stage": 2, "method": "splatfields", "datasets": {"blender-fewview6-sf": ["chair", "hotdog", "ficus"], "blender-fewview12-sf": ["chair", "hotdog", "ficus"]}, "steps": 40000, "extra": "",
+   "compare_to": "paper_results.json datasets.blender-fewview{6,12}.method; delta = stage2 - stage1 vs paper SplatFields3D - 3DGS"}
+ ],
+ "notes": "No shared gsplat baseline exists for Blender few-view; the paper's own 3DGS row is reproduced by stage 1 (splatfields-3dgs), which also produces the SplatFields init cloud. --steps must be 40000 (bake step). Primary target 6 views (paper headline +1.64 dB mean); 12 views optional if GPU time is short. Paper reports no Mip-NeRF 360 / T&T / DB / LLFF numbers."
+}

@@ -1,0 +1,18 @@
+{
+  "paper": "Revising Densification in Gaussian Splatting",
+  "slug": "revising-densification",
+  "plan_id": 67,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 5 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "ready_for_benchmark",
+  "bench_exps": [
+    "revdens-mipnerf360",
+    "revdens-tandt"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "paper": "EfficientGS: Streamlining Gaussian Splatting for Large-Scale High-Resolution Scene Representation",
+  "arxiv": "2404.12777",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.38, "ssim": 0.817, "lpips": 0.216}},
+      "baseline_3dgs": {"average": {"psnr": 27.48, "ssim": 0.812, "lpips": 0.222}},
+      "baseline_3dgs_paper": {"average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214}},
+      "resources": {"method": {"train": "19m41s", "fps": 218, "storage_mb": 98, "peak_gpu_gb": 8.8},
+                    "baseline_3dgs": {"train": "25m57s", "fps": 125, "storage_mb": 742, "peak_gpu_gb": 12.8}},
+      "ablation_table4": {
+        "none": {"psnr": 27.48, "ssim": 0.812, "lpips": 0.222, "storage_mb": 742},
+        "SD": {"psnr": 27.53, "ssim": 0.820, "lpips": 0.202, "storage_mb": 544},
+        "SD+GP": {"psnr": 27.48, "ssim": 0.821, "lpips": 0.209, "storage_mb": 259},
+        "SD+GP+SOI": {"psnr": 27.38, "ssim": 0.817, "lpips": 0.216, "storage_mb": 98}
+      },
+      "source": "Table 1 (averages only; 9 scenes); Table 4 ablation"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.45, "ssim": 0.837, "lpips": 0.197}},
+      "baseline_3dgs": {"average": {"psnr": 23.64, "ssim": 0.844, "lpips": 0.178}},
+      "baseline_3dgs_paper": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183}},
+      "source": "Table 1 (averages only)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.63, "ssim": 0.903, "lpips": 0.251}},
+      "baseline_3dgs": {"average": {"psnr": 29.54, "ssim": 0.900, "lpips": 0.247}},
+      "baseline_3dgs_paper": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243}},
+      "source": "Table 1 (averages only)"
+    },
+    "mill19": {
+      "method": {"per_scene": {"psnr": {"building": 19.77, "rubble": 24.50}, "ssim": {"building": 0.669, "rubble": 0.708}, "lpips": {"building": 0.457, "rubble": 0.455}}},
+      "baseline_3dgs": {"per_scene": {"psnr": {"building": 19.70, "rubble": 24.72}, "ssim": {"building": 0.668, "rubble": 0.712}, "lpips": {"building": 0.461, "rubble": 0.455}}},
+      "source": "Table 2 (60k iterations; not available locally)"
+    }
+  },
+  "notes": "baseline_3dgs = '3DGS*' row, retrained by the authors with the official code on one A100; baseline_3dgs_paper = numbers copied from the 3DGS paper. No per-scene numbers for Mip-NeRF360/T&T/DB in the paper or the repo."
+}

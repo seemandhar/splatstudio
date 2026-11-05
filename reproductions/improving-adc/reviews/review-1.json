@@ -1,0 +1,91 @@
+{
+  "approved": true,
+  "issues": [
+    {
+      "severity": "minor",
+      "file": "plugin/ss_improving_adc/core.py",
+      "where": "significance_prune_mask (torch.quantile, line ~68)",
+      "problem": "torch.quantile raises 'input tensor is too large' when the old non-split population exceeds 2^24 = 16,777,216 (verified with torch 2.4.1). The official code has the same limit. With a --max-gaussians cap above 16.7M, a run can crash inside density instead of hitting the runtime budget check.",
+      "evidence": "tools/ssenv python: torch.quantile(torch.rand(2**24+1), .5) -> RuntimeError; 2**24 ok",
+      "fix": "Use --max-gaussians <= 16,000,000 (scores <= N_old <= cap, so this cannot trigger), or fall back to kthvalue/sort for large N."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "Smoke run table / fidelity gap 7",
+      "problem": "The growth comparison uses smoke-baseline (0.84M at 2k). The full baseline3dgs garden run has 1.15M at 2k (final 4.76M; bicycle 2k 0.69M -> final 6.59M), so early growth is 1.6x the baseline, not 2.2x.",
+      "evidence": "runs/baseline3dgs-mipnerf360-30000/gsplat/mipnerf360-{garden,bicycle}/training.jsonl",
+      "fix": "Quote the full-baseline trajectory. Paper Table 1/3 say Ours ends at about the 3DGS count (Table 3: 3.02M vs 2.99M); expect bicycle/garden at roughly 5-9M final."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_improving_adc/probes.py",
+      "where": "significance_prune",
+      "problem": "The prune probe never densifies in the same call (grad_start=1.0), so the [old non-split | clones | split children] layout that core.significance_prune_mask relies on (mask[:n_surv]) is not exercised with clone+split+prune together. I checked it by reading gsplat ops (duplicate appends; split = cat(p[rest], children)), and it is correct.",
+      "evidence": "density.py:336 passes split_mask[:n_old]; gsplat/strategy/ops.py:165",
+      "fix": "Optional: add a fixture with one low-opacity clone parent, one split, and low-sigma old Gaussians, and compare against the independent reference."
+    },
+    {
+      "severity": "minor",
+      "file": "paper_results.json",
+      "where": "notes / Table 2",
+      "problem": "Table 2's three scenes are probably truck, garden and drjohnson (source/code/run_experiment.py scene_names). That script trains without -i, so garden would use full-res images auto-downscaled to 1600 px, a different protocol from Table 1. paper_results calls them 'unnamed'.",
+      "evidence": "source/code/run_experiment.py:4,11",
+      "fix": "Record this in the notes; it does not affect the Table 1 targets."
+    },
+    {
+      "severity": "minor",
+      "file": "paper_results.json",
+      "where": "datasets.*",
+      "problem": "The Table 1 'Revising Dens.' row (27.61/23.93/29.50, 3.3M/1.8M/2.8M) is omitted. It is the closest prior-work comparison: Ours exceeds it by only +0.10/+0.25/+0.13 dB.",
+      "evidence": "source/latex/chapters/5_experiments.tex:67",
+      "fix": "Add it for the gap analysis."
+    },
+    {
+      "severity": "minor",
+      "file": "paper.md",
+      "where": "Sec. 1 summary",
+      "problem": "The introduction lists a fourth contribution, 'opacity-momentum-guided densification' (hyperref to a nonexistent label). It has no method section, no ablation row and no official code. It is a dangling leftover, but the report should say so explicitly rather than stay silent.",
+      "evidence": "source/latex/chapters/1_introduction.tex:35; no subsubsec:opacity_momentum label anywhere; no momentum use in gaussian_model.py",
+      "fix": "Add one line to paper.md/report.md: not implemented by the authors, so not reproduced."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "Fidelity gap 2 (update order)",
+      "problem": "The exact official behaviour: at every densify step all params are replaced before optimizer.step(), so their .grad is None and Adam skips the whole step (144 skipped steps). The plugin steps first, then densifies. The effect is negligible, but the gap should be described precisely.",
+      "evidence": "source/code/train.py:156-169",
+      "fix": "Reword gap 2."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(8) revised opacity, clone parent+copy and split children", "status": "exact", "code": "density.py:densify_and_prune (clone in place, .data) + gsplat ops.split(revised_opacity=True); matches gaussian_model.py:408,429-430"},
+    {"eq": "(9) pixel-weighted gradient sum f*count*|g| / sum count", "status": "exact", "code": "density.py:accumulate/grads; matches gaussian_model.py:475-477 (pixels from forward.cu:364)"},
+    {"eq": "(10) depth factor", "status": "deviates", "code": "core.py:depth_factor -- squared min(1,(z/(0.37*e_cam))^2) as in the official rasterizer __init__.py:145 (paper prints it unsquared); e_cam = old extent as in train.py:108. Follows the code, which is correct for reproducing the numbers."},
+    {"eq": "(11/12) baseline camera extent", "status": "exact", "code": "core.py:camera_extent (train cameras, as getNerfppNorm(train_cam_infos))"},
+    {"eq": "(13) corrected extent", "status": "exact", "code": "core.py:corrected_extent; used for clone/split cutoff and spatial_lr_scale (scene/__init__.py:75-79, create_from_pcd). Garden 4.92/6.49 matches the paper's commented Table."},
+    {"eq": "(14) exponential threshold", "status": "exact", "code": "core.py:threshold -- call k (1..144, steps 600..14900) uses 1e-4*4^(k/145); official multiplies current by the factor before each call (train.py:63-67,159-160); k counts calls."},
+    {"eq": "(15/16) sigma = sum alpha*T since last densify; Alg. 2 bottom-N_prune", "status": "exact", "code": "csrc/adc_stats.cu + density.py:accumulate (reset after each densify, like per_gaussian_alpha=None) + core.py:significance_prune_mask (quantile of old non-split at N_prune/N_old, AND o<0.005; N_prune counted post clone/split). Matches gaussian_model.py:446-462."},
+    {"eq": "size pruning removed", "status": "exact", "code": "Official gaussian_model.py:466-471 is commented out (screen and world). max_radii2D is still tracked and zeroed in densification_postfix, but unused. The plugin has no size prune."}
+  ],
+  "probe_assessment": [
+    {"probe": "adc-stats-kernel", "detects_removal": true, "why": "Exact count vs brute-force loop and sigma vs the fake-colour autograd route (official method); a no-op kernel fails."},
+    {"probe": "adc-scene-extent", "detects_removal": true, "why": "Independent Eq. 13 on a fixture where e' > 5 e_cam; checks means LR and a clone/split flip."},
+    {"probe": "adc-threshold", "detects_removal": true, "why": "Checks all 144 values against the printed Eq. 14, plus a functional densify-at-call-1/not-at-144 test."},
+    {"probe": "adc-significance-prune", "detects_removal": true, "why": "Independent sort-based quantile reference; background survives; the opacity ablation removes it. Does not exercise the layout with clones+splits in the same call (minor)."},
+    {"probe": "adc-pixel-gradient", "detects_removal": true, "why": "Independent depth from the viewmat, counts from the brute-force loop, squared factor; differs from the per-view mean."},
+    {"probe": "adc-revised-opacity", "detects_removal": true, "why": "Exact 1-sqrt(1-o) on parent, copy and children; Adam moments zero/kept; the ablation keeps o."},
+    {"probe": "adc-schedule", "detects_removal": true, "why": "Exact densify steps 600..14900, resets 3000..12000, stats only for steps <15000."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "White vs black background (runtime-wide); sigma and pixel count are unaffected",
+    "Adam step before density (official: the optimizer step is skipped at densify steps because .grad is None)",
+    "gsplat numerics (alpha 0.999, T<=1e-4) vs Inria (0.99, T<1e-4) for count and sigma",
+    "With-replacement view sampling; valid-conv SSIM",
+    "Forward CUDA sigma instead of the fake-colour pass (same quantity, probe-verified)",
+    "Quantile fraction clamped to <=1",
+    "Protocol: README says full_eval.py -> -i images_4/images_2 native (< 1600 px, no resize) = our mipnerf360; T&T/DB native. PixelGS script/mipnerf360.py (-r) is an inherited leftover. Baselines baseline3dgs-{mipnerf360,tandt,db}-30000 are the right ones.",
+    "Paper 'Ours' = all five components (Sec. 4 intro; Sec. 5 'five changed components'), so the PixelGS gradient and revised opacity belong in the reproduced method; Table 1 targets 27.71/24.18/29.63 and the 3DGS row 27.39/23.74/29.50 match the LaTeX"
+  ],
+  "summary": "Faithful port of the official code. C1 (e' for the clone/split cutoff and spatial_lr_scale; log means_lr 1.038e-3 = 1.6e-4*6.4886), C2 (call-indexed 4^(k/145), 144 calls), C3 (quantile over old non-split at N_prune/N_old, AND o<0.005, no size prune) and the base mechanisms (squared PixelGS depth factor with the camera extent; revised opacity on clone parent, copy and split children) all match train.py, gaussian_model.py and the rasterizer operator by operator. The sigma window and pixel-count definitions match. pytest 6/6 and ss-verify declared_checks_passed were re-run on GPU 3. No critical or major issues. Main operational risk: the Gaussian count, plus torch.quantile's 2^24 limit. Recommend --max-gaussians 16000000."
+}

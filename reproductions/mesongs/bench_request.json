@@ -1,0 +1,20 @@
+{
+ "method": "mesongs-garden",
+ "datasets": {"mipnerf360-1600": ["garden", "bicycle", "counter"]},
+ "steps": 38000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "method_per_scene": {
+  "mipnerf360-1600/garden": "mesongs-garden",
+  "mipnerf360-1600/bicycle": "mesongs-bicycle",
+  "mipnerf360-1600/counter": "mesongs-counter"
+ },
+ "optional_methods": {
+  "mesongs-noft-<scene>": {"mipnerf360-1600": ["garden", "bicycle", "counter"], "steps": 30000,
+                           "note": "no fine-tune (paper 'Our' row); --steps 30000"},
+  "mesongs-c1-<scene>": {"mipnerf360-1600": ["garden", "bicycle", "counter"], "steps": 38000,
+                         "note": "repo csv c1 (universal config)"}
+ },
+ "baseline": "baseline3dgs-mipnerf360-1600-30000 (gsplat, same images; jobs.json shows these 3 scenes pending: must be run)",
+ "notes": "Official code loads images/ resized to width 1600 (-r -1), llffhold 8 -> mipnerf360-1600. Each scene needs its own method name (official hyper-parameters are selected by scene name): mesongs-<scene> = released scripts/mesongs_block.sh (config3, 8000 FT iterations). --steps must equal 38000 (30000 3DGS + 8000 FT; density raises otherwise; noft variants 30000). Compression stage at step 30000: importance over all train views, octree, RAHT tables, 1000-step VQ (minutes). ss-eval measures the decoded bitstream. Size: tools/ssenv python reproductions/mesongs/plugin/report_size.py <run> -> <run>/mesongs_size.json (zip_bytes = repo csv 'Size [Bytes]'; never checkpoint_bytes). Targets (official repo results/MipNeRF360 c3 csv, decoded): garden 26.39 dB / 42.94 MB(1e6) / 3.10M G, bicycle 24.54 / 42.00 / 3.16M, counter 28.59 / 12.60 / 0.88M; c1: 26.39 / 24.56 / 28.55. No per-scene 3DGS baseline from the authors; compare drop vs our 1600 baseline (rdo-gaussian's paper 3DGS rows at 1600: garden 27.30, bicycle 25.11, counter 29.10 -> implied drop -0.91 / -0.57 / -0.51)."
+}

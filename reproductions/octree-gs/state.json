@@ -1,0 +1,25 @@
+{
+  "paper": "Octree-GS: Towards Consistent Real-time Rendering with LOD-Structured 3D Gaussians",
+  "slug": "octree-gs",
+  "plan_id": 75,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 7 minors)",
+    "benchmark": "running"
+  },
+  "outcome": null,
+  "arxiv": "2403.17898",
+  "official_code_commit": "9db64fe",
+  "method": "octree-gs",
+  "custom_cuda": true,
+  "bench_request": "bench_request.json",
+  "feasible_natively": true,
+  "ss_eval_transport": "ogs_blob per-anchor field",
+  "bench_dataset": "mipnerf360-1600",
+  "bench_exps": [
+    "octree-gs-1600"
+  ]
+}

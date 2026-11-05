@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-speedy-splat"
+version = "0.1.0"
+description = "Speedy-Splat (arXiv 2412.00578) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+speedy-splat = "ss_speedysplat:method"
+speedy-splat-accutile = "ss_speedysplat:accutile"
+speedy-splat-stock = "ss_speedysplat:stock"
+
+[tool.setuptools.packages.find]
+include = ["ss_speedysplat*"]
+
+[tool.setuptools.package-data]
+ss_speedysplat = ["csrc/*/*.cu", "csrc/*/*.cpp", "csrc/*/*.h", "csrc/*/*.md", "csrc/*/cuda_rasterizer/*", "csrc/third_party/glm/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_speedysplat/csrc"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

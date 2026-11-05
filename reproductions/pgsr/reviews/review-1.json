@@ -1,0 +1,78 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "reproductions/pgsr/bench_request.json",
+      "where": "lines 3, 7, 10, 11",
+      "problem": "The benchmark request still describes the old protocol. It names dataset `mipnerf360` (images_4/2 JPGs) and baseline `baseline3dgs-mipnerf360-30000`, its our_baseline_groups numbers (30.90 / 24.39 / 27.28) come from that images_4/2 baseline, and the notes say 'we use images_4/images_2 = mipnerf360 protocol'. report.md and the orchestrator's decision say `mipnerf360-pilr` for all 9 scenes against `baseline3dgs-mipnerf360-pilr-30000`. plan.md:5 and :49-50 and state.json:21 are also stale.",
+      "evidence": "Official run_mip360.py passes -r4 (outdoor) / -r2 (indoor) with the default --images 'images' (full resolution). utils/camera_utils.loadCam uses round(W/r) for r in {1,2,4,8}, and cameras.process_image calls PIL Image.resize (bicubic). tools/make_pil_resized.py reproduces exactly this, so pilr is the correct protocol. A benchmarker that follows bench_request.json would run the wrong images and compare against the wrong baseline.",
+      "fix": "Set datasets to {\"mipnerf360-pilr\": [all 9]} and baseline to baseline3dgs-mipnerf360-pilr-30000. Drop or mark pending our_baseline_groups until the pilr baseline finishes (only 5 outdoor scenes are running; the 4 indoor scenes are pending). Fix the images_4/2 sentence in the notes and update plan.md and state.json."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/pgsr/plugin/ss_pgsr/density.py",
+      "where": "set_training_cameras, lines 186-203",
+      "problem": "splatstudio.data.load_dataset decodes every frame, test included, so test images are read into memory and then discarded. They are never used, so this does not leak test data into training, but the claim 'no test image is ever loaded' is literally false. This also keeps a second full-resolution float copy of the dataset in host RAM: about 5.7 GB for bonsai pilr, on top of the runtime's own copy.",
+      "evidence": "data.py:64-112 loads all frames before the splits are used. density.py:190 then keeps only splits['train'].",
+      "fix": "Reword the claim to 'test images are never used'. Optionally load only the training frames, or free each image after converting it to grey."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/pgsr/report.md",
+      "where": "Fidelity gaps",
+      "problem": "Some small differences are not listed. (a) The official code skips the Adam step for parameters replaced on densify, trim and reset iterations because their .grad is lost; the runtime steps first, so this is only partly covered by 'update order'. (b) SH degree goes up one step later: runtime (step-1)//1000 vs official oneupSHdegree at iteration % 1000 == 0 before rendering. (c) Each loss computes the official SSIM itself, replacing the runtime photometric loss; the report should say pgsr-rgb replaces the base photometric loss.",
+      "evidence": "train.py:143-146, 361-395; runtime.py:196-211.",
+      "fix": "Add one line to the gaps section."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/pgsr/plugin/ss_pgsr/density.py",
+      "where": "_quantile_mask, line 116",
+      "problem": "This clamps q to [0,1], whereas the official torch.quantile would raise once the 6M cap leaves limited_num <= 0. The behaviour is benign and more robust, but it is a silent divergence. It is unreachable at Mip-NeRF 360 sizes.",
+      "evidence": "gaussian_model.py:440-443 vs density.py:114-117.",
+      "fix": "None needed; mention it in a comment."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "Gaussian normal = min-scale axis, flipped toward camera (Sec. 3.1)", "status": "exact", "code": "raster.py:gaussian_normals (== GaussianModel.get_normal / get_smallest_axis)"},
+    {"eq": "Plane distance d = |n_c . p_c|, alpha-blended normal/distance maps, unbiased depth = D / (N . K^-1 p) (Sec. 3.1)", "status": "exact", "code": "raster.py:plane_inputs + vendored forward.cu (unmodified; diff -q clean for all 12 kernel files)"},
+    {"eq": "L_s = || min(s1,s2,s3) ||_1, lambda_1 = 100, over radii>0", "status": "exact", "code": "losses.py:flatten_loss"},
+    {"eq": "Normal from depth (4-neighbour cross product, camera frame) * alpha.detach()", "status": "exact", "code": "raster.py:normal_from_depth / render"},
+    {"eq": "L_svgeom = mean((1-grad I)^2 |N_d - N|_1), lambda_2 = 0.015, step > 7000", "status": "exact", "code": "losses.py:single_view_loss, geometry.py:image_grad_weight"},
+    {"eq": "Homography H_rn = K_n (R_rn - T_rn n_r^T / d_r) K_r^-1", "status": "exact", "code": "geometry.py:homography/relative_pose (== train.py:294-312)"},
+    {"eq": "L_mvrgb = mean_kept w * (1 - NCC), 7x7 grey patches, 102,400 samples, ncc<0.9 mask, lambda_3 = 0.15", "status": "exact", "code": "geometry.py:ncc_terms/lncc, losses.py:multiview_terms"},
+    {"eq": "L_mvgeom = mean_valid w*phi, w = exp(-phi) if phi < 1 (detached), lambda_4 = 0.03", "status": "exact", "code": "geometry.py:forward_backward_error/occlusion_weights"},
+    {"eq": "Exposure I^a = exp(a) I^r + b; L_rgb = (1-l) L1(I~, I) + l (1-SSIM(I^r, I)), gate 1-SSIM<0.5, step>1000, lr 1e-3", "status": "exact", "code": "losses.py:create_rgb/Exposure (off for pgsr, as run_mip360.py)"},
+    {"eq": "L = L_rgb + lambda_1 L_s + L_geom", "status": "exact", "code": "runtime sum of pgsr-rgb, pgsr-flatten, pgsr-single-view, pgsr-mv-geo, pgsr-mv-ncc"}
+  ],
+  "probe_assessment": [
+    {"probe": "plane-depth", "detects_removal": true, "why": "Compares the kernel's depth with an analytic oblique ray-plane intersection. Alpha-blended centre z would fail, and the probe also checks that depth varies across the plane."},
+    {"probe": "flatten-loss", "detects_removal": true, "why": "Checks the value against an independent reference and that the gradient falls only on the min axis."},
+    {"probe": "single-view", "detects_removal": true, "why": "Uses an analytic plane normal and an independent edge-weight formula, checks that the term is off at step 7000, and checks that the edge weight has an effect."},
+    {"probe": "mv-geometry", "detects_removal": true, "why": "Requires phi ~ 0 for consistent planes and phi equal to the homography reprojection error. It also checks that phi >= 1 pixels are rejected and that the weights are exp(-phi) and detached."},
+    {"probe": "mv-ncc", "detects_removal": true, "why": "Checks the homography against the projection and that the NCC separates the true plane from a wrong one. It also checks that the gradient reaches the distance."},
+    {"probe": "exposure", "detects_removal": true, "why": "Checks the identity at init, the formula, that the loss decreases, the step gate and the SSIM gate."},
+    {"probe": "neighbour-graph", "detects_removal": true, "why": "Checks the sort order, the angle and distance gates, and the cap of 8 on a constructed rig."},
+    {"probe": "density-recipe", "detects_removal": true, "why": "Checks the resampled clone, the s/1.6 split, the AbsGS cap, the world prune gated after 3000, the reset and its moments, and the xyz LR."},
+    {"probe": "multi-view-trim", "detects_removal": true, "why": "Runs the CUDA observe count on a constructed scene and checks which Gaussians are kept."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Optimizer step before densification, and view sampling with replacement (runtime).",
+    "ncc_scale 1.0 only (pgsr-tnt deviates from run_tnt.py 0.5; no effect on Mip-NeRF 360).",
+    "No TSDF mesh, DTU Chamfer or TnT F1 evaluation.",
+    "Different seed; SplatStudio SSIM and LPIPS evaluation implementations.",
+    "SH degree increases one step later than official (negligible)."
+  ],
+  "verified_claims": [
+    "Vendored rasterizer is unmodified: diff -q of csrc/{ext.cpp, rasterize_points.cu/.h, cuda_rasterizer/*} against source/code/submodules/diff-plane-rasterization shows no differences.",
+    "Hyper-parameters match arguments/__init__.py and run_mip360.py: scale_loss_weight 100; single_view_weight 0.015 from > 7000; multi_view geo 0.03, ncc 0.15, patch half-size 3 (7x7), sample_num 102400, pixel_noise_th 1.0, from > 7000; percent_dense 0.001; abs_split_radii2D_threshold 20; max_abs_split_points 50k; max_all_points 6M; opacity_cull 0.005; densify_abs_grad_threshold 0.0002 (run_mip360 override of the 0.0008 default); opacity_reset_interval 3000; densify 500 to 15000 every 100; multi_view_num 8, angle 30, distance 0.01 to 1.5; exposure_compensation False; black background.",
+    "Screen-size prune is a no-op upstream. In gaussian_model.py:391-412, densification_postfix zeroes self.max_radii2D, and densify_and_split always calls it (even with empty selections) before densify_and_prune:510-511 tests self.max_radii2D > 20. The world prune (0.1 * extent, size_threshold set after 3000) stays active, as in the plugin.",
+    "Trim: train.py:374-383 prunes Gaussians with fewer than 2 views where out_observe > 0, every 1000 steps while step < 15000. The plugin matches, including the order (densify, then trim, then reset).",
+    "Neighbour graph: scene/__init__.py:82-118 builds it from train_cameras only, with np.lexsort((angles, diss)) (primary key distance). Native conversion keeps COLMAP world units (colmap_to_transforms.py applies only the OpenCV-to-OpenGL flip), so the 0.01 to 1.5 thresholds have the official meaning.",
+    "Protocol: -r 4 / -r 2 of full-resolution images with round() and PIL default resize equals tools/make_pil_resized.py. The pilr scenes have the expected sizes (e.g. bicycle 1236x822, room 1557x1038) and centred principal points (check_centered passes on all 9 scenes). -r -1 (1600 px) and images_4/2 are not the official protocol.",
+    "paper_results.json Mip-NeRF 360 rows match tables/view_eval.tex exactly. PGSR: 30.36/0.934/0.147, 24.76/0.752/0.203, 27.25/0.833/0.178. 3DGS: 30.99/0.926/0.199, 24.24/0.705/0.283, 27.24/0.803/0.246.",
+    "pytest: 11 passed. ss-inspect pgsr: no issues. ss-verify pgsr --device cuda: declared_checks_passed (GPU 2)."
+  ],
+  "summary": "The port is a faithful operator-level transcription of the official de24f1a code. It uses the unmodified plane kernel, and every loss, the multi-view block, the AbsGS densification (including the upstream screen-prune no-op), the trim and the neighbour graph match train.py, gaussian_model.py and run_mip360.py. The pilr protocol is the correct official resolution protocol. The single blocking item is bookkeeping: bench_request.json (and plan.md/state.json) still specify the images_4/2 `mipnerf360` dataset and baseline, so a benchmarker following them would run the wrong protocol. The pilr baseline is also still running (5 outdoor running, 4 indoor pending). Fix the request and this is approvable."
+}

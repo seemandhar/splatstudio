@@ -1,0 +1,325 @@
+{
+ "paper": "EAGLES: Efficient Accelerated 3D Gaussians with Lightweight EncodingS",
+ "arxiv": "2312.04564",
+ "method_label": "EAGLES (Ours)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.23,
+     "ssim": 0.81,
+     "lpips": 0.24,
+     "storage_MB": 54,
+     "gaussians_M": 1.33
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.04,
+      "bonsai": 31.32,
+      "counter": 28.4,
+      "flowers": 21.29,
+      "garden": 26.91,
+      "kitchen": 30.77,
+      "room": 31.47,
+      "stump": 26.78,
+      "treehill": 22.69
+     },
+     "ssim": {
+      "bicycle": 0.75,
+      "bonsai": 0.94,
+      "counter": 0.9,
+      "flowers": 0.58,
+      "garden": 0.84,
+      "kitchen": 0.93,
+      "room": 0.92,
+      "stump": 0.77,
+      "treehill": 0.64
+     },
+     "lpips": {
+      "bicycle": 0.24,
+      "bonsai": 0.19,
+      "counter": 0.2,
+      "flowers": 0.37,
+      "garden": 0.15,
+      "kitchen": 0.13,
+      "room": 0.2,
+      "stump": 0.24,
+      "treehill": 0.34
+     },
+     "storage_MB": {
+      "bicycle": 104,
+      "bonsai": 29,
+      "counter": 25,
+      "flowers": 60,
+      "garden": 74,
+      "kitchen": 45,
+      "room": 30,
+      "stump": 100,
+      "treehill": 72
+     },
+     "gaussians_M": {
+      "bicycle": 2.26,
+      "bonsai": 0.64,
+      "counter": 0.56,
+      "flowers": 1.33,
+      "garden": 1.65,
+      "kitchen": 1.0,
+      "room": 0.67,
+      "stump": 2.22,
+      "treehill": 1.6
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.45,
+     "ssim": 0.81,
+     "lpips": 0.22,
+     "storage_MB": 745,
+     "gaussians_M": 3.11
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.13,
+      "bonsai": 32.19,
+      "counter": 29.11,
+      "flowers": 21.37,
+      "garden": 27.32,
+      "kitchen": 31.53,
+      "room": 31.59,
+      "stump": 26.73,
+      "treehill": 22.61
+     },
+     "ssim": {
+      "bicycle": 0.75,
+      "bonsai": 0.95,
+      "counter": 0.91,
+      "flowers": 0.59,
+      "garden": 0.86,
+      "kitchen": 0.93,
+      "room": 0.92,
+      "stump": 0.77,
+      "treehill": 0.64
+     },
+     "lpips": {
+      "bicycle": 0.24,
+      "bonsai": 0.18,
+      "counter": 0.18,
+      "flowers": 0.36,
+      "garden": 0.12,
+      "kitchen": 0.12,
+      "room": 0.2,
+      "stump": 0.24,
+      "treehill": 0.35
+     },
+     "storage_MB": {
+      "bicycle": 1254,
+      "bonsai": 295,
+      "counter": 276,
+      "flowers": 818,
+      "garden": 1343,
+      "kitchen": 417,
+      "room": 353,
+      "stump": 1042,
+      "treehill": 807
+     },
+     "gaussians_M": {
+      "bicycle": 5.31,
+      "bonsai": 1.25,
+      "counter": 1.17,
+      "flowers": 3.47,
+      "garden": 5.69,
+      "kitchen": 1.77,
+      "room": 1.5,
+      "stump": 4.42,
+      "treehill": 3.42
+     }
+    }
+   },
+   "source": "supp. Table 2 (main Table 1 averages; baseline = 3D-GS* authors' runs)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.37,
+     "ssim": 0.84,
+     "lpips": 0.2,
+     "storage_MB": 29,
+     "gaussians_M": 0.65
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.65,
+      "truck": 25.09
+     },
+     "ssim": {
+      "train": 0.8,
+      "truck": 0.87
+     },
+     "lpips": {
+      "train": 0.24,
+      "truck": 0.16
+     },
+     "storage_MB": {
+      "train": 21,
+      "truck": 38
+     },
+     "gaussians_M": {
+      "train": 0.46,
+      "truck": 0.83
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.63,
+     "ssim": 0.85,
+     "lpips": 0.18,
+     "storage_MB": 430,
+     "gaussians_M": 1.83
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.94,
+      "truck": 25.31
+     },
+     "ssim": {
+      "train": 0.81,
+      "truck": 0.88
+     },
+     "lpips": {
+      "train": 0.2,
+      "truck": 0.15
+     },
+     "storage_MB": {
+      "train": 262,
+      "truck": 599
+     },
+     "gaussians_M": {
+      "train": 1.11,
+      "truck": 2.54
+     }
+    }
+   },
+   "source": "supp. Table 3"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.86,
+     "ssim": 0.91,
+     "lpips": 0.25,
+     "storage_MB": 52,
+     "gaussians_M": 1.19
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.35,
+      "playroom": 30.38
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.91
+     },
+     "lpips": {
+      "drjohnson": 0.24,
+      "playroom": 0.25
+     },
+     "storage_MB": {
+      "drjohnson": 69,
+      "playroom": 36
+     },
+     "gaussians_M": {
+      "drjohnson": 1.57,
+      "playroom": 0.8
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.42,
+     "ssim": 0.9,
+     "lpips": 0.25,
+     "storage_MB": 656,
+     "gaussians_M": 2.78
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.77,
+      "playroom": 30.07
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.25,
+      "playroom": 0.25
+     },
+     "storage_MB": {
+      "drjohnson": 769,
+      "playroom": 542
+     },
+     "gaussians_M": {
+      "drjohnson": 3.26,
+      "playroom": 2.29
+     }
+    }
+   },
+   "source": "supp. Table 4 (main Table 2 lists 3D-GS* avg 29.55)"
+  }
+ },
+ "ablation_table3": {
+  "rows": [
+   "Vanilla",
+   "+Quantization",
+   "+Progressive",
+   "+Densification",
+   "+Pruning"
+  ],
+  "train_psnr": [
+   21.94,
+   21.6,
+   21.63,
+   21.62,
+   21.65
+  ],
+  "train_MB": [
+   262,
+   46,
+   38,
+   29,
+   21
+  ],
+  "playroom_psnr": [
+   30.07,
+   30.48,
+   30.39,
+   30.4,
+   30.38
+  ],
+  "playroom_MB": [
+   542,
+   82,
+   75,
+   54,
+   36
+  ],
+  "bicycle_psnr": [
+   25.13,
+   24.86,
+   25.07,
+   25.02,
+   25.04
+  ],
+  "bicycle_MB": [
+   1254,
+   192,
+   190,
+   142,
+   104
+  ]
+ },
+ "notes": "Baseline rows are the authors' own 3DGS runs on the 3DGS codebase (3D-GS*). Storage MB = GaussianModelSQ.size() Shannon estimate (bits/8/1e6). Main Table 1 3D-GS (paper-reported) rows: mip360 27.21, T&T 23.61, DB 29.41."
+}

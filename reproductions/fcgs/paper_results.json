@@ -1,0 +1,312 @@
+{
+ "paper": "Fast Feedforward 3D Gaussian Splatting Compression",
+ "arxiv": "2410.08017",
+ "method_label": "Ours-highrate (\u03bb=1e-4) / Ours-lowrate (\u03bb=16e-4)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.39,
+     "ssim": 0.806,
+     "lpips": 0.226,
+     "size_MiB": 64.05
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.954,
+      "bonsai": 32.148,
+      "counter": 29.074,
+      "flowers": 21.29,
+      "garden": 27.2,
+      "kitchen": 31.479,
+      "room": 31.565,
+      "stump": 26.311,
+      "treehill": 22.47
+     },
+     "ssim": {
+      "bicycle": 0.739,
+      "bonsai": 0.944,
+      "counter": 0.913,
+      "flowers": 0.582,
+      "garden": 0.852,
+      "kitchen": 0.929,
+      "room": 0.924,
+      "stump": 0.746,
+      "treehill": 0.624
+     },
+     "lpips": {
+      "bicycle": 0.248,
+      "bonsai": 0.182,
+      "counter": 0.185,
+      "flowers": 0.363,
+      "garden": 0.126,
+      "kitchen": 0.118,
+      "room": 0.199,
+      "stump": 0.258,
+      "treehill": 0.355
+     },
+     "size_bytes": {
+      "bicycle": 111163736,
+      "bonsai": 25647120,
+      "counter": 24526193,
+      "flowers": 76177998,
+      "garden": 125991649,
+      "kitchen": 39341523,
+      "room": 25703743,
+      "stump": 98500084,
+      "treehill": 77367083
+     },
+     "size_MiB": {
+      "bicycle": 106.014,
+      "bonsai": 24.459,
+      "counter": 23.39,
+      "flowers": 72.649,
+      "garden": 120.155,
+      "kitchen": 37.519,
+      "room": 24.513,
+      "stump": 93.937,
+      "treehill": 73.783
+     },
+     "num_gaussians": {
+      "bicycle": 5681457,
+      "bonsai": 1248494,
+      "counter": 1178270,
+      "flowers": 3394816,
+      "garden": 5623998,
+      "kitchen": 1746642,
+      "room": 1480853,
+      "stump": 4423028,
+      "treehill": 3424467
+     }
+    }
+   },
+   "method_lowrate": {
+    "average": {
+     "psnr": 27.05,
+     "ssim": 0.798,
+     "lpips": 0.237,
+     "size_MiB": 34.64
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.771,
+      "bonsai": 31.533,
+      "counter": 28.758,
+      "flowers": 21.21,
+      "garden": 26.847,
+      "kitchen": 30.698,
+      "room": 31.102,
+      "stump": 26.115,
+      "treehill": 22.403
+     },
+     "ssim": {
+      "bicycle": 0.731,
+      "bonsai": 0.937,
+      "counter": 0.904,
+      "flowers": 0.577,
+      "garden": 0.841,
+      "kitchen": 0.92,
+      "room": 0.916,
+      "stump": 0.737,
+      "treehill": 0.619
+     },
+     "lpips": {
+      "bicycle": 0.258,
+      "bonsai": 0.192,
+      "counter": 0.195,
+      "flowers": 0.369,
+      "garden": 0.143,
+      "kitchen": 0.13,
+      "room": 0.209,
+      "stump": 0.269,
+      "treehill": 0.364
+     },
+     "size_bytes": {
+      "bicycle": 61986570,
+      "bonsai": 14114882,
+      "counter": 13674480,
+      "flowers": 41735422,
+      "garden": 64244154,
+      "kitchen": 20784873,
+      "room": 14625538,
+      "stump": 54207185,
+      "treehill": 41520464
+     },
+     "size_MiB": {
+      "bicycle": 59.115,
+      "bonsai": 13.461,
+      "counter": 13.041,
+      "flowers": 39.802,
+      "garden": 61.268,
+      "kitchen": 19.822,
+      "room": 13.948,
+      "stump": 51.696,
+      "treehill": 39.597
+     },
+     "num_gaussians": {
+      "bicycle": 5681457,
+      "bonsai": 1248494,
+      "counter": 1178270,
+      "flowers": 3394816,
+      "garden": 5623998,
+      "kitchen": 1746642,
+      "room": 1480853,
+      "stump": 4423028,
+      "treehill": 3424467
+     }
+    }
+   },
+   "source": "per-scene: official repo results/MipNeRF360/*.csv (commit 31e59a46); averages: appendix Table (tab:experiments_mip)",
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.52,
+     "ssim": 0.813,
+     "lpips": 0.221,
+     "size_MiB": 741.12
+    }
+   }
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.62,
+     "ssim": 0.839,
+     "lpips": 0.184,
+     "size_MiB": 32.02
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.916,
+      "truck": 25.328
+     },
+     "ssim": {
+      "train": 0.804,
+      "truck": 0.874
+     },
+     "lpips": {
+      "train": 0.216,
+      "truck": 0.152
+     },
+     "size_bytes": {
+      "train": 22430089,
+      "truck": 44723864
+     },
+     "size_MiB": {
+      "train": 21.391,
+      "truck": 42.652
+     },
+     "num_gaussians": {
+      "train": 1084643,
+      "truck": 2568661
+     }
+    }
+   },
+   "method_lowrate": {
+    "average": {
+     "psnr": 23.48,
+     "ssim": 0.832,
+     "lpips": 0.193,
+     "size_MiB": 17.89
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.801,
+      "truck": 25.151
+     },
+     "ssim": {
+      "train": 0.797,
+      "truck": 0.868
+     },
+     "lpips": {
+      "train": 0.226,
+      "truck": 0.16
+     },
+     "size_bytes": {
+      "train": 11942232,
+      "truck": 25580012
+     },
+     "size_MiB": {
+      "train": 11.389,
+      "truck": 24.395
+     },
+     "num_gaussians": {
+      "train": 1084643,
+      "truck": 2568661
+     }
+    }
+   },
+   "source": "per-scene: official repo results/TanksAndTemples/*.csv (commit 31e59a46); averages: appendix Table (tab:experiments_tt)",
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.71,
+     "ssim": 0.845,
+     "lpips": 0.179,
+     "size_MiB": 432.03
+    }
+   }
+  },
+  "db": {
+   "method": {
+    "average": {},
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.056,
+      "playroom": 30.105
+     },
+     "ssim": {
+      "drjohnson": 0.897,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.248,
+      "playroom": 0.247
+     },
+     "size_bytes": {
+      "drjohnson": 62005445,
+      "playroom": 46944748
+     },
+     "size_MiB": {
+      "drjohnson": 59.133,
+      "playroom": 44.77
+     },
+     "num_gaussians": {
+      "drjohnson": 3279566,
+      "playroom": 2334788
+     }
+    }
+   },
+   "method_lowrate": {
+    "average": {},
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.692,
+      "playroom": 29.841
+     },
+     "ssim": {
+      "drjohnson": 0.891,
+      "playroom": 0.895
+     },
+     "lpips": {
+      "drjohnson": 0.259,
+      "playroom": 0.255
+     },
+     "size_bytes": {
+      "drjohnson": 34588328,
+      "playroom": 25626149
+     },
+     "size_MiB": {
+      "drjohnson": 32.986,
+      "playroom": 24.439
+     },
+     "num_gaussians": {
+      "drjohnson": 3279566,
+      "playroom": 2334788
+     }
+    }
+   },
+   "source": "per-scene: official repo results/DeepBlending/*.csv (commit 31e59a46)"
+  }
+ },
+ "notes": "Sizes are MiB (bytes/2^20): mean of the 9 Mip-NeRF 360 CSV byte counts = 64.05 MiB = Table value. baseline_3dgs = authors' retrained vanilla 3DGS 30K (per-scene not published); FCGS compresses exactly that 3DGS. Deep Blending only per-scene CSV (Fig. 7 boost plot, no table). Eval: black background, 8-bit rounded renders, LPIPS-VGG."
+}

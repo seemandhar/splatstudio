@@ -1,0 +1,62 @@
+{
+  "paper": "StopThePop: Sorted Gaussian Splatting for View-Consistent Real-time Rendering",
+  "arxiv": "2402.00525",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "per_scene": {
+          "psnr": {"bicycle": 25.20, "flowers": 21.50, "garden": 27.16, "stump": 26.69, "treehill": 22.43,
+                   "room": 30.83, "counter": 28.59, "kitchen": 31.13, "bonsai": 31.93},
+          "ssim": {"bicycle": 0.767, "flowers": 0.604, "garden": 0.862, "stump": 0.775, "treehill": 0.635,
+                   "room": 0.917, "counter": 0.903, "kitchen": 0.925, "bonsai": 0.939},
+          "lpips": {"bicycle": 0.206, "flowers": 0.335, "garden": 0.107, "stump": 0.210, "treehill": 0.319,
+                    "room": 0.216, "counter": 0.200, "kitchen": 0.126, "bonsai": 0.202}
+        },
+        "outdoor_average": {"psnr": 24.60, "ssim": 0.728, "lpips": 0.235},
+        "indoor_average": {"psnr": 30.62, "ssim": 0.921, "lpips": 0.186}
+      },
+      "baseline_3dgs": {
+        "per_scene": {
+          "psnr": {"bicycle": 25.18, "flowers": 21.48, "garden": 27.24, "stump": 26.62, "treehill": 22.45,
+                   "room": 31.49, "counter": 28.98, "kitchen": 31.35, "bonsai": 32.10},
+          "ssim": {"bicycle": 0.763, "flowers": 0.603, "garden": 0.862, "stump": 0.772, "treehill": 0.632,
+                   "room": 0.917, "counter": 0.906, "kitchen": 0.925, "bonsai": 0.939},
+          "lpips": {"bicycle": 0.213, "flowers": 0.338, "garden": 0.109, "stump": 0.216, "treehill": 0.327,
+                    "room": 0.221, "counter": 0.202, "kitchen": 0.127, "bonsai": 0.206}
+        },
+        "outdoor_average": {"psnr": 24.59, "ssim": 0.727, "lpips": 0.240},
+        "indoor_average": {"psnr": 30.98, "ssim": 0.922, "lpips": 0.189}
+      },
+      "source": "Table 2 (averages, indoor/outdoor groups); supp. Table per_scene_360_psnr (per scene)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.21, "ssim": 0.843, "lpips": 0.173},
+                 "per_scene": {"psnr": {"truck": 24.93, "train": 21.48}, "ssim": {"truck": 0.878, "train": 0.808},
+                               "lpips": {"truck": 0.142, "train": 0.204}}},
+      "baseline_3dgs": {"average": {"psnr": 23.71, "ssim": 0.845, "lpips": 0.178},
+                        "per_scene": {"psnr": {"truck": 25.39, "train": 22.04}, "ssim": {"truck": 0.878, "train": 0.813},
+                                      "lpips": {"truck": 0.148, "train": 0.208}}},
+      "source": "Table 2; supp. Table per_scene_tatdb_psnrssim"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.86, "ssim": 0.904, "lpips": 0.234},
+                 "per_scene": {"psnr": {"drjohnson": 29.42, "playroom": 30.31}, "ssim": {"drjohnson": 0.903, "playroom": 0.905},
+                               "lpips": {"drjohnson": 0.234, "playroom": 0.235}}},
+      "baseline_3dgs": {"average": {"psnr": 29.46, "ssim": 0.900, "lpips": 0.247},
+                        "per_scene": {"psnr": {"drjohnson": 29.06, "playroom": 29.86}, "ssim": {"drjohnson": 0.898, "playroom": 0.901},
+                                      "lpips": {"drjohnson": 0.247, "playroom": 0.246}}},
+      "source": "Table 2; supp. Table per_scene_tatdb_psnrssim"
+    }
+  },
+  "popping_flip": {
+    "metric": "FLIP_t between RAFT-warped F_i and F_{i+t}, 3 camera paths per scene",
+    "3dgs": {"db": [0.0061, 0.0114], "m360_indoor": [0.0069, 0.0134], "m360_outdoor": [0.0083, 0.0148], "tandt": [0.0102, 0.0286]},
+    "ours": {"db": [0.0053, 0.0059], "m360_indoor": [0.0060, 0.0077], "m360_outdoor": [0.0085, 0.0122], "tandt": [0.0076, 0.0113]},
+    "columns": ["FLIP_1", "FLIP_7"],
+    "source": "Table 4 (view-consistency, without opacity decay)"
+  },
+  "timings_ms_fullhd_rtx4090": {"3dgs_total": 4.797, "ours_total": 4.986, "source": "Table 5"},
+  "notes": "3DGS rows are retrained by the authors with the same code base (vanilla config). Per-scene 'Ours' = final hierarchical rasterizer (64/8/4). Opacity-decay variants omitted here."
+}

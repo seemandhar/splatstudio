@@ -1,0 +1,27 @@
+{
+  "method": "improving-adc",
+  "module": "ss_improving_adc",
+  "components": [
+    {"kind": "renderer", "name": "gsplat", "factory": "splatstudio.backends.gsplat:create_renderer"},
+    {"kind": "density", "name": "improving-adc-density", "factory": "ss_improving_adc.density:create_density", "requires": ["gradient.screen.signed"]},
+    {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [],
+  "probes": ["adc-stats-kernel", "adc-scene-extent", "adc-threshold", "adc-significance-prune", "adc-pixel-gradient", "adc-revised-opacity", "adc-schedule"],
+  "contributions": [
+    {"name": "corrected-scene-extent", "section": "4.1, Eq. 13", "probes": ["adc-scene-extent"]},
+    {"name": "exponential-gradient-threshold", "section": "4.2, Eq. 14", "probes": ["adc-threshold", "adc-schedule"]},
+    {"name": "significance-aware-pruning", "section": "4.3, Eq. 15-16, Alg. 2", "probes": ["adc-stats-kernel", "adc-significance-prune"]},
+    {"name": "pixelgs-gradient (base)", "section": "2, Eq. 9-10", "probes": ["adc-stats-kernel", "adc-pixel-gradient"]},
+    {"name": "revised-opacity (base)", "section": "2, Eq. 8", "probes": ["adc-revised-opacity"]}
+  ],
+  "fidelity_gaps": [
+    "white background (runtime) vs black (official)",
+    "Adam step before density (runtime) vs after (official)",
+    "gsplat rasterizer numerics vs Inria (alpha clamp 0.999 vs 0.99)",
+    "random-with-replacement view sampling; SSIM valid conv",
+    "sigma via CUDA forward kernel instead of fake-colour autograd (equal by probe)",
+    "quantile fraction clamped to <=1"
+  ],
+  "feasible_natively": true
+}

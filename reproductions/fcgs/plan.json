@@ -1,0 +1,55 @@
+{
+ "method": "fcgs",
+ "module": "ss_fcgs",
+ "variants": [
+  "fcgs-lowrate"
+ ],
+ "components": [
+  {
+   "name": "gsplat",
+   "kind": "renderer",
+   "factory": "splatstudio.backends.gsplat:create_renderer"
+  },
+  {
+   "name": "fcgs-density",
+   "kind": "density",
+   "factory": "ss_fcgs.density:create_density",
+   "config": {
+    "total_steps": 30000,
+    "lmd": 0.0001,
+    "encode": true,
+    "xyz_coder": "auto",
+    "weights_dir": null
+   }
+  },
+  {
+   "name": "photometric",
+   "kind": "loss",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "official-weights",
+  "grid-context",
+  "gmm-cdf",
+  "mem-and-quantisation",
+  "context-models",
+  "xyz-lossless",
+  "schedule"
+ ],
+ "contributions": [
+  "mem",
+  "inter-gaussian-context",
+  "intra-gaussian-context",
+  "gmm-entropy-coding"
+ ],
+ "fidelity_gaps": [
+  "GPCC/tmc3 unavailable: substitute lossless octree+LZMA xyz coder (size only)",
+  "base 3DGS from gsplat (white bg, fewer Gaussians) vs official 3DGS; pretrained codec trained on official-3DGS statistics",
+  "SplatStudio metrics (white bg, no 8-bit rounding, valid SSIM) vs official validate script",
+  "codec training not reproduced (official weights)",
+  "gsplat rasteriser for the decoded model"
+ ],
+ "feasible_natively": true
+}

@@ -1,0 +1,12 @@
+{"method": "coherentgs", "module": "ss_coherentgs",
+ "components": [
+  {"name": "coherent-renderer", "kind": "renderer", "factory": "ss_coherentgs.renderer:create_renderer"},
+  {"name": "coherent-density", "kind": "density", "factory": "ss_coherentgs.density:create_density"},
+  {"name": "photometric", "kind": "loss", "factory": "ss_coherentgs.losses:create_photometric"},
+  {"name": "coherent-smooth", "kind": "loss", "factory": "ss_coherentgs.losses:create_smooth"},
+  {"name": "coherent-flow", "kind": "loss", "factory": "ss_coherentgs.losses:create_flow"}],
+ "fields": [],
+ "probes": ["ray-structure", "decoder-architecture", "masked-residual", "alignment", "radius", "tv-loss", "flow-loss", "photometric-terms", "multisample-render", "persistence"],
+ "contributions": ["C1 pixel ray-structured Gaussians", "C2 implicit decoders + depth masks", "C3 TV/MTV multiview smoothness", "C4 flow regularisation", "C5 multisampling", "C6 flow-based coarse alignment + depth radius init"],
+ "fidelity_gaps": ["masked eval is a plugin tool, ss-eval unmasked", "sampling with replacement", "gsplat vs Inria rasterizer (alpha clamp)", "runtime Adam steps on final step", "SSIM valid conv in eval", "RNG not bit-identical", "only LLFF 3-view", "author-provided depth/flow reused, not re-inferred"],
+ "feasible_natively": true}

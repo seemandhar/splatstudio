@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-compact-3dgs"
+version = "0.1.0"
+description = "Compact 3D Gaussian Representation (Lee et al., CVPR 2024) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+compact-3dgs = "ss_compact_3dgs:method"
+compact-3dgs-nopp = "ss_compact_3dgs:method_no_pp"
+
+[tool.setuptools.packages.find]
+include = ["ss_compact_3dgs*"]
+
+[tool.setuptools.package-data]
+ss_compact_3dgs = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.md", "csrc/*.txt"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

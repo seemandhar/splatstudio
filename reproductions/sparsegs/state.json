@@ -1,0 +1,36 @@
+{
+  "paper": "SparseGS: Sparse View Synthesis using 3D Gaussian Splatting",
+  "slug": "sparsegs",
+  "plan_id": 52,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (major fixed: prune step restored to paper; tuned variant labelled)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "not-matched (iter 1)",
+  "method": "sparsegs",
+  "dataset": "mipnerf360-sgs12",
+  "bench_exps": [
+    "sparsegs-sgs12",
+    "sparsegs-i1-sgs12"
+  ],
+  "iterations": [
+    {
+      "n": 1,
+      "exp": "sparsegs-i1-sgs12",
+      "fix": "screen-size prune removed to match official quirk (densification_postfix zeroes max_radii2D before the check); iter-0 pooled PSNR 11.08 (sparsegs) / 12.14 (3dgs control): all methods collapsed after step 3000",
+      "diagnosis": "garden control 18.31@2900 -> 12.15@5900; variants @5900: no reset 17.89, no screen prune 17.72, min_opacity 0.005 12.59 (validation-split PSNR = official metric set incl. test)"
+    }
+  ],
+  "result": {
+    "pooled_psnr": 15.94,
+    "paper": 19.37,
+    "control": 16.33,
+    "paper_3dgs": 17.49,
+    "tuned6667": 16.9
+  }
+}

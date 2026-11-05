@@ -1,0 +1,50 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_radegs/density.py", "where": "Density.after_backward (lines 149-157)",
+   "problem": "At steps 3000/6000/9000/12000 the opacity reset uses the pre-densification filter_3d (densify -> reset -> update_filter). Official train.py:196-200 does densify -> compute_3D_filter -> reset_opacity, so the reset ceiling 0.01/coef uses the freshly recomputed filter.",
+   "evidence": "official train.py:194-200 vs density.py:151-157; same ordering inherited from the GOF port",
+   "fix": "Call update_filter(params) right after densify_and_prune when a densify step happens, before reset_opacity (and keep the later is_filter_step call idempotent). Effect expected negligible (4 resets)."},
+  {"severity": "minor", "file": "plugin/ss_radegs/csrc/cuda_rasterizer/rasterizer_impl.cu", "where": "Rasterizer::backward -> BACKWARD::preprocess (line 530)",
+   "problem": "The pinned kernel passes dL_dconic as `conic_opacity` to the backward preprocess (the bug fixed upstream in 5f5cd3b, Dec 2025), so `combined_opacity` in backward.cu:173 is a gradient, not the opacity. Present at 2d4bc08 and therefore in the paper's runs; nearly inert because kernel_size = 0 makes det_0 == det_1 and the dcoef terms cancel, except for 2D covariances with det below ~1e-3 px^2. Not documented in report.md / VENDORED.md; the kernel-gradients probe uses large Gaussians so it cannot see it.",
+   "evidence": "git show 5f5cd3b: '-(float4*)dL_dconic, +(float4*)geomState.conic_opacity'; vendored file line 530 has the pre-fix version",
+   "fix": "Keep (paper numbers came from it) but list it next to the normal->means quirk in report.md fidelity notes / VENDORED.md."},
+  {"severity": "minor", "file": "report.md", "where": "Benchmark / Fidelity gap 3",
+   "problem": "The resolution-protocol justification can be made stronger and the gap downgraded: the Table 3 '3D GS' row (24.64 / 30.41) is exactly the mean of the 3DGS paper's per-scene images_4/images_2 PSNRs (outdoor 24.643, indoor 30.407 from tools/reference_results.json), and GOF's run_mipnerf360.py uses -i images_{4,2} with default -r -1, which never rescales (all images_4/images_2 widths < 1600). The 1600-px protocol would only apply to `-i images`, which no RaDe-GS/GOF script uses for 360.",
+   "evidence": "source/latex/table/mipnerf-360.tex; gof/source/code/scripts/run_mipnerf360.py; native widths 1237-1559",
+   "fix": "Add this evidence to report.md; keep mipnerf360 as the primary protocol."},
+  {"severity": "minor", "file": "plugin/ss_radegs/probes.py", "where": "kernel_gradients",
+   "problem": "The normal->means backward error is measured but never bounded, so a future change that breaks the means gradient of the normal map further would not be detected; independent check here: kernel backward vs central FD of the kernel's own forward gives rel. err 4.1 with sign flips in the z component (confirms the quirk is in the official backward, not the reference).",
+   "evidence": "evidence/verify.json normal_map_gradient_rel_err.means = 3.13; reviewer FD check rel 4.13",
+   "fix": "Optionally assert that the measured value stays within a band (e.g. 1-10) to pin the vendored behaviour."}
+ ],
+ "equation_coverage": [
+  {"eq": "(3)/(14) rasterized depth d = z_c + p·Δ, p from centre-cosine t*", "status": "exact", "code": "csrc/forward.cu:computeCov2D + renderCUDA (vendored, unmodified)"},
+  {"eq": "(6)/(10)/(12) ray-space t*, q̂", "status": "exact", "code": "csrc/forward.cu (vendored)"},
+  {"eq": "(18)-(21) intersection plane normal n' = -(q,1)", "status": "exact", "code": "csrc/forward.cu (vendored)"},
+  {"eq": "(22) n = J^T n'", "status": "deviates", "code": "csrc/forward.cu uses its own Jn (code over paper, vendored)"},
+  {"eq": "(23) depth distortion", "status": "deviates", "code": "kernel distortion on NDC depth + losses.py:regularizer_terms edge-weighted /α² (detached) — matches train.py:143-145 exactly"},
+  {"eq": "(24) normal consistency", "status": "deviates", "code": "losses.py:regularizer_terms 0.4 expected / 0.6 median, renormalised blended normal — matches train.py:148-155 exactly"},
+  {"eq": "(25) L = Lc + 100 Ld + w_n Ln", "status": "deviates", "code": "losses.py: w_n = 0.05 (code arguments/__init__.py:91) vs paper text 5; from step 15000 (train.py:140)"},
+  {"eq": "Lc = 0.8 L1 + 0.2 (1-SSIM)", "status": "exact", "code": "losses.py:create_photometric (same-padding SSIM, train.py:163)"}
+ ],
+ "probe_assessment": [
+  {"probe": "rasterized-depth", "detects_removal": true, "why": "Compares kernel slope with an independent float64 ray/Gaussian maximum; constant-centre-depth and per-pixel-cosine ablations are shown to fail (rel err 1.0 / 0.06)."},
+  {"probe": "rasterized-normal", "detects_removal": true, "why": "Kernel normal vs plane normal from exact depth derivatives on a tilted Gaussian and short axis of a flat one (1-cos 1e-14)."},
+  {"probe": "kernel-gradients", "detects_removal": true, "why": "Forward of all 6 maps and gradients vs independent differentiable float64 renderer; normal->means excluded (official quirk, measured only)."},
+  {"probe": "distortion-formula", "detects_removal": true, "why": "Pairwise formula on NDC depth vs reference, plus zero opacity gradient (detached weights)."},
+  {"probe": "regularizer-schedule", "detects_removal": true, "why": "Exact 0 at 14999, independent re-derivation of 100 Ld + 0.05(0.4/0.6) at 15000 incl. edge map; analytic plane through depth_double_to_normal."},
+  {"probe": "densify-metric", "detects_removal": true, "why": "Cancelling-gradient fixture densifies only with the abs metric."},
+  {"probe": "density-recipe", "detects_removal": true, "why": "Independent clone/split/prune/reset/filter/LR checks on a CPU fixture."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Pinned commit 2d4bc08 (2024-06-21) is the last commit before the 2024-07-24 formulation change; arXiv v2 (2024-06-24, latex in source/) matches it (Table 3 numbers taken from source/latex/table/mipnerf-360.tex). Checked git log and HEAD.",
+  "Vendored rasterizer (cuda_rasterizer/, rasterize_points.*, ext.cpp) and glm 5c46b9c0 headers are byte-identical to source (diff -r clean; submodule pointer in tree = 5c46b9c0).",
+  "Principal point: cx = W/2, cy = H/2 exactly for all 9 mipnerf360 native scenes; renderer refuses other cameras.",
+  "Losses match train.py:140-165 operator by operator (where(mask>0, dist/(mask²).detach()), edge from clamped GT, D/α nan_to_num with non-detached mask, 0.4/0.6 mix, w_d 100, w_n 0.05, from 15000).",
+  "Screen-size prune is inert at this commit: densification_postfix (gaussian_model.py:656) zeroes max_radii2D before the prune in densify_and_prune; world-size prune after 3000 kept.",
+  "Densification = GOF verbatim (quantile abs-gradient, resampled clones, padded split s/1.6, min opacity 0.05 on unfiltered opacity); Mip 3D filter schedule matches train.py:197,202-205.",
+  "Normal-map backward w.r.t. means is wrong in the official kernel (reviewer FD of kernel forward: rel 4.1). Keep it: the paper numbers were produced by this kernel, and it only affects the 0.05-weighted L_n after 15k.",
+  "Mesh/DTU/TnT geometry metrics not ported (paper's main contribution unevaluated); decoupled appearance not ported (unused on Mip-NeRF 360).",
+  "Runtime gaps shared with the GOF port: sampling with replacement, Adam step before densify, SH one step later, log-space filter coefficient, evaluator SSIM/LPIPS."
+ ],
+ "summary": "Faithful port of RaDe-GS @2d4bc08: kernel vendored byte-identical, losses and density match the official train.py/gaussian_model.py line by line, probes are mechanism-level. Resolution protocol: images_4/images_2 (`mipnerf360`) is the right choice for both RaDe-GS and GOF — GOF's run_mipnerf360.py passes -i images_{4,2} with default -r -1, which never rescales those images (<1600 px), and RaDe-GS's 3DGS comparison row equals the 3DGS paper's images_4/2 per-scene averages. Only minor issues (reset/filter ordering, undocumented pre-5f5cd3b backward bug, report wording, unbounded quirk measurement). Approved for the benchmark."}

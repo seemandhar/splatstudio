@@ -1,0 +1,44 @@
+{
+ "approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_pup3dgs/density.py", "where": "PUPDensity.__init__/after_backward",
+   "problem": "The 40000-step horizon is not enforced. Run with --steps < 35000 the prune rounds silently never fire (or fire only once) and the run is still labelled pup-3dgs; with --steps > 40000 the last LR state persists.",
+   "evidence": "prune only triggers on `step in prune_steps`; runtime passes no total step count to the density. bench_request.json uses 40000 so the planned run is correct.",
+   "fix": "Record the intended total (prune_steps[-1]+5000) in the config and have the final-step hook or the report script flag any run whose config.steps differs; or document that --steps 40000 is mandatory."},
+  {"severity": "minor", "file": "plugin/ss_pup3dgs/probes.py", "where": "fisher_oracle (_scene default sh_rest=0.0)",
+   "problem": "The oracle probe uses shN=0, so it never exercises the higher-order SH layout or the dI/dmean path through the view direction. Not a bug: I re-ran the oracle with shN~N(0,0.3) and got rel err 0.0135 (< 0.02), so the kernel agrees, but the probe would not catch an SH layout/direction break.",
+   "evidence": "probes._scene(24, device, seed=3) with default sh_rest=0.0; my ad-hoc run with sh_rest=0.3 passed at 1.35e-2 vs 4.9e-4 without SH.",
+   "fix": "Call _scene(..., sh_rest=0.3) in fisher_oracle (tolerance 0.02 still passes; consider 0.03)."},
+  {"severity": "minor", "file": "plan.md / report.md", "where": "Fidelity gap 2 (background)",
+   "problem": "White-vs-black Fisher background is listed but not quantified. Measured on the baseline3dgs bonsai checkpoint (1.37M Gaussians, 255 train views): the pruned set differs for 0.68% of Gaussians at the 80% ratio and 1.31% at 50% (zero-Fisher counts 183804 white vs 188642 black). Negligible for the ranking; white is the correct choice because it matches the render our model was trained against, and the kernel's background term (-T_final/(1-a)*bg*dL) is the only place bg enters.",
+   "evidence": "scratchpad bg.py: scene_fisher(bg=white) vs bg=black, prune_mask 0.8/0.5 disagreement 9288/18002 of 1373997.",
+   "fix": "Add these numbers to report.md fidelity gaps."},
+  {"severity": "minor", "file": "paper_results.json", "where": "datasets.tandt.method.average.ssim; v1_88p44",
+   "problem": "Tanks&Temples SSIM average 0.8013 is the v3 Table 2 value, but the mean of the supplementary per-scene SSIMs (0.7600, 0.8541) is 0.8071. This is an inconsistency inside the paper, not a transcription error. v1 mip360 LPIPS average is 0.268 (v1 Table 2) vs 0.2688 in the pipeline table. v1 per-scene SSIM is not stored (identical to v3's per the notes).",
+   "evidence": "X_suppl.tex lines 98-102, 118-125, 141-147; 4_experiments.tex line 87; paper_v1.txt Tables 2/6/7/8 and line 276.",
+   "fix": "Add a note about the T&T SSIM inconsistency so a benchmark does not flag the per-scene mean against the Table-2 average."},
+  {"severity": "minor", "file": "plugin/ss_pup3dgs/fisher.py", "where": "raster_matrices",
+   "problem": "3DGS's kernel clamps the EWA Jacobian with symmetric limits 1.3*tanfov about the image centre; with an off-centre principal point the visible-frustum clamp differs slightly from gsplat's. The pixel mapping itself (P02 = 2cx/W-1) is exact; the clamp only affects Gaussians near the image border. Effect on the ranking is negligible and no mip360/T&T/DB scene has a strongly off-centre cx.",
+   "evidence": "backward.cu/forward.cu computeCov2D uses limx = 1.3*tan_fovx; plan states 'same EWA projection'.",
+   "fix": "Mention in the fidelity gaps; no code change needed."}
+ ],
+ "equation_coverage": [
+  {"eq": "Fisher F_i = sum_views,patches g g^T over (mean, log-scale) (Sec. 3.1-3.2)", "status": "exact", "code": "fisher.py:scene_fisher/view_fisher (vendored official renderFisherCUDA; scale gradient multiplied by exp(s) in the kernel, bit-identical csrc to the official submodule)"},
+  {"eq": "4x4 patch approximation (per-patch sum of dI/dtheta == 1/4-res render with dI/dpixel=1)", "status": "exact", "code": "fisher.py:low_res_camera (ceil(H/4) x ceil(W/4), same FoV, K scaled by w/W, h/H) matches fisher_pool_xyz_scaling.pool_fisher_cuda"},
+  {"eq": "sensitivity score log|det F_i| (6x6)", "status": "exact", "code": "fisher.py:log_det_scores (svdvals then log then sum, as official prune_finetune.py)"},
+  {"eq": "percentile prune (<= int(p*(N-1))-th sorted score)", "status": "exact", "code": "fisher.py:prune_mask (identical to GaussianModel.prune_gaussians)"},
+  {"eq": "80% then 50% rounds at 30k/35k, 5k refine each, fresh Adam, fine-tune LRs", "status": "exact", "code": "density.py:prune/set_learning_rates, schedule.py (matches prune_finetune.py: lr_iter restart at 30001, get_expon_lr_func with max_steps 35000, ExponentialLR 0.95 every 400, xyz x0.95 only on the multiple-of-400 step)"}
+ ],
+ "probe_assessment": [
+  {"probe": "fisher-oracle", "detects_removal": true, "why": "Compares the CUDA Fisher with an independent per-pixel autograd Fisher on a gsplat render of the 1/4-res camera with an off-centre principal point and fy != fx; also asserts the linear-scale and full-res variants differ by > 20%, so scale activation, patch resolution and camera conversion are discriminated. Weakness: shN=0 (minor issue above); I confirmed 1.35% error with SH on. Background is white in both, so it does not test black."},
+  {"probe": "prune-schedule", "detects_removal": true, "why": "Independent float64 slogdet ranking, pruned count per official rule, zero-Fisher Gaussians (placed behind the cameras) must go first, Adam state must be empty, and LRs at each step including 30399/30400/30401/34800/35000 are checked against an independent replay of get_expon_lr_func + torch ExponentialLR. The pre-prune means LR is checked against a 4-step horizon while the stand-in runtime uses a 10-step horizon, so a missing override would fail."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Base model is the gsplat runtime (white bg, view sampling with replacement, valid SSIM), not the authors' 3DGS checkpoints; paper 3DGS row (25.09/27.28/29.11 on bicycle/garden/counter) is higher than ours.",
+  "Fisher background white vs the official black (measured 0.7%/1.3% pruned-set disagreement on bonsai: negligible).",
+  "5000 effective fine-tune updates per round vs 4999 official (the official discards the prune-iteration and the final-iteration updates); we also prune after step 30000's update, which equals the official saved ply.",
+  "Fisher kernel is the 3DGS rasterizer (alpha clamp 0.99, symmetric tan clamp) applied to a gsplat-trained model; probe error vs gsplat 5e-4 (no SH) to 1.35e-2 (SH).",
+  "Pre-prune model is not evaluated inside the 40k run; baseline3dgs-*-30000 is the reference. Steps 1-30000 match the baseline statistically (step-1 loss bit-identical, 2000-step smoke diverges only by atomics noise, 1.17M vs 1.15M Gaussians)."
+ ],
+ "summary": "No critical or major issues found. Verified against the official code: csrc is byte-identical to the official submodule; the Fisher is the log-det of the 6x6 (mean, log-scale) block accumulated over training-split cameras only (llffhold8 train, no test leakage) at ceil(H/4) x ceil(W/4); viewmatrix = viewmat^T, projmatrix = viewmat^T @ P^T with P00=2fx/W, P02=2cx/W-1, P32=1 gives 3DGS ndc2Pix = u-0.5 (unit test and off-centre oracle probe), tanfov = W/(2fx) is invariant under the low-res K scaling; exp(scales), normalised wxyz quats, sigmoid opacities and SH [N,16,3] are the layout the kernel expects. Percentile rule, 80%/50% at 30000/35000, Adam reset, and the fine-tune LR schedule (including the lr_iter restart at 30001 for round 2 and the x0.95 means quirk) match prune_finetune.py; native LRs equal the official 3DGS LRs (0.05 opacity, 0.005 scaling, 0.001 rotation, 0.0025 / 0.000125 SH). Steps 1-30000: the density overrides the runtime's 40000-horizon means LR after every step with lr0*0.01^(s/30000), which equals the 30000-step baseline run, and the prune consumes no RNG, so the view sequence is the same. Background: measured negligible. paper_results.json matches the supplementary PSNR/SSIM/LPIPS per-scene tables (v3, 90%), the v1 Table 6/8 numbers (88.44%), and the paper's 3DGS row (27.47/0.8123/0.2216 etc.); only a T&T SSIM paper-internal inconsistency to note. Remaining risk is the empirical gap from the non-authors' base model, which only the 40k benchmark can quantify; the evidence so far is smoke-level."
+}

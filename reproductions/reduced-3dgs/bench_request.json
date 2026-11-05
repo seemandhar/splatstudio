@@ -1,0 +1,10 @@
+{
+ "method": "reduced-3dgs",
+ "datasets": {
+  "mipnerf360": ["bicycle", "garden", "counter"]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Paper Table 7 (decoded quantised-half model) PSNR / Mem: bicycle 25.06 / 48 MB, garden 27.03 / 47 MB, counter 28.54 / 11 MB; paper 3DGS* 25.10 / 27.28 / 28.98. Our baseline: baseline3dgs-mipnerf360-30000 (24.92 / 26.89 / 28.85). steps must stay 30000 (= reduced-density total_steps) or the encode->decode step does not run. ss-eval measures the decoded model; encoded MB (generate_results.py formula, MiB) via `tools/ssenv python reproductions/reduced-3dgs/plugin/report_size.py <run_dir>` (also printed as the 'encode' line in the training log). Compare to paper: delta vs our gsplat baseline (paper: -0.04 / -0.25 / -0.44 dB) and MB. First call JIT-builds the CUDA extension (~1-2 min, cached in ~/.cache/torch_extensions)."
+}

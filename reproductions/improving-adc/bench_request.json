@@ -1,0 +1,6 @@
+{"method": "improving-adc",
+ "datasets": {"mipnerf360": ["bicycle", "flowers", "garden", "stump", "treehill", "room", "counter", "kitchen", "bonsai"],
+              "tandt": ["truck", "train"],
+              "db": ["drjohnson", "playroom"]},
+ "steps": 30000, "per_scene_reported": false, "extra": "",
+ "notes": "Paper Table 1 reports dataset averages only (no per-scene numbers), so every dataset is run in full (13 scenes = the paper's ablation set). Protocol = 3DGS full_eval.py (images_4/images_2) -> our `mipnerf360`; baselines baseline3dgs-mipnerf360-30000 (avg 27.28), baseline3dgs-tandt-30000 (23.36), baseline3dgs-db-30000 (29.28). Targets: mip360 27.71 (+0.32 over paper 3DGS 27.39), T&T 24.18 (+0.44 over 23.74), DB 29.63 (+0.13 over 29.50). Mip-NeRF 360 is the primary verdict dataset. Expect more Gaussians than gsplat early (1.87M vs 0.84M at 2k on garden); the paper ends near the 3DGS count. First job JIT-compiles the CUDA kernel (~1 min, cached)."}

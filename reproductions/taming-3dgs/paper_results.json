@@ -1,0 +1,29 @@
+{
+  "paper": "Taming 3DGS: High-Quality Radiance Fields with Limited Resources",
+  "arxiv": "2406.15643",
+  "method_label": "Ours (#3DGS)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.79, "ssim": 0.822, "lpips": 0.205}},
+      "method_budget": {"average": {"psnr": 27.31, "ssim": 0.801, "lpips": 0.252}},
+      "baseline_3dgs": {"average": {"psnr": 27.46, "ssim": 0.815, "lpips": 0.215}},
+      "source": "Table 1 (bottom half: Ours (#3DGS); top half: Ours budget)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.04, "ssim": 0.851, "lpips": 0.170}},
+      "method_budget": {"average": {"psnr": 23.95, "ssim": 0.837, "lpips": 0.201},
+                        "per_scene": {"psnr": {"truck": 25.20, "train": 22.69},
+                                      "lpips": {"truck": 0.165, "train": 0.238}}},
+      "baseline_3dgs": {"average": {"psnr": 23.65, "ssim": 0.847, "lpips": 0.176}},
+      "source": "Table 1; budget per-scene from Table 2 (ablations)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.14, "ssim": 0.907, "lpips": 0.235}},
+      "method_budget": {"average": {"psnr": 29.82, "ssim": 0.904, "lpips": 0.260}},
+      "baseline_3dgs": {"average": {"psnr": 29.64, "ssim": 0.904, "lpips": 0.243}},
+      "source": "Table 1"
+    }
+  },
+  "notes": "Main configuration compared to 3DGS = 'Ours (#3DGS)' (big mode, final counts = 3DGS counts). Only dataset averages are published for it. The 3DGS row is the paper's own (retrained on RTX A4500; 27.46 on 9 Mip-NeRF360 scenes vs 27.21 in the 3DGS paper). Budget-mode T&T per-scene numbers come from the ablation table."
+}

@@ -1,0 +1,41 @@
+{
+  "paper": "Gaussian Opacity Fields: Efficient Adaptive Surface Reconstruction in Unbounded Scenes",
+  "arxiv": "2404.10772",
+  "method_label": "Ours (GOF)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {},
+        "groups": {
+          "outdoor": {"scenes": ["bicycle", "flowers", "garden", "stump", "treehill"], "psnr": 24.82, "ssim": 0.750, "lpips": 0.202},
+          "indoor": {"scenes": ["room", "counter", "kitchen", "bonsai"], "psnr": 30.79, "ssim": 0.924, "lpips": 0.184}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {},
+        "groups": {
+          "outdoor": {"psnr": 24.64, "ssim": 0.731, "lpips": 0.234},
+          "indoor": {"psnr": 30.41, "ssim": 0.920, "lpips": 0.189}
+        }
+      },
+      "ablation_densification": {
+        "3dgs_w_gof_densification": {"outdoor": {"psnr": 24.62, "ssim": 0.743, "lpips": 0.199}, "indoor": {"psnr": 31.10, "ssim": 0.928, "lpips": 0.174}},
+        "mip_splatting": {"outdoor": {"psnr": 24.65, "ssim": 0.729, "lpips": 0.245}, "indoor": {"psnr": 30.90, "ssim": 0.921, "lpips": 0.194}},
+        "mip_splatting_w_gof_densification": {"outdoor": {"psnr": 24.77, "ssim": 0.745, "lpips": 0.205}, "indoor": {"psnr": 31.18, "ssim": 0.926, "lpips": 0.180}}
+      },
+      "source": "Table 4 (tables/mipnerf-360.tex) and Table 6 (tables/mipnerf-360-densify.tex); outdoor/indoor averages only, no per-scene numbers in paper or supplementary",
+      "protocol": "official scripts/run_mipnerf360.py: images_4 outdoor, images_2 indoor, --eval (llffhold 8), 30k iterations, black background"
+    },
+    "dtu": {
+      "method": {"average": {"chamfer_mm": 0.74}, "per_scene": {"chamfer_mm": {"24": 0.50, "37": 0.82, "40": 0.37, "55": 0.37, "63": 1.12, "65": 0.74, "69": 0.73, "83": 1.18, "97": 1.29, "105": 0.68, "106": 0.77, "110": 0.90, "114": 0.42, "118": 0.66, "122": 0.49}}},
+      "baseline_3dgs": {"average": {"chamfer_mm": 1.96}},
+      "source": "Table 1 (tables/dtu.tex)"
+    },
+    "tnt_geometry": {
+      "method": {"average": {"f1": 0.46}, "per_scene": {"f1": {"Barn": 0.51, "Caterpillar": 0.41, "Courthouse": 0.28, "Ignatius": 0.68, "Meetingroom": 0.28, "Truck": 0.59}}},
+      "source": "Table 2 (tables/tnt.tex)"
+    }
+  },
+  "notes": "3DGS / Mip-Splatting rows of Table 4 are taken from their papers (3DGS paper per-group averages). Mip-NeRF 360 numbers are group averages only, so the benchmark must cover all 9 scenes."
+}

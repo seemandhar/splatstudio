@@ -1,0 +1,41 @@
+{
+  "paper": "HAC: Hash-grid Assisted Context for 3D Gaussian Splatting Compression",
+  "slug": "hac",
+  "plan_id": 41,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review-1-fixes": "done",
+    "review": "done (2 majors fixed: visible_filter; 1.6K protocol data)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "arxiv": "2403.14530",
+  "method": "hac",
+  "official_code_commit": "110dcf0a",
+  "custom_cuda": true,
+  "bench_request": "bench_request.json",
+  "feasible_natively": true,
+  "ss_eval_transport": "hac_blob per-anchor field",
+  "bench_dataset": "mipnerf360-1600",
+  "plugin_freeze_sha": "a45cce4af18b4702",
+  "bench_exps": [
+    "hac-mipnerf360-1600"
+  ],
+  "result": {
+    "psnr_delta": {
+      "bicycle": 0.03,
+      "garden": -0.14,
+      "counter": -0.02
+    },
+    "size_mb": {
+      "bicycle": 33.32,
+      "garden": 24.93,
+      "counter": 7.59
+    },
+    "note": "sizes +5..21% vs paper"
+  }
+}

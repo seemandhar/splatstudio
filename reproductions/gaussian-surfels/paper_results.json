@@ -1,0 +1,158 @@
+{
+ "paper": "High-quality Surface Reconstruction using Gaussian Surfels",
+ "arxiv": "2404.17774",
+ "method_label": "Ours",
+ "iterations": 15000,
+ "datasets": {
+  "dtu": {
+   "method": {
+    "average": {
+     "chamfer_mm": 0.88,
+     "psnr": 32.51,
+     "ssim": 0.942
+    },
+    "per_scene": {
+     "chamfer_mm": {
+      "scan24": 0.66,
+      "scan37": 0.93,
+      "scan40": 0.54,
+      "scan55": 0.41,
+      "scan63": 1.06,
+      "scan65": 1.14,
+      "scan69": 0.85,
+      "scan83": 1.29,
+      "scan97": 1.53,
+      "scan105": 0.79,
+      "scan106": 0.82,
+      "scan110": 1.58,
+      "scan114": 0.45,
+      "scan118": 0.66,
+      "scan122": 0.53
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "chamfer_mm": 2.58,
+     "psnr": 32.78,
+     "ssim": 0.943
+    },
+    "per_scene": {
+     "chamfer_mm": {
+      "scan24": 2.89,
+      "scan37": 2.65,
+      "scan40": 2.66,
+      "scan55": 2.31,
+      "scan63": 3.55,
+      "scan65": 2.94,
+      "scan69": 2.19,
+      "scan83": 2.66,
+      "scan97": 2.99,
+      "scan105": 1.83,
+      "scan106": 2.54,
+      "scan110": 3.38,
+      "scan114": 2.05,
+      "scan118": 1.99,
+      "scan122": 2.02
+     }
+    }
+   },
+   "time_min": {
+    "method": 6.67,
+    "3dgs": 5.19
+   },
+   "source": "Table 1 (CD per scan, mean, time); Table 3 (PSNR/SSIM, 12.5% test = NeuS2 split, average only); Table 4 ablation (Full CD 0.882, PSNR 32.51)"
+  },
+  "dtu_sparse50": {
+   "method": {
+    "average": {
+     "psnr": 31.7,
+     "ssim": 0.936
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 30.08,
+     "ssim": 0.882
+    }
+   },
+   "source": "Table 3, 50% test"
+  },
+  "dtu_ablation": {
+   "cd": {
+    "full": 0.882,
+    "wo_Lc": 1.243,
+    "wo_Ln": 1.07,
+    "wo_Lo": 1.085,
+    "wo_Lm": 1.015,
+    "wo_cut": 1.189
+   },
+   "psnr": {
+    "full": 32.51,
+    "wo_Lc": 31.56,
+    "wo_Ln": 32.63,
+    "wo_Lo": 32.08,
+    "wo_Lm": 29.1
+   },
+   "source": "Table 4 (DTU averages)"
+  },
+  "blendedmvs": {
+   "method": {
+    "average": {
+     "chamfer": 2.27
+    },
+    "per_scene": {
+     "chamfer": {
+      "Basketball": 1.55,
+      "Bear": 1.96,
+      "Bread": 1.17,
+      "Camera": 2.34,
+      "Clock": 3.41,
+      "Cow": 2.17,
+      "Dog": 2.89,
+      "Doll": 2.13,
+      "Dragon": 2.75,
+      "Durian": 2.35,
+      "Fountain": 3.01,
+      "Gundam": 0.85,
+      "House": 2.12,
+      "Jade": 3.5,
+      "Man": 2.47,
+      "Monster": 1.38,
+      "Sculpture": 2.9,
+      "Stone": 1.84
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "chamfer": 5.83
+    },
+    "per_scene": {
+     "chamfer": {
+      "Basketball": 5.59,
+      "Bear": 5.08,
+      "Bread": 3.98,
+      "Camera": 5.85,
+      "Clock": 7.34,
+      "Cow": 5.38,
+      "Dog": 7.16,
+      "Doll": 6.25,
+      "Dragon": 4.9,
+      "Durian": 6.66,
+      "Fountain": 5.03,
+      "Gundam": 4.46,
+      "House": 4.64,
+      "Jade": 6.96,
+      "Man": 7.13,
+      "Monster": 5.84,
+      "Sculpture": 6.68,
+      "Stone": 6.01
+     }
+    }
+   },
+   "source": "Table 2 (CD x1e3 normalised units per eval.py eval_simple scale=1e3; all images train)"
+  }
+ },
+ "notes": "No Mip-NeRF 360 / T&T / DB numbers (qualitative only, Fig. big_scene). 3DGS rows are the authors' runs (3DGS mesh via rendered-depth normals + Poisson). PSNR is on masked images with black background. Paper's SSIM/PSNR per scan not reported."
+}

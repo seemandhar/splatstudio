@@ -1,0 +1,54 @@
+{
+  "paper": "DropGaussian: Structural Regularization for Sparse-view Gaussian Splatting",
+  "arxiv": "2504.00773",
+  "venue": "CVPR 2025",
+  "method_label": "Ours",
+  "iterations": 10000,
+  "datasets": {
+    "llff-3view": {
+      "method": {"average": {"psnr": 20.76, "ssim": 0.713, "lpips": 0.200}},
+      "baseline_3dgs": {"average": {"psnr": 19.22, "ssim": 0.649, "lpips": 0.229}},
+      "scenes": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"],
+      "resolution": "1/8 (504x378), official -r 8 on full-res images/",
+      "source": "Table 1 (sec/4_experimental_results.tex, table:llff), 3-view columns"
+    },
+    "llff-6view": {
+      "method": {"average": {"psnr": 24.74, "ssim": 0.837, "lpips": 0.117}},
+      "baseline_3dgs": {"average": {"psnr": 23.80, "ssim": 0.814, "lpips": 0.125}},
+      "source": "Table 1, 6-view"
+    },
+    "llff-9view": {
+      "method": {"average": {"psnr": 26.21, "ssim": 0.874, "lpips": 0.088}},
+      "baseline_3dgs": {"average": {"psnr": 25.44, "ssim": 0.860, "lpips": 0.096}},
+      "source": "Table 1, 9-view"
+    },
+    "mipnerf360-12view": {
+      "method": {"average": {"psnr": 19.74, "ssim": 0.577, "lpips": 0.364}},
+      "baseline_3dgs": {"average": {"psnr": 18.52, "ssim": 0.523, "lpips": 0.415}},
+      "source": "Table 2 (table:mip360), 12-view, downsample 8"
+    },
+    "mipnerf360-24view": {
+      "method": {"average": {"psnr": 24.13, "ssim": 0.762, "lpips": 0.225}},
+      "baseline_3dgs": {"average": {"psnr": 22.80, "ssim": 0.708, "lpips": 0.276}},
+      "source": "Table 2, 24-view"
+    },
+    "blender-8view": {
+      "method": {"average": {"psnr": 25.42, "ssim": 0.888, "lpips": 0.089}},
+      "baseline_3dgs": {"average": {"psnr": 21.56, "ssim": 0.847, "lpips": 0.130}},
+      "source": "Table 3 (table:blender)"
+    },
+    "llff-3view-ablation-gamma": {
+      "rows": {
+        "none": {"psnr": 19.22, "ssim": 0.649, "lpips": 0.229},
+        "fixed_0.1": {"psnr": 20.28, "ssim": 0.701, "lpips": 0.209},
+        "fixed_0.2": {"psnr": 20.16, "ssim": 0.700, "lpips": 0.216},
+        "fixed_0.3": {"psnr": 20.15, "ssim": 0.691, "lpips": 0.223},
+        "progressive_0.1": {"psnr": 20.29, "ssim": 0.702, "lpips": 0.206},
+        "progressive_0.2": {"psnr": 20.56, "ssim": 0.708, "lpips": 0.207},
+        "progressive_0.3": {"psnr": 20.48, "ssim": 0.707, "lpips": 0.212}
+      },
+      "source": "Table 5 (table:ablation_study)"
+    }
+  },
+  "notes": "No per-scene numbers anywhere (paper has no supplementary in the arXiv source). The 3DGS rows equal the numbers FSGS/CoR-GS report for 3DGS (not retrained here, iteration count unstated). Inconsistency: the default setting (progressive, gamma=0.2) is 20.76 dB in Table 1 / Tables 6-7 but 20.56 dB in ablation Table 5. Standard dataset keys mipnerf360/tandt/db are not used: the paper only evaluates sparse-view protocols."
+}

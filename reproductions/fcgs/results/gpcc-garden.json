@@ -1,0 +1,44 @@
+{
+ "run": "runs/baseline3dgs-mipnerf360-30000/gsplat/mipnerf360-garden",
+ "scene": "garden",
+ "split": "test",
+ "gaussians": 4764685,
+ "results": [
+  {
+   "lambda": 0.0001,
+   "metrics": {
+    "psnr": 26.830368439356487,
+    "ssim": 0.8570946380496025,
+    "lpips": 0.1345224129036069
+   },
+   "codec": {
+    "lambda": 0.0001,
+    "gaussians": 4764685,
+    "steps": 5,
+    "xyz_coder_used": "gpcc",
+    "size_MB": 91.20657634735107,
+    "size_MB_breakdown": {
+     "xyz": 9.765911102294922,
+     "mask": 0.5418319702148438,
+     "fea": 7.1065521240234375,
+     "fea_main": 7.022647857666016,
+     "fea_hyp": 0.08390426635742188,
+     "feq": 41.243557929992676,
+     "feq_main": 41.22039794921875,
+     "feq_hyp": 0.02315998077392578,
+     "geo": 32.548723220825195,
+     "geo_main": 32.512311935424805,
+     "geo_hyp": 0.036411285400390625
+    },
+    "size_MB_attributes_only": 81.44066524505615,
+    "bitstream_disk_bytes": 95637032,
+    "mask_rate": 0.5765785146342308,
+    "encode_seconds": 156.8136295080185,
+    "decode_seconds": 180.2079568328336,
+    "roundtrip_max_abs_error": 0.0,
+    "uncompressed_ply_MB": 1126.901512145996
+   },
+   "seconds": 344.5080548003316
+  }
+ ]
+}

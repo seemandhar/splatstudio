@@ -1,0 +1,208 @@
+{
+ "paper": "SplatFields: Neural Gaussian Splats for Sparse 3D and 4D Reconstruction",
+ "arxiv": "2409.11211",
+ "method_label": "SplatFields3D",
+ "iterations": 40000,
+ "datasets": {
+  "blender-fewview6": {
+   "method": {
+    "average": {
+     "psnr": 22.26,
+     "ssim": 0.8662
+    },
+    "per_scene": {
+     "psnr": {
+      "toy": 22.41,
+      "ficus": 22.26,
+      "hotdog": 26.19,
+      "chair": 25.03,
+      "mic": 24.84,
+      "ship": 19.33,
+      "drums": 18.97,
+      "materials": 19.05
+     },
+     "ssim": {
+      "toy": 0.8405,
+      "ficus": 0.8956000000000001,
+      "hotdog": 0.9362,
+      "chair": 0.8953,
+      "mic": 0.945,
+      "ship": 0.7414000000000001,
+      "drums": 0.8503000000000001,
+      "materials": 0.8255
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 20.62,
+     "ssim": 0.8356
+    },
+    "per_scene": {
+     "psnr": {
+      "toy": 19.8,
+      "ficus": 22.25,
+      "hotdog": 21.16,
+      "chair": 22.75,
+      "mic": 25.21,
+      "ship": 17.58,
+      "drums": 17.77,
+      "materials": 18.48
+     },
+     "ssim": {
+      "toy": 0.7857999999999999,
+      "ficus": 0.8979,
+      "hotdog": 0.8781,
+      "chair": 0.8734999999999999,
+      "mic": 0.9481,
+      "ship": 0.6670999999999999,
+      "drums": 0.8245,
+      "materials": 0.8094
+     }
+    }
+   },
+   "source": "main Table 2 (exp_static_blender, PSNR) / supp. Tab. C1 (PSNR) and C2 (SSIM, x100 in paper)"
+  },
+  "blender-fewview12": {
+   "method": {
+    "average": {
+     "psnr": 25.8,
+     "ssim": 0.9118
+    },
+    "per_scene": {
+     "psnr": {
+      "toy": 26.98,
+      "ficus": 26.27,
+      "hotdog": 29.45,
+      "chair": 27.42,
+      "mic": 27.6,
+      "ship": 23.78,
+      "drums": 22.55,
+      "materials": 22.32
+     },
+     "ssim": {
+      "toy": 0.9106000000000001,
+      "ficus": 0.9436,
+      "hotdog": 0.9555,
+      "chair": 0.9242,
+      "mic": 0.9617,
+      "ship": 0.8103,
+      "drums": 0.909,
+      "materials": 0.8798
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 25.29,
+     "ssim": 0.9001
+    },
+    "per_scene": {
+     "psnr": {
+      "toy": 25.14,
+      "ficus": 25.92,
+      "hotdog": 27.51,
+      "chair": 27.1,
+      "mic": 29.02,
+      "ship": 22.79,
+      "drums": 22.1,
+      "materials": 22.71
+     },
+     "ssim": {
+      "toy": 0.8856999999999999,
+      "ficus": 0.9411,
+      "hotdog": 0.9345,
+      "chair": 0.9348000000000001,
+      "mic": 0.9698,
+      "ship": 0.7611,
+      "drums": 0.8981,
+      "materials": 0.8755
+     }
+    }
+   },
+   "source": "main Table 2 / supp. Tab. C1, C2"
+  },
+  "blender-fewview-ablation-mean": {
+   "method": {
+    "average": {
+     "psnr_12v": 25.8,
+     "psnr_10v": 24.94,
+     "psnr_8v": 23.98,
+     "psnr_6v": 22.26,
+     "psnr_4v": 19.16
+    }
+   },
+   "mlp_only": {
+    "average": {
+     "psnr_12v": 24.82,
+     "psnr_6v": 21.58
+    }
+   },
+   "mlp_plus_norm": {
+    "average": {
+     "psnr_12v": 24.98,
+     "psnr_6v": 21.79
+    }
+   },
+   "mlp_plus_tricnn": {
+    "average": {
+     "psnr_12v": 25.23,
+     "psnr_6v": 21.46
+    }
+   },
+   "source": "main Table 3 (ablation, 8-scene means)"
+  },
+  "dtu-3view": {
+   "method": {
+    "average": {
+     "psnr": 21.07
+    },
+    "per_scene": {
+     "psnr": {
+      "scan105": 21.93,
+      "scan106": 19.11,
+      "scan110": 19.77,
+      "scan114": 22.03,
+      "scan118": 21.35,
+      "scan122": 24.49,
+      "scan24": 18.43,
+      "scan37": 19.82,
+      "scan40": 19.67,
+      "scan55": 21.45,
+      "scan63": 23.79,
+      "scan65": 22.64,
+      "scan69": 17.54,
+      "scan83": 23.52,
+      "scan97": 20.52
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 19.4
+    },
+    "per_scene": {
+     "psnr": {
+      "scan105": 20.07,
+      "scan106": 17.06,
+      "scan110": 17.04,
+      "scan114": 20.56,
+      "scan118": 18.25,
+      "scan122": 20.23,
+      "scan24": 18.76,
+      "scan37": 19.82,
+      "scan40": 18.29,
+      "scan55": 21.03,
+      "scan63": 22.63,
+      "scan65": 20.02,
+      "scan69": 15.86,
+      "scan83": 21.64,
+      "scan97": 19.76
+     }
+    }
+   },
+   "source": "supp. Tab. (dtu_table), not reproduced here"
+  }
+ },
+ "notes": "Blender 'Toy' column = the Lego scene (official README teaser is lego; run_blender.sh default SCENE=lego). Baseline 3DGS is the authors' own rerun: 40k iterations, visual-hull init (300k pts), mask loss 0.1, densification until 45k (i.e. whole run), no opacity reset; it is also the stage-1 run whose point cloud initializes SplatFields. Test = all 200 transforms_test.json views at 800x800, white background; PSNR = mean of per-image PSNR on 8-bit renders. No Mip-NeRF 360 / T&T / DB / LLFF numbers in the paper. 4D (Owlii, NeRF-DS) results are out of scope. 3-scene subset used here (chair, hotdog, ficus) at 6 views: SplatFields3D mean 24.49 vs 3DGS 22.05 = +2.44 dB (not the 8-scene +1.64); at 12 views 27.71 vs 26.84 = +0.87. Compare per scene."
+}

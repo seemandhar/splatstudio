@@ -1,0 +1,66 @@
+{
+  "approved": false,
+  "round_1_resolution": [
+    {"issue": "R1-1 calibrate_weights statistic/target/state", "status": "resolved (statistic, state, per-term logging); superseded by R2-1", "evidence": "gradstats.term_gradients takes the gradient of each term w.r.t. info['means2d'] scaled by (W/2,H/2) over radii>0, which is DefaultStrategy's grad2d. pooled_ratio returns the means2d ratio as primary and rgb as secondary. train_reference trains gsplat on train views for 15000 steps of a 30000 schedule (LR 0.01**(step/30000)). magnitudes() records amplitude/phase and low/high per scene. Targets are 1.5 with 1.15/2.0 sensitivity."},
+    {"issue": "R1-2 threshold LR-schedule mismatch", "status": "resolved", "evidence": "calibrate_threshold reads the baseline from exp/<baseline-method> inside the same --exp sweep, and the docstring launch includes gsplat with --steps 15000."},
+    {"issue": "R1-3 destructive blinding", "status": "resolved", "evidence": "remove_metrics and --keep-metrics are gone. read_log refuses any file except training.jsonl. Metric files are only hashed as raw bytes. A BLINDED.json is written per run and per experiment. Nothing is unlinked. bench summarize does not yet refuse BLINDED experiments; this is a docstring warning only (acceptable)."},
+    {"issue": "R1-4 phase-term dominance", "status": "resolved (documented and logged)", "evidence": "Per-term unit-weight magnitudes are in the calibration report and the gradient_gain evidence. README pre-registers a train-hold-out phase_eps/atan2_wrapped sensitivity labelled tuned."},
+    {"issue": "R1-5 fregs-fr weight scale", "status": "resolved in code (G14), but inherits R2-1", "evidence": "With anneal=False, frequency_components adds 'high' = r > D0 from step 1, weighted w_h, while low keeps w_l."},
+    {"issue": "R1-6 silent drop of threshold probe", "status": "resolved", "evidence": "Only fregs-thr0002 passes count_matched=False. probes.threshold raises when value <= 0.0002, and also when fregs/fregs-fr differ from DEFAULTS."},
+    {"issue": "R1-7 anisotropy note", "status": "resolved", "evidence": "README G6 states the anisotropy."}
+  ],
+  "issues": [
+    {
+      "severity": "major",
+      "file": "plugin/calibrate_weights.py, plugin/ss_fregs/defaults.py",
+      "where": "WEIGHT_TARGETS['w_h']=1.5; solve(); w_h stage median",
+      "problem": "The whole-image w_h target is ill-posed and can silently switch off C2. The ratio is measured at t=T on a 15k state, so the photometric means2d gradient has already decayed (Fig. 2 w/o FR: 0.25 -> 0.055). The low-band L_f gradient, with w_l calibrated at step 1, decays much less. In the smoke test w_h_ratio_at_zero was therefore already 1.49, i.e. the low band alone hits the target. solve() then returns w_h ≈ 0 (or None when ratio(0) >= target; 1.15 is always None). The median skips None values, so report['w_h'] can be a median over a subset of scenes, or None, which leaves the placeholder in place. Fig. 2 has no low-band-only curve, so a whole-image 'with FR' ratio cannot identify w_h separately from w_l. The target confounds the two bands. A collapsed w_h also turns fregs-fr into low-band-only FR, which would bias the Table 2 ablation. solve() additionally assumes the ratio is monotone in w, but a norm of a vector sum can dip when the high-band gradient is anti-aligned with the photometric one.",
+      "evidence": "Orchestrator smoke test: ratio 1.49 at w_h=0, t=T. Code: solve(): 'if r0 >= target: return None'. The median is taken over non-None values. No weight_calib/<scene>.json exists yet; only bicycle/garden w_l logs (3.40e-6, 3.46e-6), room.log is empty.",
+      "fix": "Keep 1.5/1.15/2.0 as recorded diagnostics only and change the primary rule to per-band unit-gradient equalization: w_h = w_l * M_low / M_high. Here M_b is the pooled mean ||d(d_ba+d_bp)/dmeans2d|| at unit weight on the same 15k reference, train views, t=T. Grounding: Eq. 14 enters both bands symmetrically in the same functional form with separate weights, and the paper gives no reason to favour either band. Equal per-unit screen-gradient influence is the neutral reading, it keeps C2 active by construction, and it uses no test data. Measure M_low, M_high and the whole-image ratio at the equalized w_h, and check that the ratio stays inside Fig. 2's 12k-15k envelope (about 1.15-2.3). If it falls outside, record a deviation; do not retune. A secondary sensitivity run (labelled tuned) can use region contrast. Define 'over-reconstructed' Gaussians on train views as the top-q quantile by radius × local high-pass residual energy, and solve w_h so the over/well ratio contrast is about 2.0/1.15. Report both numbers. Make solve() failures loud: raise or record 'unidentifiable' instead of returning None into a median, and bracket the ratio's minimum before bisecting. Rejected alternative: an 'increment' target. Fig. 2 provides no low-only baseline, so any increment value would be invented."
+    },
+    {
+      "severity": "major",
+      "file": "plugin/ss_fregs/probes.py",
+      "where": "gradient_gain, freq_schedule",
+      "problem": "No probe fails if C2's weight is a no-op. freq_schedule hard-codes w_l=w_h=1.0, so it tests band geometry only. gradient_gain asserts only on t=1 (low band). At tT it records the ratio but checks nothing. With w_h=0 or 1e-12, every probe still passes, and 'frequency-annealing' would report verified while having no effect on training.",
+      "evidence": "probes.py:145 _frequency_fn(method, w_l=1.0, w_h=1.0). The gradient_gain assertion applies only when label == 't1'.",
+      "fix": "Once CALIBRATED['w_h'] is set, gradient_gain must assert at t=T that the high band adds a non-negligible share. For example, the configured weights' means2d ratio exceeds the w_h=0 ratio by >= a pre-registered margin, such as half the equalized-rule increment or >= 5%. It must also assert cfg['w_h'] > 0. The same check should cover fregs-fr at t=1."
+    },
+    {
+      "severity": "minor",
+      "file": "plan.md, plugin/README.md",
+      "where": "plan.md lines ~33, 72, 83, 124-125; README line ~67",
+      "problem": "The docs still describe the round-1 procedure. Plan: fregs-fr uses 'one unfiltered full-spectrum term w_l(d_a+d_p)', and w_h targets ratio 2.0 on the 30k baseline checkpoint. README: 'w_h: finished gsplat baseline checkpoints'. The code and the revised §6.1 note at plan line 139 disagree with these passages.",
+      "evidence": "grep of plan.md/README.md.",
+      "fix": "Update these passages to the 15k reference, the means2d statistic, per-band weights for fregs-fr, and the new w_h rule."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/calibrate_threshold.py",
+      "where": "procedure",
+      "problem": "Count matching is now like-for-like, but under a 15000-step LR schedule. The final runs use 30000 steps, where the means LR at the densification steps is higher. The matched threshold transfers only if N_fregs/N_gsplat is schedule-invariant, which is an untested assumption. The sweep must also run after w_l/w_h are written into DEFAULTS, because the candidates inherit them. The README states this, but the script does not check it.",
+      "evidence": "THRESHOLD_GRID candidates are built by _make, which takes w_l/w_h from DEFAULTS.",
+      "fix": "Document the transfer assumption under G4. Have calibrate_threshold refuse to run (or record a warning) when CALIBRATED['w_l'] or CALIBRATED['w_h'] is False, and record the w_l/w_h used in the report."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(2)-(12)", "status": "exact", "code": "frequency.py (unchanged since review-1)"},
+    {"eq": "(13) band", "status": "exact", "code": "frequency.py:band_radius/high_mask; the anneal=False band is r > D0"},
+    {"eq": "(14) L_f piecewise", "status": "exact", "code": "frequency.py:frequency_loss. The form is exact, but the w_h value is ill-posed (R2-1)"},
+    {"eq": "Sec 4.2 raised threshold", "status": "exact", "code": "__init__.py fregs-density (calibration pending)"}
+  ],
+  "probe_assessment": [
+    {"probe": "freq-oracle", "detects_removal": true, "why": "Unchanged; independent float64 DFT oracle."},
+    {"probe": "freq-annealing", "detects_removal": true, "why": "Detects a wrong or missing band schedule, but forces w=1, so it cannot detect w_h≈0."},
+    {"probe": "fregs-gradient-gain", "detects_removal": false, "why": "Detects removal of the low band at t=1 after calibration. It does not detect a zero or negligible w_h, because the tT value is unasserted."},
+    {"probe": "fregs-threshold", "detects_removal": true, "why": "Now always attached for fregs/fregs-fr. It fails for <= 0.0002 or when the value deviates from DEFAULTS."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "G13: Fig. 2 read as a screen-space statistic. The whole-image w_h target is assumed and, as currently specified, unidentifiable (R2-1).",
+    "G14: fregs-fr per-band weights (deconfounded) are acceptable if w_h is not degenerate.",
+    "G4: threshold count-matched under a 15k schedule and transferred to 30k runs.",
+    "All other gaps from review-1 stand."
+  ],
+  "calibration_evidence_seen": "evidence/weight_calib/: bicycle.log w_l=3.40e-6, garden.log w_l=3.46e-6, room.log empty. No <scene>.json yet, and no w_h results.",
+  "summary": "All seven round-1 issues are resolved in code: means2d statistic, 15k reference, same-sweep gsplat baseline, non-destructive BLINDED.json, a threshold probe that fails at <= 0.0002, per-band fregs-fr, and documented phase/anisotropy. pytest passes 23/23. Not approved, for two reasons. First, the w_h whole-image target of 1.5 is not identifiable: the step-1-calibrated low band alone already gives about 1.49 at t=T, so the solver drives w_h to about 0 or None and the median hides this. Second, no probe would catch a zero w_h. Recommended fix: set w_h by per-band unit-gradient equalization, w_h = w_l * M_low/M_high on the 15k train-view reference. Report the resulting whole-image ratio against Fig. 2's 1.15-2.3 envelope, keep 1.5/1.15/2.0 and a region-contrast variant as labelled sensitivities, and add a tT high-band gain assertion to gradient_gain."
+}
