@@ -306,8 +306,11 @@ def hierarchy_optimization(method, device):
 def leaf_training(method, device):
     """Sec. 5.2 + train_single.py: MAX (not mean) screen-gradient statistic, the official
     selection rule grad*radius*sigma^0.2 >= 0.015 & sigma > 0.15, split scale /1.6, opacity-only
-    prune, reset to min(sigma, 0.01), big-Gaussian shrink, sparse Adam (invisible rows frozen),
-    position lr schedule 2e-5 -> 2e-7 (x extent)."""
+    prune, reset to min(sigma, 0.01), big-Gaussian shrink (off by default as in the README.md:550
+    eval protocol, on with skip_scale_big_gauss False), sparse Adam (invisible rows frozen),
+    position lr schedule 2e-5 -> 2e-7 (x extent) applied by after_backward over the runtime's own
+    means-lr decay and restarted for the post phase, extent = 1.1 x q0.9 camera distance."""
+    import numpy as np
     from torch import nn
 
     cfg = dict(DEFAULTS)
@@ -356,11 +359,40 @@ def leaf_training(method, device):
     dens.reset_opacity(params, optimizers)
     if float(params["opacities"].sigmoid().max()) > 0.01 + 1e-6:
         raise AssertionError("opacity reset is not min(sigma, 0.01)")
-    with torch.no_grad():
-        params["scales"][0] = math.log(0.05)
-    dens.shrink_big(params)
-    if abs(float(params["scales"][0, 0].exp()) - 0.04) > 1e-6:
-        raise AssertionError("big Gaussians (> 0.02 extent) are not shrunk by 0.8")
+    # big-Gaussian shrink: off by default (--skip_scale_big_gauss), x0.8 when enabled
+    if not cfg["skip_scale_big_gauss"]:
+        raise AssertionError("big-Gaussian shrink must default to off (README.md:550)")
+    step = cfg["densify_until"] + 1  # leaf phase, no densification/reset/build
+    for skip, expect in ((True, 0.05), (False, 0.04)):
+        dens.cfg["skip_scale_big_gauss"] = skip
+        with torch.no_grad():
+            params["scales"][0] = math.log(0.05)
+        # runtime.py: means lr decayed by the runtime *before* after_backward
+        optimizers["means"].param_groups[0]["lr"] = 123.0
+        dens.after_backward(params, optimizers, step, {"info": {}})
+        if abs(float(params["scales"][0, 0].exp()) - expect) > 1e-6:
+            raise AssertionError(f"big-Gaussian shrink with skip={skip}: expected {expect}")
+        lr = optimizers["means"].param_groups[0]["lr"]
+        if abs(lr / (expon_lr(step + 1, 2e-5, 2e-7, 30000) * dens.extent) - 1) > 1e-9:
+            raise AssertionError(f"after_backward did not override the runtime means lr: {lr}")
+    dens.cfg["skip_scale_big_gauss"] = True
+    # post phase restarts the position schedule (train_post.py update_learning_rate(1))
+    dens._set_position_lr(optimizers, cfg["leaves_steps"] + 1)
+    lr_post = optimizers["means"].param_groups[0]["lr"]
+    if abs(lr_post / (expon_lr(1, 2e-5, 2e-7, 30000) * dens.extent) - 1) > 1e-9:
+        raise AssertionError("position lr is not restarted for hierarchy optimization")
+    # extent: 1.1 x 0.9-quantile (not max) of camera distances, set after initialize
+    radii_c = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 20.0]
+    cams = [{"viewmat": look_at((r * math.cos(i), r * math.sin(i), 0.0))}
+            for i, r in enumerate(radii_c)]
+    centres = np.array([[r * math.cos(i), r * math.sin(i), 0.0] for i, r in enumerate(radii_c)])
+    ref = 1.1 * np.quantile(np.linalg.norm(centres - centres.mean(0), axis=1), 0.9)
+    dens.set_training_cameras(cams)
+    if abs(dens.extent / ref - 1) > 1e-6 or dens.state["extent"] != dens.extent:
+        raise AssertionError(f"extent {dens.extent} != 1.1 * q0.9 = {ref}")
+    lr = optimizers["means"].param_groups[0]["lr"]
+    if abs(lr / (expon_lr(1, 2e-5, 2e-7, 30000) * ref) - 1) > 1e-6:
+        raise AssertionError("position lr not rescaled to the quantile extent")
     # sparse Adam: rows without opacity gradient keep parameters and moments
     p = nn.Parameter(torch.zeros(4, 2))
     o = nn.Parameter(torch.zeros(4))
@@ -378,4 +410,5 @@ def leaf_training(method, device):
     lr1 = expon_lr(30000, 2e-5, 2e-7, 30000)
     if abs(lr0 / 2e-5 - 1) > 1e-3 or abs(lr1 / 2e-7 - 1) > 1e-6:
         raise AssertionError("position lr schedule is not 2e-5 -> 2e-7")
-    return {"max_statistic": 0.3, "split_scale": 0.01 / 1.6, "sparse_adam_rows_frozen": 2}
+    return {"max_statistic": 0.3, "split_scale": 0.01 / 1.6, "sparse_adam_rows_frozen": 2,
+            "shrink_default": "off", "extent_q90": float(ref)}

@@ -1,0 +1,65 @@
+{
+ "method": "adamw-gs-gs8",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "methods_by_scene": {
+  "bicycle": [
+   "adamw-gs-gs8 (primary)",
+   "adamw-gs (secondary)"
+  ],
+  "counter": [
+   "adamw-gs-indoor"
+  ]
+ },
+ "launch": [
+  "bench.py launch --exp adamw-gs-gs8-mipnerf360 --methods adamw-gs-gs8 --dataset mipnerf360 --scenes bicycle --steps 30000",
+  "bench.py launch --exp adamw-gs-gs9-mipnerf360 --methods adamw-gs --dataset mipnerf360 --scenes bicycle --steps 30000",
+  "bench.py launch --exp adamw-gs-indoor-mipnerf360 --methods adamw-gs-indoor --dataset mipnerf360 --scenes counter --steps 30000"
+ ],
+ "baseline": "baseline3dgs-mipnerf360-30000 (images_4/images_2 = official protocol: train.py forces images_4 outdoor / images_2 indoor, resolution -1 leaves them unchanged)",
+ "paper_reference": {
+  "bicycle": {
+   "adamw-gs-gs8": {
+    "row": "GS8 (Table-2 headline; noise+reset+StSS GS2)",
+    "psnr": 25.454,
+    "ssim": 0.778,
+    "lpips": 0.219,
+    "delta_vs_GS1": 0.216
+   },
+   "adamw-gs": {
+    "row": "GS9 (= released mipnerf_adamwgsp)",
+    "psnr": 25.481,
+    "ssim": 0.776,
+    "lpips": 0.219,
+    "delta_vs_GS1": 0.243
+   },
+   "baseline_3dgs_GS1": {
+    "psnr": 25.238,
+    "ssim": 0.765,
+    "lpips": 0.211
+   }
+  },
+  "counter": {
+   "adamw-gs-indoor": {
+    "row": "GS7/GS8 (= released mipnerf_adamwgs)",
+    "psnr": 29.112,
+    "ssim": 0.907,
+    "lpips": 0.206,
+    "delta_vs_GS1": 0.066
+   },
+   "baseline_3dgs_GS1": {
+    "psnr": 29.046,
+    "ssim": 0.909,
+    "lpips": 0.201
+   }
+  }
+ },
+ "notes": "One method per bench.py launch. Compare each method's delta over our gsplat baseline (bicycle 24.921, counter 28.846) to the paper delta vs its GS1. Paper N_a: bicycle GS8 2.72M / GS9 3.12M vs 5.44M; counter 0.535M vs 1.09M."
+}

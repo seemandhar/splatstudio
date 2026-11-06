@@ -152,6 +152,18 @@ def metrics(rgb, gt, device):
             "lpips_vgg": float(lpips_net("vgg", device)(x, y))}
 
 
+def metrics_official(rgb, gt, device):
+    """Official test.py evaluate() conventions (review-1 major): no clamp; PSNR = mean of
+    per-channel PSNRs over the [3, H*W] view; 3DGS same-padded SSIM; LPIPS-Alex fed [0, 1]
+    images directly (lpipsPyTorch copy whose z-score layer expects [-1, 1], i.e. the 3DGS
+    convention), reproduced with the `lpips` package by passing [0, 1] tensors unchanged."""
+    a, b = rgb.permute(2, 0, 1), gt.permute(2, 0, 1)
+    mse_c = (a - b).reshape(3, -1).square().mean(dim=1).clamp_min(1e-12)
+    return {"psnr": float((-10 * torch.log10(mse_c)).mean()),
+            "ssim": float(ssim_same(rgb, gt)),
+            "lpips_alex": float(lpips_net("alex", device)(a[None], b[None]))}
+
+
 def evaluate(run, split="test", device="cuda:0", epochs=None, seed=0):
     run = Path(run)
     config = json.loads((run / "config.json").read_text())
@@ -180,18 +192,21 @@ def evaluate(run, split="test", device="cuda:0", epochs=None, seed=0):
             rows.append({"frame": name,
                          "unaligned": metrics(before.clamp(0, 1), frame["image"], device),
                          "aligned": metrics(after.clamp(0, 1), frame["image"], device),
+                         "aligned_official": metrics_official(after, frame["image"], device),
                          "aligned_unclamped_psnr": float(-10 * torch.log10(
                              (after - frame["image"]).square().mean().clamp_min(1e-12))),
                          "pose_delta_translation": float((vm[:3, 3] - frame["viewmat"][:3, 3])
                                                          .norm()),
                          "viewmat": vm.cpu().tolist()})
     summary = {k: {m: sum(r[k][m] for r in rows) / len(rows) for m in rows[0][k]}
-               for k in ("unaligned", "aligned")}
+               for k in ("unaligned", "aligned", "aligned_official")}
     result = {"run": str(run.resolve()), "split": split, "metrics": summary,
               "pose_optimisation": {**POSE_DEFAULTS, **({"epochs": epochs} if epochs else {}),
                                     "final_l1": history[-1], "first_l1": history[0]},
               "per_view": rows,
-              "note": "aligned = official test.py protocol (paper Table 1): psnr, ssim (3DGS "
+              "note": "HEADLINE = aligned_official (official test.py evaluate() conventions: unclamped, "
+                      "per-channel PSNR, same-padded SSIM, LPIPS-Alex on [0,1] input). "
+                      "aligned = same poses, clamped, runtime conventions: psnr, ssim (3DGS "
                       "same-padded), lpips_alex; unaligned = ss-eval rendering"}
     write_json(run / f"{split}_tpo.json", result)
     return result

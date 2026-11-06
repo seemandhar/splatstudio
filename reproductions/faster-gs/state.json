@@ -1,0 +1,14 @@
+{
+ "paper": "Faster-GS: Analyzing and Improving Gaussian Splatting Optimization",
+ "slug": "faster-gs",
+ "plan_id": 100,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done"
+ },
+ "outcome": "ready_for_benchmark",
+ "method": "faster-gs",
+ "headline": "smoke garden 2k: 23.42 vs gsplat 22.99 dB, 65 s vs 150 s"
+}

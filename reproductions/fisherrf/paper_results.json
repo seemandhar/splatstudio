@@ -1,0 +1,34 @@
+{
+  "paper": "FisherRF: Active View Selection and Uncertainty Quantification for Radiance Fields using Fisher Information",
+  "arxiv": "2311.17874",
+  "method_label": "3D Gaussian + Ours",
+  "iterations": 30000,
+  "datasets": {
+    "blender-active20-seq1": {
+      "method": {"average": {"psnr": 29.525, "ssim": 0.944, "lpips": 0.043}},
+      "random": {"average": {"psnr": 28.732, "ssim": 0.939, "lpips": 0.053}},
+      "activenerf": {"average": {"psnr": 26.610, "ssim": 0.905, "lpips": 0.081}},
+      "source": "Table 2 (tables/blender2tabs.tex, tab:blender20): sequential, 1 view / 100 epochs, 4 init -> 20 views, 8 scenes, 200 test views"
+    },
+    "blender-active20-seq4": {
+      "method": {"average": {"psnr": 29.094, "ssim": 0.938, "lpips": 0.053}},
+      "random": {"average": {"psnr": 27.135, "ssim": 0.927, "lpips": 0.065}},
+      "activenerf": {"average": {"psnr": 27.326, "ssim": 0.912, "lpips": 0.076}},
+      "source": "Table 3 (tab:blender-batch): batch, 4 views / 300 epochs"
+    },
+    "blender-active10-seq1": {
+      "method": {"average": {"psnr": 23.681, "ssim": 0.883, "lpips": 0.102}},
+      "random": {"average": {"psnr": 22.493, "ssim": 0.873, "lpips": 0.112}},
+      "activenerf": {"average": {"psnr": 22.979, "ssim": 0.876, "lpips": 0.111}},
+      "source": "Table 4 (tab:blender10): 2 init -> 10 views"
+    },
+    "mipnerf360-active20": {
+      "method": {"average": {"psnr": 20.351, "ssim": 0.601, "lpips": 0.361}},
+      "method_batch": {"average": {"psnr": 20.568, "ssim": 0.608, "lpips": 0.365}},
+      "random": {"average": {"psnr": 17.914, "ssim": 0.564, "lpips": 0.430}},
+      "random_batch": {"average": {"psnr": 19.542, "ssim": 0.568, "lpips": 0.376}},
+      "source": "Table 5 (tables/mip_table.tex, tab:mip360): 9 scenes average only, width 1600"
+    }
+  },
+  "notes": "No per-scene numbers in the paper or e-print (no supplementary). 'random' rows are the authors' own 3D Gaussian + Random runs with the same schedule (the baseline for the selection gain). No 3DGS full-data baseline is reported."
+}

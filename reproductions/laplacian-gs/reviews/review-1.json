@@ -1,0 +1,74 @@
+{
+  "approved": true,
+  "issues": [
+    {
+      "severity": "minor",
+      "file": "paper.md / paper_results.json / plan.md / bench_request.json",
+      "where": "table citations",
+      "problem": "Per-scene tables are mis-numbered. The Mip-NeRF 360 1K per-scene table is supp. Table 10 (Deep Blending is 11, T&T is 12); Table 9 is the Ours(FastGS) runtime breakdown.",
+      "evidence": "source/paper.txt:831 'Table 9. Runtime breakdown ...', :884 'Table 10. Results of the 1K setting ... Mip-NeRF 360', :928 'Table 11 ... Deep Blending'. The numbers themselves (garden 27.35, counter 29.22; 3DGS 27.36/29.17; Taming 27.48/29.43) are transcribed correctly.",
+      "fix": "Relabel as supp. Tab. 10/11/12 in paper.md §6, paper_results.json 'source', plan.md Benchmark, bench_request 'compare' and report.md."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_laplacian_gs/__init__.py",
+      "where": "_build renderer config base_background='white' (renderer.py RENDER_DEFAULTS)",
+      "problem": "The base field is composited over white, but the official code uses black (white_background=False) for training, for the stage cache and in render_pn. The option already exists and nothing in the runtime requires white.",
+      "evidence": "train_lap.py: bg_color = [1,1,1] if dataset.white_background else [0,0,0], default False; render_pn.py uses the same rule.",
+      "fix": "Set base_background='black' for fidelity, or keep white and leave it in the gap list as now. The effect should be small on unbounded scenes."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_laplacian_gs/density.py",
+      "where": "DEFAULTS['lr'] vs splatstudio/state.py rates",
+      "problem": "This is an attribution confound, not a bug. The port follows the official LRs (opacity 0.025, shN 0.005/20 = 2.5e-4), while the gsplat baseline uses opacity 0.05 and shN 1.25e-4. A delta against baseline3dgs therefore mixes the LR change with the Laplacian mechanism. Also, the paper's method-vs-own-backbone delta is -0.13 (garden) / -0.21 (counter) dB against Taming, while the delta against the paper's 3DGS row is about -0.01 / +0.05.",
+      "evidence": "arguments/__init__.py opacity_lr 0.025, highfeature_lr 0.005 (/20 in training_setup); state.py rates opacities 0.05, shN 0.0025/20; paper Tab.10 Taming 27.48/29.43 vs Ours(Taming) 27.35/29.22.",
+      "fix": "In the report, give both paper deltas (vs 3DGS and vs Taming backbone) and name the LR difference as a confound. No code change needed."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_laplacian_gs/density.py",
+      "where": "after_backward",
+      "problem": "Nothing checks that runtime --steps equals sum(iter_plan). With other step counts the last stage is silently truncated or runs past its LR/densify schedule.",
+      "evidence": "bench_request.json notes '--steps must be 30000' but the code does not enforce it.",
+      "fix": "Raise when the last stage's local_step exceeds plan[-1], and/or log a warning at the end if the plan was not completed."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_laplacian_gs/probes.py",
+      "where": "lap_composition reference",
+      "problem": "The independent composition reference reuses the plugin's own P.blur and up(), so it is not fully independent. lap_pyramid does check blur/up against a numpy reference, so the combined coverage is adequate.",
+      "evidence": "probes.py:160 ref = P.blur(up) + ...",
+      "fix": "Optional: use np_reflect_conv in the composition reference."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(4) pyramid Down / residual", "status": "exact", "code": "pyramid.py:down/up/blur (5x5 [1,4,6,4,1]^2/256, reflect pad 2, stride 2; Up = bilinear align_corners=False + reflect-pad blur; same-size passthrough as get_upsampled)"},
+    {"eq": "(5) base colour clamp(c+0.5,0,1)", "status": "exact", "code": "renderer.py:render_field signed=False (gsplat SH +0.5 clamp_min 0; render clamp [0,1] as gaussian_renderer_dash)"},
+    {"eq": "(5') residual signed colours", "status": "exact", "code": "renderer.py:render_field signed=True (raw SH, no shift/clamp = _pn forward.cu; render clamp [-1,1]; no background); checked on GPU for SH degrees 0/1/3: signed = base - 0.5*alpha to 3e-7"},
+    {"eq": "(6) per-level render at pyramid size", "status": "exact", "code": "renderer.py:level_camera (K rows scaled by w/W, h/H = same FoV, render_size)"},
+    {"eq": "(7) composition", "status": "exact", "code": "renderer.py:compose (eval, matches render_pn.py) and render (training: cache Up(I^1) under no_grad + R^0, matches train_lap.py pred_accumulated_dict)"},
+    {"eq": "L_rec^l (Alg.1 l.19)", "status": "exact", "code": "losses.py:create_loss (0.8 L1 + 0.2 (1-SSIM same/zero-pad) vs Down^l(GT); stage 0 vs level-1 GT, stage 1 vs full-res GT through the unclamped composed image, as in train_lap.py)"}
+  ],
+  "probe_assessment": [
+    {"probe": "lap-pyramid", "detects_removal": true, "why": "numpy reflect-pad loop and bilinear reference; fails if the kernel, padding, stride, size rule or blur_up change"},
+    {"probe": "lap-signed-residual", "detects_removal": true, "why": "R = B - 0.5A with negative colour fails if the +0.5 shift or a clamp at 0 is kept; also checks the [-1,1] clamp"},
+    {"probe": "lap-composition", "detects_removal": true, "why": "eval rebuilt from raw gsplat calls; checks archived grad == 0 and active grad != 0; cache = Up(base); stage-local SH 0"},
+    {"probe": "lap-staging", "detects_removal": true, "why": "checks the inherited count/xyz, 3-NN scales, SH 0, opacity 0.1, identity quats, zeroed moments and step, LR restart, archived rows frozen, ADC limited to the active rows"},
+    {"probe": "lap-loss", "detects_removal": true, "why": "fails for a full-res target at level 1, residual supervision, or a missing SSIM term"},
+    {"probe": "lap-renderer-gradient", "detects_removal": true, "why": "fails if screen gradients do not reach the per-stage stats"}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Backbone: gsplat + dense Adam instead of the Taming/DashGaussian rasterizer + SparseGaussianAdam (official script --optimizer_type sparse_adam)",
+    "Archived field kept in params/GPU and cache re-rendered every step (frozen, so numerically the same cache; speed and memory claims not reproduced)",
+    "White base background vs black in the official code",
+    "Random view sampling with replacement vs the shuffled stack",
+    "Optimizer steps on the last iteration of each stage (official skips it); step-1 position LR is lr(0) not lr(1); optimizer steps before densification (official densifies first)",
+    "cKDTree exact 3-NN vs distCUDA2",
+    "Ours(FastGS) not ported",
+    "Verified: the Ours(Taming) rows come from run_mipnerf360_1k_taming.sh, which uses --backbone taming with PipelineParams defaults resolution_mode='const' and densify_mode='free'. So both DashGaussian schedulers are off (get_res_scale=1, get_densify_rate=1.0), and prune_and_densify_dash ignores max_screen_size (opacity-only prune). This matches the paper's description of Taming-3DGS as efficient backward + Sparse Adam.",
+    "Verified: the official loader with -r -1 (default) resizes images wider than 1600 to width 1600, which matches the w1600 dataset (PIL resize). Baseline baseline3dgs-mipnerf360-1600-30000: garden 26.934, counter 29.041.",
+    "Verified: smoke evidence shows 22.86 / 0.589 / 0.471 vs gsplat 22.95 / 0.626 / 0.439; Gaussians 207K -> 414K at the boundary (archive + full xyz inheritance)"
+  ],
+  "summary": "Faithful port of the official --backbone taming path. Pyramid kernel and padding, size rule, Up (bilinear + blur, same-size passthrough), signed residual rendering, clamps, training cache and eval composition, per-level targets (stage 1 supervises full-res GT through the unclamped composed image), stage-local densify/reset/SH/LR schedules, prune-first top-k ADC at rate 1, xyz-only inheritance with fresh Adam, and the official LRs and percent_dense 0.01 all match the source. 6/6 unit tests pass, and an independent GPU check confirmed signed SH colours for degrees 0-3. No critical or major issues. Minors: table numbering (10/11/12, not 9-11), white vs black base background, the LR confound in delta attribution, no steps==sum(iter_plan) guard, and one partly self-referential probe reference."
+}

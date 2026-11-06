@@ -1,0 +1,78 @@
+{
+ "method": "spec-gaussian",
+ "module": "ss_spec_gaussian",
+ "variants": {
+  "spec-gaussian": {
+   "indoor": false,
+   "c2f": false
+  },
+  "spec-gaussian-indoor": {
+   "indoor": true,
+   "c2f": false
+  },
+  "spec-gaussian-c2f": {
+   "indoor": false,
+   "c2f": true
+  },
+  "spec-gaussian-indoor-c2f": {
+   "indoor": true,
+   "c2f": true
+  }
+ },
+ "components": [
+  {
+   "name": "spec-asg-raster",
+   "kind": "renderer"
+  },
+  {
+   "name": "spec-density",
+   "kind": "density"
+  },
+  {
+   "name": "photometric|spec-photometric",
+   "kind": "loss"
+  }
+ ],
+ "fields": [
+  {
+   "name": "spec_feat",
+   "shape": [
+    12
+   ],
+   "lr": 0.0025,
+   "init": 0.0
+  },
+  {
+   "name": "spec_blob",
+   "shape": [],
+   "lr": 1e-12,
+   "init": 0.0
+  }
+ ],
+ "probes": [
+  "asg-basis",
+  "decoder-architecture",
+  "colour-composition",
+  "decoder-blob",
+  "absgrad-densify",
+  "official-schedules",
+  "c2f-resolution"
+ ],
+ "contributions": [
+  "asg-appearance-field",
+  "coarse-to-fine-absgrad",
+  "coarse-to-fine-resolution (c2f variants)",
+  "official-schedules"
+ ],
+ "fidelity_gaps": [
+  "white background",
+  "no screen-size prune",
+  "step/densify order",
+  "SH step offset",
+  "sampling with replacement",
+  "no reflection/normal (official real code)",
+  "resolution c2f off in benchmarked variants (official code)",
+  "paper 3DGS row stronger than 3DGS paper"
+ ],
+ "feasible_natively": true
+}

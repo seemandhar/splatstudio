@@ -1,0 +1,217 @@
+{
+ "paper": "A Step to Decouple Optimization in 3DGS",
+ "arxiv": "2601.16736",
+ "method_label": "3DGS + AdamW-GS",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.678,
+     "ssim": 0.822,
+     "lpips": 0.22
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.454,
+      "flowers": 21.711,
+      "garden": 27.17,
+      "stump": 27.045,
+      "treehill": 22.891,
+      "room": 31.741,
+      "counter": 29.112,
+      "kitchen": 31.728,
+      "bonsai": 32.251
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "flowers": 0.61,
+      "garden": 0.862,
+      "stump": 0.8,
+      "treehill": 0.651,
+      "room": 0.921,
+      "counter": 0.907,
+      "kitchen": 0.927,
+      "bonsai": 0.942
+     },
+     "lpips": {
+      "bicycle": 0.219,
+      "flowers": 0.344,
+      "garden": 0.124,
+      "stump": 0.206,
+      "treehill": 0.325,
+      "room": 0.222,
+      "counter": 0.206,
+      "kitchen": 0.132,
+      "bonsai": 0.205
+     }
+    },
+    "outdoor": {
+     "psnr": 24.854,
+     "ssim": 0.74,
+     "lpips": 0.243
+    },
+    "indoor": {
+     "psnr": 31.209,
+     "ssim": 0.925,
+     "lpips": 0.191
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.506,
+     "ssim": 0.815,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.238,
+      "flowers": 21.527,
+      "garden": 27.334,
+      "stump": 26.606,
+      "treehill": 22.534,
+      "room": 31.5,
+      "counter": 29.046,
+      "kitchen": 31.505,
+      "bonsai": 32.269
+     },
+     "ssim": {
+      "bicycle": 0.765,
+      "flowers": 0.605,
+      "garden": 0.865,
+      "stump": 0.772,
+      "treehill": 0.633,
+      "room": 0.92,
+      "counter": 0.909,
+      "kitchen": 0.928,
+      "bonsai": 0.943
+     },
+     "lpips": {
+      "bicycle": 0.211,
+      "flowers": 0.336,
+      "garden": 0.108,
+      "stump": 0.216,
+      "treehill": 0.326,
+      "room": 0.221,
+      "counter": 0.201,
+      "kitchen": 0.127,
+      "bonsai": 0.207
+     }
+    }
+   },
+   "variants": {
+    "GS7_main_table (outdoor: noise, no reset, StSS GS5)": {
+     "average": {
+      "psnr": 27.73,
+      "ssim": 0.82,
+      "lpips": 0.222
+     },
+     "outdoor": {
+      "psnr": 24.949,
+      "ssim": 0.737,
+      "lpips": 0.248
+     },
+     "per_scene_outdoor": {
+      "psnr": {
+       "bicycle": 25.47,
+       "flowers": 21.718,
+       "garden": 27.59,
+       "stump": 27.271,
+       "treehill": 22.691
+      },
+      "ssim": {
+       "bicycle": 0.775,
+       "flowers": 0.606,
+       "garden": 0.864,
+       "stump": 0.798,
+       "treehill": 0.644
+      },
+      "lpips": {
+       "bicycle": 0.223,
+       "flowers": 0.349,
+       "garden": 0.127,
+       "stump": 0.211,
+       "treehill": 0.328
+      }
+     }
+    },
+    "baseline_3dgs_groups": {
+     "outdoor": {
+      "psnr": 24.648,
+      "ssim": 0.728,
+      "lpips": 0.239
+     },
+     "indoor": {
+      "psnr": 31.08,
+      "ssim": 0.925,
+      "lpips": 0.189
+     }
+    },
+    "released_config_GS9 (outdoor: noise, no reset, StSS GS2 = mipnerf_adamwgsp)": {
+     "per_scene_outdoor": {
+      "psnr": {
+       "bicycle": 25.481,
+       "flowers": 21.762,
+       "garden": 27.438,
+       "stump": 27.175,
+       "treehill": 22.791
+      },
+      "ssim": {
+       "bicycle": 0.776,
+       "flowers": 0.609,
+       "garden": 0.864,
+       "stump": 0.796,
+       "treehill": 0.646
+      },
+      "lpips": {
+       "bicycle": 0.219,
+       "flowers": 0.343,
+       "garden": 0.123,
+       "stump": 0.211,
+       "treehill": 0.322
+      }
+     },
+     "outdoor": {
+      "psnr": 24.929
+     }
+    }
+   },
+   "source": "Table 2 (averages, row +AdamW-GS(GS8)); App. 'All Results' vanilla-3DGS tables: method per_scene = GS8 outdoor (noise+reset+StSS GS2) and GS7/GS8 indoor (no noise, StSS GS1); baseline = GS1"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.303,
+     "ssim": 0.855,
+     "lpips": 0.181
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.677,
+     "ssim": 0.848,
+     "lpips": 0.178
+    }
+   },
+   "source": "Table 3"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.26,
+     "ssim": 0.912,
+     "lpips": 0.245
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.694,
+     "ssim": 0.904,
+     "lpips": 0.247
+    }
+   },
+   "source": "Table 3"
+  }
+ },
+ "notes": "Baseline 3DGS = authors' retrained GS1 rows. method = Table-2 headline GS8 (per-scene means 24.854 outdoor / 31.208 indoor match Table 2). GS8 outdoor has no released config (plugin method adamw-gs-gs8 = released outdoor config + opacity reset every 3000 + 3DGS big prune); released outdoor config = GS9 (variants), plugin method adamw-gs. Indoor GS7/GS8 = released mipnerf_adamwgs = adamw-gs-indoor."
+}

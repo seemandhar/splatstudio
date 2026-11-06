@@ -1,0 +1,6 @@
+{"method": "robustsplat",
+ "datasets": {"robustsplat-onthego": ["patio-high"], "robustsplat-robustnerf": ["crab2"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "New datasets registered in tools/datasets.json (authors' released RobustSplat data, native root ~/datasets/robustsplat/native -> /bigdata/sejain/datasets/robustsplat). No shared baseline exists: also run `gsplat` on the same two scenes (protocol baseline). Paper targets (Table 1/2): patio-high 22.87 / 0.837 / 0.146, crab2 34.88 / 0.940 / 0.154 (3DGS rows 17.04 and 31.76; SpotLessSplats 21.17 and 33.90). Optional ablations (On-the-go Table 3, patio-high): robustsplat-nodg (paper 22.11), robustsplat-nomb (22.74). Put the experiment dir under /bigdata/sejain/runs and symlink (main disk full). Extra scenes prepared but not requested: patio (x4), android."}

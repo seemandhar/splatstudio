@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-adamw-gs"
+version = "0.1.0"
+description = "AdamW-GS (arXiv 2601.16736) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+adamw-gs = "ss_adamw_gs:method"
+adamw-gs-indoor = "ss_adamw_gs:indoor"
+adamw-gs-gs8 = "ss_adamw_gs:gs8"
+
+[tool.setuptools.packages.find]
+include = ["ss_adamw_gs*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,430 @@
+{
+ "run": "/home/sejain/splatify/runs/gup4x-ctl-db/gradient-upscaling-3dgs/db-playroom",
+ "run_method": "gradient-upscaling-3dgs",
+ "run_downscale": 4,
+ "data": "/home/sejain/datasets/tandt_db/native/playroom",
+ "scene": "playroom",
+ "split": "test",
+ "views": 29,
+ "gaussians": 999953,
+ "sh_degree": 3,
+ "factors": [
+  4.0
+ ],
+ "gpu": {
+  "name": "NVIDIA RTX A6000",
+  "nvidia_smi": [
+   "0, 99 %, 28032 MiB",
+   "1, 0 %, 39572 MiB",
+   "2, 98 %, 29908 MiB",
+   "3, 98 %, 8807 MiB",
+   "4, 100 %, 26322 MiB",
+   "5, 100 %, 11505 MiB",
+   "6, 91 %, 5457 MiB",
+   "7, 99 %, 24345 MiB"
+  ]
+ },
+ "timing_note": "same-GPU medians on a shared GPU; compare ratios, not absolute ms",
+ "quality": {
+  "native": {
+   "psnr": 26.735686532382307,
+   "ssim": 0.8453910268586258,
+   "lpips": 0.3913538815646336
+  },
+  "4x": {
+   "spline": {
+    "psnr": 28.68237199454472,
+    "ssim": 0.8780547976493835,
+    "lpips": 0.37493225007221614
+   },
+   "spline_fd": {
+    "psnr": 28.49026028863315,
+    "ssim": 0.8712541008817738,
+    "lpips": 0.38702802308674517
+   },
+   "bicubic": {
+    "psnr": 28.507622422843145,
+    "ssim": 0.8710081762280958,
+    "lpips": 0.38604503972777005
+   }
+  }
+ },
+ "quality_seconds": 22.181950936093926,
+ "speed": {
+  "native_ms": 6.817244710593388,
+  "4x": {
+   "render_gsplat_ms": 6.010734352572211,
+   "render_jets_ms": 6.148650485893776,
+   "upscale_bicubic_ms": 0.07366841402033279,
+   "upscale_spline_ms": 0.8559497923686586,
+   "spline_total_ms": 8.087407465638785,
+   "bicubic_total_ms": 6.448605225003999,
+   "speedup_spline": 0.842945621270849,
+   "speedup_bicubic": 1.057165770383961,
+   "jets_overhead": 1.0229449723164934
+  }
+ },
+ "speed_per_view": [
+  {
+   "frame": "images/DSC05572.jpg",
+   "native_ms": 8.126976013183594,
+   "4x": {
+    "render_gsplat_ms": 4.588559865951538,
+    "render_jets_ms": 6.982655763626099,
+    "upscale_bicubic_ms": 0.06963200122117996,
+    "upscale_spline_ms": 0.924159973859787,
+    "spline_total_ms": 8.837120056152344,
+    "bicubic_total_ms": 7.615488052368164
+   }
+  },
+  {
+   "frame": "images/DSC05580.jpg",
+   "native_ms": 5.224447965621948,
+   "4x": {
+    "render_gsplat_ms": 7.76638388633728,
+    "render_jets_ms": 6.021120071411133,
+    "upscale_bicubic_ms": 0.06963200122117996,
+    "upscale_spline_ms": 1.0936320424079895,
+    "spline_total_ms": 8.583087921142578,
+    "bicubic_total_ms": 4.791440010070801
+   }
+  },
+  {
+   "frame": "images/DSC05588.jpg",
+   "native_ms": 9.01587200164795,
+   "4x": {
+    "render_gsplat_ms": 7.800735950469971,
+    "render_jets_ms": 10.40769624710083,
+    "upscale_bicubic_ms": 0.0695360004901886,
+    "upscale_spline_ms": 0.8038399815559387,
+    "spline_total_ms": 11.074032306671143,
+    "bicubic_total_ms": 11.18617582321167
+   }
+  },
+  {
+   "frame": "images/DSC05596.jpg",
+   "native_ms": 3.5700639486312866,
+   "4x": {
+    "render_gsplat_ms": 5.294079899787903,
+    "render_jets_ms": 6.879232168197632,
+    "upscale_bicubic_ms": 0.06963200122117996,
+    "upscale_spline_ms": 1.1861760020256042,
+    "spline_total_ms": 7.667680025100708,
+    "bicubic_total_ms": 4.522479891777039
+   }
+  },
+  {
+   "frame": "images/DSC05604.jpg",
+   "native_ms": 8.060383796691895,
+   "4x": {
+    "render_gsplat_ms": 4.302208065986633,
+    "render_jets_ms": 5.347215890884399,
+    "upscale_bicubic_ms": 0.06963200122117996,
+    "upscale_spline_ms": 0.8023039996623993,
+    "spline_total_ms": 8.221184253692627,
+    "bicubic_total_ms": 5.386096000671387
+   }
+  },
+  {
+   "frame": "images/DSC05612.jpg",
+   "native_ms": 6.900799989700317,
+   "4x": {
+    "render_gsplat_ms": 7.212479829788208,
+    "render_jets_ms": 3.138559937477112,
+    "upscale_bicubic_ms": 0.06911999732255936,
+    "upscale_spline_ms": 0.8028160035610199,
+    "spline_total_ms": 6.275583982467651,
+    "bicubic_total_ms": 7.288831949234009
+   }
+  },
+  {
+   "frame": "images/DSC05620.jpg",
+   "native_ms": 5.91974401473999,
+   "4x": {
+    "render_gsplat_ms": 5.509632110595703,
+    "render_jets_ms": 8.346015930175781,
+    "upscale_bicubic_ms": 0.06907199695706367,
+    "upscale_spline_ms": 0.8023039996623993,
+    "spline_total_ms": 8.663551807403564,
+    "bicubic_total_ms": 8.14131212234497
+   }
+  },
+  {
+   "frame": "images/DSC05628.jpg",
+   "native_ms": 6.788095951080322,
+   "4x": {
+    "render_gsplat_ms": 6.581248044967651,
+    "render_jets_ms": 4.107632040977478,
+    "upscale_bicubic_ms": 0.06932799890637398,
+    "upscale_spline_ms": 0.8064639866352081,
+    "spline_total_ms": 4.902384042739868,
+    "bicubic_total_ms": 5.357616066932678
+   }
+  },
+  {
+   "frame": "images/DSC05636.jpg",
+   "native_ms": 8.013840198516846,
+   "4x": {
+    "render_gsplat_ms": 4.364768028259277,
+    "render_jets_ms": 8.704512119293213,
+    "upscale_bicubic_ms": 0.09164800122380257,
+    "upscale_spline_ms": 0.8017920255661011,
+    "spline_total_ms": 9.210367679595947,
+    "bicubic_total_ms": 7.498655796051025
+   }
+  },
+  {
+   "frame": "images/DSC05644.jpg",
+   "native_ms": 4.510560035705566,
+   "4x": {
+    "render_gsplat_ms": 8.091520071029663,
+    "render_jets_ms": 8.345263957977295,
+    "upscale_bicubic_ms": 0.06939199939370155,
+    "upscale_spline_ms": 0.944128006696701,
+    "spline_total_ms": 10.09766435623169,
+    "bicubic_total_ms": 6.195712089538574
+   }
+  },
+  {
+   "frame": "images/DSC05652.jpg",
+   "native_ms": 6.225360155105591,
+   "4x": {
+    "render_gsplat_ms": 7.033344030380249,
+    "render_jets_ms": 2.922943949699402,
+    "upscale_bicubic_ms": 0.06860800087451935,
+    "upscale_spline_ms": 0.8017920255661011,
+    "spline_total_ms": 6.28110408782959,
+    "bicubic_total_ms": 7.09119987487793
+   }
+  },
+  {
+   "frame": "images/DSC05661.jpg",
+   "native_ms": 7.72812819480896,
+   "4x": {
+    "render_gsplat_ms": 3.0730239152908325,
+    "render_jets_ms": 7.326176166534424,
+    "upscale_bicubic_ms": 0.06860800087451935,
+    "upscale_spline_ms": 0.8063839972019196,
+    "spline_total_ms": 6.3697919845581055,
+    "bicubic_total_ms": 4.529152035713196
+   }
+  },
+  {
+   "frame": "images/DSC05669.jpg",
+   "native_ms": 6.151679992675781,
+   "4x": {
+    "render_gsplat_ms": 7.472192049026489,
+    "render_jets_ms": 3.369472026824951,
+    "upscale_bicubic_ms": 0.0687360018491745,
+    "upscale_spline_ms": 0.8033279776573181,
+    "spline_total_ms": 6.297551870346069,
+    "bicubic_total_ms": 7.507936000823975
+   }
+  },
+  {
+   "frame": "images/DSC05678.jpg",
+   "native_ms": 7.233423948287964,
+   "4x": {
+    "render_gsplat_ms": 3.5430400371551514,
+    "render_jets_ms": 7.822335958480835,
+    "upscale_bicubic_ms": 0.0920960009098053,
+    "upscale_spline_ms": 0.8048160076141357,
+    "spline_total_ms": 8.570288181304932,
+    "bicubic_total_ms": 3.7247519493103027
+   }
+  },
+  {
+   "frame": "images/DSC05686.jpg",
+   "native_ms": 8.03223991394043,
+   "4x": {
+    "render_gsplat_ms": 6.899808168411255,
+    "render_jets_ms": 5.013487815856934,
+    "upscale_bicubic_ms": 0.06937599927186966,
+    "upscale_spline_ms": 0.8043839931488037,
+    "spline_total_ms": 8.068096160888672,
+    "bicubic_total_ms": 7.285120010375977
+   }
+  },
+  {
+   "frame": "images/DSC05695.jpg",
+   "native_ms": 5.776384115219116,
+   "4x": {
+    "render_gsplat_ms": 5.009919881820679,
+    "render_jets_ms": 6.488432168960571,
+    "upscale_bicubic_ms": 0.0684639997780323,
+    "upscale_spline_ms": 0.8043519854545593,
+    "spline_total_ms": 7.916543960571289,
+    "bicubic_total_ms": 3.048959970474243
+   }
+  },
+  {
+   "frame": "images/DSC05703.jpg",
+   "native_ms": 8.223743915557861,
+   "4x": {
+    "render_gsplat_ms": 5.758304119110107,
+    "render_jets_ms": 3.958783984184265,
+    "upscale_bicubic_ms": 0.06963200122117996,
+    "upscale_spline_ms": 1.0296320021152496,
+    "spline_total_ms": 8.273327827453613,
+    "bicubic_total_ms": 5.81004786491394
+   }
+  },
+  {
+   "frame": "images/DSC05711.jpg",
+   "native_ms": 6.514175891876221,
+   "4x": {
+    "render_gsplat_ms": 7.707648038864136,
+    "render_jets_ms": 4.488047957420349,
+    "upscale_bicubic_ms": 0.06943999975919724,
+    "upscale_spline_ms": 0.8021600246429443,
+    "spline_total_ms": 5.305855989456177,
+    "bicubic_total_ms": 7.794528007507324
+   }
+  },
+  {
+   "frame": "images/DSC05719.jpg",
+   "native_ms": 4.868496060371399,
+   "4x": {
+    "render_gsplat_ms": 5.3186399936676025,
+    "render_jets_ms": 6.695856094360352,
+    "upscale_bicubic_ms": 0.06883199885487556,
+    "upscale_spline_ms": 0.8008800148963928,
+    "spline_total_ms": 7.639424085617065,
+    "bicubic_total_ms": 5.286399841308594
+   }
+  },
+  {
+   "frame": "images/DSC05728.jpg",
+   "native_ms": 6.990640163421631,
+   "4x": {
+    "render_gsplat_ms": 7.725055932998657,
+    "render_jets_ms": 3.8021280765533447,
+    "upscale_bicubic_ms": 0.06860800087451935,
+    "upscale_spline_ms": 0.8033759891986847,
+    "spline_total_ms": 8.714144229888916,
+    "bicubic_total_ms": 7.764991998672485
+   }
+  },
+  {
+   "frame": "images/DSC05738.jpg",
+   "native_ms": 4.408320069313049,
+   "4x": {
+    "render_gsplat_ms": 7.328768014907837,
+    "render_jets_ms": 3.324928045272827,
+    "upscale_bicubic_ms": 0.06905599683523178,
+    "upscale_spline_ms": 0.8007200062274933,
+    "spline_total_ms": 6.259711980819702,
+    "bicubic_total_ms": 7.373664140701294
+   }
+  },
+  {
+   "frame": "images/DSC05747.jpg",
+   "native_ms": 6.668720006942749,
+   "4x": {
+    "render_gsplat_ms": 2.943376064300537,
+    "render_jets_ms": 7.119855880737305,
+    "upscale_bicubic_ms": 0.09171200171113014,
+    "upscale_spline_ms": 0.8033279776573181,
+    "spline_total_ms": 7.930431842803955,
+    "bicubic_total_ms": 3.773919939994812
+   }
+  },
+  {
+   "frame": "images/DSC05755.jpg",
+   "native_ms": 5.766575932502747,
+   "4x": {
+    "render_gsplat_ms": 5.751808166503906,
+    "render_jets_ms": 4.627455949783325,
+    "upscale_bicubic_ms": 0.06887999922037125,
+    "upscale_spline_ms": 0.8018720149993896,
+    "spline_total_ms": 7.5407679080963135,
+    "bicubic_total_ms": 7.062576055526733
+   }
+  },
+  {
+   "frame": "images/DSC05763.jpg",
+   "native_ms": 5.828096151351929,
+   "4x": {
+    "render_gsplat_ms": 9.976320266723633,
+    "render_jets_ms": 10.71615982055664,
+    "upscale_bicubic_ms": 0.06960000097751617,
+    "upscale_spline_ms": 1.1688960194587708,
+    "spline_total_ms": 12.992144107818604,
+    "bicubic_total_ms": 10.334720134735107
+   }
+  },
+  {
+   "frame": "images/DSC05771.jpg",
+   "native_ms": 11.5665283203125,
+   "4x": {
+    "render_gsplat_ms": 6.038608074188232,
+    "render_jets_ms": 7.465872049331665,
+    "upscale_bicubic_ms": 0.06960000097751617,
+    "upscale_spline_ms": 0.8037279844284058,
+    "spline_total_ms": 10.167712211608887,
+    "bicubic_total_ms": 7.18887996673584
+   }
+  },
+  {
+   "frame": "images/DSC05780.jpg",
+   "native_ms": 7.810559988021851,
+   "4x": {
+    "render_gsplat_ms": 3.5579839944839478,
+    "render_jets_ms": 7.855583906173706,
+    "upscale_bicubic_ms": 0.08089600130915642,
+    "upscale_spline_ms": 0.8033119738101959,
+    "spline_total_ms": 8.687103748321533,
+    "bicubic_total_ms": 4.7937599420547485
+   }
+  },
+  {
+   "frame": "images/DSC05788.jpg",
+   "native_ms": 7.359488010406494,
+   "4x": {
+    "render_gsplat_ms": 6.938623905181885,
+    "render_jets_ms": 4.363680124282837,
+    "upscale_bicubic_ms": 0.06860800087451935,
+    "upscale_spline_ms": 0.8032639920711517,
+    "spline_total_ms": 7.557039976119995,
+    "bicubic_total_ms": 7.885823965072632
+   }
+  },
+  {
+   "frame": "images/DSC05797.jpg",
+   "native_ms": 6.33241605758667,
+   "4x": {
+    "render_gsplat_ms": 4.746239900588989,
+    "render_jets_ms": 7.546815872192383,
+    "upscale_bicubic_ms": 0.07014400139451027,
+    "upscale_spline_ms": 0.8048639893531799,
+    "spline_total_ms": 8.507472038269043,
+    "bicubic_total_ms": 3.6755999326705933
+   }
+  },
+  {
+   "frame": "images/DSC05805.jpg",
+   "native_ms": 8.084335803985596,
+   "4x": {
+    "render_gsplat_ms": 5.976975917816162,
+    "render_jets_ms": 5.122944116592407,
+    "upscale_bicubic_ms": 0.11886399984359741,
+    "upscale_spline_ms": 0.8038399815559387,
+    "spline_total_ms": 7.923647880554199,
+    "bicubic_total_ms": 7.093712091445923
+   }
+  }
+ ],
+ "gpu_after": {
+  "name": "NVIDIA RTX A6000",
+  "nvidia_smi": [
+   "0, 97 %, 28032 MiB",
+   "1, 0 %, 39572 MiB",
+   "2, 98 %, 29957 MiB",
+   "3, 94 %, 8807 MiB",
+   "4, 98 %, 26340 MiB",
+   "5, 100 %, 13151 MiB",
+   "6, 100 %, 8297 MiB",
+   "7, 98 %, 24345 MiB"
+  ]
+ }
+}

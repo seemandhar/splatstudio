@@ -1,0 +1,56 @@
+{
+  "paper": "GS-IR: 3D Gaussian Splatting for Inverse Rendering",
+  "arxiv": "2311.16473",
+  "venue": "CVPR 2024",
+  "method_label": "Ours (GS-IR)",
+  "iterations": 40000,
+  "iterations_note": "Mip-NeRF 360: 30000 initial stage + 10000 decomposition stage (official README: --iterations 30000 then --iterations 40000); TensoIR: 30000 + 5000 (README) although supp. says 10K",
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 25.381, "ssim": 0.757, "lpips": 0.267},
+        "per_scene": {
+          "psnr": {"bicycle": 23.80, "flowers": 20.57, "garden": 25.72, "stump": 25.37, "treehill": 21.79,
+                   "room": 28.79, "counter": 26.22, "kitchen": 27.99, "bonsai": 28.18},
+          "ssim": {"bicycle": 0.706, "flowers": 0.543, "garden": 0.804, "stump": 0.716, "treehill": 0.586,
+                   "room": 0.867, "counter": 0.839, "kitchen": 0.867, "bonsai": 0.883},
+          "lpips": {"bicycle": 0.259, "flowers": 0.371, "garden": 0.158, "stump": 0.258, "treehill": 0.372,
+                    "room": 0.279, "counter": 0.260, "kitchen": 0.188, "bonsai": 0.264}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214},
+        "per_scene": {
+          "psnr": {"bicycle": 25.25, "flowers": 21.52, "garden": 27.41, "stump": 26.55, "treehill": 22.49,
+                   "room": 30.63, "counter": 28.70, "kitchen": 30.32, "bonsai": 31.98},
+          "ssim": {"bicycle": 0.771, "flowers": 0.605, "garden": 0.868, "stump": 0.775, "treehill": 0.638,
+                   "room": 0.914, "counter": 0.905, "kitchen": 0.922, "bonsai": 0.938},
+          "lpips": {"bicycle": 0.205, "flowers": 0.336, "garden": 0.103, "stump": 0.210, "treehill": 0.317,
+                    "room": 0.220, "counter": 0.204, "kitchen": 0.129, "bonsai": 0.205}
+        }
+      },
+      "ablations_average": {
+        "w/o occlusion": {"psnr": 25.060, "ssim": 0.753, "lpips": 0.270},
+        "w/o indirect illum.": {"psnr": 24.898, "ssim": 0.749, "lpips": 0.272},
+        "Vol. Accum. dag": {"psnr": 24.664, "ssim": 0.747, "lpips": 0.277},
+        "Peak Selec. dag": {"psnr": 25.143, "ssim": 0.753, "lpips": 0.281}
+      },
+      "source": "main Table 2 (average), supp. Tables 360psnr/360ssim/360lpips (per scene), main Tables 3/4 (ablations)"
+    },
+    "tensoir_synthetic": {
+      "method": {
+        "average": {"normal_mae": 4.948, "psnr": 35.333, "ssim": 0.974, "lpips": 0.039,
+                    "albedo_psnr": 30.286, "albedo_ssim": 0.941, "albedo_lpips": 0.084,
+                    "relight_psnr": 24.374, "relight_ssim": 0.885, "relight_lpips": 0.096},
+        "per_scene": {
+          "psnr": {"lego": 34.379, "hotdog": 34.116, "armadillo": 39.287, "ficus": 33.551},
+          "normal_mae": {"lego": 8.078, "hotdog": 4.771, "armadillo": 2.176, "ficus": 4.762},
+          "albedo_psnr": {"lego": 24.958, "hotdog": 26.745, "armadillo": 38.572, "ficus": 30.867},
+          "relight_psnr": {"lego": 23.256, "hotdog": 21.572, "armadillo": 27.737, "ficus": 24.932}
+        }
+      },
+      "source": "main Table 1, supp. Table TensoIR"
+    }
+  },
+  "notes": "3DGS rows in the Mip-NeRF 360 tables are the 3DGS paper's numbers (identical to Kerbl et al. Table 1 per-scene values), not a GS-IR retraining. Mip-NeRF 360 PSNR is the PBR rendering (render.py --pbr --metallic --indirect), images_4 outdoor / images_2 indoor, -r 1, llffhold 8. The text says '7 publicly available scenes' but the tables list all 9 and the average 25.381 is the 9-scene mean. LPIPS in render.py is lpips VGG on [0,1] inputs (no [-1,1] mapping); PSNR is the mean of per-channel PSNRs."
+}

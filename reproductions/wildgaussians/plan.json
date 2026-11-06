@@ -1,0 +1,12 @@
+{"method": "wildgaussians", "module": "ss_wildgaussians",
+ "variants": ["wildgaussians", "wildgaussians-noapp", "wildgaussians-pt"],
+ "components": [
+  {"name": "wg-renderer", "kind": "renderer", "factory": "ss_wildgaussians.renderer:create_renderer"},
+  {"name": "wg-density", "kind": "density", "factory": "ss_wildgaussians.density:create_density"},
+  {"name": "wg-uncertainty", "kind": "loss", "factory": "ss_wildgaussians.losses:create_uncertainty"},
+  {"name": "wg-color", "kind": "loss", "factory": "ss_wildgaussians.losses:create_color"}],
+ "fields": [{"name": "wg_embedding", "shape": [24], "lr": 0.005}, {"name": "filter_3d", "shape": [], "lr": 1e-8}],
+ "probes": ["appearance-toning", "split-objective", "dino-backbone", "uncertainty-loss", "sky-init", "densify-official", "filter-3d", "nerfw-protocol", "render-two-pass", "state-transitions"],
+ "contributions": ["appearance-modeling", "split-objective", "test-time-appearance", "dino-uncertainty", "uncertainty-mask", "sky-init", "mip-absgrad-base"],
+ "fidelity_gaps": ["view sampling with replacement", "optimizer-before-density order", "exact KNN vs distCUDA2", "gsplat vs Mip/GOF rasterizer", "sky logit 20 vs inf", "single seed", "paper-vs-code choices (PT reset 15000, On-the-go appearance, gamma without +1)", "ss-eval sees no bank: use ss_wildgaussians.evaluate"],
+ "feasible_natively": true}

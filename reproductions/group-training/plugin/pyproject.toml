@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-group-training"
+version = "0.1.0"
+description = "Group Training (arXiv 2412.07608) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+group-training = "ss_group_training:method"
+group-training-smoke2k = "ss_group_training:smoke2k"
+
+[tool.setuptools.packages.find]
+include = ["ss_group_training*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

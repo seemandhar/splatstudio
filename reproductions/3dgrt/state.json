@@ -1,0 +1,8 @@
+{"paper": "3D Gaussian Ray Tracing: Fast Tracing of Particle Scenes", "slug": "3dgrt", "plan_id": 82,
+ "stages": {"feasibility": "done", "read": "not_started", "plan": "not_started", "implement": "not_started", "test": "not_started"},
+ "outcome": "blocked",
+ "blocked_reason": "needs user approval to build OptiX tracer: the official 3dgrut tracer (threedgrt_tracer, nv-tlabs/3dgrut @ bb203b1) JIT-compiles its Gaussian kernels from Slang sources with slangc (v2026.5.2 prebuilt binary from GitHub releases); downloading/running that external binary was denied by the permission classifier ('Code from External'). OptiX 7.5 headers (NVIDIA/optix-dev, public, no login) were obtained; driver 580 provides libnvoptix runtime on RTX A6000.",
+ "official_code": "reproductions/3dgut/source/code (nv-tlabs/3dgrut @ bb203b1)",
+ "deps_obtained": {"optix-dev v7.5.0 headers": "reproductions/3dgrt/source/deps/optix-dev/include"},
+ "deps_missing": {"slangc 2026.5.2": "https://github.com/shader-slang/slang/releases/download/v2026.5.2/slang-2026.5.2-linux-x86_64.tar.gz"}
+}

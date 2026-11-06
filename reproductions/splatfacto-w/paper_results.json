@@ -1,0 +1,44 @@
+{
+  "paper": "Splatfacto-W: A Nerfstudio Implementation of Gaussian Splatting for Unconstrained Photo Collections",
+  "arxiv": "2407.12306",
+  "method_label": "Splatfacto-W",
+  "iterations": 65000,
+  "iterations_code": 55000,
+  "datasets": {
+    "phototourism": {
+      "method": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 26.87, "trevi-fountain": 22.66, "sacre-coeur": 22.53},
+          "ssim": {"brandenburg-gate": 0.932, "trevi-fountain": 0.769, "sacre-coeur": 0.876},
+          "lpips": {"brandenburg-gate": 0.124, "trevi-fountain": 0.224, "sacre-coeur": 0.158}
+        },
+        "training_hours_mean": 1.05, "fps_mean": 40.2
+      },
+      "splatfacto-w-a": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 27.50, "trevi-fountain": 22.81, "sacre-coeur": 22.62},
+          "ssim": {"brandenburg-gate": 0.930, "trevi-fountain": 0.770, "sacre-coeur": 0.876},
+          "lpips": {"brandenburg-gate": 0.130, "trevi-fountain": 0.225, "sacre-coeur": 0.156}
+        },
+        "training_hours_mean": 0.83, "fps_mean": 58.8
+      },
+      "splatfacto-w-t": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 26.16, "trevi-fountain": 22.88, "sacre-coeur": 22.78},
+          "ssim": {"brandenburg-gate": 0.925, "trevi-fountain": 0.772, "sacre-coeur": 0.878},
+          "lpips": {"brandenburg-gate": 0.131, "trevi-fountain": 0.228, "sacre-coeur": 0.155}
+        },
+        "training_hours_mean": 0.85, "fps_mean": 59.1
+      },
+      "baseline_3dgs": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 19.99, "trevi-fountain": 18.47, "sacre-coeur": 17.57},
+          "ssim": {"brandenburg-gate": 0.889, "trevi-fountain": 0.761, "sacre-coeur": 0.831},
+          "lpips": {"brandenburg-gate": 0.180, "trevi-fountain": 0.234, "sacre-coeur": 0.219}
+        }
+      },
+      "source": "Table 1 (sec/5_experiments.tex); no supplementary tables"
+    }
+  },
+  "notes": "Metrics on the right half of each NeRF-W test image. 3DGS row and SWAG/GS-W rows are copied from SWAG / GS-W papers (3DGS footnote: computed by SWAG). Official code evaluates with torchmetrics PSNR, pytorch_msssim SSIM, torchmetrics LPIPS (AlexNet, normalize=True). Official code trains on all images (train + test), masking the right half of test images, and evaluates test views with their jointly trained embedding."
+}

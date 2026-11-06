@@ -1,0 +1,44 @@
+{
+  "paper": "3DGUT: Enabling Distorted Cameras and Secondary Rays in Gaussian Splatting",
+  "arxiv": "2412.12507",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.26, "ssim": 0.810, "lpips": 0.218},
+                 "per_scene": {
+                   "psnr": {"bicycle": 24.21, "bonsai": 32.17, "counter": 29.03, "garden": 26.90, "kitchen": 31.23, "stump": 26.51, "flowers": 21.48, "room": 31.64, "treehill": 22.15},
+                   "ssim": {"bicycle": 0.741, "bonsai": 0.941, "counter": 0.908, "garden": 0.851, "kitchen": 0.926, "stump": 0.768, "flowers": 0.612, "room": 0.919, "treehill": 0.623},
+                   "lpips": {"bicycle": 0.226, "bonsai": 0.202, "counter": 0.197, "garden": 0.121, "kitchen": 0.126, "stump": 0.222, "flowers": 0.316, "room": 0.218, "treehill": 0.332}}},
+      "method_sorted": {"average": {"psnr": 27.26, "ssim": 0.812, "lpips": 0.215},
+                 "per_scene": {
+                   "psnr": {"bicycle": 24.91, "bonsai": 32.14, "counter": 28.91, "garden": 26.79, "kitchen": 31.33, "stump": 26.40, "flowers": 21.46, "room": 31.06, "treehill": 22.31},
+                   "ssim": {"bicycle": 0.756, "bonsai": 0.940, "counter": 0.907, "garden": 0.851, "kitchen": 0.926, "stump": 0.768, "flowers": 0.610, "room": 0.919, "treehill": 0.629},
+                   "lpips": {"bicycle": 0.217, "bonsai": 0.200, "counter": 0.195, "garden": 0.121, "kitchen": 0.124, "stump": 0.223, "flowers": 0.318, "room": 0.213, "treehill": 0.323}}},
+      "baseline_3dgs": {"average": {"psnr": 27.26, "ssim": 0.803, "lpips": 0.240}},
+      "official_code_rerun_rtx5090": {"per_scene": {"psnr": {"bicycle": 25.01, "bonsai": 32.46, "counter": 29.14, "flowers": 21.45, "garden": 27.18, "kitchen": 31.16, "room": 31.63, "stump": 26.50, "treehill": 22.35}}, "average": {"psnr": 27.43, "ssim": 0.815}},
+      "source": "Table 1 (main), supp. Table 7 (per scene); official README 'GS Strategy, Unsorted' re-run"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.21, "ssim": 0.841, "lpips": 0.178},
+                 "per_scene": {"psnr": {"train": 21.65, "truck": 24.77}, "ssim": {"train": 0.813, "truck": 0.868}, "lpips": {"train": 0.199, "truck": 0.157}}},
+      "method_sorted": {"average": {"psnr": 22.90, "ssim": 0.844, "lpips": 0.172},
+                 "per_scene": {"psnr": {"train": 21.39, "truck": 24.41}, "ssim": {"train": 0.815, "truck": 0.874}, "lpips": {"train": 0.196, "truck": 0.148}}},
+      "baseline_3dgs": {"average": {"psnr": 23.64, "ssim": 0.837, "lpips": 0.196}},
+      "source": "Table 1, supp. Table 6"
+    },
+    "scannetpp_fisheye": {
+      "method_sorted": {"average": {"psnr": 29.11, "ssim": 0.910, "lpips": 0.252},
+                 "per_scene": {"psnr": {"0a5c013435": 29.80, "8d563fc2cc": 27.09, "bb87c292ad": 31.28, "d415cc449b": 27.75, "e8ea9b4da8": 33.09, "fe1733741f": 25.59}}},
+      "fisheyegs": {"average": {"psnr": 28.15, "ssim": 0.901, "lpips": 0.261}},
+      "baseline_3dgs": {"average": {"psnr": 22.76, "ssim": 0.798}},
+      "source": "Table 3, supp. Table 8 (licensed dataset, not available)"
+    },
+    "waymo": {
+      "method_sorted": {"average": {"psnr": 30.16, "ssim": 0.900}},
+      "baseline_3dgs": {"average": {"psnr": 29.83, "ssim": 0.917}},
+      "source": "Table 4 (licensed dataset, not available)"
+    }
+  },
+  "notes": "Table 1 3DGS row (27.26 / 23.64) is not the 3DGS paper's numbers (27.21 / 23.14); provenance unstated. Per-scene 3DGS baselines are not given in this paper: use 3DGS paper per-scene (tools/reference_results.json). The pinhole 'Ours' (unsorted) row is the reproduction target."
+}

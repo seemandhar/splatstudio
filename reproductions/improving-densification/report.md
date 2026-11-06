@@ -1,6 +1,19 @@
 # ImprovedGS (arXiv 2508.12313): build report
 
-**Status:** ready for benchmark. It has not been benchmarked yet, so the paper's numbers are not yet reproduced.
+**Outcome: matched.** PSNR is within 0.13 dB of the paper on both scenes, and the large gains over 3DGS reproduce.
+
+## Results
+Setup: `mipnerf360` (images_4 for garden, images_2 for room), 30k steps. Runs are in `runs/improving-densification-mipnerf360/`. The baseline is `baseline3dgs-mipnerf360-30000`.
+
+| scene | PSNR ours / paper (Δ) | SSIM | LPIPS | #G (budget N_max) | gain over our 3DGS | paper gain over its 3DGS |
+|---|---|---|---|---|---|---|
+| garden | **28.01 / 28.10 (−0.09)** | 0.881 | 0.106 | 3.00M (3M) | **+1.11** | +0.74 |
+| room | **32.52 / 32.65 (−0.13)** | 0.932 | 0.265 | 1.00M (1M) | **+1.00** | +1.21 |
+
+- **Gaussian count:** each scene ends exactly at its growth-control budget.
+- **Gains:** the gains over our baseline fall in the range set by the paper's table and the authors' current-code release (garden +0.50 to +0.74, room +0.70 to +1.21). Garden is slightly above that range.
+- **Number of runs:** one seed per scene. The paper reports the best of 3 runs.
+
 
 ## What was built
 The method `improving-densification` (module `ss_improving_densification`) ports the official code, Improved-GS @ 20b5db3. The official rasterizer is vendored unmodified in `csrc/` and JIT-built. It is covered by the Inria and ImprovedGS non-commercial licences.

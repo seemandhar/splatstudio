@@ -8,9 +8,10 @@
     "coder": "done",
     "tester": "done",
     "review": "done (major fixed: dn-splatter-splatfacto control; 5 minors)",
-    "benchmark": "running"
+    "benchmark": "done",
+    "report": "done"
   },
-  "outcome": "built (benchmark pending)",
+  "outcome": "matched (absolute; gain over Splatfacto not reproduced)",
   "arxiv": "2403.17822",
   "official_code_commit": "97588b4",
   "method": "dn-splatter",
@@ -43,5 +44,11 @@
   "control": "dn-splatter-splatfacto",
   "bench_exps": [
     "dn-splatter-vr_room"
-  ]
+  ],
+  "result": {
+    "within_psnr": 26.87,
+    "paper": 26.8,
+    "splatfacto_ours": 27.69,
+    "splatfacto_paper": 26.6
+  }
 }

@@ -1,0 +1,10 @@
+{"method": "group-training", "module": "ss_group_training",
+ "components": [
+  {"name": "gsplat", "kind": "renderer", "factory": "splatstudio.backends.gsplat:create_renderer"},
+  {"name": "group-training-density", "kind": "density", "factory": "ss_group_training.density:create_density", "requires": ["gradient.screen.signed"]},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["gt-ops-sampling", "gt-schedule", "gt-subset-state", "gt-cuda-training"],
+ "contributions": ["group-training (subset render/update, cache, merge)", "opacity-prioritized-sampling", "cyclic-schedule-global-densify-optimize"],
+ "fidelity_gaps": ["runtime host differences shared with baseline", "timing on shared A6000 vs RTX 3090", "optimizer step before density op (runtime-wide)", "only OPS 0~30K benchmarked"],
+ "feasible_natively": true}

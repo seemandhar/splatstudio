@@ -1,0 +1,52 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "report.md", "where": "line 17 (Evidence)",
+   "problem": "Report says backward matches float64 autograd with rel <= 1e-6; measured relative errors are up to 5.1e-4 (means), 2.8e-4 (hgs_normal), 2.0e-4 (scales) at opacity <= 0.45 (gate 1e-3).",
+   "evidence": "evidence/verify.json hgs-gradients.relative_grad_error; probes.py:220 gate 1e-3",
+   "fix": "Quote the measured values (<= 5e-4) instead of 1e-6."},
+  {"severity": "minor", "file": "plugin/ss_3dhgs/density.py", "where": "after_backward (runtime order)",
+   "problem": "Official train.py runs densify_and_prune/reset_opacity before optimizer.step(); the replaced Parameters have grad None, so on every densification iteration (~195 iterations, 600..19900) the official code updates nothing (and opacities are not updated at reset iterations). The runtime steps first and then densifies, so those ~195 updates are applied. This is the already-recorded 'optimizer step before density' gap; the skipped-update effect is not spelled out.",
+   "evidence": "source/code/train.py:128-145; gaussian_model.py:452 (new nn.Parameter, no grad); splatstudio runtime.py step loop (opt.step before density.after_backward)",
+   "fix": "Add one sentence to report.md deviation 3; no code change needed."},
+  {"severity": "minor", "file": "report.md", "where": "Deviations",
+   "problem": "Paper §4.1 says 3D-HGS 'adhered to the training settings and hyperparameters used in 3DGS' (densify until 15k), while the official code (arguments/__init__.py:87) uses densify_until 20000. The plugin correctly follows the code, but this paper-vs-code conflict is not listed with the other paper-vs-code items (normal LR 0.3 on DB, normal-LR decay).",
+   "evidence": "latex/sec/4experiments.tex:91 vs source/code/arguments/__init__.py:87",
+   "fix": "List densify_until 20000 (code) vs 15000 (implied by paper text) among the recorded paper-vs-code deviations."},
+  {"severity": "minor", "file": "report.md", "where": "Protocol",
+   "problem": "Official full_eval.py calls metrics.py, which does not exist in the repo at dde1bd5; the only shipped scorer (test_and_score.py) computes PSNR/SSIM/LPIPS on the unclamped float render. Exactly how the paper's numbers were scored is therefore ambiguous; the runtime clamps to [0,1] (3DGS metrics.py on saved PNGs is also clamped/quantised). Effect expected < 0.05 dB.",
+   "evidence": "source/code/full_eval.py:75; ls source/code (no metrics.py); test_and_score.py render_set",
+   "fix": "Note the ambiguity in the protocol section."},
+  {"severity": "minor", "file": "plugin/ss_3dhgs/core.py", "where": "clone_opacity_logit",
+   "problem": "Stable float64 formula differs from the official float32 expression by up to 1e-4 in alpha (logit up to 0.2-0.56 near the extremes) where the official result is finite (|logit| < ~16.2); outside that range the official gives -inf / +inf. Checked: no NaN arises officially (sigmoid backward at +-inf is exactly 0, Adam update 0, reset maps +inf to logit(0.02) and keeps -inf at -inf, prune uses max of halves). Clamp to -40 gives sigmoid'=4e-18, so with Adam eps 1e-15 the clamped half moves < ~1e-5 logit/step: equivalent in practice. Not a fidelity problem; documented as deviation 2.",
+   "evidence": "numerical sweep x in [-30,30]: official non-finite for x < -16.23 and x > 16.64; max |alpha diff| on finite range 1.0e-4",
+   "fix": "None required."}
+ ],
+ "equation_coverage": [
+  {"eq": "(7)", "status": "exact", "code": "csrc/cuda_rasterizer/forward.cu (vendored, byte-identical to submodule); checked by probes.py:half_plane vs z-quadrature (1.5e-3)"},
+  {"eq": "(8)", "status": "exact", "code": "csrc/cuda_rasterizer/forward.cu erf factor; reference.py:render; normal moved with transformPoint4x3 (forward.cu:380, translation added — official quirk kept)"},
+  {"eq": "(9)", "status": "exact", "code": "vendored compositor (Inria front-to-back, T<1e-4 stop, 1/255 skip, -4.8 forward-only cutoff forward.cu:616)"},
+  {"eq": "(10)", "status": "exact", "code": "vendored kernel; probes.py:equal_opacity (alpha1=alpha2 -> 3DGS, 1.9e-7) and half_plane complement (1.8e-7)"},
+  {"eq": "supp. B.1 efficient rasterizer", "status": "exact", "code": "raster.py:293-299 non-empty cov3D_precomp_small only under no_grad (matches official load_ply -> small_gaussian path, forward.cu:424 pointer test)"},
+  {"eq": "supp. B.2 training settings", "status": "deviates", "code": "density.py DEFAULTS / __init__.py: follows official code (normal LR 0.003 with no decay; paper text says normal LR also /1.4 and 0.3 on DB) — recorded; 3dhgs-db-paper variant provided"}
+ ],
+ "probe_assessment": [
+  {"probe": "hgs-equal-opacity", "detects_removal": true, "why": "Requires kernel == independent float64 plain compositor at alpha1=alpha2, normal invariance, and >1e-2 change when one half is made transparent — a non-half kernel fails the last check, a wrong kernel fails the first."},
+  {"probe": "hgs-half-plane", "detects_removal": true, "why": "Compares per-pixel alpha with numerical quadrature of the ray-space 3D Gaussian over the half-space (not the erf closed form) and asserts both sides of the plane exist and the transparent side leaks < 1e-3."},
+  {"probe": "hgs-gradients", "detects_removal": true, "why": "All 8 fields' gradients vs float64 autograd (gate 1e-3 relative); measured <= 5e-4. The reference shares the kernel's conventions (translation quirk), so it validates the port, not the convention."},
+  {"probe": "hgs-test-cull", "detects_removal": true, "why": "Fails if the cull path has no effect, if it is used during training, or if eval does not use it."},
+  {"probe": "hgs-density", "detects_removal": true, "why": "Checks clone 1-sqrt(1-a) on copies only with originals unchanged, split /1.6 with copied normal/opacities, prune on max half, reset both halves to <= 0.02 with zeroed moments, LR /1.4 only on opacity fields, densify window boundary at 20000."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Vendored rasterizer byte-identical to source/code/submodules/diff-gaussian-rasterization (cuda_rasterizer/*, rasterize_points.cu/.h, ext.cpp, LICENSE.md; glm headers present). Python wrapper argument order and gradient mapping match diff_gaussian_rasterization/__init__.py.",
+  "Fields: opacities=alpha1, opacity2=alpha2 (init logit 0.1, lr 0.05, one group officially, decayed together), hgs_normal init 0.6 lr 0.003 — gaussian_model.py:152-153, 172/178 (normal_lr arg is ignored: hard-coded 0.003 in both branches).",
+  "Opacity LR /1.4 every 5000: train.py:126 param_groups[4] is 'opacity' (order xyz, normal, f_dc, f_rest, opacity) — normal is never decayed; plugin matches.",
+  "Densify 500 < s < 20000 every 100, grad 2e-4, percent_dense 0.01, prune max(alpha1,alpha2) < 0.01 (train.py:135, gaussian_model.py:545-547), world-size prune 0.1*extent only when s > 3000, reset min(alpha, 0.02) both halves every 3000 with moments zeroed and step kept.",
+  "Screen-size prune is inert in this repo: train.py:130 fills max_radii2D, but densification_postfix (gaussian_model.py:482) zeroes it after clone and split before the prune test.",
+  "Clone: official self._opacity[mask].copy_(...) writes into an advanced-indexing temporary (no-op), so only the copy gets 1-sqrt(1-alpha); split copies opacities and normal unchanged.",
+  "Normal transformed with view rotation + translation (forward.cu:380) — official quirk kept; -4.8 power cutoff forward-only (forward.cu:616) giving ~1% gradient mismatch at high opacity (measured 0.05-1.1%).",
+  "Clone opacity: official float32 produces +-inf (no NaN) for |logit| > ~16.2; inert in both implementations.",
+  "Protocol: full_eval.py trains with -i images_4 (outdoor) / images_2 (indoor), --eval llffhold8; native mipnerf360 garden 1297x840, counter 1558x1038 (< 1600 px, no extra Inria downscale), centred principal point. Evaluation via render.py loads the .ply, so the half-aware test path is used; plugin does the same under no_grad.",
+  "paper_results.json matches supp. tab:all per scene (garden 27.50 vs 3DGS 27.30; counter 29.84 vs 28.70) and the 7-scene average 29.66/28.88.",
+  "Runtime: optimizer step before density (and so the official 'no update at densification iterations' is not reproduced), SH degree one step late, means LR one step late, sampling with replacement, SSIM valid conv."
+ ],
+ "summary": "Faithful port of the official 3DHGS code at dde1bd5. Rasterizer vendored byte-identical; every density/training value checked against train.py, gaussian_model.py and arguments; the claimed quirks (inert screen-size prune, clone copy_ no-op, translation in the normal transform, forward-only cutoff, normal LR 0.003 with no decay) are all confirmed in the source. Clone ±inf in the official code is inert (no NaN), so the ±40 clamp is equivalent. pytest 7/7 and ss-verify pass on GPU 3. No critical or major issues; 5 minor issues, all about documentation or ordering effects expected to cost < 0.1 dB. Ready for the garden + counter benchmark against baseline3dgs-mipnerf360-30000."}

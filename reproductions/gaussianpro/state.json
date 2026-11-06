@@ -1,0 +1,20 @@
+{
+  "paper": "GaussianPro: 3D Gaussian Splatting with Progressive Propagation",
+  "slug": "gaussianpro",
+  "plan_id": 79,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "partial (probes pass; 2k smoke running)",
+    "review": "done (approved, 6 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "built (benchmark pending)",
+  "arxiv": "2402.14650",
+  "method": "gaussianpro",
+  "custom_cuda": true,
+  "bench_exps": [
+    "gaussianpro-mipnerf360"
+  ]
+}

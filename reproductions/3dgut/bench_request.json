@@ -1,0 +1,2 @@
+{"method": "3dgut", "datasets": {"mipnerf360": ["garden", "counter"]}, "steps": 30000,
+ "per_scene_reported": true, "extra": ""}

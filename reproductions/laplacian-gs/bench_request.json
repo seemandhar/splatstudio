@@ -1,0 +1,13 @@
+{
+ "method": "laplacian-gs",
+ "datasets": {
+  "mipnerf360-1600": [
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "compare": "supp. Tab. 9 'Ours (Taming)' (1K = width 1600): garden 27.35, counter 29.22; paper 3DGS 27.36/29.17, Taming 27.48/29.43. Baseline: baseline3dgs-mipnerf360-1600-30000 (garden 26.93, counter 29.04). --steps must be 30000 (= iter_plan sum)."
+}

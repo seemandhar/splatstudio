@@ -1,0 +1,50 @@
+{
+  "paper": "Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering",
+  "arxiv": "2311.17089",
+  "method_label": "Ours / Our Full Method",
+  "iterations": 40000,
+  "datasets": {
+    "mipnerf360-msgs": {
+      "protocol": "multi-scale: train 1x..128x (linear 2^i), base width 1600 from full-res; test views at each scale; PSNR mean over views per scale",
+      "method": {
+        "average": {"psnr": {"1x": 27.39, "2x": 26.44, "4x": 24.82, "8x": 24.44, "16x": 24.75, "32x": 25.06, "64x": 25.35, "128x": 22.55},
+                    "lpips": {"1x": 0.155, "2x": 0.134, "4x": 0.132, "8x": 0.112, "16x": 0.066, "32x": 0.025}},
+        "per_scene": {
+          "psnr": {"garden": {"1x": 27.16, "4x": 23.99, "16x": 26.41, "64x": 24.79, "128x": 21.19},
+                   "counter": {"1x": 29.17, "4x": 26.77, "16x": 23.44, "64x": 24.59, "128x": 21.14},
+                   "flowers": {"1x": 21.11, "4x": 20.83, "16x": 21.97, "64x": 22.69, "128x": 21.82},
+                   "treehill": {"1x": 22.64, "4x": 22.31, "16x": 23.55, "64x": 24.28, "128x": 22.27},
+                   "bicycle": {"1x": 24.44, "4x": 24.76, "16x": 25.00, "64x": 26.02, "128x": 21.56},
+                   "kitchen": {"1x": 31.64, "4x": 25.93, "16x": 24.16, "64x": 25.35, "128x": 21.50},
+                   "room": {"1x": 31.51, "4x": 28.95, "16x": 28.15, "64x": 25.77, "128x": 21.82},
+                   "stump": {"1x": 26.59, "4x": 23.52, "16x": 25.22, "64x": 29.22, "128x": 29.09},
+                   "bonsai": {"1x": 32.27, "4x": 26.32, "16x": 24.87, "64x": 25.40, "128x": 22.53}},
+          "lpips": {"garden": {"1x": 0.080, "4x": 0.112, "16x": 0.044},
+                    "counter": {"1x": 0.100, "4x": 0.076, "16x": 0.057}}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": {"1x": 27.52, "2x": 25.96, "4x": 22.50, "8x": 19.79, "16x": 17.79, "32x": 16.30, "64x": 15.23, "128x": 14.55},
+                    "lpips": {"1x": 0.142, "2x": 0.124, "4x": 0.137, "8x": 0.154, "16x": 0.149, "32x": 0.084}},
+        "per_scene": {
+          "psnr": {"garden": {"1x": 27.27, "4x": 20.42, "16x": 16.74, "64x": 14.92, "128x": 14.29},
+                   "counter": {"1x": 29.15, "4x": 24.81, "16x": 17.94, "64x": 14.32, "128x": 13.39}},
+          "lpips": {"garden": {"1x": 0.070, "4x": 0.136, "16x": 0.166},
+                    "counter": {"1x": 0.099, "4x": 0.084, "16x": 0.101}}
+        }
+      },
+      "source": "main Tab. 1 (1/4/16/64x averages), supp. Tab. 360_more_reso (averages at 1..128x), supp. Tab. 360_per_scene (per scene 1/4/16/64/128x)"
+    },
+    "tandt-msgs": {
+      "method": {"per_scene": {"psnr": {"truck": {"1x": 24.94, "4x": 23.67, "16x": 22.62, "64x": 19.99}, "train": {"1x": 21.98, "4x": 20.17, "16x": 19.21, "64x": 19.36}}}},
+      "baseline_3dgs": {"per_scene": {"psnr": {"truck": {"1x": 25.39, "4x": 19.97, "16x": 15.69, "64x": 14.20}, "train": {"1x": 22.09, "4x": 19.42, "16x": 15.54, "64x": 13.57}}}},
+      "source": "supp. Tab. tnt_per_scene"
+    },
+    "db-msgs": {
+      "method": {"per_scene": {"psnr": {"drjohnson": {"1x": 29.19, "4x": 27.96, "16x": 26.80, "64x": 27.19}, "playroom": {"1x": 30.20, "4x": 28.89, "16x": 28.53, "64x": 24.22}}}},
+      "baseline_3dgs": {"per_scene": {"psnr": {"drjohnson": {"1x": 29.14, "4x": 27.23, "16x": 22.73, "64x": 18.60}, "playroom": {"1x": 30.15, "4x": 27.72, "16x": 21.40, "64x": 16.89}}}},
+      "source": "supp. Tab. db_per_scene"
+    }
+  },
+  "notes": "Scales are linear downsampling factors 2^i of a 1600-px-wide base (official -r -1 loader). Multi-scale protocol differs from the Mip-Splatting/Analytic-Splatting MTMT (mipnerf360-ms: images_4/images_2 base, 1/2/4/8x). Baseline 3DGS row = authors' single-scale 3DGS (30k) evaluated at every scale. LPIPS N.A. at >=64x (360) in the paper. 128x test images (12x8 px) cannot be loaded by the native runtime (min 11x11)."
+}

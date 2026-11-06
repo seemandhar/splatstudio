@@ -1,0 +1,1326 @@
+{
+ "paper": "Lightweight Gradient-Aware Upscaling of 3D Gaussian Splatting Images",
+ "arxiv": "2503.14171",
+ "method_label": "Spline (Ours)",
+ "iterations": 30000,
+ "factors": {
+  "2x": {
+   "mipnerf360": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 26.9684,
+      "ssim": 0.8093,
+      "lpips": 0.3082
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.402,
+       "bonsai": 32.021,
+       "counter": 28.507,
+       "flowers": 20.871,
+       "garden": 26.351,
+       "kitchen": 31.277,
+       "room": 31.549,
+       "stump": 26.248,
+       "treehill": 21.49
+      },
+      "ssim": {
+       "bicycle": 0.733,
+       "bonsai": 0.94,
+       "counter": 0.912,
+       "flowers": 0.598,
+       "garden": 0.794,
+       "kitchen": 0.92,
+       "room": 0.921,
+       "stump": 0.797,
+       "treehill": 0.669
+      },
+      "lpips": {
+       "bicycle": 0.338,
+       "bonsai": 0.267,
+       "counter": 0.255,
+       "flowers": 0.414,
+       "garden": 0.261,
+       "kitchen": 0.186,
+       "room": 0.269,
+       "stump": 0.366,
+       "treehill": 0.418
+      },
+      "train_minutes_L4": {
+       "bicycle": 116.0,
+       "bonsai": 76.0,
+       "counter": 89.0,
+       "flowers": 119.0,
+       "garden": 130.0,
+       "kitchen": 90.0,
+       "room": 82.0,
+       "stump": 114.0,
+       "treehill": 126.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 26.945,
+      "ssim": 0.8134,
+      "lpips": 0.3097
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.434,
+       "bonsai": 31.52,
+       "counter": 28.374,
+       "flowers": 20.984,
+       "garden": 26.281,
+       "kitchen": 31.093,
+       "room": 31.585,
+       "stump": 26.446,
+       "treehill": 21.788
+      },
+      "ssim": {
+       "bicycle": 0.737,
+       "bonsai": 0.937,
+       "counter": 0.915,
+       "flowers": 0.604,
+       "garden": 0.8,
+       "kitchen": 0.922,
+       "room": 0.923,
+       "stump": 0.804,
+       "treehill": 0.679
+      },
+      "lpips": {
+       "bicycle": 0.34,
+       "bonsai": 0.27,
+       "counter": 0.254,
+       "flowers": 0.418,
+       "garden": 0.26,
+       "kitchen": 0.188,
+       "room": 0.268,
+       "stump": 0.364,
+       "treehill": 0.425
+      },
+      "train_minutes_L4": {
+       "bicycle": 141.0,
+       "bonsai": 87.0,
+       "counter": 99.0,
+       "flowers": 145.0,
+       "garden": 154.0,
+       "kitchen": 99.0,
+       "room": 93.0,
+       "stump": 137.0,
+       "treehill": 150.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 26.9997,
+      "ssim": 0.8131,
+      "lpips": 0.3101
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.397,
+       "bonsai": 32.071,
+       "counter": 28.391,
+       "flowers": 20.955,
+       "garden": 26.33,
+       "kitchen": 31.022,
+       "room": 31.657,
+       "stump": 26.442,
+       "treehill": 21.732
+      },
+      "ssim": {
+       "bicycle": 0.734,
+       "bonsai": 0.94,
+       "counter": 0.915,
+       "flowers": 0.603,
+       "garden": 0.799,
+       "kitchen": 0.923,
+       "room": 0.923,
+       "stump": 0.803,
+       "treehill": 0.678
+      },
+      "lpips": {
+       "bicycle": 0.344,
+       "bonsai": 0.268,
+       "counter": 0.253,
+       "flowers": 0.42,
+       "garden": 0.263,
+       "kitchen": 0.185,
+       "room": 0.266,
+       "stump": 0.365,
+       "treehill": 0.427
+      },
+      "train_minutes_L4": {
+       "bicycle": 162.0,
+       "bonsai": 95.0,
+       "counter": 107.0,
+       "flowers": 165.0,
+       "garden": 178.0,
+       "kitchen": 109.0,
+       "room": 101.0,
+       "stump": 160.0,
+       "treehill": 173.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-2x (tab:metrics-2x)"
+   },
+   "tandt": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 22.0925,
+      "ssim": 0.799,
+      "lpips": 0.2195
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 24.219,
+       "train": 19.966
+      },
+      "ssim": {
+       "truck": 0.844,
+       "train": 0.754
+      },
+      "lpips": {
+       "truck": 0.185,
+       "train": 0.254
+      },
+      "train_minutes_L4": {
+       "truck": 16.0,
+       "train": 18.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 22.187,
+      "ssim": 0.799,
+      "lpips": 0.238
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 24.173,
+       "train": 20.201
+      },
+      "ssim": {
+       "truck": 0.837,
+       "train": 0.761
+      },
+      "lpips": {
+       "truck": 0.211,
+       "train": 0.265
+      },
+      "train_minutes_L4": {
+       "truck": 17.0,
+       "train": 19.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 22.637,
+      "ssim": 0.826,
+      "lpips": 0.206
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 24.652,
+       "train": 20.622
+      },
+      "ssim": {
+       "truck": 0.864,
+       "train": 0.788
+      },
+      "lpips": {
+       "truck": 0.177,
+       "train": 0.235
+      },
+      "train_minutes_L4": {
+       "truck": 17.0,
+       "train": 19.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-2x (tab:metrics-2x)"
+   },
+   "db": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 29.644,
+      "ssim": 0.901,
+      "lpips": 0.247
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.259,
+       "playroom": 30.029
+      },
+      "ssim": {
+       "drjohnson": 0.898,
+       "playroom": 0.904
+      },
+      "lpips": {
+       "drjohnson": 0.251,
+       "playroom": 0.243
+      },
+      "train_minutes_L4": {
+       "drjohnson": 17.0,
+       "playroom": 17.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 29.674,
+      "ssim": 0.902,
+      "lpips": 0.2485
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.258,
+       "playroom": 30.09
+      },
+      "ssim": {
+       "drjohnson": 0.899,
+       "playroom": 0.905
+      },
+      "lpips": {
+       "drjohnson": 0.251,
+       "playroom": 0.246
+      },
+      "train_minutes_L4": {
+       "drjohnson": 18.0,
+       "playroom": 17.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 29.693,
+      "ssim": 0.905,
+      "lpips": 0.2455
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.12,
+       "playroom": 30.266
+      },
+      "ssim": {
+       "drjohnson": 0.901,
+       "playroom": 0.909
+      },
+      "lpips": {
+       "drjohnson": 0.249,
+       "playroom": 0.242
+      },
+      "train_minutes_L4": {
+       "drjohnson": 19.0,
+       "playroom": 18.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-2x (tab:metrics-2x)"
+   }
+  },
+  "4x": {
+   "mipnerf360": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 26.3486,
+      "ssim": 0.7823,
+      "lpips": 0.3467
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.216,
+       "bonsai": 30.728,
+       "counter": 27.082,
+       "flowers": 20.63,
+       "garden": 25.834,
+       "kitchen": 30.194,
+       "room": 31.003,
+       "stump": 26.05,
+       "treehill": 21.4
+      },
+      "ssim": {
+       "bicycle": 0.708,
+       "bonsai": 0.915,
+       "counter": 0.875,
+       "flowers": 0.571,
+       "garden": 0.755,
+       "kitchen": 0.886,
+       "room": 0.905,
+       "stump": 0.78,
+       "treehill": 0.646
+      },
+      "lpips": {
+       "bicycle": 0.375,
+       "bonsai": 0.31,
+       "counter": 0.298,
+       "flowers": 0.44,
+       "garden": 0.322,
+       "kitchen": 0.246,
+       "room": 0.293,
+       "stump": 0.389,
+       "treehill": 0.447
+      },
+      "train_minutes_L4": {
+       "bicycle": 60.0,
+       "bonsai": 50.0,
+       "counter": 54.0,
+       "flowers": 63.0,
+       "garden": 67.0,
+       "kitchen": 56.0,
+       "room": 52.0,
+       "stump": 60.0,
+       "treehill": 65.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 26.6019,
+      "ssim": 0.7992,
+      "lpips": 0.3384
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.222,
+       "bonsai": 31.053,
+       "counter": 27.906,
+       "flowers": 21.01,
+       "garden": 25.916,
+       "kitchen": 30.258,
+       "room": 30.933,
+       "stump": 26.318,
+       "treehill": 21.801
+      },
+      "ssim": {
+       "bicycle": 0.722,
+       "bonsai": 0.925,
+       "counter": 0.899,
+       "flowers": 0.598,
+       "garden": 0.767,
+       "kitchen": 0.9,
+       "room": 0.909,
+       "stump": 0.8,
+       "treehill": 0.673
+      },
+      "lpips": {
+       "bicycle": 0.365,
+       "bonsai": 0.293,
+       "counter": 0.291,
+       "flowers": 0.433,
+       "garden": 0.308,
+       "kitchen": 0.237,
+       "room": 0.303,
+       "stump": 0.372,
+       "treehill": 0.444
+      },
+      "train_minutes_L4": {
+       "bicycle": 95.0,
+       "bonsai": 63.0,
+       "counter": 68.0,
+       "flowers": 95.0,
+       "garden": 100.0,
+       "kitchen": 70.0,
+       "room": 65.0,
+       "stump": 93.0,
+       "treehill": 99.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 26.8503,
+      "ssim": 0.8087,
+      "lpips": 0.3219
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.317,
+       "bonsai": 31.11,
+       "counter": 28.162,
+       "flowers": 20.984,
+       "garden": 26.192,
+       "kitchen": 31.262,
+       "room": 31.349,
+       "stump": 26.336,
+       "treehill": 21.941
+      },
+      "ssim": {
+       "bicycle": 0.729,
+       "bonsai": 0.934,
+       "counter": 0.909,
+       "flowers": 0.601,
+       "garden": 0.786,
+       "kitchen": 0.92,
+       "room": 0.918,
+       "stump": 0.801,
+       "treehill": 0.68
+      },
+      "lpips": {
+       "bicycle": 0.352,
+       "bonsai": 0.282,
+       "counter": 0.269,
+       "flowers": 0.428,
+       "garden": 0.282,
+       "kitchen": 0.199,
+       "room": 0.283,
+       "stump": 0.367,
+       "treehill": 0.435
+      },
+      "train_minutes_L4": {
+       "bicycle": 105.0,
+       "bonsai": 68.0,
+       "counter": 72.0,
+       "flowers": 106.0,
+       "garden": 110.0,
+       "kitchen": 73.0,
+       "room": 68.0,
+       "stump": 104.0,
+       "treehill": 110.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-4x (tab:metrics-4x)"
+   },
+   "tandt": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 20.314,
+      "ssim": 0.677,
+      "lpips": 0.3405
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 21.684,
+       "train": 18.944
+      },
+      "ssim": {
+       "truck": 0.703,
+       "train": 0.651
+      },
+      "lpips": {
+       "truck": 0.325,
+       "train": 0.356
+      },
+      "train_minutes_L4": {
+       "truck": 17.0,
+       "train": 21.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 20.2765,
+      "ssim": 0.6775,
+      "lpips": 0.392
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 22.096,
+       "train": 18.457
+      },
+      "ssim": {
+       "truck": 0.719,
+       "train": 0.636
+      },
+      "lpips": {
+       "truck": 0.372,
+       "train": 0.412
+      },
+      "train_minutes_L4": {
+       "truck": 18.0,
+       "train": 21.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 21.3,
+      "ssim": 0.744,
+      "lpips": 0.323
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 23.002,
+       "train": 19.598
+      },
+      "ssim": {
+       "truck": 0.78,
+       "train": 0.708
+      },
+      "lpips": {
+       "truck": 0.305,
+       "train": 0.341
+      },
+      "train_minutes_L4": {
+       "truck": 17.0,
+       "train": 22.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-4x (tab:metrics-4x)"
+   },
+   "db": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 28.888,
+      "ssim": 0.8765,
+      "lpips": 0.2855
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.596,
+       "playroom": 29.18
+      },
+      "ssim": {
+       "drjohnson": 0.873,
+       "playroom": 0.88
+      },
+      "lpips": {
+       "drjohnson": 0.286,
+       "playroom": 0.285
+      },
+      "train_minutes_L4": {
+       "drjohnson": 14.0,
+       "playroom": 14.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 28.6955,
+      "ssim": 0.8755,
+      "lpips": 0.3115
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.433,
+       "playroom": 28.958
+      },
+      "ssim": {
+       "drjohnson": 0.871,
+       "playroom": 0.88
+      },
+      "lpips": {
+       "drjohnson": 0.31,
+       "playroom": 0.313
+      },
+      "train_minutes_L4": {
+       "drjohnson": 15.0,
+       "playroom": 15.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 29.087,
+      "ssim": 0.89,
+      "lpips": 0.286
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.75,
+       "playroom": 29.424
+      },
+      "ssim": {
+       "drjohnson": 0.887,
+       "playroom": 0.893
+      },
+      "lpips": {
+       "drjohnson": 0.286,
+       "playroom": 0.286
+      },
+      "train_minutes_L4": {
+       "drjohnson": 16.0,
+       "playroom": 15.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-4x (tab:metrics-4x)"
+   }
+  },
+  "8x": {
+   "mipnerf360": {
+    "baseline_3dgs_lowres_train": {
+     "average_of_per_scene": {
+      "psnr": 24.6714,
+      "ssim": 0.6806,
+      "lpips": 0.4459
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 22.941,
+       "bonsai": 28.071,
+       "counter": 25.848,
+       "flowers": 19.658,
+       "garden": 23.861,
+       "kitchen": 27.245,
+       "room": 29.32,
+       "stump": 24.567,
+       "treehill": 20.532
+      },
+      "ssim": {
+       "bicycle": 0.601,
+       "bonsai": 0.822,
+       "counter": 0.774,
+       "flowers": 0.473,
+       "garden": 0.621,
+       "kitchen": 0.753,
+       "room": 0.854,
+       "stump": 0.666,
+       "treehill": 0.561
+      },
+      "lpips": {
+       "bicycle": 0.467,
+       "bonsai": 0.418,
+       "counter": 0.407,
+       "flowers": 0.5,
+       "garden": 0.438,
+       "kitchen": 0.413,
+       "room": 0.366,
+       "stump": 0.488,
+       "treehill": 0.516
+      },
+      "train_minutes_L4": {
+       "bicycle": 47.0,
+       "bonsai": 47.0,
+       "counter": 49.0,
+       "flowers": 48.0,
+       "garden": 50.0,
+       "kitchen": 50.0,
+       "room": 45.0,
+       "stump": 46.0,
+       "treehill": 49.0
+      }
+     }
+    },
+    "bicubic": {
+     "average_of_per_scene": {
+      "psnr": 25.3094,
+      "ssim": 0.7454,
+      "lpips": 0.4354
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 23.008,
+       "bonsai": 29.31,
+       "counter": 26.451,
+       "flowers": 20.641,
+       "garden": 24.276,
+       "kitchen": 27.524,
+       "room": 29.427,
+       "stump": 25.496,
+       "treehill": 21.652
+      },
+      "ssim": {
+       "bicycle": 0.657,
+       "bonsai": 0.885,
+       "counter": 0.851,
+       "flowers": 0.563,
+       "garden": 0.665,
+       "kitchen": 0.802,
+       "room": 0.878,
+       "stump": 0.764,
+       "treehill": 0.644
+      },
+      "lpips": {
+       "bicycle": 0.479,
+       "bonsai": 0.37,
+       "counter": 0.394,
+       "flowers": 0.498,
+       "garden": 0.445,
+       "kitchen": 0.385,
+       "room": 0.378,
+       "stump": 0.455,
+       "treehill": 0.515
+      },
+      "train_minutes_L4": {
+       "bicycle": 88.0,
+       "bonsai": 63.0,
+       "counter": 67.0,
+       "flowers": 90.0,
+       "garden": 94.0,
+       "kitchen": 68.0,
+       "room": 62.0,
+       "stump": 88.0,
+       "treehill": 91.0
+      }
+     }
+    },
+    "spline": {
+     "average_of_per_scene": {
+      "psnr": 25.9483,
+      "ssim": 0.776,
+      "lpips": 0.3852
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 23.456,
+       "bonsai": 29.915,
+       "counter": 27.609,
+       "flowers": 20.697,
+       "garden": 25.064,
+       "kitchen": 29.168,
+       "room": 29.785,
+       "stump": 25.934,
+       "treehill": 21.907
+      },
+      "ssim": {
+       "bicycle": 0.683,
+       "bonsai": 0.911,
+       "counter": 0.882,
+       "flowers": 0.578,
+       "garden": 0.712,
+       "kitchen": 0.871,
+       "room": 0.895,
+       "stump": 0.786,
+       "treehill": 0.666
+      },
+      "lpips": {
+       "bicycle": 0.43,
+       "bonsai": 0.322,
+       "counter": 0.333,
+       "flowers": 0.475,
+       "garden": 0.383,
+       "kitchen": 0.287,
+       "room": 0.336,
+       "stump": 0.413,
+       "treehill": 0.488
+      },
+      "train_minutes_L4": {
+       "bicycle": 90.0,
+       "bonsai": 64.0,
+       "counter": 66.0,
+       "flowers": 92.0,
+       "garden": 96.0,
+       "kitchen": 68.0,
+       "room": 62.0,
+       "stump": 90.0,
+       "treehill": 92.0
+      }
+     }
+    },
+    "source": "supp. Table metrics-8x (tab:metrics-8x)"
+   }
+  }
+ },
+ "notes": "Per-scene numbers from the supplementary tables; T&T/DB averages of per-scene rows equal Table 1. baseline_3dgs = '3DGS' row = 3DGS (Taming densification, same budget) trained at W/s and rendered at full W (not the 3DGS paper). 'Bicubic' = trained with PyTorch bicubic upscaling in the loop (per-scene durations > 3DGS). All rows use Taming growth to 1M (T&T, DB) / 5M (MipNeRF360) Gaussians. MipNeRF360 is evaluated at full 5187x3361 resolution (not images_4/images_2). Iterations not stated (3DGS code default 30000 assumed).",
+ "table1_averages": {
+  "2x": {
+   "mipnerf360": {
+    "3DGS": {
+     "ssim": 0.809,
+     "psnr": 26.97,
+     "lpips": 0.308,
+     "fps_L4": 15,
+     "train_min_L4": 105
+    },
+    "Mip": {
+     "ssim": 0.815,
+     "psnr": 27.23,
+     "lpips": 0.302,
+     "fps_L4": 10,
+     "train_min_L4": 143
+    },
+    "Bicubic": {
+     "ssim": 0.813,
+     "psnr": 26.94,
+     "lpips": 0.31,
+     "fps_L4": 43,
+     "train_min_L4": 123
+    },
+    "Spline (Ours)": {
+     "ssim": 0.813,
+     "psnr": 27.0,
+     "lpips": 0.31,
+     "fps_L4": 41,
+     "train_min_L4": 139
+    },
+    "Spline (3DGS)": {
+     "ssim": 0.809,
+     "psnr": 26.94,
+     "lpips": 0.309,
+     "fps_L4": 35,
+     "train_min_L4": 105
+    }
+   },
+   "tandt": {
+    "3DGS": {
+     "ssim": 0.799,
+     "psnr": 22.09,
+     "lpips": 0.22,
+     "fps_L4": 156,
+     "train_min_L4": 17
+    },
+    "Mip": {
+     "ssim": 0.811,
+     "psnr": 22.62,
+     "lpips": 0.19,
+     "fps_L4": 126,
+     "train_min_L4": 20
+    },
+    "Bicubic": {
+     "ssim": 0.799,
+     "psnr": 22.19,
+     "lpips": 0.238,
+     "fps_L4": 213,
+     "train_min_L4": 18
+    },
+    "Spline (Ours)": {
+     "ssim": 0.826,
+     "psnr": 22.64,
+     "lpips": 0.206,
+     "fps_L4": 235,
+     "train_min_L4": 18
+    },
+    "Spline (3DGS)": {
+     "ssim": 0.783,
+     "psnr": 21.93,
+     "lpips": 0.239,
+     "fps_L4": 186,
+     "train_min_L4": 17
+    }
+   },
+   "db": {
+    "3DGS": {
+     "ssim": 0.901,
+     "psnr": 29.64,
+     "lpips": 0.247,
+     "fps_L4": 209,
+     "train_min_L4": 17
+    },
+    "Mip": {
+     "ssim": 0.908,
+     "psnr": 29.95,
+     "lpips": 0.239,
+     "fps_L4": 118,
+     "train_min_L4": 22
+    },
+    "Bicubic": {
+     "ssim": 0.902,
+     "psnr": 29.67,
+     "lpips": 0.249,
+     "fps_L4": 429,
+     "train_min_L4": 18
+    },
+    "Spline (Ours)": {
+     "ssim": 0.905,
+     "psnr": 29.69,
+     "lpips": 0.245,
+     "fps_L4": 430,
+     "train_min_L4": 18
+    },
+    "Spline (3DGS)": {
+     "ssim": 0.905,
+     "psnr": 29.76,
+     "lpips": 0.246,
+     "fps_L4": 313,
+     "train_min_L4": 17
+    }
+   }
+  },
+  "4x": {
+   "mipnerf360": {
+    "3DGS": {
+     "ssim": 0.783,
+     "psnr": 26.35,
+     "lpips": 0.347,
+     "fps_L4": 15,
+     "train_min_L4": 59
+    },
+    "Mip": {
+     "ssim": 0.806,
+     "psnr": 27.14,
+     "lpips": 0.317,
+     "fps_L4": 10,
+     "train_min_L4": 73
+    },
+    "Bicubic": {
+     "ssim": 0.799,
+     "psnr": 26.6,
+     "lpips": 0.338,
+     "fps_L4": 90,
+     "train_min_L4": 83
+    },
+    "Spline (Ours)": {
+     "ssim": 0.809,
+     "psnr": 26.85,
+     "lpips": 0.322,
+     "fps_L4": 90,
+     "train_min_L4": 91
+    },
+    "Spline (3DGS)": {
+     "ssim": 0.776,
+     "psnr": 25.71,
+     "lpips": 0.342,
+     "fps_L4": 69,
+     "train_min_L4": 59
+    }
+   },
+   "tandt": {
+    "3DGS": {
+     "ssim": 0.677,
+     "psnr": 20.31,
+     "lpips": 0.341,
+     "fps_L4": 142,
+     "train_min_L4": 19
+    },
+    "Mip": {
+     "ssim": 0.705,
+     "psnr": 20.85,
+     "lpips": 0.293,
+     "fps_L4": 116,
+     "train_min_L4": 20
+    },
+    "Bicubic": {
+     "ssim": 0.677,
+     "psnr": 20.28,
+     "lpips": 0.392,
+     "fps_L4": 124,
+     "train_min_L4": 20
+    },
+    "Spline (Ours)": {
+     "ssim": 0.744,
+     "psnr": 21.3,
+     "lpips": 0.323,
+     "fps_L4": 159,
+     "train_min_L4": 20
+    },
+    "Spline (3DGS)": {
+     "ssim": 0.654,
+     "psnr": 20.03,
+     "lpips": 0.379,
+     "fps_L4": 122,
+     "train_min_L4": 19
+    }
+   },
+   "db": {
+    "3DGS": {
+     "ssim": 0.877,
+     "psnr": 28.89,
+     "lpips": 0.286,
+     "fps_L4": 209,
+     "train_min_L4": 14
+    },
+    "Mip": {
+     "ssim": 0.896,
+     "psnr": 29.56,
+     "lpips": 0.265,
+     "fps_L4": 112,
+     "train_min_L4": 16
+    },
+    "Bicubic": {
+     "ssim": 0.875,
+     "psnr": 28.7,
+     "lpips": 0.312,
+     "fps_L4": 399,
+     "train_min_L4": 15
+    },
+    "Spline (Ours)": {
+     "ssim": 0.89,
+     "psnr": 29.09,
+     "lpips": 0.286,
+     "fps_L4": 423,
+     "train_min_L4": 16
+    },
+    "Spline (3DGS)": {
+     "ssim": 0.886,
+     "psnr": 29.14,
+     "lpips": 0.291,
+     "fps_L4": 312,
+     "train_min_L4": 14
+    }
+   }
+  },
+  "source": "main Table 1 (tab:train-results); MipNeRF360 at 5187x3361, T&T 979x546, DB 1264x832"
+ },
+ "render_times_garden_5187x3361_L4_ms": {
+  "3DGS_full": 72.4,
+  "bicubic": {
+   "2": [
+    24.6,
+    2.0,
+    2.7
+   ],
+   "3": [
+    15.4,
+    1.8,
+    4.2
+   ],
+   "4": [
+    11.8,
+    1.8,
+    5.3
+   ],
+   "8": [
+    10.5,
+    1.6,
+    6.0
+   ]
+  },
+  "spline": {
+   "2": [
+    24.7,
+    4.0,
+    2.5
+   ],
+   "3": [
+    15.6,
+    1.8,
+    4.2
+   ],
+   "4": [
+    11.9,
+    2.2,
+    5.1
+   ],
+   "8": [
+    10.7,
+    1.7,
+    5.9
+   ]
+  },
+  "fields": "[render ms, upscale ms, speedup vs 3DGS full-res]",
+  "source": "supp. tab:render_times_all, 5M Gaussians"
+ },
+ "mip_supp_8x_mipnerf360_avg": {
+  "3DGS": {
+   "ssim": 0.681,
+   "psnr": 24.67,
+   "lpips": 0.446
+  },
+  "Mip": {
+   "ssim": 0.775,
+   "psnr": 26.37,
+   "lpips": 0.371
+  },
+  "Spline (Ours)": {
+   "ssim": 0.776,
+   "psnr": 25.95,
+   "lpips": 0.385
+  },
+  "source": "supp. tab:mip-metrics"
+ },
+ "datasets": {
+  "tandt": {
+   "method": {
+    "average_of_per_scene": {
+     "psnr": 21.3,
+     "ssim": 0.744,
+     "lpips": 0.323
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 23.002,
+      "train": 19.598
+     },
+     "ssim": {
+      "truck": 0.78,
+      "train": 0.708
+     },
+     "lpips": {
+      "truck": 0.305,
+      "train": 0.341
+     },
+     "train_minutes_L4": {
+      "truck": 17.0,
+      "train": 22.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average_of_per_scene": {
+     "psnr": 20.314,
+     "ssim": 0.677,
+     "lpips": 0.3405
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 21.684,
+      "train": 18.944
+     },
+     "ssim": {
+      "truck": 0.703,
+      "train": 0.651
+     },
+     "lpips": {
+      "truck": 0.325,
+      "train": 0.356
+     },
+     "train_minutes_L4": {
+      "truck": 17.0,
+      "train": 21.0
+     }
+    }
+   },
+   "source": "supp. Table metrics-4x (headline factor); see factors for 2x/8x"
+  },
+  "db": {
+   "method": {
+    "average_of_per_scene": {
+     "psnr": 29.087,
+     "ssim": 0.89,
+     "lpips": 0.286
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.75,
+      "playroom": 29.424
+     },
+     "ssim": {
+      "drjohnson": 0.887,
+      "playroom": 0.893
+     },
+     "lpips": {
+      "drjohnson": 0.286,
+      "playroom": 0.286
+     },
+     "train_minutes_L4": {
+      "drjohnson": 16.0,
+      "playroom": 15.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average_of_per_scene": {
+     "psnr": 28.888,
+     "ssim": 0.8765,
+     "lpips": 0.2855
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.596,
+      "playroom": 29.18
+     },
+     "ssim": {
+      "drjohnson": 0.873,
+      "playroom": 0.88
+     },
+     "lpips": {
+      "drjohnson": 0.286,
+      "playroom": 0.285
+     },
+     "train_minutes_L4": {
+      "drjohnson": 14.0,
+      "playroom": 14.0
+     }
+    }
+   },
+   "source": "supp. Table metrics-4x (headline factor); see factors for 2x/8x"
+  },
+  "mipnerf360": {
+   "method": {
+    "average_of_per_scene": {
+     "psnr": 26.8503,
+     "ssim": 0.8087,
+     "lpips": 0.3219
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.317,
+      "bonsai": 31.11,
+      "counter": 28.162,
+      "flowers": 20.984,
+      "garden": 26.192,
+      "kitchen": 31.262,
+      "room": 31.349,
+      "stump": 26.336,
+      "treehill": 21.941
+     },
+     "ssim": {
+      "bicycle": 0.729,
+      "bonsai": 0.934,
+      "counter": 0.909,
+      "flowers": 0.601,
+      "garden": 0.786,
+      "kitchen": 0.92,
+      "room": 0.918,
+      "stump": 0.801,
+      "treehill": 0.68
+     },
+     "lpips": {
+      "bicycle": 0.352,
+      "bonsai": 0.282,
+      "counter": 0.269,
+      "flowers": 0.428,
+      "garden": 0.282,
+      "kitchen": 0.199,
+      "room": 0.283,
+      "stump": 0.367,
+      "treehill": 0.435
+     },
+     "train_minutes_L4": {
+      "bicycle": 105.0,
+      "bonsai": 68.0,
+      "counter": 72.0,
+      "flowers": 106.0,
+      "garden": 110.0,
+      "kitchen": 73.0,
+      "room": 68.0,
+      "stump": 104.0,
+      "treehill": 110.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average_of_per_scene": {
+     "psnr": 26.3486,
+     "ssim": 0.7823,
+     "lpips": 0.3467
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.216,
+      "bonsai": 30.728,
+      "counter": 27.082,
+      "flowers": 20.63,
+      "garden": 25.834,
+      "kitchen": 30.194,
+      "room": 31.003,
+      "stump": 26.05,
+      "treehill": 21.4
+     },
+     "ssim": {
+      "bicycle": 0.708,
+      "bonsai": 0.915,
+      "counter": 0.875,
+      "flowers": 0.571,
+      "garden": 0.755,
+      "kitchen": 0.886,
+      "room": 0.905,
+      "stump": 0.78,
+      "treehill": 0.646
+     },
+     "lpips": {
+      "bicycle": 0.375,
+      "bonsai": 0.31,
+      "counter": 0.298,
+      "flowers": 0.44,
+      "garden": 0.322,
+      "kitchen": 0.246,
+      "room": 0.293,
+      "stump": 0.389,
+      "treehill": 0.447
+     },
+     "train_minutes_L4": {
+      "bicycle": 60.0,
+      "bonsai": 50.0,
+      "counter": 54.0,
+      "flowers": 63.0,
+      "garden": 67.0,
+      "kitchen": 56.0,
+      "room": 52.0,
+      "stump": 60.0,
+      "treehill": 65.0
+     }
+    }
+   },
+   "source": "supp. Table metrics-4x (headline factor); see factors for 2x/8x"
+  }
+ }
+}

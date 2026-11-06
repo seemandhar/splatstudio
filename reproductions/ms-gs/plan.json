@@ -1,0 +1,10 @@
+{"method": "ms-gs", "module": "ss_ms_gs",
+ "components": [
+  {"kind": "renderer", "name": "ms-gs-renderer", "factory": "ss_ms_gs.renderer:create_renderer"},
+  {"kind": "density", "name": "ms-gs-density", "factory": "ss_ms_gs.density:create_density"},
+  {"kind": "loss", "name": "ms-photometric", "factory": "ss_ms_gs.losses:create_photometric"}],
+ "fields": [{"name": "ms_level", "shape": [], "init": 0}, {"name": "ms_max_px", "shape": [], "init": -1}, {"name": "ms_min_px", "shape": [], "init": -1}],
+ "probes": ["pixel-coverage", "selection-rule", "range-update", "aggregation", "ms-schedule", "densify-split-fields", "selective-render"],
+ "contributions": ["C1 pixel coverage", "C2 aggregate-insert large Gaussians", "C3 selective rendering with S_max/S_min", "C4 multi-scale training schedule"],
+ "fidelity_gaps": ["training low-res GT resampled on GPU from 1600px frame", "with-replacement views / densify after step / white bg / gsplat rasterizer", "128x test not loadable", "SH step off by one; runtime SSIM/LPIPS"],
+ "feasible_natively": true}

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-robustsplat"
+version = "0.1.0"
+description = "RobustSplat (arXiv 2506.02751) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy", "pillow"]
+
+[project.entry-points."splatstudio.methods"]
+robustsplat = "ss_robustsplat:method"
+robustsplat-nodg = "ss_robustsplat:method_nodg"
+robustsplat-nomb = "ss_robustsplat:method_nomb"
+
+[tool.setuptools.packages.find]
+include = ["ss_robustsplat*"]
+
+[tool.ruff]
+line-length = 100

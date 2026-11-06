@@ -1,0 +1,103 @@
+{
+  "approved": false,
+  "issues": [
+    {
+      "severity": "major",
+      "file": "reproductions/adamw-gs/paper_results.json",
+      "where": "datasets.mipnerf360.method (lines 9-50) and bench_request.json:14",
+      "problem": "method.average is the Table-2 headline row GS8 (27.678 / 0.822 / 0.220), but method.per_scene lists the outdoor GS9 rows. These are two different configurations, and the per-scene values average to 27.720, not 27.678. The bench target for bicycle (25.481, GS9) is therefore not the paper's headline method.",
+      "evidence": "tex:359 Table 2 '+AdamW-GS(GS8)' 27.678, outdoor 24.854. Outdoor GS8 rows: tex:1027 bicycle 25.454, :1111 flowers 21.711, :1195 garden 27.170, :1279 stump 27.045, :1363 treehill 22.891, mean 24.854 (matches Table 2). GS9 rows: tex:1024/1108/1192/1276/1360, mean 24.929, which appears in no table. Indoor GS7/GS8 (tex:1450/1531/1611/1695) mean 31.208, which matches Table 2's 31.209.",
+      "fix": "Set method.per_scene outdoor to GS8 (bicycle 25.454/0.778/0.219, flowers 21.711/0.610/0.344, garden 27.170/0.862/0.124, stump 27.045/0.800/0.206, treehill 22.891/0.651/0.325) and keep indoor GS7/GS8. Move GS9 to variants as 'released_config_GS9'. Update bench_request.paper_reference.bicycle to GS8: 25.454, delta +0.216 vs GS1 25.238."
+    },
+    {
+      "severity": "major",
+      "file": "reproductions/adamw-gs/plugin/ss_adamw_gs/__init__.py",
+      "where": "method()/indoor() (lines 85-95); pyproject.toml entry points",
+      "problem": "No packaged method exists for the headline outdoor configuration GS8: noise, opacity reset every 3000, StSS GS2, and the 3DGS big-primitive prune after 3000. The density code supports it through opacity_reset_every=3000, but bench.py cannot pass density config overrides, so the paper's headline method cannot be benchmarked.",
+      "evidence": "Bicycle table tex:1024-1027: GS9 = noise, no reset, StSS GS2 (= released mipnerf_adamwgsp). GS8 = noise + reset + StSS GS2. The official code with opacity_reset_interval=3000 also enables size_threshold=20 (train.py:219). The plugin reproduces both behaviours (density.py:157-158, 201-204) only when the config is set.",
+      "fix": "Add an entry point 'adamw-gs-gs8' = _make(..., {'opacity_reset_every': 3000}) and benchmark it as the primary outdoor method. Keep 'adamw-gs' (GS9, released config) as the code-faithful secondary run. Indoor stays 'adamw-gs-indoor' (GS7/GS8 = released mipnerf_adamwgs, no reset)."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/adamw-gs/plan.md",
+      "where": "line 41; plugin/README.md:46",
+      "problem": "The extra-update count is wrong: densification iterations are steps 600..14900 every 100, which is 144, not 145. With GS8 the reset iterations (3000/6000/9000/12000) also coincide; there the official code skips the opacity update because the parameter is replaced before the step, while the plugin updates first and then resets.",
+      "evidence": "train.py:213-243: densify/reset run before optimizer.step, and replaced nn.Parameters have grad=None, so the kernel skips them.",
+      "fix": "Correct the count to 144 and mention the reset-iteration case in the fidelity gap."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/adamw-gs/plugin/ss_adamw_gs/density.py",
+      "where": "before_backward (line 147), visibility definition",
+      "problem": "The visibility set differs from diff-gauss and this is not listed as a fidelity gap. gsplat 1.5.3 projection sets radii=0 for opacity < 1/255 and uses opacity-aware tighter radii; it also uses near_plane 0.01 vs 3DGS 0.2. Near-dead primitives are therefore invisible here: they get no Sparse-Adam/DAR update and no asystep increment, while in the official code they are visible. Tighter radii also lower max_radii for the GS8 20-px prune.",
+      "evidence": "gsplat cuda/csrc/ProjectionEWA3DGSFused.cu:171-178 (ALPHA_THRESHOLD cull, extend = sqrt(2 log(o/ALPHA_THRESHOLD))); official visibility_filter = radii>0 from diff-gauss.",
+      "fix": "Record this as a fidelity gap. The effect is expected to be small because o<0.005 is pruned every 100 iterations until 15k."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/adamw-gs/plugin/ss_adamw_gs/probes.py",
+      "where": "all probes",
+      "problem": "No probe would fail if AdamWGSDensity.initialize stopped installing SparseAdamWGS into the runtime's optimizers dict. sparse_step constructs the optimizer directly, and rsr/topology pass with plain Adam. Installation currently works: in a reviewer runtime.train check (bicycle, 40 steps) step was called 240 times (6 fields x 40), 0 invisible rows or moments changed, and the means LR schedule reached the swapped optimizer.",
+      "evidence": "probes.py:42-63, 183-271",
+      "fix": "Add an install probe: after density.initialize, assert every optimizers[k] is SparseAdamWGS sharing one context, and that a runtime-style step leaves invisible rows unchanged."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/adamw-gs/paper.md",
+      "where": "section 3 noise row (line 87)",
+      "problem": "paper.md says noise is on for T&T/DB, but ttdb_adamwgs/sub12_train has noise_transport False. Drjohnson uses StSS 0.1/0.15 while the others use 0.1/0.3.",
+      "evidence": "experiments/ttdb_adamwgs/sub12_train/config.yaml:37",
+      "fix": "Correct the row. Only matters if T&T/DB are packaged later."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/adamw-gs/report.md",
+      "where": "missing",
+      "problem": "No report.md exists yet. state.json says outcome 'built'.",
+      "evidence": "ls reproductions/adamw-gs",
+      "fix": "Write report.md listing every deviation: alpha2 0.01 (code) vs 0.04 (paper), two-digit img_scale vs the paper's one-digit text (counter 160000 vs 100000), the order gap, the visibility gap, runtime-wide gaps, and the target-row choice."
+    },
+    {
+      "severity": "minor",
+      "file": "reproductions/adamw-gs/evidence/test.json",
+      "where": "smoke",
+      "problem": "The 2k-step smoke (garden 22.52 vs gsplat 23.05, 39% fewer Gaussians) is not diagnostic. ss-train compresses the means LR schedule to 2k steps while the DAR/RSR/noise windows are absolute, and Sparse Adam alone trails dense Adam early (paper GS2 < GS1 in every scene). The Gaussian reduction points the same way as the paper (bicycle N_a -42..-50%, garden -63%). This is no evidence of a bug, but no evidence of fidelity either.",
+      "evidence": "smoke-1 checkpoint: asystep in [29,2000], mean 784; means lr ends at 7.9e-6 at step 2000; all moments finite.",
+      "fix": "None required. Judge on the 30k benchmark."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "(2)/(3) Adam", "status": "exact", "code": "optim.py:sparse_adamwgs_update (b1 0.9, b2 0.999, eps 1e-15)"},
+    {"eq": "(4) Sparse Adam, beta' = beta V + (1-V), per-primitive asystep bias correction", "status": "exact", "code": "optim.py:76-98, AdamWGSContext.begin_iteration (asystep += vis once per iteration, int32, inherited on clone/split via gsplat state)"},
+    {"eq": "(5) RSR m*=a1, v*=a2, uniform without replacement, all six optimizers, asystep not reset", "status": "exact", "code": "density.py:restate (a2 = 0.01 code-effective; paper 0.04)"},
+    {"eq": "StSS milestones GS1 / GS2", "status": "exact", "code": "density.py:rsr_ratio/rsr_active ([1000,15000], every 100; config end 15000, Fig. 7c shows 14000)"},
+    {"eq": "(7) moments see only grad(l)", "status": "exact", "code": "optim.py (no reg gradient in m/v; photometric loss only)"},
+    {"eq": "(8) DAR min(lambda/img_scale * dR/(sqrt(v_hat)+eps), 10)", "status": "exact", "code": "optim.py:89-96; AdamWGSContext.regularizer (opacity [3000,15000], scale [1000,15000], inclusive, 1-based)"},
+    {"eq": "App. 13-16 dR = sigma(1-sigma), exp(kappa)", "status": "exact", "code": "optim.py:90-93"},
+    {"eq": "N_I normalisation (_img_scale two-digit rule)", "status": "exact", "code": "optim.py:img_scale; bicycle 1237x822 -> 100000, counter 1558x1038 -> 160000, garden -> 100000 (match official images_4/images_2 sizes)"},
+    {"eq": "App. position noise Sigma n sigma(-100((1-o)-0.995)) 5e5 lr_xyz(s)", "status": "exact", "code": "density.py:add_noise (after step and densify, [1000,14000]; runtime lr at after_backward = lr(s) exactly like official xyz_lr)"},
+    {"eq": "Clone opacity correction 1-sqrt(1-o), clamp [0.005, 1-eps], source and copy", "status": "exact", "code": "density.py:correct_clone_opacity/_densify"},
+    {"eq": "3DGS ADC (grad >= 2e-4, (500,15000) every 100, percent_dense 0.01, split /1.6, prune o<0.005, children zero moments)", "status": "exact", "code": "density.py:_densify + gsplat ops"},
+    {"eq": "Opacity reset 0.01 every 3000 + big prune (GS8)", "status": "exact", "code": "density.py:157-158, 201-204 (config only, not packaged)"},
+    {"eq": "Order densify -> step -> noise -> RSR", "status": "deviates", "code": "runtime steps before after_backward: 144 extra updates on densify iterations (and opacity updates on reset iterations for GS8)"}
+  ],
+  "probe_assessment": [
+    {"probe": "adamwgs-sparse-step", "detects_removal": true, "why": "Independent scalar adam.cu transcription. Checks that invisible rows and moments are bit-identical and that a global-step reference is distinguishable. The unit test with dense update fails it."},
+    {"probe": "adamwgs-dar", "detects_removal": true, "why": "Window edges 2999/3000/15000/15001 and 999/1000. Moments must equal the pure photometric EMA, and the cap step is exactly lr*10. The no-DAR monkeypatch fails it."},
+    {"probe": "adamwgs-img-scale", "detects_removal": true, "why": "Compares against an independent digits formula on four sizes."},
+    {"probe": "adamwgs-rsr", "detects_removal": true, "why": "Exact row count int(ratio*N) per milestone and identical rows across all fields, scaled by a1/a2."},
+    {"probe": "adamwgs-topology", "detects_removal": true, "why": "Checks asystep inheritance order, zero child moments, and opacity correction on source and clone, then check_state."},
+    {"probe": "adamwgs-noise", "detects_removal": true, "why": "Compares against gsplat inject_noise_to_position (same formula as the official train.py) with the same RNG seed, plus the schedule."},
+    {"probe": "(missing) optimizer installation", "detects_removal": false, "why": "No probe asserts that the runtime's optimizers become SparseAdamWGS. Verified manually by the reviewer."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Runtime-wide: white background, random-with-replacement views, SSIM valid conv, SH degree and means LR one step late.",
+    "Optimizer step before densification: 144 (not 145) extra updates; GS8 also gets opacity updates on reset iterations.",
+    "alpha2 = 0.01, the value the released code actually uses (it reads the misspelled key rsr_exeabg_sq_fading), vs 0.04 in the paper text.",
+    "Two-digit img_scale (code) vs the paper text's 'most significant digit'.",
+    "Visibility from gsplat (opacity<1/255 culled, opacity-aware radii, near 0.01) vs diff-gauss radii>0. Not yet listed.",
+    "Torch implementation of the fused kernel: same float32 formula, no speed claim.",
+    "T&T/DB configs not packaged."
+  ],
+  "summary": "The optimizer and density code follow the official repository closely. adam.cu numerics, per-primitive asystep, DAR windows/λ/cap/img_scale, RSR (all six optimizers, α1 0.2 / code-effective α2 0.01, uniform without replacement over all current primitives, milestones), MCMC noise, clone opacity correction, 3DGS ADC, and zero child moments with inherited asystep all match. Installation into the runtime works: the in-place dict swap is stepped every iteration with the sparse visibility, the means LR schedule reaches it, and checkpoints work. Neither major issue is in the optimizer or density code; both concern which paper row is targeted. paper_results mixes the GS8 headline average with GS9 per-scene rows, and the headline GS8 outdoor configuration (released outdoor config + opacity reset 3000 + big prune) is not packaged. Recommended targets: bicycle = new 'adamw-gs-gs8' (GS8: 25.454 / 0.778 / 0.219, +0.216 over GS1 25.238, N_a 2.717M), with 'adamw-gs' (GS9 25.481, +0.243) as the released-config secondary; counter = 'adamw-gs-indoor' (GS7/GS8: 29.112 / 0.907 / 0.206, +0.066 over GS1 29.046, N_a 0.535M vs 1.092M)."
+}

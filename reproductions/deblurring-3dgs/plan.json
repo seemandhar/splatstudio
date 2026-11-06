@@ -1,0 +1,57 @@
+{
+ "method": [
+  "deblurring-3dgs-defocus",
+  "deblurring-3dgs-motion"
+ ],
+ "module": "ss_deblurring_3dgs",
+ "components": [
+  {
+   "name": "deblur3dgs-renderer",
+   "kind": "renderer"
+  },
+  {
+   "name": "deblur3dgs-density",
+   "kind": "density"
+  },
+  {
+   "name": "deblur3dgs-photometric",
+   "kind": "loss"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "mlp-architecture",
+  "defocus-blur",
+  "motion-blur",
+  "extra-points",
+  "depth-pruning",
+  "schedule"
+ ],
+ "contributions": {
+  "C1 defocus blur MLP": [
+   "mlp-architecture",
+   "defocus-blur"
+  ],
+  "C2 camera motion blur": [
+   "motion-blur"
+  ],
+  "C3 extra points": [
+   "extra-points"
+  ],
+  "C4 depth-based pruning": [
+   "depth-pruning"
+  ],
+  "C5 sharp inference": [
+   "defocus-blur"
+  ]
+ },
+ "fidelity_gaps": [
+  "gsplat vs Inria rasterizer",
+  "views sampled with replacement",
+  "optimizer step before densify; step-2500 update not skipped",
+  "SH degree one step later",
+  "ss-eval SSIM/LPIPS != Deblur-NeRF metrics",
+  "new gsplat baseline needed on deblur3dgs-* at 20k"
+ ],
+ "feasible_natively": true
+}

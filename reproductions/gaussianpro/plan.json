@@ -1,0 +1,16 @@
+{
+  "method": "gaussianpro",
+  "module": "ss_gaussianpro",
+  "components": [
+    {"name": "gaussianpro-render", "kind": "renderer", "factory": "ss_gaussianpro.renderer:create_renderer"},
+    {"name": "gaussianpro-density", "kind": "density", "factory": "ss_gaussianpro.density:create_density"},
+    {"name": "gaussianpro-photometric", "kind": "loss", "factory": "ss_gaussianpro.losses:create_photometric"},
+    {"name": "gaussianpro-normal", "kind": "loss", "factory": "ss_gaussianpro.losses:create_normal"},
+    {"name": "gaussianpro-flatten", "kind": "loss", "factory": "ss_gaussianpro.losses:create_flatten"}
+  ],
+  "fields": [],
+  "probes": ["propagation-plane", "propagation-selection", "geometry-render", "planar-losses", "opacity-mask", "consistency-check"],
+  "contributions": ["hybrid-geometry", "progressive-propagation", "planar-constraint", "training-strategy"],
+  "fidelity_gaps": ["authors' re-run COLMAP unavailable", "gsplat rasterizer", "white background / sampling / SSIM conv", "propagation at end of step", "neighbour graph regenerated", "propagation window end 12000 assumed", "official quirks replicated"],
+  "feasible_natively": true
+}

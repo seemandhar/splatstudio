@@ -8,10 +8,17 @@
     "coder": "done",
     "tester": "done",
     "review": "done (approved, 6 minors)",
-    "benchmark": "running"
+    "benchmark": "done",
+    "report": "done"
   },
-  "outcome": "built",
+  "outcome": "matched",
   "bench_exps": [
     "atomgs-mipnerf360"
-  ]
+  ],
+  "result": {
+    "psnr_delta": {
+      "garden": -0.05,
+      "room": 0.02
+    }
+  }
 }

@@ -1,6 +1,6 @@
 # Reproduction progress
 
-52/100 started: 1 blocked, 1 built, 4 built (benchmark pending), 3 in progress, 22 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; indoor gain over 3DGS not reproduced), 2 matched (iter 1), 3 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 1 partial, 2 partial (2/3 scenes), 7 ready_for_benchmark, 1 skipped
+75/100 started: 4 blocked, 11 built, 5 built (benchmark pending), 5 in progress, 24 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 2 matched (iter 1), 3 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 1 partial, 2 partial (2/3 scenes), 11 ready_for_benchmark, 1 skipped
 
 | # | paper | stage | outcome | ours vs paper (PSNR) |
 |---:|---|---|---|---|
@@ -66,41 +66,41 @@
 | 60 | [DOF-GS: Adjustable Depth-of-Field 3D Gaussian Splatting for Post-Captu](dofgs/report.md) | report | matched (3/3 scenes) |  |
 | 61 | [Improving Adaptive Density Control for 3D Gaussian Splatting](improving-adc/report.md) | report | matched (T&T, DB) |  |
 | 62 | [High-quality Surface Reconstruction using Gaussian Surfels](gaussian-surfels/report.md) | benchmark | matched |  |
-| 63 | [DN-Splatter: Depth and Normal Priors for Gaussian Splatting and Meshin](dn-splatter/report.md) | review | built (benchmark pending) |  |
+| 63 | [DN-Splatter: Depth and Normal Priors for Gaussian Splatting and Meshin](dn-splatter/report.md) | report | matched (absolute; gain over Splatfacto not reproduced) |  |
 | 64 | [AGS-Mesh: Adaptive Gaussian Splatting and Meshing with Geometric Prior](ags-mesh/report.md) | review | built (benchmark pending) |  |
 | 65 | [Planar Gaussian Splatting](planar-gs/report.md) | paper-reader | blocked |  |
-| 66 | [AtomGS: Atomizing Gaussian Splatting for High-Fidelity Radiance Field](atomgs/report.md) | review | built |  |
+| 66 | [AtomGS: Atomizing Gaussian Splatting for High-Fidelity Radiance Field](atomgs/report.md) | report | matched |  |
 | 67 | [Revising Densification in Gaussian Splatting](revising-densification/report.md) | review | ready_for_benchmark |  |
 | 68 | [Steepest Descent Density Control for Compact 3D Gaussian Splatting](steepgs/report.md) | review | ready_for_benchmark |  |
-| 69 | [Improving Densification in 3D Gaussian Splatting for High-Fidelity Ren](improving-densification/report.md) | review | ready_for_benchmark |  |
+| 69 | [Improving Densification in 3D Gaussian Splatting for High-Fidelity Ren](improving-densification/report.md) | report | matched |  |
 | 70 | [Analytic-Splatting: Anti-Aliased 3D Gaussian Splatting via Analytic In](analytic-splatting/report.md) | review | ready_for_benchmark |  |
 | 71 | [StopThePop: Sorted Gaussian Splatting for View-Consistent Real-time Re](stopthepop/report.md) | review | ready_for_benchmark |  |
 | 72 | [Speedy-Splat: Fast 3D Gaussian Splatting with Sparse Pixels and Sparse](speedy-splat/report.md) | review | ready_for_benchmark |  |
 | 73 | [FlashGS: Efficient 3D Gaussian Splatting for Large-scale and High-reso](flashgs/report.md) | report | partial |  |
-| 74 | [A Hierarchical 3D Gaussian Representation for Real-Time Rendering of V](hierarchical-3dgs/report.md) | coder | in progress |  |
+| 74 | [A Hierarchical 3D Gaussian Representation for Real-Time Rendering of V](hierarchical-3dgs/report.md) | review | ready_for_benchmark |  |
 | 75 | [Octree-GS: Towards Consistent Real-time Rendering with LOD-Structured ](octree-gs/report.md) | review | in progress |  |
-| 76 | [DeblurGS: Gaussian Splatting for Camera Motion Blur](deblurgs/report.md) | coder | in progress |  |
-| 77 | SpotLessSplats: Ignoring Distractors in 3D Gaussian Splatting | — | — | |
-| 78 | 3D-HGS: 3D Half-Gaussian Splatting | — | — | |
-| 79 | GaussianPro: 3D Gaussian Splatting with Progressive Propagation | — | — | |
-| 80 | Lightweight Gradient-Aware Upscaling of 3D Gaussian Splatting Images | — | — | |
-| 81 | 3DGUT: Enabling Distorted Cameras and Secondary Rays in Gaussian Splat | — | — | |
-| 82 | 3D Gaussian Ray Tracing: Fast Tracing of Particle Scenes | — | — | |
-| 83 | Laplacian Frequency Hierarchies for Efficient 3D Gaussian Splatting Tr | — | — | |
-| 84 | WildGaussians: 3D Gaussian Splatting In the Wild | — | — | |
-| 85 | SWAG: Splatting in the Wild images with Appearance-conditioned Gaussia | — | — | |
-| 86 | Splatfacto-W: A Nerfstudio Implementation of Gaussian Splatting for Un | — | — | |
-| 87 | RobustSplat: Decoupling Densification and Dynamics for Transient-Free  | — | — | |
-| 88 | Deblurring 3D Gaussian Splatting | — | — | |
-| 89 | BAGS: Blur Agnostic Gaussian Splatting through Multi-Scale Kernel Mode | — | — | |
-| 90 | Spec-Gaussian: Anisotropic View-Dependent Appearance for 3D Gaussian S | — | — | |
-| 91 | GS-IR: 3D Gaussian Splatting for Inverse Rendering | — | — | |
-| 92 | FisherRF: Active View Selection and Uncertainty Quantification for Rad | — | — | |
-| 93 | A Step to Decouple Optimization in 3DGS | — | — | |
-| 94 | Faster and Better 3D Splatting via Group Training | — | — | |
-| 95 | MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic M | — | — | |
-| 96 | ResGS: Residual Densification of 3D Gaussian for Efficient Detail Reco | — | — | |
-| 97 | HDA-GS: Hierarchical Density-Controlled for Anisotropic 3D Gaussian Sp | — | — | |
-| 98 | Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering | — | — | |
-| 99 | DRGSplat: Depth-Regularized 3D Gaussian Splatting | — | — | |
+| 76 | [DeblurGS: Gaussian Splatting for Camera Motion Blur](deblurgs/report.md) | review | built |  |
+| 77 | [SpotLessSplats: Ignoring Distractors in 3D Gaussian Splatting](spotlesssplats/report.md) | review | in progress |  |
+| 78 | [3D-HGS: 3D Half-Gaussian Splatting](3dhgs/report.md) | review | ready_for_benchmark |  |
+| 79 | [GaussianPro: 3D Gaussian Splatting with Progressive Propagation](gaussianpro/report.md) | review | built (benchmark pending) |  |
+| 80 | [Lightweight Gradient-Aware Upscaling of 3D Gaussian Splatting Images](gradient-upscaling/report.md) | review | built |  |
+| 81 | [3DGUT: Enabling Distorted Cameras and Secondary Rays in Gaussian Splat](3dgut/report.md) | review | ready_for_benchmark |  |
+| 82 | [3D Gaussian Ray Tracing: Fast Tracing of Particle Scenes](3dgrt/report.md) | feasibility | blocked |  |
+| 83 | [Laplacian Frequency Hierarchies for Efficient 3D Gaussian Splatting Tr](laplacian-gs/report.md) | tester | built |  |
+| 84 | [WildGaussians: 3D Gaussian Splatting In the Wild](wildgaussians/report.md) | tester | in progress |  |
+| 85 | [SWAG: Splatting in the Wild images with Appearance-conditioned Gaussia](swag/report.md) | tester | built |  |
+| 86 | [Splatfacto-W: A Nerfstudio Implementation of Gaussian Splatting for Un](splatfacto-w/report.md) | tester | built |  |
+| 87 | [RobustSplat: Decoupling Densification and Dynamics for Transient-Free ](robustsplat/report.md) | tester | in progress |  |
+| 88 | [Deblurring 3D Gaussian Splatting](deblurring-3dgs/report.md) | tester | built |  |
+| 89 | [BAGS: Blur Agnostic Gaussian Splatting through Multi-Scale Kernel Mode](bags/report.md) | tester | built |  |
+| 90 | [Spec-Gaussian: Anisotropic View-Dependent Appearance for 3D Gaussian S](spec-gaussian/report.md) | tester | ready_for_benchmark |  |
+| 91 | [GS-IR: 3D Gaussian Splatting for Inverse Rendering](gs-ir/report.md) | report | built |  |
+| 92 | [FisherRF: Active View Selection and Uncertainty Quantification for Rad](fisherrf/report.md) | tester | ready_for_benchmark |  |
+| 93 | [A Step to Decouple Optimization in 3DGS](adamw-gs/report.md) | test | built |  |
+| 94 | [Faster and Better 3D Splatting via Group Training](group-training/report.md) | test | built (benchmark pending) |  |
+| 95 | [MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic M](maskgaussian/report.md) | test | built |  |
+| 96 | [ResGS: Residual Densification of 3D Gaussian for Efficient Detail Reco](resgs/report.md) | test | built |  |
+| 97 | [HDA-GS: Hierarchical Density-Controlled for Anisotropic 3D Gaussian Sp](hda-gs/report.md) | started | blocked |  |
+| 98 | [Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering](ms-gs/report.md) | started | in progress |  |
+| 99 | [DRGSplat: Depth-Regularized 3D Gaussian Splatting](drgsplat/report.md) | started | blocked |  |
 | 100 | Faster-GS: Analyzing and Improving Gaussian Splatting Optimization | — | — | |

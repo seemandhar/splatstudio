@@ -1,0 +1,20 @@
+{"method": "ms-gs",
+ "datasets": {"mipnerf360-msgs": ["garden", "counter"]},
+ "steps": 40000,
+ "per_scene_reported": true,
+ "extra": "",
+ "recipe": "3dgs",
+ "protocol": "MS-GS multi-scale: base = official -r -1 loader (full-res -> width 1600), test views at 1,2,4,8,16,32,64x (PIL bicubic from full res); ms-gs trains 1x..128x itself (dataset train split = 1x frames only). Paper tables use 1/4/16/64x; 128x not loadable (12x8 px < 11 px loader minimum).",
+ "experiments": [
+  {"exp": "ms-gs-msgs", "methods": ["ms-gs"], "dataset": "mipnerf360-msgs", "scenes": ["garden", "counter"], "steps": 40000},
+  {"exp": "ms-gs-msgs-3dgs", "methods": ["gsplat"], "dataset": "mipnerf360-msgs", "scenes": ["garden", "counter"], "steps": 30000,
+   "why": "paper's 3D-GS row = single-scale 3DGS 30k evaluated at every scale; gsplat on this dataset trains on the 1x frames only = same protocol. No pre-existing baseline (baseline3dgs-mipnerf360-1600-30000 has the same train images but only a 1x test split)."}],
+ "summary": "python3 tools/multiscale_summary.py --exp <exp> --dataset mipnerf360-msgs --scales 1,4,16,64   (also --scales 1,2,4,8,16,32,64)",
+ "paper_targets": {
+  "psnr": {"garden": {"1x": 27.16, "4x": 23.99, "16x": 26.41, "64x": 24.79},
+           "counter": {"1x": 29.17, "4x": 26.77, "16x": 23.44, "64x": 24.59}},
+  "paper_3dgs_row_psnr": {"garden": {"1x": 27.27, "4x": 20.42, "16x": 16.74, "64x": 14.92},
+           "counter": {"1x": 29.15, "4x": 24.81, "16x": 17.94, "64x": 14.32}},
+  "source": "supp. Tab. 360_per_scene (paper_results.json datasets.mipnerf360-msgs)"},
+ "success_criterion": "per scene and scale within +-0.5 dB of the paper PSNR; also compare our gain over gsplat with the paper's gain over its 3DGS row (calibration: gsplat 1600 garden 26.93 vs paper 3DGS 27.27, counter 29.04 vs 29.15)",
+ "resources": "garden at 1600 px reaches ~4.5M Gaussians with gsplat (similar expected); RAM ~4 GB (garden) / ~6 GB (counter) of frames; put runs on /bigdata/sejain/runs with a symlink"}

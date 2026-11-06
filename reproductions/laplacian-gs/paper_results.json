@@ -1,0 +1,439 @@
+{
+ "paper": "Laplacian Frequency Hierarchies for Efficient 3D Gaussian Splatting Training",
+ "arxiv": "2609.03334",
+ "method_label": "Ours (Taming)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.39,
+     "ssim": 0.797,
+     "lpips": 0.245
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.76,
+      "bonsai": 32.17,
+      "counter": 29.22,
+      "flowers": 21.04,
+      "garden": 27.35,
+      "kitchen": 31.51,
+      "room": 31.45,
+      "stump": 26.0,
+      "treehill": 23.01
+     },
+     "ssim": {
+      "bicycle": 0.72,
+      "bonsai": 0.942,
+      "counter": 0.908,
+      "flowers": 0.547,
+      "garden": 0.849,
+      "kitchen": 0.927,
+      "room": 0.921,
+      "stump": 0.733,
+      "treehill": 0.623
+     },
+     "lpips": {
+      "bicycle": 0.282,
+      "bonsai": 0.188,
+      "counter": 0.198,
+      "flowers": 0.4,
+      "garden": 0.143,
+      "kitchen": 0.129,
+      "room": 0.211,
+      "stump": 0.282,
+      "treehill": 0.375
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.58,
+     "ssim": 0.814,
+     "lpips": 0.22
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.18,
+      "bonsai": 32.4,
+      "counter": 29.17,
+      "flowers": 21.38,
+      "garden": 27.36,
+      "kitchen": 31.56,
+      "room": 31.86,
+      "stump": 26.66,
+      "treehill": 22.67
+     },
+     "ssim": {
+      "bicycle": 0.748,
+      "bonsai": 0.947,
+      "counter": 0.916,
+      "flowers": 0.588,
+      "garden": 0.858,
+      "kitchen": 0.933,
+      "room": 0.928,
+      "stump": 0.768,
+      "treehill": 0.637
+     },
+     "lpips": {
+      "bicycle": 0.242,
+      "bonsai": 0.18,
+      "counter": 0.183,
+      "flowers": 0.358,
+      "garden": 0.122,
+      "kitchen": 0.116,
+      "room": 0.196,
+      "stump": 0.243,
+      "treehill": 0.345
+     }
+    }
+   },
+   "backbone_taming": {
+    "average": {
+     "psnr": 27.73,
+     "ssim": 0.81,
+     "lpips": 0.228
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.01,
+      "bonsai": 32.73,
+      "counter": 29.43,
+      "flowers": 21.52,
+      "garden": 27.48,
+      "kitchen": 31.82,
+      "room": 32.04,
+      "stump": 26.53,
+      "treehill": 22.99
+     },
+     "ssim": {
+      "bicycle": 0.731,
+      "bonsai": 0.948,
+      "counter": 0.916,
+      "flowers": 0.59,
+      "garden": 0.854,
+      "kitchen": 0.932,
+      "room": 0.926,
+      "stump": 0.76,
+      "treehill": 0.637
+     },
+     "lpips": {
+      "bicycle": 0.269,
+      "bonsai": 0.18,
+      "counter": 0.183,
+      "flowers": 0.361,
+      "garden": 0.13,
+      "kitchen": 0.117,
+      "room": 0.201,
+      "stump": 0.259,
+      "treehill": 0.354
+     }
+    }
+   },
+   "method_fastgs": {
+    "average": {
+     "psnr": 27.67,
+     "ssim": 0.809,
+     "lpips": 0.233
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.0,
+      "bonsai": 32.43,
+      "counter": 29.43,
+      "flowers": 21.02,
+      "garden": 27.56,
+      "kitchen": 32.27,
+      "room": 31.54,
+      "stump": 26.8,
+      "treehill": 22.99
+     },
+     "ssim": {
+      "bicycle": 0.742,
+      "bonsai": 0.948,
+      "counter": 0.913,
+      "flowers": 0.556,
+      "garden": 0.862,
+      "kitchen": 0.938,
+      "room": 0.928,
+      "stump": 0.767,
+      "treehill": 0.629
+     },
+     "lpips": {
+      "bicycle": 0.267,
+      "bonsai": 0.171,
+      "counter": 0.189,
+      "flowers": 0.383,
+      "garden": 0.121,
+      "kitchen": 0.108,
+      "room": 0.194,
+      "stump": 0.263,
+      "treehill": 0.4
+     }
+    }
+   },
+   "backbone_fastgs": {
+    "average": {
+     "psnr": 27.96,
+     "ssim": 0.82,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.26,
+      "bonsai": 33.08,
+      "counter": 29.6,
+      "flowers": 21.63,
+      "garden": 27.61,
+      "kitchen": 32.39,
+      "room": 32.14,
+      "stump": 27.16,
+      "treehill": 22.81
+     },
+     "ssim": {
+      "bicycle": 0.755,
+      "bonsai": 0.954,
+      "counter": 0.918,
+      "flowers": 0.604,
+      "garden": 0.865,
+      "kitchen": 0.939,
+      "room": 0.93,
+      "stump": 0.786,
+      "treehill": 0.632
+     },
+     "lpips": {
+      "bicycle": 0.245,
+      "bonsai": 0.16,
+      "counter": 0.177,
+      "flowers": 0.338,
+      "garden": 0.11,
+      "kitchen": 0.104,
+      "room": 0.189,
+      "stump": 0.24,
+      "treehill": 0.377
+     }
+    }
+   },
+   "source": "main Tab. 1 (averages), supp. Tab. 9 (per scene), 1K setting",
+   "protocol": "1K = all images resized to width 1600 (3DGS loader -r -1 on full-res images) -> our dataset mipnerf360-1600"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.38,
+     "ssim": 0.9,
+     "lpips": 0.243
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.06,
+      "playroom": 29.69
+     },
+     "ssim": {
+      "drjohnson": 0.897,
+      "playroom": 0.902
+     },
+     "lpips": {
+      "drjohnson": 0.246,
+      "playroom": 0.24
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.83,
+     "ssim": 0.907,
+     "lpips": 0.238
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.49,
+      "playroom": 30.16
+     },
+     "ssim": {
+      "drjohnson": 0.905,
+      "playroom": 0.909
+     },
+     "lpips": {
+      "drjohnson": 0.236,
+      "playroom": 0.241
+     }
+    }
+   },
+   "backbone_taming": {
+    "average": {
+     "psnr": 29.29,
+     "ssim": 0.899,
+     "lpips": 0.246
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.37,
+      "playroom": 29.21
+     },
+     "ssim": {
+      "drjohnson": 0.904,
+      "playroom": 0.893
+     },
+     "lpips": {
+      "drjohnson": 0.241,
+      "playroom": 0.251
+     }
+    }
+   },
+   "method_fastgs": {
+    "average": {
+     "psnr": 30.16,
+     "ssim": 0.907,
+     "lpips": 0.257
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.6,
+      "playroom": 30.73
+     },
+     "ssim": {
+      "drjohnson": 0.901,
+      "playroom": 0.913
+     },
+     "lpips": {
+      "drjohnson": 0.266,
+      "playroom": 0.248
+     }
+    }
+   },
+   "backbone_fastgs": {
+    "average": {
+     "psnr": 30.24,
+     "ssim": 0.911,
+     "lpips": 0.24
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.74,
+      "playroom": 30.75
+     },
+     "ssim": {
+      "drjohnson": 0.907,
+      "playroom": 0.915
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.237
+     }
+    }
+   },
+   "source": "main Tab. 1, supp. Tab. 10"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.93,
+     "ssim": 0.841,
+     "lpips": 0.197
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.28,
+      "truck": 25.59
+     },
+     "ssim": {
+      "train": 0.801,
+      "truck": 0.88
+     },
+     "lpips": {
+      "train": 0.239,
+      "truck": 0.155
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.82,
+     "ssim": 0.853,
+     "lpips": 0.169
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.17,
+      "truck": 25.47
+     },
+     "ssim": {
+      "train": 0.821,
+      "truck": 0.885
+     },
+     "lpips": {
+      "train": 0.196,
+      "truck": 0.142
+     }
+    }
+   },
+   "backbone_taming": {
+    "average": {
+     "psnr": 24.36,
+     "ssim": 0.86,
+     "lpips": 0.165
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.8,
+      "truck": 25.93
+     },
+     "ssim": {
+      "train": 0.832,
+      "truck": 0.887
+     },
+     "lpips": {
+      "train": 0.189,
+      "truck": 0.141
+     }
+    }
+   },
+   "method_fastgs": {
+    "average": {
+     "psnr": 24.03,
+     "ssim": 0.842,
+     "lpips": 0.205
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.43,
+      "truck": 25.63
+     },
+     "ssim": {
+      "train": 0.805,
+      "truck": 0.88
+     },
+     "lpips": {
+      "train": 0.244,
+      "truck": 0.166
+     }
+    }
+   },
+   "backbone_fastgs": {
+    "average": {
+     "psnr": 24.34,
+     "ssim": 0.858,
+     "lpips": 0.173
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.58,
+      "truck": 26.1
+     },
+     "ssim": {
+      "train": 0.828,
+      "truck": 0.889
+     },
+     "lpips": {
+      "train": 0.207,
+      "truck": 0.14
+     }
+    }
+   },
+   "source": "main Tab. 1, supp. Tab. 11"
+  }
+ },
+ "notes": "'method' = Ours(Taming) (2 levels, 10K/20K, xyz-only rho=1), the backbone closest to our gsplat 3DGS baseline; 'method_fastgs' = Ours(FastGS). baseline_3dgs = 'Original 3DGS' row of this paper (retrained by authors, 1K). backbone_* = the backbones without Laplacian-GS. 2K/4K m360 tables (Tab. 2/3, supp. 12/13) not transcribed (no matching baseline/protocol in our data)."
+}

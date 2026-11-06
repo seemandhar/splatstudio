@@ -1,0 +1,43 @@
+{
+  "paper": "GaussianPro: 3D Gaussian Splatting with Progressive Propagation",
+  "arxiv": "2402.14650",
+  "method_label": "GaussianPro (Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.92, "ssim": 0.825, "lpips": 0.208},
+        "per_scene": {
+          "psnr": {"room": 31.98, "counter": 29.17, "kitchen": 31.60, "bonsai": 33.05, "bicycle": 26.60, "flowers": 21.54, "garden": 28.70, "stump": 26.42, "treehill": 22.21},
+          "ssim": {"room": 0.927, "counter": 0.916, "kitchen": 0.935, "bonsai": 0.952, "bicycle": 0.810, "flowers": 0.598, "garden": 0.890, "stump": 0.763, "treehill": 0.631},
+          "lpips": {"room": 0.192, "counter": 0.175, "kitchen": 0.113, "bonsai": 0.163, "bicycle": 0.195, "flowers": 0.342, "garden": 0.107, "stump": 0.244, "treehill": 0.344}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.88, "ssim": 0.824, "lpips": 0.209},
+        "per_scene": {
+          "psnr": {"room": 31.71, "counter": 29.06, "kitchen": 31.57, "bonsai": 32.69, "bicycle": 26.64, "flowers": 21.64, "garden": 28.77, "stump": 26.58, "treehill": 22.30},
+          "ssim": {"room": 0.919, "counter": 0.915, "kitchen": 0.933, "bonsai": 0.945, "bicycle": 0.810, "flowers": 0.603, "garden": 0.890, "stump": 0.769, "treehill": 0.636},
+          "lpips": {"room": 0.192, "counter": 0.185, "kitchen": 0.113, "bonsai": 0.169, "bicycle": 0.194, "flowers": 0.346, "garden": 0.107, "stump": 0.236, "treehill": 0.337}
+        }
+      },
+      "baseline_3dgs_original_paper": {
+        "average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214},
+        "per_scene": {"psnr": {"room": 30.63, "counter": 28.70, "kitchen": 30.32, "bonsai": 31.98, "bicycle": 25.25, "flowers": 21.52, "garden": 27.41, "stump": 26.55, "treehill": 22.49}}
+      },
+      "source": "Table 1 (averages); camera-ready appendix D Tables 13 (SSIM), 14 (PSNR), 15 (LPIPS); column '3DGS' = 3DGS retrained on the authors' re-run COLMAP, column '3DGS*' = original 3DGS paper"
+    },
+    "waymo": {
+      "method": {"average": {"psnr": 34.68, "ssim": 0.949, "lpips": 0.191}},
+      "baseline_3dgs": {"average": {"psnr": 33.53, "ssim": 0.938, "lpips": 0.226}},
+      "source": "Table 1 (9 Waymo segments; per-scene in appendix Tables 10-12, dataset not available locally)"
+    },
+    "official_repo_csv": {
+      "note": "Official repo results/*.csv (Baseline row vs GaussianPro row); not paper tables, different numbers from Table 14.",
+      "mipnerf360_psnr": {"room": [31.281, 31.693], "garden": [27.238, 27.122], "counter": [29.104, 29.151], "kitchen": [31.223, 31.527], "bonsai": [32.315, 32.477], "bicycle": [25.064, 25.122], "flowers": [21.446, 21.354], "stump": [26.641, 26.609], "treehill": [22.565, 22.118]},
+      "tandt_psnr": {"train": [21.915, 21.493], "truck": [26.270, 25.930]},
+      "db_psnr": {"drjohnson": [29.251, 29.276], "playroom": [30.330, 30.401]}
+    }
+  },
+  "notes": "Mip-NeRF 360 baseline_3dgs is 3DGS retrained by the authors with their own re-run COLMAP (not released); absolute numbers are ~+0.7 dB above the original 3DGS paper, so compare improvements over the respective 3DGS baseline. Room is also the Table 2 / Table 5 scene (100% views: 3DGS 31.71 -> GaussianPro 31.98)."
+}

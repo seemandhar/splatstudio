@@ -9,8 +9,8 @@
 - **Feasible target**: §6.2 text, Mip-NeRF 360 *entire dataset average* with single-chunk
   optimization: 3DGS 29.11 / leaves 28.96; τ1/τ2/τ3 (3/6/15 px) basic 28.86/28.05/24.82,
   optimized 28.87/28.52/27.25. Data on disk; cost ≈ 9 × (30k + 15k) + 9 × 30k steps.
-  Average-only → all 9 scenes (brief rule). Compare deltas (their 3DGS 29.11 ≠ 27.21 of the 3DGS
-  paper; our baseline `baseline3dgs-mipnerf360-30000`).
+  Average-only → all 9 scenes (brief rule) at 1600 px; also 7-scene means. Compare deltas (their
+  3DGS 29.11 ≠ 27.21 of the 3DGS paper; our baselines `baseline3dgs-mipnerf360-1600(-b)-30000`).
 
 ## Method / module
 `hierarchical-3dgs` (`ss_hierarchical_3dgs`), plus `hierarchical-3dgs-quick` (pipeline smoke only).
@@ -35,19 +35,27 @@ from `checkpoint.pt` (runtime has no component-state persistence).
 
 ## Evaluation
 `ss-eval` → leaves (eval_tau −0.5 = threshold 0, every leaf, t = 1).
-`python -m ss_hierarchical_3dgs.eval_taus --run R --taus -0.5 3 6 15` → test_tau*.json.
+`python -m ss_hierarchical_3dgs.eval_taus --run R --taus -0.5 0 3 6 15` → test_tau*.json (+ per-channel PSNR);
+`python -m ss_hierarchical_3dgs.summary` → 9/7-scene means and paper deltas.
 Runs: `--steps 30000` (basic hierarchy) and `--steps 45000` (optimized).
 
 ## Fidelity gaps
-1. Depth regularization not used (no monocular depth for Mip-NeRF 360 in the runtime; paper
-   ablation: depth does not raise metrics, −0.12 dB avg). Unknown whether the authors used it here.
+1. Depth regularization not used. The official single-chunk eval command (README.md:550) passes
+   `-d depths`, so it is the stated eval protocol; Mip-NeRF 360 ships no depth maps (paper
+   ablation: depth −0.12 dB avg).
 2. Exposure optimization off (paper disables it for single-chunk comparisons).
 3. No scaffold/skybox/chunking/consolidation/streaming viewer (large-scene parts, C5).
 4. Runtime differences: random-with-replacement view sampling (official: shuffled epochs via
    DataLoader), densify/reset applied after the optimizer step of the same iteration (official
    before), SH degree increments one step later, SSIM valid conv, LPIPS from `lpips`.
-5. Resolution: our images_4/images_2 (official default `-r -1` caps width at 1600 px); the
-   paper's protocol for this experiment is unstated → compare deltas.
+5. Resolution: benchmark on `mipnerf360-1600` = official default (`-r -1`, `images`, width ≤ 1600;
+   README eval passes no -r/-i); τ is in pixels at render resolution. Baselines
+   `baseline3dgs-mipnerf360-1600-30000` [garden,bicycle,counter] + `-1600b-30000` [other 6].
+8. Scene set / PSNR variant: their 3DGS 29.11 fits a 7-scene mean (no flowers/treehill) with
+   per-channel PSNR → summary.py reports 9- and 7-scene, full-image and per-channel PSNR.
+9. Big-Gaussian shrink off (README.md:550 `--skip_scale_big_gauss`); opt-in via
+   `skip_scale_big_gauss: False`. Extent = 1.1 × q0.9 camera distance (dataset_readers.py:58)
+   inside the density.
 6. Creator's appearance filter uses training cameras only (official uses all COLMAP cameras of
    the source incl. test views; affects only which nodes are kept/anchored).
 7. Evaluation background black (official) rather than the runtime's white convention.

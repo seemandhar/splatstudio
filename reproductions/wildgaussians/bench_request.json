@@ -1,0 +1,80 @@
+{
+ "method": "wildgaussians",
+ "datasets": {
+  "onthego-undist": [
+   "patio-high",
+   "patio"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "additional_runs": [
+  {
+   "method": "wildgaussians-noapp",
+   "datasets": {
+    "onthego-undist": [
+     "patio-high",
+     "patio"
+    ]
+   },
+   "steps": 30000,
+   "extra": "",
+   "required": true,
+   "why": "paper Tab.7 'Ours' uses appearance, the released nerfonthego.yml disables it: both rows are needed to resolve the conflict"
+  },
+  {
+   "method": "wildgaussians-pt",
+   "datasets": {
+    "phototourism": [
+     "brandenburg-gate"
+    ]
+   },
+   "steps": 200000,
+   "extra": "",
+   "required": true
+  },
+  {
+   "method": "gsplat",
+   "datasets": {
+    "onthego-undist": [
+     "patio-high",
+     "patio"
+    ],
+    "phototourism": [
+     "brandenburg-gate"
+    ]
+   },
+   "steps": 30000,
+   "extra": "",
+   "required": true,
+   "why": "protocol control (no shared baseline); score with python -m ss_wildgaussians.evaluate --run RUN (auto protocol: On-the-go full image; Photo Tourism right half, no test-time optimisation possible) for the same official metrics"
+  }
+ ],
+ "evaluation": "after training run `tools/ssenv python -m ss_wildgaussians.evaluate --run RUN` (writes RUN/test_wild.json; headline = metrics.official; Photo Tourism uses the NeRF-W left/right-half protocol automatically). ss-eval numbers are raw untoned renders and are NOT the paper protocol.",
+ "data_roots": {
+  "onthego-undist": "~/datasets/onthego-undist/native/<scene> (-> /bigdata/sejain/datasets/onthego-undist)",
+  "phototourism": "~/datasets/phototourism/native/<scene> (-> /bigdata/sejain/datasets/phototourism)"
+ },
+ "paper_targets": {
+  "patio-high": {
+   "psnr": 22.23,
+   "ssim": 0.725,
+   "lpips": 0.206,
+   "3dgs": 17.29
+  },
+  "patio": {
+   "psnr": 21.44,
+   "ssim": 0.8,
+   "lpips": 0.138,
+   "3dgs": 17.48
+  },
+  "brandenburg-gate": {
+   "psnr": 27.77,
+   "ssim": 0.927,
+   "lpips": 0.133,
+   "3dgs": 19.37
+  }
+ },
+ "notes": "Not registered in tools/datasets.json; pass --data directly or register. Put run dirs under /bigdata/sejain/runs with a symlink. Expect ~3x gsplat time per step (DINO ViT-S + two raster passes); PT 200k steps is long (~5 it/s early on a busy A6000), ~9 GB host RAM for images + ~5 GB DINO cache."
+}

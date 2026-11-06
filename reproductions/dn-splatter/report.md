@@ -54,3 +54,26 @@
    - The 1/4 → 1/2 → full resolution schedule runs inside the renderer, which counts training renders (equal to the runtime step). Intrinsics and image size are divided by d, and the plugin photometric loss downscales the target with Splatfacto's `resize_image`.
    - It shares the base SSIM (valid convolution, not torchmetrics) and with-replacement view sampling with the other methods.
    - The random quaternions come from the runtime-seeded torch RNG, so they are not the authors' draw.
+
+
+## Benchmark results (MuSHRoom iPhone vr_room, 30k steps)
+**Outcome: matched on absolute PSNR. The gain over Splatfacto is not reproduced.**
+
+Runs are in `runs/dn-splatter-vr_room/`. "Within" is the 42 frames in `test.txt` (the headline split, as in the paper). "Cross" is the 186 frames of the second trajectory.
+
+| method | within PSNR / SSIM / LPIPS | paper within PSNR / SSIM | cross PSNR / SSIM | #G |
+|---|---|---|---|---|
+| **dn-splatter** | **26.87** / 0.875 / 0.301 | 26.8 / 0.879 (**+0.07**) | 23.77 / 0.822 | 974k |
+| dn-splatter-splatfacto (vanilla Splatfacto control) | 27.69 / 0.892 / 0.260 | 26.6 / 0.870 | 23.69 / 0.830 | 991k |
+
+**Reading the result**
+- **Absolute numbers:** DN-Splatter reproduces the paper's NVS numbers (+0.07 dB PSNR, −0.004 SSIM).
+- **Control vs the paper's baseline:** our vanilla-Splatfacto control is 1.09 dB above the paper's Splatfacto row. It uses isotropic kNN init, random quaternions and the num_downscales=2 schedule, and runs on the same data and runtime.
+- **Gain over the control:**
+  - Ours is −0.82 dB on the within split, against the paper's +0.2. The paper itself notes that its +0.2 dB is within noise.
+  - On the cross split the two are about even (+0.08 dB).
+- **Likely causes of the gap:**
+  - Our runtime and gsplat 1.5.3 train Splatfacto better than the paper's Nerfstudio 1.1.3 / gsplat 1.0 setup.
+  - DN-Splatter's depth and normal terms trade some RGB fidelity for geometry. The paper's own ablation shows this for the TV term.
+- **Not tested:** the paper's geometry claim, which needs mesh metrics against the Faro scans.
+- **No iteration:** no grounded fix was found; the method's absolute numbers already match.

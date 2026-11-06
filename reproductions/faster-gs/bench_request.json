@@ -1,0 +1,11 @@
+{
+ "method": "faster-gs",
+ "datasets": {"tandt": ["truck", "train"], "db": ["drjohnson", "playroom"]},
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "",
+ "baseline": "baseline3dgs-tandt-30000 (avg 23.36: truck 25.21, train 21.52), baseline3dgs-db-30000 (avg 29.28: drjohnson 28.76, playroom 29.80)",
+ "paper_targets": "Table 1 averages: T&T 23.75 (paper 3DGS 23.77), DB 29.78 (paper 3DGS 29.81); criterion +-0.5 dB on the complete dataset averages; compare Delta vs our baseline to the paper's Delta vs 3DGS (~0).",
+ "post": "after each run: tools/ssenv python -m ss_faster_gs.profile --run <run> --views 50 -> <run>/fastergs_profile.json (forward / backward / update ms, Faster-GS+FusedAdam vs gsplat+torch Adam vs gsplat+fused torch Adam on the final checkpoint, same GPU). Speed is secondary; quality is the primary criterion.",
+ "notes": "Paper reports dataset averages only (no per-scene quality) -> cheapest complete averages: tandt (2) + db (2). First use JIT-builds the vendored CUDA backend (~75 s, cached in ~/.cache/torch_extensions; concurrent first builds may race - build once before launching, e.g. by ss-verify). Training wall time in the bench is contaminated by other users on the shared GPUs; use the profile json for speed ratios."
+}

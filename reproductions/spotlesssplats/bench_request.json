@@ -1,0 +1,6 @@
+{"method": "spotlesssplats",
+ "datasets": {"robustnerf": ["android"], "onthego": ["patio"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "New datasets registered in tools/datasets.json (native root ~/datasets/spotless/native -> /bigdata). No shared baseline exists: also run `gsplat` on the same two scenes (protocol baseline). Paper targets (SLS-mlp w/ UBP): android 25.15, patio 22.24 (3DGS rows 23.33 / 18.25; official gsplat README 24.96 / 22.2). Optional variants: spotlesssplats-noubp (paper 25.08 / 22.36), spotlesssplats-agg (24.94 / 22.31). Put the experiment dir under /bigdata/sejain/runs and symlink (main disk full)."}

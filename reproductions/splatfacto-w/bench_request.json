@@ -1,0 +1,63 @@
+{
+ "method": "splatfacto-w",
+ "datasets": {
+  "phototourism-sfw": [
+   "brandenburg-gate",
+   "sacre-coeur"
+  ]
+ },
+ "steps": 55000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "data_roots": {
+  "brandenburg-gate": "/home/sejain/datasets/phototourism/sfw/brandenburg-gate",
+  "sacre-coeur": "/home/sejain/datasets/phototourism/sfw/sacre-coeur"
+ },
+ "post_train_eval": "tools/ssenv python -m ss_splatfactow.evaluate --run RUN   (writes RUN/test_sfw.json; HEADLINE = metrics.nerfw = right half of the NeRF-W test views; ss-eval / validation.json are full-image numbers and NOT the paper protocol)",
+ "paper_targets": {
+  "brandenburg-gate": {
+   "psnr": 26.87,
+   "ssim": 0.932,
+   "lpips": 0.124,
+   "3dgs": 19.99
+  },
+  "sacre-coeur": {
+   "psnr": 22.53,
+   "ssim": 0.876,
+   "lpips": 0.158,
+   "3dgs": 17.57
+  }
+ },
+ "optional_ablations": [
+  {
+   "method": "splatfacto-w-a",
+   "datasets": {
+    "phototourism-sfw": [
+     "brandenburg-gate",
+     "sacre-coeur"
+    ]
+   },
+   "steps": 55000,
+   "targets": {
+    "brandenburg-gate": 27.5,
+    "sacre-coeur": 22.62
+   }
+  },
+  {
+   "method": "splatfacto-w-t",
+   "datasets": {
+    "phototourism-sfw": [
+     "brandenburg-gate",
+     "sacre-coeur"
+    ]
+   },
+   "steps": 55000,
+   "targets": {
+    "brandenburg-gate": 26.16,
+    "sacre-coeur": 22.78
+   }
+  }
+ ],
+ "baseline": "no shared gsplat baseline on Photo Tourism; optional reference: gsplat on phototourism-sfw with the same extra args (score with ss_splatfactow.evaluate is not possible for gsplat - use full-image validation.json); compare to paper's 3DGS row 19.99 / 17.57",
+ "notes": "phototourism-sfw registered in tools/datasets.json (built by tools/prepare_sfw.py on /bigdata via the ~/datasets/phototourism symlink). Iterations: code config 55000 (paper text 65000). Put runs under /bigdata/sejain/runs with a symlink. ~6.6 GB host RAM per run (full-res images). Check that the sfw-alpha loss becomes nonzero in training.jsonl. After training, report checkpoint density_state.counters.alpha_active_steps / alpha_selected_pixels (and the per-step sfw-alpha-selected-frac in training.jsonl); if 0 through 55k, state that the C3 alpha loss was inactive. The logged total 'loss' includes the gradient-free diagnostic fraction (<= 1)."
+}

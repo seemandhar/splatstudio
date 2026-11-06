@@ -8,11 +8,22 @@
     "implement": "done",
     "test": "done",
     "review": "done (approved, 6 minors)",
-    "benchmark": "running"
+    "benchmark": "done",
+    "report": "done"
   },
-  "outcome": "ready_for_benchmark",
+  "outcome": "matched",
   "method": "improving-densification",
   "bench_exps": [
     "improving-densification-mipnerf360"
-  ]
+  ],
+  "result": {
+    "psnr_delta": {
+      "garden": -0.09,
+      "room": -0.13
+    },
+    "gain_vs_ours": {
+      "garden": 1.11,
+      "room": 1.0
+    }
+  }
 }

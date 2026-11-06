@@ -1,0 +1,43 @@
+{
+ "method": "resgs",
+ "module": "ss_resgs",
+ "components": [
+  {
+   "name": "resgs-renderer",
+   "kind": "renderer"
+  },
+  {
+   "name": "resgs-density",
+   "kind": "density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "resgs-residual-split",
+  "resgs-selection",
+  "resgs-schedule",
+  "resgs-pyramid",
+  "resgs-render-scale",
+  "resgs-opacity-reduce",
+  "resgs-cycle"
+ ],
+ "contributions": [
+  "residual-split",
+  "image-pyramid",
+  "varying-threshold",
+  "absgs-opacity-reduction"
+ ],
+ "fidelity_gaps": [
+  "white background",
+  "with-replacement view sampling",
+  "optimizer step before density ops",
+  "pyramid camera pixel-centre convention",
+  "gsplat rasterizer vs AbsGS 3DGS fork",
+  "baseline is our gsplat, compare deltas"
+ ],
+ "feasible_natively": true
+}

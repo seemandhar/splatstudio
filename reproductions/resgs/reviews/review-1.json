@@ -1,0 +1,55 @@
+{
+ "approved": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "plugin/ss_resgs/density.py",
+   "where": "_accumulate (l.199-210), initialize (l.157-167)",
+   "problem": "No probe pins the abs-gradient NDC normalisation (x W/2, H/2 at the pyramid render size) or the official LR overrides. Deleting either one would still pass all 10 probes. The cycle probe only needs a split to happen, and it uses tau 0.0002.",
+   "evidence": "Code is correct: AbsGS backward.cu:549-550 accumulates fabs(dL_dG*dG_ddelx*0.5W), which equals gsplat absgrad x W/2. The LRs equal arguments/__init__.py. But no probe asserts either.",
+   "fix": "Add a probe: one gsplat render at a pyramid size, then check stats['grad2d'] == ||absgrad*(w/2,h/2)|| and that density.initialize sets the 6 LRs (means = 1.28e-4*scene_scale)."
+  },
+  {
+   "severity": "minor",
+   "file": "report.md",
+   "where": "Fidelity gaps (optimizer order)",
+   "problem": "The gap list does not spell out a difference in the official loop. It replaces every parameter on densify iterations (104 of them) and the opacity parameter on reduce iterations (45). Those replaced parameters have grad=None, so the official optimizer.step() skips them for that iteration. The runtime takes those Adam steps.",
+   "evidence": "train.py: adjust_gaussian/reduce_opacity run before gaussians.optimizer.step(). The runtime calls opt.step() before density.after_backward (runtime.py:206-211).",
+   "fix": "Add one line under gap 3. The effect is expected to be negligible."
+  },
+  {
+   "severity": "minor",
+   "file": "report.md",
+   "where": "Fidelity gaps",
+   "problem": "Runtime schedules are offset by one step and this is not listed. The means LR uses 0.01^((t-1)/T) vs the official 0.01^(t/T). SH degree goes up at step 1001 vs the official iteration 1000.",
+   "evidence": "runtime.py:197,209 vs gaussian_model.update_learning_rate / oneupSHdegree in train.py",
+   "fix": "Mention it in one line (negligible)."
+  }
+ ],
+ "equation_coverage": [
+  {"eq": "(4) child: S/lambda_s, R, SH, o copied (pre-reduction), mu ~ N(mu, Sigma), level+1", "status": "exact", "code": "density.py:residual_split"},
+  {"eq": "(5) parent o' = beta*o (sigmoid domain), opacity moments zeroed, other moments kept, children zero moments", "status": "exact", "code": "density.py:residual_split"},
+  {"eq": "(6)-(7) pyramid targets cv2.pyrDown^{2,1,0}, FoV kept", "status": "exact", "code": "pyramid.py:pyr_down/scaled_camera, losses.py, renderer.py"},
+  {"eq": "(8) tau*alpha^(l-k) for l<k, alpha=2^(1/3), k global substage 1..9", "status": "exact", "code": "density.py:thresholds/select"},
+  {"eq": "3DGS loss 0.8 L1 + 0.2 D-SSIM (same padding)", "status": "exact", "code": "losses.py:create_photometric"},
+  {"eq": "AbsGS reduce_opacity x0.8, moments zeroed, prune<0.005 first from 12000", "status": "exact", "code": "density.py:reduce_opacity/after_backward, schedule.py:opacity_reduce_step"}
+ ],
+ "probe_assessment": [
+  {"probe": "resgs-residual-split", "detects_removal": true, "why": "Checks every field, the moments and the level against independent formulas. Clone/split or ignoring beta/lambda would fail. A reviewer differential test against an official port with shared eps matched to 0.0 on all fields, moments and levels."},
+  {"probe": "resgs-selection", "detects_removal": true, "why": "Compares to Eq.8 written as tau/alpha^(k-l) on a 12x9 grid, plus a boundary test and an ablation."},
+  {"probe": "resgs-schedule", "detects_removal": true, "why": "Compares to a transcription of train.py over 30k steps. The reviewer checked the transcription line by line against train.py, including the 'is not' int comparisons and the order of change, reduce and counter updates. Anchors are 2500/2501/6000/6001, densify 800..11900 with 104 events, reduce 2500..24500 (45x), prune from 12000."},
+  {"probe": "resgs-pyramid", "detects_removal": true, "why": "Compares to cv2 on odd sizes. The loss must be ~0 on the exact target and must reject a size mismatch."},
+  {"probe": "resgs-render-scale", "detects_removal": true, "why": "Training render size and pixels must equal direct gsplat with the scaled K. The no_grad render must be full resolution."},
+  {"probe": "resgs-opacity-reduce", "detects_removal": true, "why": "Checks the x0.8 factor, the zeroed moments, and prune-before-reduce at 12000."},
+  {"probe": "resgs-cycle", "detects_removal": true, "why": "Runs the real runtime. Pyramid levels must go 2->1->0, Gaussian levels must reach >=2, and PSNR must be finite. It does not pin the gradient normalisation (see minor issue 1)."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "White background (runtime) vs black (official). Small effect on Mip-NeRF 360.",
+  "Random-with-replacement view sampling vs the official popped stack, which is refilled at each stage change.",
+  "Optimizer step before density ops. The official run also skips Adam steps on params replaced by densify or reduce.",
+  "Pyramid camera K scaled by w'/W vs 3DGS FoV camera with implicit centred principal point (sub-pixel).",
+  "gsplat rasterizer (classic, eps2d 0.3) vs the diff-gaussian-rasterization-abs fork. Same abs-grad definition, verified in backward.cu:549-550.",
+  "Runtime eval SSIM is valid-padded. The baseline is our gsplat run, so compare deltas: paper garden +0.41, counter +0.80 vs its 3DGS row 27.41 / 28.70. Our baseline3dgs-mipnerf360-30000 has garden 26.892 and counter 28.846 (verified in runs/.../test.json)."
+ ],
+ "summary": "No critical or major issues found. Every builder claim checked against the official code (a0db69d) holds. (1) Host: arguments/__init__.py defaults are densify_grad_threshold 0.00067, the abs-gradient accumulator (xyz_gradient_accum_abs) and AbsGS reduce_opacity, which is the 'Ours (AbsGS)' row in exp. Sec. 4.1. Supp. tab:mip_psnr/ssim/lpips report that row per scene: garden 27.82/0.876/0.089, counter 29.50/0.918/0.172, and paper_results.json matches. (2) Residual split: matches densify_residual_split/adjust_gaussian exactly. That covers the moments, every selected Gaussian being split with no clone or size prune, the prune < 0.005 after the split, and the stats reset. Selection uses abs grad / denom with radii>0 counts and the NDC factor W/2, H/2 at the render size. (3) Schedule: an independent run gives stats 501..11999 except 2501-2999 and 6001-6499, and 104 densify events from 800 to 11900. First densify steps for k=1..9 are 800/1400/2000/3000/4000/5000/6000/8400/10200; k reaches 7 at 5998, inside stage 2, as in the literal code. Here k is the global substage (L*K=9) and Gaussian levels start at 0, so late-stage thresholds go down to tau/8 for level-0 Gaussians. Renders run at 1/4 for 1..2500, 1/2 for 2501..6000, then full. Opacity reduction runs 2500..24500 (45x) with prune-first from 12000. (4) The torch pyrDown differs from cv2 by at most 1.79e-7 on a real garden image (840x1297 -> 210x325). (5) LRs: means 1.28e-4 x camera extent (runtime camera_extent = 3DGS radius). initial_lr is read after density.initialize, so the 0.01^(t/T) decay equals the official 1.28e-4 -> 1.28e-6 with no delay. SH 0.002 and shN /20, opacity 0.04, scaling 0.006, rotation 0.001. D-SSIM uses an 11x11 Gaussian window with zero padding 5. pytest: 8 passed. The smoke explanation holds: the default 2k run never leaves the 1/4 stage. The compressed-schedule result of 22.60 vs 23.05 says little about 30k quality. Remaining: three minor issues (probe coverage of grad normalisation and LRs; undocumented skipped-Adam-step and off-by-one schedule differences)."
+}

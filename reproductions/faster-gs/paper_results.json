@@ -1,0 +1,38 @@
+{
+  "paper": "Faster-GS: Analyzing and Improving Gaussian Splatting Optimization",
+  "arxiv": "2602.09999",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.56, "ssim": 0.816, "lpips": 0.254},
+                 "train_time": "4m31s", "vram_gib": 6.1, "gaussians_m": 2.73},
+      "baseline_3dgs": {"average": {"psnr": 27.53, "ssim": 0.815, "lpips": 0.256},
+                        "train_time": "18m44s", "vram_gib": 8.8, "gaussians_m": 2.74},
+      "groups": {"outdoor": {"method_full_psnr": 24.72, "method_fused_updates_psnr": 24.73,
+                             "source": "Table 3 (optimizer bottleneck), 5 outdoor scenes"}},
+      "source": "Table 1 (tab:main_results)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.75, "ssim": 0.853, "lpips": 0.204},
+                 "train_time": "3m04s", "vram_gib": 3.4, "gaussians_m": 1.55},
+      "baseline_3dgs": {"average": {"psnr": 23.77, "ssim": 0.852, "lpips": 0.204},
+                        "train_time": "11m26s", "vram_gib": 4.7, "gaussians_m": 1.57},
+      "source": "Table 1 (tab:main_results)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.78, "ssim": 0.906, "lpips": 0.304},
+                 "train_time": "3m46s", "vram_gib": 6.0, "gaussians_m": 2.61},
+      "baseline_3dgs": {"average": {"psnr": 29.81, "ssim": 0.907, "lpips": 0.305},
+                        "train_time": "19m43s", "vram_gib": 8.1, "gaussians_m": 2.47},
+      "source": "Table 1 (tab:main_results)"
+    }
+  },
+  "speed_ablation_rtx4090": {
+    "source": "Table 2 (tab:ablations), training time",
+    "basis": {"mipnerf360_outdoor": "17m07s", "mipnerf360_indoor": "14m29s", "tandt": "9m39s", "db": "17m15s"},
+    "full": {"mipnerf360_outdoor": "5m31s", "mipnerf360_indoor": "3m14s", "tandt": "3m04s", "db": "3m46s"},
+    "full_speedup_vs_basis": {"mipnerf360_outdoor": 3.10, "mipnerf360_indoor": 4.47, "tandt": 3.14, "db": 4.58}
+  },
+  "notes": "Averages only (no per-scene quality tables). Quality metrics are means of 5 runs on an RTX 4090. The 3DGS row is the authors' rerun of the official 3DGS code with unified hyper-parameters (opacity lr 0.025, fused-ssim). Headline row = main configuration (no MCMC / Mip-Splatting / Speedy-Splat / AbsGS / PPISP); fused backward+optimizer is the optional Table 3 row."
+}

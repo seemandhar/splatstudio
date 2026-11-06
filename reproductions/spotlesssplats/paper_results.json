@@ -1,0 +1,45 @@
+{
+  "paper": "SpotLessSplats: Ignoring Distractors in 3D Gaussian Splatting",
+  "arxiv": "2406.20055",
+  "method_label": "SLS-mlp (w/ UBP)",
+  "iterations": 30000,
+  "datasets": {
+    "robustnerf": {
+      "method": {"per_scene": {
+        "psnr": {"statue": 22.69, "android": 25.15, "yoda": 33.60, "crab1": 35.85, "crab2": 33.63},
+        "ssim": {"statue": 0.85, "android": 0.86, "yoda": 0.96, "crab1": 0.97},
+        "lpips": {"statue": 0.12, "android": 0.09, "yoda": 0.10, "crab1": 0.08}}},
+      "baseline_3dgs": {"per_scene": {
+        "psnr": {"statue": 21.68, "android": 23.33, "yoda": 27.15, "crab1": 31.80, "crab2": 29.74},
+        "ssim": {"statue": 0.83, "android": 0.80, "yoda": 0.92, "crab1": 0.96},
+        "lpips": {"statue": 0.14, "android": 0.15, "yoda": 0.13, "crab1": 0.08}}},
+      "source": "Fig. 3 table (fig/sotarobustnerf.tex); crab2 from Fig. 8 (fig/robustprogress.tex)"
+    },
+    "onthego": {
+      "method": {"per_scene": {
+        "psnr": {"fountain": 22.81, "corner": 26.43, "spot": 25.76, "mountain": 22.53, "patio": 22.24, "patio-high": 22.84},
+        "ssim": {"fountain": 0.80, "corner": 0.90, "spot": 0.90, "mountain": 0.77, "patio": 0.86, "patio-high": 0.83},
+        "lpips": {"fountain": 0.15, "corner": 0.10, "spot": 0.12, "mountain": 0.18, "patio": 0.10, "patio-high": 0.16}}},
+      "baseline_3dgs": {"per_scene": {
+        "psnr": {"fountain": 21.70, "corner": 24.05, "spot": 20.72, "mountain": 20.18, "patio": 18.25, "patio-high": 18.14},
+        "ssim": {"fountain": 0.79, "corner": 0.86, "spot": 0.76, "mountain": 0.70, "patio": 0.71, "patio-high": 0.68},
+        "lpips": {"fountain": 0.16, "corner": 0.13, "spot": 0.31, "mountain": 0.23, "patio": 0.23, "patio-high": 0.30}}},
+      "source": "Fig. 4 and Fig. 5 tables (fig/sotanerfonthego1.tex, sotanerfonthego2.tex)"
+    }
+  },
+  "variants_fig8_psnr_mean_pm_std_5runs": {
+    "3DGS(GLO, no opacity reset)": {"android": [23.33, 0.13], "statue": [21.68, 0.16], "crab2": [29.74, 0.37], "yoda": [27.15, 0.61], "mountain": [20.90, 0.18], "fountain": [21.85, 0.27], "corner": [23.39, 0.43], "patio": [18.33, 0.27], "spot": [21.50, 0.85], "patio-high": [18.06, 0.71], "average": 22.60},
+    "RobustFilter": {"android": [24.50, 0.05], "statue": [22.70, 0.06], "crab2": [31.34, 0.13], "yoda": [33.23, 0.13], "mountain": [22.29, 0.07], "fountain": [22.59, 0.07], "corner": [25.20, 0.10], "patio": [18.16, 0.19], "spot": [25.54, 0.08], "patio-high": [23.01, 0.18], "average": 24.85},
+    "SLS-agg": {"android": [24.94, 0.08], "statue": [23.16, 0.08], "crab2": [33.50, 0.14], "yoda": [35.01, 0.21], "mountain": [22.65, 0.14], "fountain": [23.03, 0.17], "corner": [26.33, 0.10], "patio": [22.31, 0.13], "spot": [26.34, 0.37], "patio-high": [23.54, 0.15], "average": 26.08},
+    "SLS-mlp w/o UBP": {"android": [25.08, 0.04], "statue": [22.75, 0.14], "crab2": [34.43, 0.03], "yoda": [34.36, 0.24], "mountain": [22.93, 0.09], "fountain": [23.19, 0.13], "corner": [26.74, 0.13], "patio": [22.36, 0.07], "spot": [25.95, 0.47], "patio-high": [23.27, 0.13], "average": 26.11},
+    "SLS-mlp w/ UBP": {"android": [25.15, 0.05], "statue": [22.69, 0.16], "crab2": [33.63, 0.27], "yoda": [33.60, 0.30], "mountain": [22.53, 0.11], "fountain": [22.81, 0.10], "corner": [26.43, 0.08], "patio": [22.24, 0.19], "spot": [25.76, 0.15], "patio-high": [22.84, 0.32], "average": 25.77}
+  },
+  "official_gsplat_readme_psnr": {
+    "note": "Official repo README: reproduced on gsplat WITHOUT appearance modelling (GLO), single run",
+    "3DGS": {"android": 23.23, "statue": 21.45, "crab2": 30.03, "yoda": 29.7, "mountain": 20.02, "fountain": 21.49, "corner": 22.34, "patio": 16.77, "spot": 18.93, "patio-high": 17.09},
+    "SLS-mlp": {"android": 25.05, "statue": 22.85, "crab2": 35.33, "yoda": 35.40, "mountain": 21.67, "fountain": 22.51, "corner": 25.84, "patio": 22.68, "spot": 25.06, "patio-high": 23.12},
+    "SLS-mlp+UBP": {"android": 24.96, "statue": 22.65, "crab2": 35.30, "yoda": 35.26, "mountain": 21.31, "fountain": 22.30, "corner": 26.36, "patio": 22.2, "spot": 25.12, "patio-high": 23.00},
+    "SLS-agg": {"android": 25.01, "statue": 22.76, "crab2": 34.96, "yoda": 35.06, "mountain": 21.66, "fountain": 22.66, "corner": 25.77, "patio": 22.58, "spot": 24.37, "patio-high": 22.72}
+  },
+  "notes": "Per-scene only (no dataset average except Fig. 8's 10-scene mean). Baseline 3DGS rows are the authors' own runs with GLO and without opacity reset. Paper numbers are means over 5 runs. LPIPS VGG per paper. No Mip-NeRF 360/T&T/DB quality numbers (Fig. pruning is a plot only)."
+}

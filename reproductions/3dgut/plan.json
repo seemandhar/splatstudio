@@ -1,0 +1,10 @@
+{"method": "3dgut", "module": "ss_3dgut",
+ "components": [
+  {"name": "3dgut-renderer", "kind": "renderer", "factory": "ss_3dgut.renderer:create_renderer", "requires": ["state.gaussian3d", "camera.pinhole"], "provides": ["render.rgb", "render.depth.expected_z", "gradient.world.means", "camera.distorted.ut"], "config": {"ut_alpha": 1.0, "ut_beta": 2.0, "ut_kappa": 0.0, "ut_in_image_margin_factor": 0.1, "ut_require_all_sigma_points_valid": false, "eps2d": 0.3}},
+  {"name": "3dgut-density", "kind": "density", "factory": "ss_3dgut.density:create_density", "requires": ["gradient.world.means"], "config": {"grad_threshold": 0.0002, "densify_every": 300, "densify_start": 500, "densify_stop": 15000, "prune_every": 100, "prune_opa": 0.005, "reset_every": 3000, "reset_value": 0.01, "percent_dense": 0.01, "official_init": true, "init_scale_factor": 0.01}},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric", "requires": ["render.rgb"]}],
+ "fields": [],
+ "probes": ["state-transitions", "photometric-gradient", "3dgut-ut-moments", "3dgut-ut-vs-ewa-mc", "3dgut-eval3d-response", "3dgut-eval3d-gradient", "3dgut-fisheye-render", "3dgut-densify-statistic", "3dgut-official-init"],
+ "contributions": ["unscented-transform-projection", "3d-particle-evaluation", "distorted-camera-support", "3d-gradient-densification"],
+ "fidelity_gaps": ["max alpha 0.999 vs 0.99, no min-response 0.0113 cut", "gsplat tile bounding vs StopThePop culling", "white vs black background", "distorted/rolling-shutter training blocked by core loader + licensed data", "sorted k-buffer variant not implemented", "view sampling with replacement, 1-based steps", "scene extent from train cameras", "metric implementations"],
+ "feasible_natively": true}

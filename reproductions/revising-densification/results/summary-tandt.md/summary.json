@@ -1,0 +1,38 @@
+{
+  "exp": "revdens-tandt",
+  "datasets": {
+    "tandt": {
+      "scenes": [
+        "train",
+        "truck"
+      ],
+      "all_scenes": true,
+      "methods": {
+        "revising-densification": {
+          "per_scene": {
+            "truck": {
+              "lpips": 0.14190936158411205,
+              "psnr": 25.358480155467987,
+              "ssim": 0.8801146503537893,
+              "gaussians": 2494648,
+              "minutes": 36.72290220436019
+            },
+            "train": {
+              "lpips": 0.24837855406497655,
+              "psnr": 21.434891349390934,
+              "ssim": 0.8070802265091946,
+              "gaussians": 1257187,
+              "minutes": 44.62982579646632
+            }
+          },
+          "mean": {
+            "psnr": 23.396685752429462,
+            "ssim": 0.8435974384314919,
+            "lpips": 0.1951439578245443
+          }
+        }
+      },
+      "gaps": {}
+    }
+  }
+}

@@ -1,0 +1,411 @@
+{
+ "paper": "Spec-Gaussian: Anisotropic View-Dependent Appearance for 3D Gaussian Splatting",
+ "arxiv": "2402.15870",
+ "method_label": "Ours (performance version, vanilla-3DGS based, tau_g=0.0005)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.18,
+     "ssim": 0.835,
+     "lpips": 0.176
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.9,
+      "flowers": 21.86,
+      "garden": 28.07,
+      "stump": 27.25,
+      "treehill": 22.48,
+      "room": 32.11,
+      "counter": 30.12,
+      "kitchen": 32.25,
+      "bonsai": 33.54
+     },
+     "ssim": {
+      "bicycle": 0.797,
+      "flowers": 0.648,
+      "garden": 0.881,
+      "stump": 0.797,
+      "treehill": 0.647,
+      "room": 0.935,
+      "counter": 0.923,
+      "kitchen": 0.937,
+      "bonsai": 0.953
+     },
+     "lpips": {
+      "bicycle": 0.166,
+      "flowers": 0.263,
+      "garden": 0.092,
+      "stump": 0.184,
+      "treehill": 0.269,
+      "room": 0.177,
+      "counter": 0.166,
+      "kitchen": 0.108,
+      "bonsai": 0.162
+     }
+    },
+    "outdoor_average": {
+     "psnr": 25.11,
+     "ssim": 0.754,
+     "lpips": 0.195
+    },
+    "indoor_average": {
+     "psnr": 32.01,
+     "ssim": 0.937,
+     "lpips": 0.153
+    }
+   },
+   "method_light": {
+    "average": {
+     "psnr": 28.07,
+     "ssim": 0.834,
+     "lpips": 0.183
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.87,
+      "flowers": 21.81,
+      "garden": 28.06,
+      "stump": 27.23,
+      "treehill": 22.48,
+      "room": 32.11,
+      "counter": 29.74,
+      "kitchen": 32.09,
+      "bonsai": 33.26
+     },
+     "ssim": {
+      "bicycle": 0.795,
+      "flowers": 0.645,
+      "garden": 0.879,
+      "stump": 0.795,
+      "treehill": 0.647,
+      "room": 0.934,
+      "counter": 0.92,
+      "kitchen": 0.936,
+      "bonsai": 0.952
+     },
+     "lpips": {
+      "bicycle": 0.173,
+      "flowers": 0.279,
+      "garden": 0.097,
+      "stump": 0.19,
+      "treehill": 0.275,
+      "room": 0.182,
+      "counter": 0.173,
+      "kitchen": 0.111,
+      "bonsai": 0.168
+     }
+    }
+   },
+   "method_anchor": {
+    "average": {
+     "psnr": 28.14,
+     "ssim": 0.824,
+     "lpips": 0.196
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.44,
+      "flowers": 21.36,
+      "garden": 27.97,
+      "stump": 26.91,
+      "treehill": 23.23,
+      "room": 32.27,
+      "counter": 30.12,
+      "kitchen": 32.04,
+      "bonsai": 33.91
+     },
+     "ssim": {
+      "bicycle": 0.775,
+      "flowers": 0.611,
+      "garden": 0.869,
+      "stump": 0.775,
+      "treehill": 0.645,
+      "room": 0.932,
+      "counter": 0.92,
+      "kitchen": 0.934,
+      "bonsai": 0.953
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.292,
+      "garden": 0.11,
+      "stump": 0.215,
+      "treehill": 0.293,
+      "room": 0.185,
+      "counter": 0.179,
+      "kitchen": 0.115,
+      "bonsai": 0.166
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.79,
+     "ssim": 0.826,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.63,
+      "flowers": 21.94,
+      "garden": 27.73,
+      "stump": 27.02,
+      "treehill": 22.79,
+      "room": 31.8,
+      "counter": 29.12,
+      "kitchen": 31.61,
+      "bonsai": 32.48
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "flowers": 0.623,
+      "garden": 0.874,
+      "stump": 0.784,
+      "treehill": 0.651,
+      "room": 0.928,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.204,
+      "flowers": 0.328,
+      "garden": 0.103,
+      "stump": 0.207,
+      "treehill": 0.318,
+      "room": 0.191,
+      "counter": 0.178,
+      "kitchen": 0.113,
+      "bonsai": 0.173
+     }
+    },
+    "outdoor_average": {
+     "psnr": 25.02,
+     "ssim": 0.742,
+     "lpips": 0.232
+    },
+    "indoor_average": {
+     "psnr": 31.25,
+     "ssim": 0.931,
+     "lpips": 0.164
+    }
+   },
+   "ablation_supp": {
+    "3dgs": 27.47,
+    "wo_asg_field": 27.61,
+    "wo_c2f": 28.01,
+    "w_anchor": 28.14,
+    "full_light": 28.07,
+    "full": 28.18,
+    "source": "supp table/ablation-full.tex (PSNR, average)"
+   },
+   "source": "main Table 1 (averages); supp. table/psnr-mip360.tex, ssim-mip360.tex, lpips-mip360.tex (per scene)",
+   "resolution": "official run_wo_anchor.sh: -r 4 outdoor, -r 2 indoor (3DGS PIL resize of full-res images) -> our mipnerf360-pilr"
+  },
+  "mipnerf360-pilr": {
+   "method": {
+    "average": {
+     "psnr": 28.18,
+     "ssim": 0.835,
+     "lpips": 0.176
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.9,
+      "flowers": 21.86,
+      "garden": 28.07,
+      "stump": 27.25,
+      "treehill": 22.48,
+      "room": 32.11,
+      "counter": 30.12,
+      "kitchen": 32.25,
+      "bonsai": 33.54
+     },
+     "ssim": {
+      "bicycle": 0.797,
+      "flowers": 0.648,
+      "garden": 0.881,
+      "stump": 0.797,
+      "treehill": 0.647,
+      "room": 0.935,
+      "counter": 0.923,
+      "kitchen": 0.937,
+      "bonsai": 0.953
+     },
+     "lpips": {
+      "bicycle": 0.166,
+      "flowers": 0.263,
+      "garden": 0.092,
+      "stump": 0.184,
+      "treehill": 0.269,
+      "room": 0.177,
+      "counter": 0.166,
+      "kitchen": 0.108,
+      "bonsai": 0.162
+     }
+    },
+    "outdoor_average": {
+     "psnr": 25.11,
+     "ssim": 0.754,
+     "lpips": 0.195
+    },
+    "indoor_average": {
+     "psnr": 32.01,
+     "ssim": 0.937,
+     "lpips": 0.153
+    }
+   },
+   "method_light": {
+    "average": {
+     "psnr": 28.07,
+     "ssim": 0.834,
+     "lpips": 0.183
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.87,
+      "flowers": 21.81,
+      "garden": 28.06,
+      "stump": 27.23,
+      "treehill": 22.48,
+      "room": 32.11,
+      "counter": 29.74,
+      "kitchen": 32.09,
+      "bonsai": 33.26
+     },
+     "ssim": {
+      "bicycle": 0.795,
+      "flowers": 0.645,
+      "garden": 0.879,
+      "stump": 0.795,
+      "treehill": 0.647,
+      "room": 0.934,
+      "counter": 0.92,
+      "kitchen": 0.936,
+      "bonsai": 0.952
+     },
+     "lpips": {
+      "bicycle": 0.173,
+      "flowers": 0.279,
+      "garden": 0.097,
+      "stump": 0.19,
+      "treehill": 0.275,
+      "room": 0.182,
+      "counter": 0.173,
+      "kitchen": 0.111,
+      "bonsai": 0.168
+     }
+    }
+   },
+   "method_anchor": {
+    "average": {
+     "psnr": 28.14,
+     "ssim": 0.824,
+     "lpips": 0.196
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.44,
+      "flowers": 21.36,
+      "garden": 27.97,
+      "stump": 26.91,
+      "treehill": 23.23,
+      "room": 32.27,
+      "counter": 30.12,
+      "kitchen": 32.04,
+      "bonsai": 33.91
+     },
+     "ssim": {
+      "bicycle": 0.775,
+      "flowers": 0.611,
+      "garden": 0.869,
+      "stump": 0.775,
+      "treehill": 0.645,
+      "room": 0.932,
+      "counter": 0.92,
+      "kitchen": 0.934,
+      "bonsai": 0.953
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.292,
+      "garden": 0.11,
+      "stump": 0.215,
+      "treehill": 0.293,
+      "room": 0.185,
+      "counter": 0.179,
+      "kitchen": 0.115,
+      "bonsai": 0.166
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.79,
+     "ssim": 0.826,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.63,
+      "flowers": 21.94,
+      "garden": 27.73,
+      "stump": 27.02,
+      "treehill": 22.79,
+      "room": 31.8,
+      "counter": 29.12,
+      "kitchen": 31.61,
+      "bonsai": 32.48
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "flowers": 0.623,
+      "garden": 0.874,
+      "stump": 0.784,
+      "treehill": 0.651,
+      "room": 0.928,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.204,
+      "flowers": 0.328,
+      "garden": 0.103,
+      "stump": 0.207,
+      "treehill": 0.318,
+      "room": 0.191,
+      "counter": 0.178,
+      "kitchen": 0.113,
+      "bonsai": 0.173
+     }
+    },
+    "outdoor_average": {
+     "psnr": 25.02,
+     "ssim": 0.742,
+     "lpips": 0.232
+    },
+    "indoor_average": {
+     "psnr": 31.25,
+     "ssim": 0.931,
+     "lpips": 0.164
+    }
+   },
+   "ablation_supp": {
+    "3dgs": 27.47,
+    "wo_asg_field": 27.61,
+    "wo_c2f": 28.01,
+    "w_anchor": 28.14,
+    "full_light": 28.07,
+    "full": 28.18,
+    "source": "supp table/ablation-full.tex (PSNR, average)"
+   },
+   "source": "main Table 1 (averages); supp. table/psnr-mip360.tex, ssim-mip360.tex, lpips-mip360.tex (per scene)",
+   "resolution": "official run_wo_anchor.sh: -r 4 outdoor, -r 2 indoor (3DGS PIL resize of full-res images) -> our mipnerf360-pilr"
+  }
+ },
+ "notes": "The 3D-GS row (avg 27.79; garden 27.73, counter 29.12) is NOT the 3DGS paper's own numbers (27.21; garden 27.41, counter 28.70): it is a retrained / borrowed stronger 3DGS (provenance not stated). Spec-Gaussian's gain over its own 3D-GS row is +0.39 dB avg (garden +0.34, counter +1.00). LPIPS VGG. Black background, final iteration 30000 rendered by render.py (best-PSNR printout in train.py is logging only). Per-scene numbers of 'Ours' produced by train.py (run_wo_anchor.sh, README says these scripts generated the tables)."
+}

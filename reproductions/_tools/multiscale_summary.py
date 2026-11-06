@@ -9,6 +9,7 @@ mean over the 4 scales (supp. 360_multi_per.tex "Avg"; e.g. garden Ours 27.13/29
 
     python3 tools/multiscale_summary.py runs/<exp>/<method>/mipnerf360-ms-garden
     python3 tools/multiscale_summary.py --exp <exp> --method analytic-splatting [--json]
+    python3 tools/multiscale_summary.py --exp <exp> --dataset mipnerf360-msgs --scales 1,4,16,64
 """
 
 import argparse
@@ -36,7 +37,8 @@ def run_summary(run, split="test"):
         m = SCALE_RE.search(row["frame"])
         if not m:
             raise SystemExit(f"{run}: cannot infer scale from frame {row['frame']!r}")
-        by_scale[int(m.group(1))].append(row)
+        if int(m.group(1)) in by_scale:
+            by_scale[int(m.group(1))].append(row)
     out = {"run": str(run), "split": split, "views": {s: len(v) for s, v in by_scale.items()}}
     for k in METRICS:
         per = {s: mean([r.get(k) for r in v]) for s, v in by_scale.items()}
@@ -68,7 +70,11 @@ def main():
     p.add_argument("--dataset", default="mipnerf360-ms")
     p.add_argument("--split", default="test")
     p.add_argument("--json", action="store_true")
+    p.add_argument("--scales", default="1,2,4,8",
+                   help="comma list of scales to report/average (MS-GS mipnerf360-msgs: 1,4,16,64)")
     a = p.parse_args()
+    global SCALES
+    SCALES = tuple(int(s) for s in a.scales.split(","))
     runs = [Path(r) for r in a.runs]
     if a.exp:
         base = RUNS / a.exp

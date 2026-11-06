@@ -1,0 +1,10 @@
+{"method": "spec-gaussian",
+ "methods": ["spec-gaussian", "spec-gaussian-indoor"],
+ "datasets": {"mipnerf360-pilr": ["garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "method_per_scene": {"mipnerf360-pilr/garden": "spec-gaussian",
+                      "mipnerf360-pilr/counter": "spec-gaussian-indoor"},
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000 (garden 27.35, counter 29.03 PSNR test)",
+ "notes": "Official run_wo_anchor.sh: outdoor -r 4, indoor -r 2 with 3DGS PIL resize of full-res images -> mipnerf360-pilr. Per-scene variant = official --is_indoor flag (indoor decoder has one more hidden layer). Compare to paper_results.json mipnerf360.method per scene (garden 28.07, counter 30.12) and delta vs the paper's 3D-GS row (+0.34 garden, +1.00 counter; that row is stronger than the 3DGS paper). Optional ablation (paper-text resolution coarse-to-fine, not in official train.py): spec-gaussian-c2f on garden, spec-gaussian-indoor-c2f on counter. Expect ~2x baseline Gaussian count (abs-grad threshold 0.0005) and slower training."}

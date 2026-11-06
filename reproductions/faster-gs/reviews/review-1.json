@@ -1,0 +1,103 @@
+{
+  "approved": true,
+  "issues": [
+    {
+      "severity": "minor",
+      "file": "plugin/ss_faster_gs/raster.py",
+      "where": "NEAR, FAR = 0.2, 10000.0 (line 15)",
+      "problem": "Near/far planes come from the garden yaml (MipNeRF360 loader, APPLY_PCA_RESCALE false). The NeRFICG TanksAndTemples_3DGS loader defaults to APPLY_PCA_RESCALE=True with NEAR_PLANE 0.01 in rescaled units, so the paper's T&T/DB near plane is not pinned by the released code.",
+      "evidence": "source/nerficg/src/Datasets/TanksAndTemples_3DGS.py:21-28 vs fastergs_garden.yaml NEAR_PLANE 0.2. 3DGS also culls at z<=0.2 world units, so 0.2 is a defensible 3DGS-equivalent choice.",
+      "fix": "Note it as an ambiguity in report.md, with 0.2 world units = 3DGS in_frustum. No code change needed."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_faster_gs/profile.py",
+      "where": "_run_path / profile_params",
+      "problem": "The profile does not measure what the paper's timing tables report. Tab. 1/2 give end-to-end 30k training time and peak VRAM against official 3DGS. The profile gives per-phase ms (forward/backward/update) on the final checkpoint against gsplat with torch Adam. It leaves out ADC, Morton, sorting growth over training and fused-ssim. The noise is large: the identical loss takes 10.7 ms in one path and 18.3 ms in the other in profile-smoke-1.json.",
+      "evidence": "evidence/profile-smoke-1.json loss_ms 10.73 vs 18.33 for the same loss; paper Tab. 2 reports training time only.",
+      "fix": "Label the profile as a per-phase kernel comparison against gsplat, not a reproduction of Tab. 1/2's 3.1-4.6x. Repeat it (or interleave paths) and report the spread. If a speed number is wanted, also report bench wall-time ratios from same-GPU runs."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_faster_gs/probes.py",
+      "where": "fused_adam (tolerance 1e-3), render_reference (2e-3 / 2e-2)",
+      "problem": "Probe thresholds are 2-3 orders of magnitude looser than the measured errors. Measured: update 1.1e-5, v 2.9e-5, image 1.3e-6, grads <=1.4e-6. The probes still catch removal (SGD and dense-reference checks), but a subtle regression of up to ~1e-3 would pass.",
+      "evidence": "ss-verify rerun: fastergs-adam update_rel_err 1.10e-5, exp_avg_sq 2.92e-5; render grads ~1e-6.",
+      "fix": "Tighten to ~1e-4 (Adam) and ~1e-4 / 1e-4 (render), or note the margin."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_faster_gs/probes.py",
+      "where": "adc / morton",
+      "problem": "No probe checks that the opacity reset zeroes the opacity moments while keeping step, or that state['step'] survives densify/prune/permute. Checked by hand here (see summary), but nothing guards it.",
+      "evidence": "Independent check: FusedAdam vs torch Adam through append, permute, reset_opa and remove. 16 steps on both sides, param rel err <=4e-7, m 3e-7, v 2e-5.",
+      "fix": "Add a reset step to fastergs-adc, asserting opacity moments are zero, step is unchanged and opacities are clamped to logit(0.01)."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "Smoke test table",
+      "problem": "The smoke comparison (23.42 vs 22.99, 65 s vs 150 s) is confounded and is not fidelity evidence. Black vs white background, opacity lr 0.025 vs 0.05, 2k steps, a shared GPU, and only one scene (garden), which is not in the benchmark set.",
+      "evidence": "report.md smoke table; baseline gsplat config differs (CLAUDE.md, plan gap 5).",
+      "fix": "State that the smoke run is a sanity check only."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "Benchmark targets",
+      "problem": "Our gsplat baselines are 0.41 (T&T 23.36 vs 23.77) and 0.53 dB (DB 29.28 vs 29.81) below the paper's 3DGS row. They also differ in background and opacity lr. So 'delta vs our baseline ~ 0' and 'absolute = 23.75/29.78' are different criteria, and an exact port could plausibly land between them.",
+      "evidence": "runs/baseline3dgs-tandt-30000 truck 25.21 / train 21.52; runs/baseline3dgs-db-30000 drjohnson 28.76 / playroom 29.80; paper_results.json.",
+      "fix": "Say in advance which criterion is primary (paper absolute ±0.5 dB), and interpret any gain over our baseline in light of the bg/opacity-lr differences."
+    },
+    {
+      "severity": "minor",
+      "file": "plugin/ss_faster_gs/density.py",
+      "where": "after_backward cleanup (step == total_steps)",
+      "problem": "Official training_cleanup also re-applies the Morton sort after the final prune. This is omitted. It has no quality effect and only matters for inference speed/memory layout.",
+      "evidence": "source/code/Model.py training_cleanup: prune then apply_morton_ordering.",
+      "fix": "Optional: call self.morton after the final prune."
+    },
+    {
+      "severity": "minor",
+      "file": "report.md",
+      "where": "Checks",
+      "problem": "The report omits that LPIPS is VGG on [-1,1]. That matches NeRFICG (torchmetrics normalize=True, vgg) and the paper, but not the 3DGS paper (which explains 0.204 vs 3DGS-paper 0.183 on T&T). Gap 8 says 'paper: unspecified'; it is in fact specified by the NeRFICG code.",
+      "evidence": "source/nerficg/src/Methods/Base/Trainer.py:382.",
+      "fix": "Update gap 8: LPIPS-VGG on [-1,1] matches the official evaluation."
+    }
+  ],
+  "equation_coverage": [
+    {"eq": "eq:mean_projection", "status": "exact", "code": "csrc (vendored, byte-identical) / checked by reference.py:project"},
+    {"eq": "eq:cov_projection (+0.3 dilation, 1.3x frustum clamp in J)", "status": "exact", "code": "csrc vendored; probe fastergs-render-reference"},
+    {"eq": "eq:alpha_computation (alpha>=1/255 skip)", "status": "exact", "code": "csrc vendored; reference.render"},
+    {"eq": "eq:alpha_blending (front-to-back, T<1e-4 stop, black bg, colour clamp_min 0)", "status": "exact", "code": "csrc vendored; renderer.py background [0,0,0]"},
+    {"eq": "opacity-aware AABB / exact tile culling", "status": "exact", "code": "csrc vendored; probe fastergs-tile-culling (kernel count == visible lower bound)"},
+    {"eq": "densification statistic (count, NDC ||dL/dmu2D||)", "status": "exact", "code": "csrc backward; density.adc_masks; probe fastergs-densification-info 7.5e-7"},
+    {"eq": "Adam (adam.cu, torch numerics, per-param step, eps 1e-15)", "status": "exact", "code": "optim.py:FusedAdam -> vendored adam_step"},
+    {"eq": "Morton code (21-bit, bbox min / largest side, saturate, interleave)", "status": "exact", "code": "morton.py vs nerficg MortonEncoding/morton_encoding.cu"},
+    {"eq": "3DGS ADC (dup/split 1/1.6, prune opacity<0.005, degenerate quats, big>0.1 extent after 3000)", "status": "exact", "code": "density.py:adaptive_density_control vs Model.py:adaptive_density_control"},
+    {"eq": "loss 0.8 L1 + 0.2 D-SSIM", "status": "deviates", "code": "runtime photometric (valid-conv SSIM, not fused-ssim same padding) — shared fidelity gap"},
+    {"eq": "means LR log-linear 1.6e-4->1.6e-6 x extent", "status": "deviates", "code": "runtime.py:209 (one-step offset; documented gap 3)"}
+  ],
+  "probe_assessment": [
+    {"probe": "fastergs-render-reference", "detects_removal": true, "why": "Independent float64 dense compositor. Image 1.3e-6 and all six grads ~1e-6 on an off-centre camera with unnormalised quats. Any change to the rasterizer, activations or SH path would show up. Threshold (2e-3/2e-2) is loose."},
+    {"probe": "fastergs-tile-culling", "detects_removal": true, "why": "Kernel instance count equals the lower bound of tiles holding visible fragments (27 vs AABB 100, 3-sigma 100). Removing exact culling or opacity-aware bounds raises n, and over-culling drops it below L."},
+    {"probe": "fastergs-adam", "detects_removal": true, "why": "Compares to torch Adam with a changing lr and a 6-decade grad range, plus an SGD check. Tolerance 1e-3 vs measured 1e-5."},
+    {"probe": "fastergs-morton", "detects_removal": true, "why": "Checks sort order with an independent Python bit-interleave, checks moment permutation with tags, and checks the schedule set."},
+    {"probe": "fastergs-adc", "detects_removal": true, "why": "Population, duplicate/split contents, survivor moments and zero new moments are checked against an independent rule. Info re-zero/disable and schedule counts are also checked. Opacity reset is not exercised."},
+    {"probe": "fastergs-densification-info", "detects_removal": true, "why": "Compared to the reference's mean2d grads with the 3DGS NDC scaling, and to visibility. Accumulation across two iterations is checked."},
+    {"probe": "fastergs-profile", "detects_removal": false, "why": "Timing smoke only (by design, no claim)."}
+  ],
+  "fidelity_gaps_confirmed": [
+    "Runtime SSIM (valid conv, separable) vs official fused-ssim (same padding) — shared with baseline",
+    "View sampling with replacement vs per-epoch random permutation (DatasetSampler/RandomSequentialSampler)",
+    "Means LR one step behind (runtime lr(s-1) vs official update_learning_rate(iteration+1))",
+    "Single seed vs 5-run mean",
+    "gsplat baseline: white bg + opacity lr 0.05 + gsplat kernels; paper 3DGS row: black bg + 0.025 + fused-ssim",
+    "main-branch kernels (16x12 tiles + borrowed warp-level sub-tile culling) instead of the paper testbed — lossless, verified by the dense reference",
+    "Speed: shared A6000 / CUDA 12.1 vs RTX 4090 / CUDA 12.8; profile is per-phase vs gsplat, not end-to-end vs 3DGS",
+    "Near plane 0.2 world units (garden yaml / 3DGS) while the NeRFICG T&T loader would PCA-rescale with near 0.01",
+    "No final Morton sort in cleanup (layout only)"
+  ],
+  "summary": "Approved: 0 critical, 0 major, 8 minor. The pinned configuration is the paper's headline 'Ours' row, which equals Tab. 2/3 'Full'. Tab. 3 lists '+ fused updates' (24.73) and '+ skip invisible' (24.59) as optional additions on top of Full (24.72), and the main branch has no fused path. Excluding both is correct. Every training hyper-parameter matches Trainer.py/Model.py defaults: ADC 600..14900 every 100, inclusive callbacks; prune-large only when iteration > 3000; resets 3000..12000 with moments zeroed and step kept; no extra reset at 500 with a black background; Morton at 0/5k/10k/15k with priority order ADC > Morton > reset; opacity lr 0.025; lr for the other fields; extent 1.1x max camera distance; SfM init with opacity 0.1 and RMS 3-NN scales; SH +1 per 1000. The official code ships only a garden yaml, so T&T/DB use the loader defaults. Both datasets are the 3DGS-provided pre-downscaled images (979x546, 980x545, 1332x876, 1264x832), which matches our native data and the paper's 'pre-downscaled when provided'. Step mapping (official 0-based callback i == runtime after_backward(s=i)) is correct, including info accumulation up to step 14900. Vendored rasterization/adam/utils are byte-identical to FasterGSCudaBackend @ 090e8ad. bindings.cpp only drops filter3d/MCMC, and the official setup.py flags are used. Reruns on GPU 3: 7 unit tests pass; ss-verify passes all 8 probes (image 1.28e-6, grads <=1.1e-6, info 7.5e-7, Adam 1.1e-5). An independent check ran FusedAdam vs torch Adam through append, permute, reset_opa and remove for 16 steps on both: step counts equal, params <=4e-7, moments <=2e-5. Baselines are confirmed at 23.36/29.28, and the paper targets in paper_results.json match Tab. 1. Main caveats are interpretive. The profile is a per-phase kernel comparison against gsplat, not the paper's end-to-end training-time table, and it is noisy (the same loss differs 1.7x between paths). The smoke result is confounded by bg/opacity-lr differences. Our baseline sits 0.4-0.5 dB below the paper's 3DGS row, so the absolute and delta criteria differ."
+}

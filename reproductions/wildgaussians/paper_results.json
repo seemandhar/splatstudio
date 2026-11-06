@@ -1,0 +1,58 @@
+{
+  "paper": "WildGaussians: 3D Gaussian Splatting in the Wild",
+  "arxiv": "2407.08447",
+  "method_label": "Ours (WildGaussians)",
+  "iterations": {"onthego": 30000, "phototourism": 200000},
+  "datasets": {
+    "onthego": {
+      "method": {
+        "average": {"psnr": 22.15, "ssim": 0.756, "lpips": 0.167},
+        "per_scene": {
+          "psnr": {"mountain": 20.43, "fountain": 20.81, "corner": 24.16, "patio": 21.44, "spot": 23.82, "patio-high": 22.23},
+          "ssim": {"mountain": 0.653, "fountain": 0.662, "corner": 0.822, "patio": 0.800, "spot": 0.816, "patio-high": 0.725},
+          "lpips": {"mountain": 0.255, "fountain": 0.215, "corner": 0.045, "patio": 0.138, "spot": 0.138, "patio-high": 0.206}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 19.30, "ssim": 0.669, "lpips": 0.253},
+        "per_scene": {
+          "psnr": {"mountain": 19.40, "fountain": 19.96, "corner": 20.90, "patio": 17.48, "spot": 20.77, "patio-high": 17.29},
+          "ssim": {"mountain": 0.638, "fountain": 0.659, "corner": 0.713, "patio": 0.704, "spot": 0.693, "patio-high": 0.604},
+          "lpips": {"mountain": 0.213, "fountain": 0.185, "corner": 0.241, "patio": 0.199, "spot": 0.316, "patio-high": 0.363}
+        }
+      },
+      "ablation_groups": {
+        "low (mountain+fountain)": {"ours": {"psnr": 20.62, "ssim": 0.658, "lpips": 0.235}, "wo_uncert": {"psnr": 20.53, "ssim": 0.646, "lpips": 0.229}, "wo_app": {"psnr": 20.80, "ssim": 0.669, "lpips": 0.228}},
+        "high (spot+patio-high)": {"ours": {"psnr": 23.03, "ssim": 0.771, "lpips": 0.172}, "wo_uncert": {"psnr": 20.27, "ssim": 0.652, "lpips": 0.337}, "wo_app": {"psnr": 22.80, "ssim": 0.755, "lpips": 0.183}}
+      },
+      "source": "Table 1 (groups) and supp. Table 7 (per scene); ablation Table 4",
+      "protocol": "undistorted NeRF On-the-go (NerfBaselines), no test-time optimisation, LPIPS-Alex, uint8 metrics"
+    },
+    "phototourism": {
+      "method": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 27.77, "sacre-coeur": 22.56, "trevi-fountain": 23.63},
+          "ssim": {"brandenburg-gate": 0.927, "sacre-coeur": 0.859, "trevi-fountain": 0.766},
+          "lpips": {"brandenburg-gate": 0.133, "sacre-coeur": 0.177, "trevi-fountain": 0.228}
+        }
+      },
+      "baseline_3dgs": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 19.37, "sacre-coeur": 17.44, "trevi-fountain": 17.58},
+          "ssim": {"brandenburg-gate": 0.880, "sacre-coeur": 0.835, "trevi-fountain": 0.709},
+          "lpips": {"brandenburg-gate": 0.141, "sacre-coeur": 0.204, "trevi-fountain": 0.266}
+        }
+      },
+      "ablations_per_scene_psnr": {
+        "wo_fourier": {"brandenburg-gate": 27.33, "sacre-coeur": 22.32, "trevi-fountain": 23.78},
+        "wo_appearance": {"brandenburg-gate": 20.81, "sacre-coeur": 17.19, "trevi-fountain": 17.42},
+        "wo_appearance_uncertainty": {"brandenburg-gate": 20.04, "sacre-coeur": 17.59, "trevi-fountain": 17.81},
+        "wo_gaussian_embeddings": {"brandenburg-gate": 25.18, "sacre-coeur": 18.68, "trevi-fountain": 19.49},
+        "wo_uncertainty": {"brandenburg-gate": 27.16, "sacre-coeur": 21.97, "trevi-fountain": 23.82}
+      },
+      "source": "Table 2; supp. Table 6 (detailed ablation)",
+      "protocol": "NeRF-W protocol: appearance embedding optimised on the left half, metrics on the right half; full-res IMC dense images; NeRF-W split"
+    }
+  },
+  "notes": "No mipnerf360/tandt/db per-scene numbers (Table 4 has a MipNeRF360 bicycle ablation only: 23.73/0.643/0.304). 3DGS rows are the authors' NerfBaselines runs. Metrics computed by NerfBaselines (uint8, dm_pix SSIM, LPIPS-Alex)."
+}

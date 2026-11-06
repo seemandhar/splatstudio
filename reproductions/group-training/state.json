@@ -1,0 +1,12 @@
+{
+ "paper": "Faster and Better 3D Splatting via Group Training",
+ "slug": "group-training",
+ "plan_id": 94,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done"
+ },
+ "outcome": "built (benchmark pending)"
+}

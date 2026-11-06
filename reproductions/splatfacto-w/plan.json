@@ -1,0 +1,74 @@
+{
+ "method": "splatfacto-w",
+ "module": "ss_splatfactow",
+ "variants": [
+  "splatfacto-w",
+  "splatfacto-w-a",
+  "splatfacto-w-t"
+ ],
+ "components": [
+  {
+   "name": "sfw-renderer",
+   "kind": "renderer",
+   "factory": "ss_splatfactow.renderer:create_renderer",
+   "provides": [
+    "render.rgb",
+    "gradient.screen.absolute",
+    "render.antialiased_2d"
+   ]
+  },
+  {
+   "name": "sfw-density",
+   "kind": "density",
+   "factory": "ss_splatfactow.density:create_density",
+   "requires": [
+    "gradient.screen.absolute"
+   ]
+  },
+  {
+   "name": "sfw-photometric",
+   "kind": "loss",
+   "factory": "ss_splatfactow.losses:create_photometric"
+  },
+  {
+   "name": "sfw-alpha",
+   "kind": "loss",
+   "factory": "ss_splatfactow.losses:create_alpha_loss"
+  }
+ ],
+ "fields": [
+  {
+   "name": "appearance_features",
+   "shape": [
+    72
+   ],
+   "lr": 0.02,
+   "init": 0.0
+  }
+ ],
+ "probes": [
+  "appearance-colour",
+  "robust-mask",
+  "masked-view-padding",
+  "background-model",
+  "alpha-loss",
+  "splatfacto-schedule",
+  "splatfacto-refine",
+  "ns-normalisation",
+  "state-transitions"
+ ],
+ "contributions": [
+  "latent-appearance",
+  "robust-mask",
+  "background-model",
+  "nerfw-right-half-protocol"
+ ],
+ "fidelity_gaps": [
+  "view sampling with replacement",
+  "masked view crop+pad (odd widths, alpha loss left half only)",
+  "masked-view detection by cx heuristic",
+  "55000 (code) vs 65000 (paper) iterations",
+  "no shared PT baseline"
+ ],
+ "feasible_natively": true
+}

@@ -1,0 +1,222 @@
+{
+ "paper": "RobustSplat: Decoupling Densification and Dynamics for Transient-Free 3DGS",
+ "arxiv": "2506.02751",
+ "method_label": "Ours (RobustSplat)",
+ "iterations": 30000,
+ "datasets": {
+  "onthego": {
+   "method": {
+    "average": {
+     "psnr": 23.22,
+     "ssim": 0.818,
+     "lpips": 0.149
+    },
+    "per_scene": {
+     "psnr": {
+      "mountain": 21.15,
+      "fountain": 21.01,
+      "corner": 26.42,
+      "patio": 21.63,
+      "spot": 26.21,
+      "patio-high": 22.87
+     },
+     "ssim": {
+      "mountain": 0.737,
+      "fountain": 0.701,
+      "corner": 0.897,
+      "patio": 0.827,
+      "spot": 0.907,
+      "patio-high": 0.837
+     },
+     "lpips": {
+      "mountain": 0.201,
+      "fountain": 0.199,
+      "corner": 0.104,
+      "patio": 0.139,
+      "spot": 0.102,
+      "patio-high": 0.146
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 19.09,
+     "ssim": 0.717,
+     "lpips": 0.248
+    },
+    "per_scene": {
+     "psnr": {
+      "mountain": 19.21,
+      "fountain": 20.08,
+      "corner": 22.65,
+      "patio": 17.04,
+      "spot": 18.54,
+      "patio-high": 17.04
+     },
+     "ssim": {
+      "mountain": 0.691,
+      "fountain": 0.686,
+      "corner": 0.835,
+      "patio": 0.713,
+      "spot": 0.717,
+      "patio-high": 0.657
+     },
+     "lpips": {
+      "mountain": 0.229,
+      "fountain": 0.208,
+      "corner": 0.162,
+      "patio": 0.232,
+      "spot": 0.334,
+      "patio-high": 0.314
+     }
+    }
+   },
+   "spotlesssplats": {
+    "average": {
+     "psnr": 22.17,
+     "ssim": 0.757,
+     "lpips": 0.22
+    },
+    "per_scene": {
+     "psnr": {
+      "mountain": 20.67,
+      "fountain": 20.63,
+      "corner": 25.47,
+      "patio": 21.43,
+      "spot": 23.64,
+      "patio-high": 21.17
+     },
+     "ssim": {
+      "mountain": 0.67,
+      "fountain": 0.645,
+      "corner": 0.858,
+      "patio": 0.803,
+      "spot": 0.819,
+      "patio-high": 0.749
+     },
+     "lpips": {
+      "mountain": 0.282,
+      "fountain": 0.265,
+      "corner": 0.155,
+      "patio": 0.171,
+      "spot": 0.207,
+      "patio-high": 0.237
+     }
+    }
+   },
+   "source": "Table 1 (tables/onthego.tex); factor 8, patio factor 4; train=clutter, test=extra",
+   "ablation_psnr": {
+    "3dgs+mask": {
+     "mountain": 19.81,
+     "fountain": 20.74,
+     "corner": 25.05,
+     "patio": 21.23,
+     "spot": 24.75,
+     "patio-high": 22.19
+    },
+    "3dgs+mask+dg": {
+     "mountain": 20.85,
+     "fountain": 20.99,
+     "corner": 26.01,
+     "patio": 21.49,
+     "spot": 25.61,
+     "patio-high": 22.74
+    },
+    "source": "Table 3 (tables/ablation_method.tex)",
+    "3dgs+mask+mb": {
+     "mountain": 20.78,
+     "fountain": 20.83,
+     "corner": 25.52,
+     "patio": 20.88,
+     "spot": 25.25,
+     "patio-high": 22.11
+    }
+   }
+  },
+  "robustnerf": {
+   "method": {
+    "average": {
+     "psnr": 29.36,
+     "ssim": 0.895,
+     "lpips": 0.135
+    },
+    "per_scene": {
+     "psnr": {
+      "android": 24.62,
+      "crab2": 34.88,
+      "statue": 22.8,
+      "yoda": 35.14
+     },
+     "ssim": {
+      "android": 0.831,
+      "crab2": 0.94,
+      "statue": 0.865,
+      "yoda": 0.944
+     },
+     "lpips": {
+      "android": 0.125,
+      "crab2": 0.154,
+      "statue": 0.11,
+      "yoda": 0.151
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 26.21,
+     "ssim": 0.864,
+     "lpips": 0.168
+    },
+    "per_scene": {
+     "psnr": {
+      "android": 23.32,
+      "crab2": 31.76,
+      "statue": 20.83,
+      "yoda": 28.92
+     },
+     "ssim": {
+      "android": 0.794,
+      "crab2": 0.925,
+      "statue": 0.83,
+      "yoda": 0.905
+     },
+     "lpips": {
+      "android": 0.159,
+      "crab2": 0.172,
+      "statue": 0.148,
+      "yoda": 0.192
+     }
+    }
+   },
+   "spotlesssplats": {
+    "average": {
+     "psnr": 28.58,
+     "ssim": 0.875,
+     "lpips": 0.162
+    },
+    "per_scene": {
+     "psnr": {
+      "android": 24.2,
+      "crab2": 33.9,
+      "statue": 21.97,
+      "yoda": 34.24
+     },
+     "ssim": {
+      "android": 0.81,
+      "crab2": 0.933,
+      "statue": 0.821,
+      "yoda": 0.938
+     },
+     "lpips": {
+      "android": 0.159,
+      "crab2": 0.169,
+      "statue": 0.163,
+      "yoda": 0.156
+     }
+    }
+   },
+   "source": "Table 2 (tables/robustnerf.tex); factor 8"
+  }
+ },
+ "notes": "3DGS / SpotLessSplats rows retrained by the authors with public code on the authors' re-run COLMAP data. LPIPS = VGG (official metrics.py). Single run."
+}

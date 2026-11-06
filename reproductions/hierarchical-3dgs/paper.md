@@ -92,10 +92,18 @@ Inria 3DGS codebase with Mip-Splatting 2D filter; per-pixel loss unchanged (0.8 
 - Metrics: PSNR/SSIM/LPIPS(VGG) on black background, clamped renders (render_hierarchy.py).
 
 ## 7. Ambiguities
-- Mip-NeRF 360 3DGS = 29.11 is far above the 3DGS paper (27.21 at images_4/images_2): resolution
-  and split for this experiment are unknown → compare deltas, not absolutes.
-- Whether depth regularization was used on Mip-NeRF 360 (needs DPT/Depth-Anything; no depth
-  files ship with Mip-NeRF 360). Code applies depth only when `-d` is passed.
+- Mip-NeRF 360 3DGS = 29.11 is far above the 3DGS paper's 9-scene 27.21. It is not reachable as a
+  9-scene llffhold8 mean at any resolution we have (our gsplat 9-scene ≈ 27.2-27.3) but fits the
+  7 original public scenes (no flowers/treehill; our 7-scene 28.81 at images_4/2, 3DGS paper
+  28.69) plus the official per-channel PSNR (render_hierarchy.py:111, image_utils.psnr on
+  [3,H,W], ≥ full-image PSNR). → report 9- and 7-scene means, full-image and per-channel PSNR;
+  compare leaves − 3DGS on the 7-scene mean (paper −0.15) and the τ deltas (scene-set independent).
+- Resolution: code default (`-r -1`, `images`, width capped at 1600 px) with the README eval
+  commands passing no `-r/-i` → we use `mipnerf360-1600`; τ is in pixels at render resolution.
+- Depth regularization: the documented single-chunk eval command (README.md:550) passes
+  `-d depths`, so depth regularization is part of the official eval protocol; whether the
+  Mip-NeRF 360 runs used it is not stated. No depth files ship with Mip-NeRF 360; not ported.
+- Big-Gaussian shrink: the same command passes `--skip_scale_big_gauss` → off in our config.
 - Whether a scaffold/skybox was used on Mip-NeRF 360 (none needed for single scenes; we use none).
 - Post-optimization hyper-parameters on Mip-NeRF 360 are taken from the chunk script.
 - Compaction (§4.2) in code is `AppearanceFilter::filter(root, gaussians, 0.0005, 2.0)` using all

@@ -1,0 +1,13 @@
+{
+  "paper": "Deblurring 3D Gaussian Splatting",
+  "slug": "deblurring-3dgs",
+  "plan_id": 88,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done"
+  },
+  "outcome": "built",
+  "notes": "awaiting benchmark (bench_request.json)"
+}

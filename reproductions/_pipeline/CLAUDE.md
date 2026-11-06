@@ -102,3 +102,9 @@ Benchmark runs: `runs/<slug>-<tag>/` (managed by `tools/bench.py`).
 - Never tune hyper-parameters on test images beyond what the paper specifies without labeling
   the result "tuned"; never report a subset average as the dataset average.
 - Keep failed and weak runs in the report.
+
+## Disk
+The main disk (`/`) is shared and nearly full. `/bigdata/sejain/` is the overflow disk (writable). Put large new
+experiments there — `mkdir -p /bigdata/sejain/runs/<exp> && ln -s /bigdata/sejain/runs/<exp> runs/<exp>` before
+`bench.py launch` — and archive finished/superseded experiments to `/bigdata/sejain/runs-archive/<exp>` with a symlink
+left at `runs/<exp>`. Never delete run data without asking the user.

@@ -1,0 +1,26 @@
+{
+ "paper": "Splatfacto-W: A Nerfstudio Implementation of Gaussian Splatting for Unconstrained Photo Collections",
+ "slug": "splatfacto-w",
+ "plan_id": 86,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done"
+ },
+ "outcome": "built",
+ "arxiv": "2407.12306",
+ "method": "splatfacto-w",
+ "variants": [
+  "splatfacto-w",
+  "splatfacto-w-a",
+  "splatfacto-w-t"
+ ],
+ "custom_cuda": false,
+ "data": {
+  "phototourism-sfw": [
+   "brandenburg-gate",
+   "sacre-coeur"
+  ]
+ }
+}

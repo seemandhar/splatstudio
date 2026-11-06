@@ -60,8 +60,10 @@ def method(name="hierarchical-3dgs", density_overrides=None):
                "through the cut interpolation, anchors frozen, interior nodes optimized", True),
         _probe("h3dgs-leaf-training", "leaf_training",
                "train_single.py: max screen-gradient statistic, grad*radius*sigma^0.2 >= 0.015 "
-               "selection, split /1.6, opacity-only prune, reset, big-Gaussian shrink, "
-               "sparse Adam, position lr 2e-5 -> 2e-7"),
+               "selection, split /1.6, opacity-only prune, reset, big-Gaussian shrink off by "
+               "default (README eval --skip_scale_big_gauss) and x0.8 when enabled, sparse Adam, "
+               "position lr 2e-5 -> 2e-7 overriding the runtime decay and restarted post-build, "
+               "extent 1.1 x q0.9 camera distance"),
     )
     contribs = (
         ContributionSpec("hierarchy-generation",
@@ -98,4 +100,5 @@ def method(name="hierarchical-3dgs", density_overrides=None):
 def quick():
     """Pipeline smoke variant (not a paper configuration): hierarchy built after 1500 steps."""
     return method("hierarchical-3dgs-quick",
-                  {"leaves_steps": 1500, "densify_until": 1200, "position_lr_max_steps": 1500})
+                  {"leaves_steps": 1500, "densify_until": 1200, "position_lr_max_steps": 1500,
+                   "post_steps": 500})

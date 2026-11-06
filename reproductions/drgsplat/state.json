@@ -1,0 +1,4 @@
+{"paper": "DRGSplat: Depth-Regularized 3D Gaussian Splatting", "slug": "drgsplat", "plan_id": 99,
+ "stages": {"paper-reader": "blocked"},
+ "outcome": "blocked",
+ "blocked_reason": "Full paper unobtainable non-interactively: only copy is the OpenReview PDF (forum BpwRgbmTW9, ICLR 2026 rejected submission), gated by a browser challenge (403 ChallengeRequiredError); no arXiv preprint, no BMVC 2026 proceedings online yet, no code released. Loss equations, weights, prior networks, uncertainty source and result tables are unknown."}

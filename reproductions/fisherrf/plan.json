@@ -1,0 +1,10 @@
+{"method": "fisherrf", "module": "ss_fisherrf",
+ "components": [
+  {"name": "fisherrf-renderer", "kind": "renderer", "factory": "ss_fisherrf.renderer:create_renderer"},
+  {"name": "fisherrf-density", "kind": "density", "factory": "ss_fisherrf.density:create_density"},
+  {"name": "fisherrf-photometric", "kind": "loss", "factory": "ss_fisherrf.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["fisher-kernel", "eig-selection", "active-schedule", "active-loop"],
+ "contributions": ["fisher-statistic-rendering", "eig-view-selection", "active-training-loop"],
+ "fidelity_gaps": ["view sampling with replacement", "gsplat training rasterizer", "no 20px screen pruning", "RNG differs", "mipnerf360 not benchmarked"],
+ "feasible_natively": true}

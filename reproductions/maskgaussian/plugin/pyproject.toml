@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-maskgaussian"
+version = "0.1.0"
+description = "MaskGaussian (arXiv 2412.20522) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+maskgaussian = "ss_maskgaussian:method"
+maskgaussian-beta = "ss_maskgaussian:beta"
+maskgaussian-gamma = "ss_maskgaussian:gamma"
+maskgaussian-opacitymask = "ss_maskgaussian:opacitymask"
+maskgaussian-exactgrad = "ss_maskgaussian:exactgrad"
+
+[tool.setuptools.packages.find]
+include = ["ss_maskgaussian*"]
+
+[tool.setuptools.package-data]
+ss_maskgaussian = ["csrc/*/*.cu", "csrc/*/*.cpp", "csrc/*/*.h", "csrc/*/*.md", "csrc/*/cuda_rasterizer/*", "csrc/third_party/glm/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_maskgaussian/csrc"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

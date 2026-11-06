@@ -1,0 +1,38 @@
+{
+  "exp": "stopthepop-mipnerf360",
+  "datasets": {
+    "mipnerf360": {
+      "scenes": [
+        "counter",
+        "garden"
+      ],
+      "all_scenes": false,
+      "methods": {
+        "stopthepop": {
+          "per_scene": {
+            "garden": {
+              "lpips": 0.12003228285660346,
+              "psnr": 27.230784972508747,
+              "ssim": 0.8653339768449465,
+              "gaussians": 5892081,
+              "minutes": 193.1429997110429
+            },
+            "counter": {
+              "lpips": 0.2556574801603953,
+              "psnr": 28.847382227579754,
+              "ssim": 0.9081444998582204,
+              "gaussians": 1246945,
+              "minutes": 115.21191452272858
+            }
+          },
+          "mean": {
+            "psnr": 28.03908360004425,
+            "ssim": 0.8867392383515835,
+            "lpips": 0.18784488150849937
+          }
+        }
+      },
+      "gaps": {}
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+ "method": "3dhgs",
+ "module": "ss_3dhgs",
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "hgs-renderer",
+   "factory": "ss_3dhgs.renderer:create_renderer"
+  },
+  {
+   "kind": "density",
+   "name": "hgs-density",
+   "factory": "ss_3dhgs.density:create_density"
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [
+  {
+   "name": "opacity2",
+   "shape": [],
+   "lr": 0.05,
+   "init": -2.1972246
+  },
+  {
+   "name": "hgs_normal",
+   "shape": [
+    3
+   ],
+   "lr": 0.003,
+   "init": 0.6
+  }
+ ],
+ "probes": [
+  "hgs-equal-opacity",
+  "hgs-half-plane",
+  "hgs-gradients",
+  "hgs-test-cull",
+  "hgs-density"
+ ],
+ "contributions": [
+  "half-gaussian-kernel",
+  "half-gaussian-rasterizer",
+  "hgs-training-settings"
+ ],
+ "fidelity_gaps": [
+  "runtime step/density order",
+  "SH switch +1 step, sampling with replacement, SSIM valid conv",
+  "means LR schedule form",
+  "paper-vs-code: normal LR 0.003 (DB 0.3 ignored by code), no normal LR decay, normal translation quirk, forward-only -4.8 cutoff",
+  "init via --recipe 3dgs"
+ ],
+ "feasible_natively": true
+}

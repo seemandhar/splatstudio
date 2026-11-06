@@ -23,14 +23,20 @@ ss-train hierarchical-3dgs --data D --output R --steps 45000 --recipe 3dgs \
     --num-gaussians 10000000 --max-gaussians 40000000      # optimized hierarchy
 ss-train hierarchical-3dgs ... --steps 30000                # unoptimized ("basic") hierarchy
 ss-eval --run R --split test                                # all leaves (tau -> threshold 0)
-python -m ss_hierarchical_3dgs.eval_taus --run R --taus -0.5 3 6 15
+python -m ss_hierarchical_3dgs.eval_taus --run R --taus -0.5 0 3 6 15   # + per-channel PSNR
+python -m ss_hierarchical_3dgs.eval_taus --run R --basic --taus 0 3 6 15   # unoptimized hierarchy
+python -m ss_hierarchical_3dgs.summary --ours runs/EXP --baseline B1 B2 --channel-baseline
 ```
+Defaults follow the official single-chunk eval command (README.md:550 of the source):
+`--skip_scale_big_gauss` (shrink off; `skip_scale_big_gauss: False` enables it) and
+`--exposure_lr_init 0.0`; extent = 1.1 × 0.9-quantile camera distance (getNerfppNorm).
+Benchmark on `mipnerf360-1600` (official default resolution; τ is in pixels).
 `hierarchical-3dgs-quick` builds the hierarchy after 1500 steps (pipeline smoke test only).
 
 ## Mapping
 | paper | code |
 |---|---|
-| Sec. 5.2 max-gradient densification, train_single schedule, sparse Adam, big-Gaussian shrink | `density.py`, `optim.py` |
+| Sec. 5.2 max-gradient densification, train_single schedule, sparse Adam, optional big-Gaussian shrink | `density.py`, `optim.py` |
 | Sec. 3.1 / 4.2 hierarchy generation + compaction | vendored creator via `hier.build` |
 | Sec. 3.2 cut + interpolation, Eq. alphap | `hier.Cut`, `raster.render_cut`, kernel |
 | Sec. 4.1 hierarchy optimization | `renderer.py` (random target), `optim.FrozenAdam` |
@@ -40,7 +46,7 @@ Config values (paper/code sources in `density.DEFAULTS`, `renderer.DEFAULTS` and
 `../paper.md`).
 
 ## Fidelity gaps
-No depth regularization, no exposure optimization, no scaffold/skybox/chunking/consolidation/
+No depth regularization (the official eval command passes `-d depths`), no exposure optimization, no scaffold/skybox/chunking/consolidation/
 streaming viewer; runtime view sampling with replacement and densification after (not before)
 the optimizer step; appearance filter fed with training cameras only; black evaluation
 background (official) instead of the runtime's white convention. See `../plan.md`.

@@ -1,0 +1,13 @@
+{
+ "paper": "A Step to Decouple Optimization in 3DGS",
+ "slug": "adamw-gs",
+ "plan_id": 93,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done"
+ },
+ "outcome": "built",
+ "method": "adamw-gs"
+}

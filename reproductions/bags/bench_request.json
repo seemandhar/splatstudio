@@ -1,0 +1,72 @@
+{
+ "method": "bags-ball",
+ "methods": [
+  "bags-ball",
+  "bags-caps",
+  "bags-ball-nobpn",
+  "bags-caps-nobpn",
+  "gsplat"
+ ],
+ "datasets": {
+  "deblurnerf-motion": [
+   "ball"
+  ],
+  "deblurnerf-real": [
+   "caps"
+  ]
+ },
+ "steps": 49000,
+ "steps_per_scene": {
+  "deblurnerf-motion/ball": 49000,
+  "deblurnerf-real/caps": 12000
+ },
+ "method_per_scene": {
+  "deblurnerf-motion/ball": "bags-ball",
+  "deblurnerf-real/caps": "bags-caps"
+ },
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "post_eval": "tools/ssenv python -m ss_bags.evaluate --run <run> --split test  # official metrics.py -t deblur-nerf: 8-bit PNG PSNR, skimage-0.19 SSIM on [-1,1] (data_range 2), LPIPS-Alex on [-1,1] -> <run>/test_official.json; headline = metrics.psnr/ssim/lpips_alex",
+ "paper_reference": {
+  "deblurnerf-motion/ball": {
+   "psnr": 27.68,
+   "ssim": 0.799,
+   "lpips": 0.15
+  },
+  "deblurnerf-real/caps": {
+   "psnr": 24.16,
+   "ssim": 0.725,
+   "lpips": 0.159
+  },
+  "source": "Table 1 (BAGS row)"
+ },
+ "baseline": {
+  "method": "gsplat",
+  "datasets": {
+   "deblurnerf-motion": [
+    "ball"
+   ],
+   "deblurnerf-real": [
+    "caps"
+   ]
+  },
+  "steps": 30000,
+  "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+  "note": "Fresh gsplat controls on both scenes with identical settings. The DOF-GS-era caps run (runs/baseline-gsplat-deblurnerf-40000, 40k, white bg, 15.61 dB) is an outlier and is not used."
+ },
+ "cost": "ball: 49k steps, ~43k at 600x400 with 17x17 per-pixel kernels (~3.6 GB peak at 16k Gaussians in the smoke test; expect ~1-2 GPU-h); caps: 12k steps (<1 GPU-h).",
+ "notes": "Data = deblurnerf-motion / deblurnerf-real (original Deblur-NeRF COLMAP, the folder BAGS's README links), not deblur3dgs-* (re-run COLMAP). --steps must equal the method's total_steps (49000 ball, 12000 caps): the schedule (ms_steps restart, final-step skip) depends on it.",
+ "controls": {
+  "bags-ball-nobpn": {
+   "scene": "deblurnerf-motion/ball",
+   "steps": 49000,
+   "paper_row": "Mip-Splatting 23.22 / 0.619 / 0.340"
+  },
+  "bags-caps-nobpn": {
+   "scene": "deblurnerf-real/caps",
+   "steps": 12000,
+   "paper_row": "Mip-Splatting 21.00 / 0.503 / 0.442"
+  },
+  "note": "BPN disabled (bpn_start = total_steps): Mip-Splatting under the BAGS schedule; isolates the BPN gain. Same post_eval."
+ }
+}

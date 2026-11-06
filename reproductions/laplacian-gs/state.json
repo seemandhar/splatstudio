@@ -1,0 +1,12 @@
+{
+ "paper": "Laplacian Frequency Hierarchies for Efficient 3D Gaussian Splatting Training",
+ "slug": "laplacian-gs",
+ "plan_id": 83,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done"
+ },
+ "outcome": "built"
+}

@@ -1,0 +1,68 @@
+{
+ "method": "bags",
+ "module": "ss_bags",
+ "methods": [
+  "bags",
+  "bags-smoke",
+  "bags-ball",
+  "bags-basket",
+  "bags-buick",
+  "bags-coffee",
+  "bags-decoration",
+  "bags-girl",
+  "bags-heron",
+  "bags-parterre",
+  "bags-puppet",
+  "bags-stair",
+  "bags-cake",
+  "bags-caps",
+  "bags-cisco",
+  "bags-coral",
+  "bags-cupcake",
+  "bags-cups",
+  "bags-daisy",
+  "bags-sausage",
+  "bags-seal",
+  "bags-tools"
+ ],
+ "components": [
+  "bags-raster (renderer)",
+  "bags-density (density)",
+  "bags-objective (loss)",
+  "bags-mask (loss)",
+  "bags-depth-tv (loss)",
+  "bags-rgb-tv (loss)"
+ ],
+ "fields": [
+  {
+   "name": "filter_3d",
+   "shape": [],
+   "lr": 1e-08
+  }
+ ],
+ "probes": [
+  "spatial-conv-reference",
+  "bpn-architecture",
+  "objective-terms",
+  "multiscale-schedule",
+  "phase-schedule",
+  "official-config",
+  "density-recipe",
+  "state-transitions"
+ ],
+ "contributions": [
+  "blur-proposal-network",
+  "coarse-to-fine",
+  "official-scene-config"
+ ],
+ "fidelity_gaps": [
+  "coarse targets resized from 600x400",
+  "adam step before densify",
+  "SH degree +1 step",
+  "metrics via ss_bags.evaluate",
+  "per-scene official flags",
+  "no shared baseline on deblurnerf-*",
+  "mixres/drone not reproduced"
+ ],
+ "feasible_natively": true
+}

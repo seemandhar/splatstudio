@@ -1,0 +1,46 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_group_training/density.py", "where": "GROUP_DEFAULTS total_steps / group_step (lines 32, 164)",
+   "problem": "Final merge depends on a hard-coded total_steps=30000 rather than the runtime's step count; a group-training run with --steps between 1000 and 28999 saves a checkpoint with ~40% of the Gaussians still cached (never evaluated).",
+   "evidence": "group_step merges only if step >= config total_steps; runtime does not pass steps to the density.",
+   "fix": "Harmless for the 30k benchmark; optionally raise/warn in initialize when the cache is non-empty at checkpoint, or document that total_steps must equal --steps."},
+  {"severity": "minor", "file": "report.md", "where": "Contributions C3 / Fidelity gaps",
+   "problem": "Two faithful-but-consequential interactions are undocumented: (a) opacity resets at 3000/6000/9000/12000 fall inside a grouping window, so only the 60% subset is reset and the cached 40% keep their opacity (and OPS then favours them at the next regroup); (b) every refine at a multiple of 500 (1500..14500) runs on one step of statistics because the merge just zeroed grad2d/count.",
+   "evidence": "Official: grouping before render of iter k, prune/densification_postfix zero accumulators, densify+reset at end of iter k on current (subset) model only. Port: regroup at after_backward(k-1), base refine/reset at after_backward(k) on params = subset. Same behaviour.",
+   "fix": "Add two lines to report.md so a gap analyst does not 'fix' them."},
+  {"severity": "minor", "file": "plugin/ss_group_training/probes.py", "where": "subset_state (lines 142-167)",
+   "problem": "Retained-row moment check uses moments captured after the regroup, so an implementation that zeroed the sampled set's Adam moments at regroup (not official) would still pass; the opacity-reset/cache interplay is not probed.",
+   "evidence": "active_m is snapshotted after d.regroup + 4 Adam steps.",
+   "fix": "Compare optimizer state right after regroup with full_m[...][mask]."},
+  {"severity": "minor", "file": "report.md", "where": "Smoke test",
+   "problem": "The -0.51 dB smoke gap is explained only by 'Gaussians sit out'; it is also the forced merge at the very last step with no re-adaptation window (the real schedule gives 1000 steps after I_O). Not a fidelity signal either way.",
+   "evidence": "smoke2k merges at step 2000, right after a regroup at 2000.",
+   "fix": "Reword; rely on the 30k benchmark."},
+  {"severity": "minor", "file": "report.md", "where": "Fidelity gap 4",
+   "problem": "Host version can be narrowed: the official cache dict lacks new_tmp_radii, so it only runs on graphdeco 3DGS before the tmp_radii change (late 2024), whose densification_postfix zeroes xyz_gradient_accum/denom/max_radii2D — consistent with the port.",
+   "evidence": "source/code/__init__.py _points_caching keys.",
+   "fix": "State it."}
+ ],
+ "equation_coverage": [
+  {"eq": "(1)-(2) G_UT / G_Cached = G \\ G_UT", "status": "exact", "code": "density.py:GroupTrainingDensity.regroup (gsplat ops.remove = official prune_points; cache = detached clone)"},
+  {"eq": "Fig.3 merge (densification_postfix)", "status": "exact", "code": "density.py:append_rows/merge (zero moments for appended rows, Adam step kept, grad2d/count/radii zeroed for all)"},
+  {"eq": "(11) p_i = alpha_i / sum alpha", "status": "exact", "code": "density.py:under_training_mask (sigmoid(opacity) = official get_opacity; multinomial int(N*0.6) without replacement)"},
+  {"eq": "Sec.4.1 schedule (500-step groupings 1000..29000, I_D=14.5K, I_O=29K, SH fixed at merges)", "status": "exact", "code": "density.py:group_step/regroup/is_merge_only/set_sh_trainable"}
+ ],
+ "probe_assessment": [
+  {"probe": "gt-ops-sampling", "detects_removal": true, "why": "Exact count + inclusion frequencies vs independent numpy reference; random (0.6/0.6) and with-replacement sampling fail."},
+  {"probe": "gt-schedule", "detects_removal": true, "why": "Checks event iterations and the exact SH-frozen render steps (14500 only, 29000..30000); an off-by-one in regroup timing shifts the frozen window and fails."},
+  {"probe": "gt-subset-state", "detects_removal": true, "why": "Removing the regroup, keeping cached moments, or not zeroing accumulators fails; does not catch zeroing retained moments at regroup (minor)."},
+  {"probe": "gt-cuda-training", "detects_removal": true, "why": "Real gsplat loop: cached rows bit-identical across a merge, stats stay subset-indexed, regroup/final-merge events required."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Verified against official code: regroup keeps sampled rows' Adam moments and their xyz_gradient_accum/denom/max_radii2D (prune_points indexes them); at every regroup after the first, the preceding merge has already zeroed all accumulators (port identical).",
+  "Opacity reset touches only the under-training subset; cached Gaussians are not reset (official and port identical).",
+  "Densification only on the subset, with one-step statistics at refine steps that coincide with groupings (official and port identical).",
+  "SH-rest freeze lasts one iteration at 14500 (undone by the 14500 densify, official requires_grad_(True) rebuild) and 29000..30000 (port identical).",
+  "Regroup in after_backward(k-1) after the runtime optimizer step is equivalent to the official grouping before render(k); no gradient is lost.",
+  "Shared runtime gaps (white background, no max_radii2D screen-size prune, optimizer step before density, SH-degree/view sampling) affect baseline and method equally.",
+  "paper_results.json matches tab:supp_3dgs_MipNerf360 OPS 0~30K and 3DGS* rows (all 9 scenes PSNR/SSIM/LPIPS/size/time/PM) and Table 3 averages; time ratios garden 0.646, counter 0.820; size ratios 0.78/0.79.",
+  "No efficiency killer found: per regroup one cat + one index of N rows and one multinomial, every 500 steps; optimizers are updated in place, not rebuilt."
+ ],
+ "summary": "Faithful port of the official plug-in. Removal/caching, merge semantics (zero appended moments, kept step, zeroed accumulators), OPS on activated opacity with int(0.6N) without replacement, schedule timing, SH-freeze windows and the subset-only opacity reset/densification all match the official code operator by operator. pytest 5/5 and ss-verify (CUDA) pass. Only documentation/probe-strength minors."}

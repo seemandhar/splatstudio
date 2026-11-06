@@ -1,0 +1,31 @@
+{
+ "paper": "RobustSplat: Decoupling Densification and Dynamics for Transient-Free 3DGS",
+ "slug": "robustsplat",
+ "plan_id": 87,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done"
+ },
+ "outcome": null,
+ "arxiv": "2506.02751",
+ "method": "robustsplat",
+ "custom_cuda": false,
+ "variants": [
+  "robustsplat",
+  "robustsplat-nodg",
+  "robustsplat-nomb"
+ ],
+ "data": {
+  "robustsplat-onthego": [
+   "patio",
+   "patio-high"
+  ],
+  "robustsplat-robustnerf": [
+   "android",
+   "crab2"
+  ],
+  "root": "/bigdata/sejain/datasets/robustsplat (symlink ~/datasets/robustsplat)"
+ }
+}

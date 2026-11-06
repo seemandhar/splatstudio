@@ -1,0 +1,195 @@
+{
+ "paper": "BAGS: Blur Agnostic Gaussian Splatting through Multi-Scale Kernel Modeling",
+ "arxiv": "2403.04926",
+ "method_label": "BAGS",
+ "iterations": "per scene (official scripts/*.sh, 10000-58000)",
+ "datasets": {
+  "deblurnerf-motion": {
+   "method": {
+    "average": {
+     "psnr": 26.7,
+     "ssim": 0.824,
+     "lpips": 0.096
+    },
+    "per_scene": {
+     "psnr": {
+      "ball": 27.68,
+      "basket": 29.54,
+      "buick": 26.18,
+      "coffee": 31.59,
+      "decoration": 26.09,
+      "girl": 25.45,
+      "heron": 22.04,
+      "parterre": 25.92,
+      "puppet": 25.81,
+      "stair": 26.69
+     },
+     "ssim": {
+      "ball": 0.799,
+      "basket": 0.9,
+      "buick": 0.844,
+      "coffee": 0.908,
+      "decoration": 0.858,
+      "girl": 0.869,
+      "heron": 0.715,
+      "parterre": 0.819,
+      "puppet": 0.804,
+      "stair": 0.721
+     },
+     "lpips": {
+      "ball": 0.15,
+      "basket": 0.068,
+      "buick": 0.088,
+      "coffee": 0.096,
+      "decoration": 0.083,
+      "girl": 0.079,
+      "heron": 0.126,
+      "parterre": 0.092,
+      "puppet": 0.094,
+      "stair": 0.08
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 21.87,
+     "ssim": 0.627,
+     "lpips": 0.306
+    },
+    "per_scene": {
+     "psnr": {
+      "ball": 23.22,
+      "basket": 23.24,
+      "buick": 21.46,
+      "coffee": 24.73,
+      "decoration": 20.55,
+      "girl": 19.87,
+      "heron": 19.43,
+      "parterre": 22.28,
+      "puppet": 22.05,
+      "stair": 21.91
+     },
+     "ssim": {
+      "ball": 0.619,
+      "basket": 0.688,
+      "buick": 0.658,
+      "coffee": 0.749,
+      "decoration": 0.641,
+      "girl": 0.714,
+      "heron": 0.505,
+      "parterre": 0.59,
+      "puppet": 0.631,
+      "stair": 0.474
+     },
+     "lpips": {
+      "ball": 0.34,
+      "basket": 0.288,
+      "buick": 0.266,
+      "coffee": 0.288,
+      "decoration": 0.299,
+      "girl": 0.278,
+      "heron": 0.332,
+      "parterre": 0.321,
+      "puppet": 0.267,
+      "stair": 0.387
+     }
+    }
+   },
+   "source": "Table 1 (camera_motion_results_v2.tex), Camera Motion block"
+  },
+  "deblurnerf-real": {
+   "method": {
+    "average": {
+     "psnr": 23.95,
+     "ssim": 0.754,
+     "lpips": 0.095
+    },
+    "per_scene": {
+     "psnr": {
+      "cake": 27.21,
+      "caps": 24.16,
+      "cisco": 20.79,
+      "coral": 20.53,
+      "cupcake": 22.93,
+      "cups": 26.27,
+      "daisy": 23.74,
+      "sausage": 18.76,
+      "seal": 26.52,
+      "tools": 28.6
+     },
+     "ssim": {
+      "cake": 0.818,
+      "caps": 0.725,
+      "cisco": 0.743,
+      "coral": 0.628,
+      "cupcake": 0.762,
+      "cups": 0.823,
+      "daisy": 0.746,
+      "sausage": 0.574,
+      "seal": 0.812,
+      "tools": 0.913
+     },
+     "lpips": {
+      "cake": 0.108,
+      "caps": 0.159,
+      "cisco": 0.07,
+      "coral": 0.117,
+      "cupcake": 0.08,
+      "cups": 0.104,
+      "daisy": 0.062,
+      "sausage": 0.11,
+      "seal": 0.09,
+      "tools": 0.046
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 21.08,
+     "ssim": 0.623,
+     "lpips": 0.281
+    },
+    "per_scene": {
+     "psnr": {
+      "cake": 22.17,
+      "caps": 21.0,
+      "cisco": 20.08,
+      "coral": 19.6,
+      "cupcake": 21.55,
+      "cups": 20.93,
+      "daisy": 21.59,
+      "sausage": 17.78,
+      "seal": 22.13,
+      "tools": 23.98
+     },
+     "ssim": {
+      "cake": 0.645,
+      "caps": 0.503,
+      "cisco": 0.709,
+      "coral": 0.555,
+      "cupcake": 0.681,
+      "cups": 0.646,
+      "daisy": 0.614,
+      "sausage": 0.473,
+      "seal": 0.592,
+      "tools": 0.812
+     },
+     "lpips": {
+      "cake": 0.29,
+      "caps": 0.442,
+      "cisco": 0.163,
+      "coral": 0.323,
+      "cupcake": 0.213,
+      "cups": 0.314,
+      "daisy": 0.273,
+      "sausage": 0.284,
+      "seal": 0.31,
+      "tools": 0.196
+     }
+    }
+   },
+   "source": "Table 1 (camera_motion_results_v2.tex), Defocus block (includes coral, which our deblurnerf-real set lacks)"
+  }
+ },
+ "notes": "baseline_3dgs = the paper's Mip-Splatting row (BAGS's Gaussian-splatting baseline trained on the blurry inputs). LPIPS = lpips AlexNet (metrics.py -t deblur-nerf); SSIM = skimage. Mix-resolution Mip-NeRF 360 and drone results (Table 2) not transcribed: different data protocol, out of scope."
+}

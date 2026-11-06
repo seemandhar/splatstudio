@@ -1,0 +1,51 @@
+{
+  "paper": "MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic Masks",
+  "arxiv": "2412.20522",
+  "method_label": "MaskGaussian-alpha (Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360-1600": {
+      "method": {
+        "average": {"psnr": 27.43, "ssim": 0.811, "lpips": 0.227, "gaussians_M": 1.205},
+        "per_scene": {
+          "psnr": {"bicycle": 25.08, "bonsai": 31.9, "counter": 29.01, "flowers": 21.33, "garden": 27.34, "kitchen": 31.54, "room": 31.42, "stump": 26.67, "treehill": 22.6},
+          "ssim": {"bicycle": 0.746, "bonsai": 0.944, "counter": 0.913, "flowers": 0.587, "garden": 0.856, "kitchen": 0.931, "room": 0.918, "stump": 0.77, "treehill": 0.634},
+          "lpips": {"bicycle": 0.248, "bonsai": 0.184, "counter": 0.188, "flowers": 0.361, "garden": 0.125, "kitchen": 0.119, "room": 0.222, "stump": 0.244, "treehill": 0.352},
+          "gaussians_M": {"bicycle": 2.34, "bonsai": 0.353, "counter": 0.328, "flowers": 1.41, "garden": 2.13, "kitchen": 0.516, "room": 0.366, "stump": 1.90, "treehill": 1.51}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.45, "ssim": 0.811, "lpips": 0.223, "gaussians_M": 3.204},
+        "per_scene": {
+          "psnr": {"bicycle": 25.09, "bonsai": 32.29, "counter": 29.09, "flowers": 21.35, "garden": 27.38, "kitchen": 31.3, "room": 31.44, "stump": 26.59, "treehill": 22.53},
+          "ssim": {"bicycle": 0.745, "bonsai": 0.946, "counter": 0.915, "flowers": 0.587, "garden": 0.857, "kitchen": 0.931, "room": 0.919, "stump": 0.767, "treehill": 0.633},
+          "lpips": {"bicycle": 0.244, "bonsai": 0.179, "counter": 0.183, "flowers": 0.358, "garden": 0.122, "kitchen": 0.116, "room": 0.217, "stump": 0.244, "treehill": 0.347},
+          "gaussians_M": {"bicycle": 5.70, "bonsai": 1.25, "counter": 1.16, "flowers": 3.47, "garden": 5.81, "kitchen": 1.75, "room": 1.56, "stump": 4.65, "treehill": 3.49}
+        }
+      },
+      "source": "supp. Table per-scene-mipnerf360 (tables/per-scene-results-mipnerf.tex); average = main Table 1"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.72, "ssim": 0.847, "lpips": 0.181, "gaussians_M": 0.590},
+                 "per_scene": {"psnr": {"train": 22.01, "truck": 25.43}, "ssim": {"train": 0.812, "truck": 0.882}, "lpips": {"train": 0.214, "truck": 0.148}, "gaussians_M": {"train": 0.402, "truck": 0.779}}},
+      "baseline_3dgs": {"average": {"psnr": 23.74, "ssim": 0.848, "lpips": 0.176, "gaussians_M": 1.825},
+                 "per_scene": {"psnr": {"train": 22.06, "truck": 25.43}, "ssim": {"train": 0.815, "truck": 0.882}, "lpips": {"train": 0.206, "truck": 0.146}, "gaussians_M": {"train": 1.08, "truck": 2.57}}},
+      "source": "supp. Table per-scene-tankstempledeepblending"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.695, "ssim": 0.907, "lpips": 0.244, "gaussians_M": 0.694},
+                 "per_scene": {"psnr": {"drjohnson": 29.21, "playroom": 30.18}, "ssim": {"drjohnson": 0.904, "playroom": 0.910}, "lpips": {"drjohnson": 0.244, "playroom": 0.245}, "gaussians_M": {"drjohnson": 0.880, "playroom": 0.508}}},
+      "baseline_3dgs": {"average": {"psnr": 29.52, "ssim": 0.903, "lpips": 0.243, "gaussians_M": 2.815},
+                 "per_scene": {"psnr": {"drjohnson": 29.05, "playroom": 29.99}, "ssim": {"drjohnson": 0.900, "playroom": 0.906}, "lpips": {"drjohnson": 0.244, "playroom": 0.242}, "gaussians_M": {"drjohnson": 3.30, "playroom": 2.33}}},
+      "source": "supp. Table per-scene-tankstempledeepblending"
+    },
+    "mipnerf360-1600-ablations": {
+      "beta":  {"average": {"psnr": 27.44, "ssim": 0.811, "lpips": 0.226, "gaussians_M": 1.520}},
+      "gamma": {"average": {"psnr": 27.42, "ssim": 0.809, "lpips": 0.228, "gaussians_M": 1.171}},
+      "mask_x_opacity": {"average": {"psnr": 27.05, "ssim": 0.801, "lpips": 0.245, "gaussians_M": 0.866}},
+      "ste": {"average": {"psnr": 27.30, "ssim": 0.808, "lpips": 0.232, "gaussians_M": 1.026}},
+      "source": "Tables ablation_c3dgs, ablation_masked_rasterization, ablation_gumbel (9-scene averages)"
+    }
+  },
+  "notes": "Mip-NeRF 360 uses the official 3DGS loader default (images/ resized to width 1600) -> our mipnerf360-1600 protocol. 3DGS rows are the authors' retrain in the same code base on RTX 4090. Per-scene tables are MaskGaussian-alpha (lambda_m=0.1 on iterations 19000..20000). gaussians_M = millions of Gaussians in the saved model."
+}

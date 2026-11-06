@@ -1,0 +1,8 @@
+{"method": "fisherrf",
+ "methods": ["fisherrf", "fisherrf-random"],
+ "datasets": {"blender-fisherrf": ["chair", "drums", "ficus", "hotdog", "lego", "materials", "mic", "ship"]},
+ "steps": 230000,
+ "per_scene_reported": false,
+ "extra": "",
+ "compare": "8-scene average vs paper Table 2 (sequential 4->20 views): FisherRF 29.525 / random 28.732 PSNR; key quantity is our fisherrf - fisherrf-random gain vs the paper's +0.79 dB",
+ "notes": "steps = runtime loop iterations; effective (official) iterations are 30000, the rest are skipped non-selected frames. No gsplat baseline needed (paper baseline is the random selector). Expect ~2 h per run on a shared A6000; 16 runs. A run that ends before 30000 effective iterations fails at evaluation (re-run with more --steps)."}

@@ -66,3 +66,12 @@ Notes added from the review:
 - The backward-pass error is up to 1.08e-6.
 - On densify and reset iterations, the official `optimizer.step()` has no effect on the replaced tensors.
 - The SH degree is raised one step later than in the official code.
+
+## Benchmark result (stopthepop-mipnerf360, 30k, images_4/2) — MATCHED
+| scene | ours | paper (Ours) | Δ | gsplat baseline | paper 3DGS | gain ours / paper |
+|---|---|---|---|---|---|---|
+| garden | 27.23 | 27.16 | +0.07 | 26.89 | 27.24 | +0.34 / −0.08 |
+| counter | 28.85 | 28.59 | +0.26 | 28.85 | 28.98 | 0.00 / −0.39 |
+- Mean SSIM is 0.887 and LPIPS 0.188 (runtime metrics).
+- Both scenes are within ±0.5 dB. Sorting costs little or no PSNR, as in the paper; our run shows no indoor loss where the paper shows −0.39.
+- Popping and view-consistency metrics (FLIP) were not evaluated.

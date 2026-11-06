@@ -1,0 +1,172 @@
+{
+ "approved": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "plugin/ss_gradient_upscaling/upscale.py",
+   "where": "_axis line 27",
+   "problem": "Border: edge cell index clamped to [0,w-2] and cubic extrapolated over the outer half low-res pixel; brush clamps samples and mirrors the fraction.",
+   "evidence": "brush upscale.wgsl uv_in mirror vs upscale.py:27",
+   "fix": "Keep; strip is s/2 px per side (~1.1% of pixels at 4x on truck, ~0.55% at 2x) and trained through, expected <0.05 dB. Optionally add a brush-mode flag to apply_upscaling for an ablation."
+  },
+  {
+   "severity": "minor",
+   "file": "../taming-3dgs/plugin/ss_taming_3dgs/density.py",
+   "where": "_cache_view/_render",
+   "problem": "Taming score for spline/bicubic methods renders full-res stock gsplat vs full-res GT; the --downscale control scores at low res. Asymmetric; paper does not specify.",
+   "evidence": "renderer.py:128-129 passes full-res camera/target",
+   "fix": "Record as fidelity gap in report.md."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_gradient_upscaling/renderer.py",
+   "where": "low_res_camera line 37",
+   "problem": "Low-res size floor(W/s) (brush, runtime) vs Inria -r round(W/s); intrinsics rescaled consistently.",
+   "evidence": "truck 979/4 -> 244 vs 245",
+   "fix": "Note only."
+  },
+  {
+   "severity": "minor",
+   "file": "splatstudio/src/splatstudio/data.py",
+   "where": "load_dataset line ~85",
+   "problem": "Control low-res training targets use PIL LANCZOS; Inria 3DGS uses PIL resize default (bicubic).",
+   "evidence": "data.py resize(..., LANCZOS)",
+   "fix": "Already listed in report gap 7; keep."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_gradient_upscaling/csrc/jet_raster.cu",
+   "where": "eval_alpha lines 72-75",
+   "problem": "Zero derivative where alpha clamped at 0.999 (brush differentiates unclamped). Consistent with gsplat backward.",
+   "evidence": "brush rasterize.wgsl dalpha = dg*alpha",
+   "fix": "Note only."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_gradient_upscaling/probes.py",
+   "where": "jet_vs_torch_autograd line 164",
+   "problem": "Autograd probe only uses opacity 0.1-0.5, n=14, so it never hits the clamp, deep compositing or early termination, which is where the inversion trick is fragile.",
+   "evidence": "Reviewer stress test (opacity up to 1.0, 30-60 Gaussians, min T~1e-4, reference with gsplat termination): forward and backward rel err <=4.3e-7",
+   "fix": "Optionally add a high-opacity case with a terminating reference."
+  },
+  {
+   "severity": "minor",
+   "file": "bench_request.json",
+   "where": "experiments",
+   "problem": "Over-scoped: about 24 runs (2x+4x, 4 scenes, plus 4 control exps).",
+   "evidence": "user rule: ~2 reported scenes per paper",
+   "fix": "Use the minimal benchmark in the summary."
+  },
+  {
+   "severity": "minor",
+   "file": "report.md",
+   "where": "Speed",
+   "problem": "Speed claim (3-5x at 5187x3361 on L4) cannot be tested at T&T/DB resolution; the smoke test shows a slowdown at 979x546.",
+   "evidence": "report.md: 8.1 vs 5.4 ms",
+   "fix": "Report as not reproduced at this resolution; do not claim it."
+  }
+ ],
+ "equation_coverage": [
+  {
+   "eq": "(3)-(5) blending",
+   "status": "exact",
+   "code": "jet_raster.cu:jet_fwd_kernel (value bitwise gsplat)"
+  },
+  {
+   "eq": "(9)-(11) image gradients / supp. forward recurrences",
+   "status": "exact",
+   "code": "jet_raster.cu:eval_alpha,jmul (alpha_x=-a s_x, alpha_xy=a(s_x s_y-b)); bg term T_N jet * bg"
+  },
+  {
+   "eq": "supp. backward + inversion trick",
+   "status": "exact",
+   "code": "jet_raster.cu:jet_bwd_kernel (jdiv inversion, adjoint of jet product, chain to o/conic/means2d in gsplat conventions)"
+  },
+  {
+   "eq": "supp. spline F=CAC^T",
+   "status": "exact",
+   "code": "upscale.py:spline_upscale (separable Hermite == C^-1 F C^-T)"
+  },
+  {
+   "eq": "Bicubic baseline (PyTorch)",
+   "status": "exact",
+   "code": "upscale.py:bicubic_upscale"
+  },
+  {
+   "eq": "Training with upscaling, loss at full GT res",
+   "status": "exact",
+   "code": "renderer.py:UpscaleRenderer.render + photometric loss"
+  },
+  {
+   "eq": "Taming densification to 1M (T&T/DB)",
+   "status": "exact",
+   "code": "__init__.py:DENSITY (interval 100 = Taming/3DGS default)"
+  }
+ ],
+ "probe_assessment": [
+  {
+   "probe": "jet-value-equals-gsplat",
+   "detects_removal": true,
+   "why": "value or bg compositing errors break parity"
+  },
+  {
+   "probe": "jet-derivs-vs-finite-diff",
+   "detects_removal": true,
+   "why": "explicit zero-derivative check (removed_q99)"
+  },
+  {
+   "probe": "jet-vs-torch-autograd",
+   "detects_removal": true,
+   "why": "independent float64 reference for forward and backward; easy regime only (see minor)"
+  },
+  {
+   "probe": "spline-equals-paper-matrix",
+   "detects_removal": true,
+   "why": "independent matrix formula"
+  },
+  {
+   "probe": "spline-equals-catmull-rom",
+   "detects_removal": true,
+   "why": "also detects derivative-unit errors"
+  },
+  {
+   "probe": "analytic-beats-fd",
+   "detects_removal": true,
+   "why": "analytic derivatives replaced by FD drop below threshold"
+  },
+  {
+   "probe": "renderer-end-to-end",
+   "detects_removal": true,
+   "why": "FD opacity gradient through the full pipeline"
+  }
+ ],
+ "fidelity_gaps_confirmed": [
+  "no official training code; kernels derived from paper + brush",
+  "white bg vs Inria black",
+  "border extrapolation vs brush mirror",
+  "Taming densification only, interval 100 assumed",
+  "Taming score asymmetric (full-res for upscaling methods, low-res for control)",
+  "LANCZOS GT downsampling for control",
+  "floor vs round low-res size",
+  "drjohnson native 1332x876 (Inria tandt_db; paper header shows 1264x832)",
+  "Mip-NeRF360 full-res/5M not benchmarked",
+  "speed claim not testable at T&T/DB resolution",
+  "iterations 30000 assumed"
+ ],
+ "targets_check": "paper_results.json factors.{2x,4x}.{tandt,db} per-scene PSNR/SSIM/LPIPS match supp. tab:metrics-2x/-4x exactly; the per-scene averages equal Table 1. Row definitions confirmed: 3DGS = trained at W/s, rendered at full res; Bicubic = bicubic in the training loop (Sec. 5: 'pipeline remains identical'; supp. durations > 3DGS); Spline (Ours) = trained with spline.",
+ "recommended_benchmark": {
+  "factor": "4x only (headline; largest effect: T&T +1.0 dB vs 3DGS and bicubic)",
+  "scenes": [
+   "tandt/truck",
+   "db/playroom"
+  ],
+  "methods": [
+   "gradient-upscaling-4x",
+   "bicubic-upscaling-4x",
+   "gradient-upscaling-3dgs --downscale 4 (+ apply_upscaling.py --factor 4)"
+  ],
+  "runs": 6,
+  "compare": "per scene vs factors.4x: spline<-ss-eval gradient-upscaling-4x; bicubic<-bicubic-upscaling-4x; baseline_3dgs_lowres_train<-quality.native of the control; check dPSNR(spline-3DGS): truck +1.32, playroom +0.24; dPSNR(spline-bicubic): truck +0.91, playroom +0.47"
+ },
+ "summary": "Approved. Independently verified the CUDA jet forward/backward against a float64 reference with clamping, deep compositing and gsplat early termination (<=4.3e-7). Derivative maths, background term and gsplat conic conventions are correct. The spline equals the paper's matrix form. Densification (Taming to 1M) and the row definitions match the paper. Targets match the supplementary tables. 0 critical, 0 major, 8 minor. Benchmark: 4x, truck + playroom, 3 methods = 6 runs."
+}

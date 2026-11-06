@@ -1,0 +1,4 @@
+{"method": "resgs", "datasets": {"mipnerf360": ["garden", "counter"]}, "steps": 30000,
+ "per_scene_reported": true, "extra": "",
+ "baseline": "baseline3dgs-mipnerf360-30000",
+ "notes": "Official protocol = images_4 outdoor / images_2 indoor (script.py -i), i.e. the default native mipnerf360 conversion. Targets (Ours (AbsGS), supp. per-scene): garden 27.82 / 0.876 / 0.089, counter 29.50 / 0.918 / 0.172; paper 3DGS row garden 27.41, counter 28.70 (deltas +0.41, +0.80). Expect ~3-4M Gaussians on garden; default --max-gaussians of bench.py should suffice (official mem 698MB avg Mip360)."}

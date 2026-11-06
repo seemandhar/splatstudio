@@ -1,0 +1,14 @@
+{
+ "method": "maskgaussian",
+ "datasets": {"mipnerf360-1600": ["garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": "baseline3dgs-mipnerf360-1600-30000 (gsplat: garden 26.93 dB / 4.55M, counter 29.04 dB / 1.19M)",
+ "optional_methods": {
+  "maskgaussian-exactgrad": {"mipnerf360-1600": ["garden", "counter"], "steps": 30000,
+                             "note": "same Ours-alpha with the exact supplementary dL/dM (released kernel's accum_rec uses the wrong mask); fidelity diagnostic, lower priority"}
+ },
+ "compare": "PSNR AND Gaussian count (test.json resources.gaussians). Paper Ours-alpha (supp. per-scene table, 1600-px, RTX 4090): garden 27.34 dB / 2.13M, counter 29.01 dB / 0.328M; paper 3DGS (same code base): garden 27.38 / 5.81M, counter 29.09 / 1.16M -> paper delta -0.04 / -0.08 dB, count x0.37 / x0.28.",
+ "notes": "Official run_all.py loads images/ with -r -1 (width 1600) -> mipnerf360-1600. --steps must be 30000: the mask-loss window (19000..20000), mask_prune cadence (>=15000, every 1000) and the final single-sample keep (step == total_steps 30000) use absolute steps. First use JIT-builds the masked rasterizer (~2 min, cached in ~/.cache/torch_extensions). Gaussian count only collapses after step 19000 (lambda 0.1 window) and the 1000-step mask prunes after it; the final count is one Gumbel sample. Black background (official)."
+}

@@ -1,0 +1,59 @@
+{
+ "approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_swag/probes.py", "where": "concrete_opacity / appearance_mlp",
+   "problem": "No probe checks that the renderer samples U ~ U(0,1) on training views (Eq. 10). Both probes run the renderer in eval mode (U = 0.5). Replacing the training sample with U = 0.5 would pass every probe. concrete_opacity also only returns renderer.cfg['transient'] and never asserts that the renderer applies Eq. 11 or that SWAG-A skips it.",
+   "evidence": "probes.py:99-102 (returns cfg only); appearance_mlp:168-185 uses bank.eval() and U = 0.5",
+   "fix": "In bank.train() with a matched training view, render twice with no fixed u and assert delta_tilde differs between the two renders and is near-binary. For swag-a, assert opacity == sigmoid(logit)."},
+  {"severity": "minor", "file": "plugin/ss_swag/evaluate.py", "where": "left_half (l.50-54) / metrics slice (l.114)",
+   "problem": "The left half is w - w//2 columns and the right half is [w//2:]. For odd widths, column w//2 is in both halves, so it is optimised on and scored. Ha-NeRF/CR-NeRF eval code uses [:w//2] and [w//2:].",
+   "evidence": "cam['width'] = w - w // 2 vs pred[:, w // 2:]",
+   "fix": "Optimise on [:, :w//2] (width w//2) so the halves are disjoint."},
+  {"severity": "minor", "file": "plan.md", "where": "A8",
+   "problem": "The test-time lr (0.01 -> 0.1) was chosen on test images. Only the left-half objective was used, which the protocol allows the method to see. It is still a protocol hyper-parameter chosen on the test split.",
+   "evidence": "plan.md A8; evidence/smoke-2-eval*.log",
+   "fix": "Say so in report.md. Optionally confirm lr 0.1 converges on held-out training views."},
+  {"severity": "minor", "file": "plan.md", "where": "A9 resolution",
+   "problem": "The paper never states resolution. Its PT comparison numbers (NeRF-W, Ha-NeRF, CR-NeRF) are at downscale 2. The port trains and evaluates at full resolution (config downscale 1).",
+   "evidence": "main.tex has no resolution statement; smoke-2/config.json downscale 1",
+   "fix": "Keep the assumption but flag it in report.md as a source of an absolute-PSNR offset. If budget allows, add a downscale-2 evaluation."},
+  {"severity": "minor", "file": "plugin/ss_swag/hashgrid.py", "where": "level_resolutions / forward_torch",
+   "problem": "Grid alignment differs from tiny-cuda-nn: tcnn uses scale = N_min*b^l - 1, pos = x*scale + 0.5, resolution ceil(scale)+1; the port uses floor(N_min*b^l) with corners at 0. The encoding family is the same, only cell offsets differ. Not specified by the paper.",
+   "evidence": "hashgrid.py:18-20, 75-80",
+   "fix": "Record it under fidelity gap 2. No change needed."},
+  {"severity": "minor", "file": "plugin/ss_swag/bank.py", "where": "SwagBank.mean_embedding / A5+A7",
+   "problem": "Embeddings start at N(0,1) (norm about 4.9) and barely move (4.86 at 2k steps). The mean of 763 of them has norm about 0.18, which is out of distribution for the MLP, so both no-optimisation renders and the start of test-time optimisation are OOD. This is plausibly why psnr_no_optimisation is so low (14.5).",
+   "evidence": "diagnostic on evidence/smoke-2 checkpoint: trained emb norm 4.86, fresh 4.87",
+   "fix": "Keep A5/A7 as recorded. If the 60k test-time loss does not converge, a smaller init std (e.g. 0.01 or zero) is a documented, legitimate alternative."}
+ ],
+ "equation_coverage": [
+  {"eq": "(1)-(5) 3DGS", "status": "exact", "code": "gsplat rasterization via renderer.py:Renderer.render"},
+  {"eq": "(7)", "status": "exact", "code": "renderer.py:conditioned (sigmoid head = A3), bank.py:mlp_outputs"},
+  {"eq": "(8)", "status": "exact", "code": "bank.py:SwagMLP (51->64x3->4), out[:,3] = delta alpha"},
+  {"eq": "(9)", "status": "exact", "code": "renderer.py:concrete (eps 1e-10 inside log)"},
+  {"eq": "(10)", "status": "exact", "code": "renderer.py:conditioned l.165-168 (U~U(0,1) on training views, 0.5 otherwise)"},
+  {"eq": "(11)", "status": "exact", "code": "renderer.py:image_opacity"},
+  {"eq": "Var[delta alpha tilde] != 0", "status": "exact", "code": "density.py:transient_variance (eval U=0.5)"},
+  {"eq": "loss L1 + D-SSIM", "status": "exact", "code": "built-in photometric (runtime valid-conv SSIM)"},
+  {"eq": "NeRF-W eval (§5.3)", "status": "deviates", "code": "evaluate.py (1-column half overlap on odd widths; steps/lr/init are assumptions A7/A8)"}
+ ],
+ "probe_assessment": [
+  {"probe": "hash-grid", "detects_removal": true, "why": "torch path vs an independent Python per-corner loop with N(0,1) tables; a wrong index or weight gives O(1) error vs 1e-3 tol; also checks that the encoding is not constant"},
+  {"probe": "hash-cuda", "detects_removal": true, "why": "CUDA vs torch forward, table grad and x grad on 5000 points, some outside the box, with N(0,1) tables; rel tol 1e-3, observed ~2e-7; a wrong prime/offset/weight gives O(1) relative error. Chained with hash-grid, this gives independent coverage"},
+  {"probe": "concrete-opacity", "detects_removal": true, "why": "checks the formula and U=0.5 closed form and near-binary mass at T=0.1, but only at function level; it does not check that the renderer samples U in training (see issue 1)"},
+  {"probe": "transient-variance", "detects_removal": true, "why": "known per-Gaussian delta alpha; static Var must be 0 and varying Var must match |d|^10/(1+|d|^10)"},
+  {"probe": "appearance-mlp", "detects_removal": true, "why": "renderer colours/opacities vs an independent MLP pass; embedding must change the render; gradients must route to the right embedding row"},
+  {"probe": "bank-training", "detects_removal": true, "why": "schedule values, position LR closed form, all three bank parameter groups must move after a step"},
+  {"probe": "nerfw-protocol", "detects_removal": true, "why": "left-half loss must drop by 30%; right-half metric must not depend on the left half"}
+ ],
+ "fidelity_gaps_confirmed": [
+  "No official code; A1-A11 are unverifiable. Of these, MLP depth (3 hidden vs 3 linear layers), output activations, embedding init and test-time optimisation settings matter most.",
+  "Supp. Tab. 7 checked value by value: 60000 it, densification interval 2000, densification end 30000, emb dim 24 / lr 0.0025, hash T 2^19 / N_max 2048 / N_min 16 / L 12 / lr 0.0025, MLP 3 layers / in 51 / hidden 64 / out 4 / lr 0.0025. All match. The 4 outputs are c^I (3) + delta alpha^I (1), per Eq. 8 and the Fig. 2 caption.",
+  "'Densification interval 2000' is the densification interval, not the opacity reset. Supp. §D says SWAG 'uses less frequent densification steps than original 3DGS'. The opacity reset (3000 until 30000) is unspecified, and the 3DGS default is applied (A6).",
+  "The paper has no regulariser or warm-up on delta alpha, and no temperature annealing (§4.2 says T=0.1 fixed). The port correctly adds none.",
+  "Own CUDA hash kernel instead of tcnn (fp32, gradient reaches the centres).",
+  "Full-resolution PT and LPIPS net are unspecified (A9/A10)."
+ ],
+ "transient_opacity_finding": "No port bug found. Sign, range, eval handling and terms all match Eq. 9-11: |raw| as the location, sigmoid((log|d| + logit U)/T), T = 0.1, U ~ U(0,1) on training renders, U = 0.5 at test, alpha^I = max(alpha - d~, 0), and no regulariser in the paper. Diagnostic on the evidence/smoke-2 checkpoint (12 training views, own embeddings): at init (same seed and cfg, the trained Gaussians as input) median |d| = 0.06-0.12 and the expected training-time drop E[|d|/(1+|d|)] is 6-10%. After 2k steps, median |d| = 0.42-0.83 (the raw output has drifted negative, mean -0.76, std 0.86). 25-40% of Gaussians have |d| > 1 (off at U = 0.5) per view, 24.7% are off on every sampled view, and the expected training-time drop is 32-43% per render. So the optimiser learned to switch Gaussians off; this is not an init artefact. Rendering the same training views with random U beats U = 0.5 on 9/12 views (e.g. 18.01 vs 15.52, 20.09 vs 17.55). This train/test mismatch is inherent in the paper's 'fix U at 0.5' choice when locations sit near 1, not a code error. Conclusion: faithful but early (no densification yet at 2k, so dropping misplaced SfM Gaussians per image is cheap). It remains the top result risk. The benchmark should log per-checkpoint transient statistics (fraction off at U = 0.5, Var > 0 fraction; paper Gate is 12.5%) and run swag-a on brandenburg-gate (paper 26.44 vs 26.33). If at 60k swag stays more than 1 dB below swag-a, report it as an unresolved fidelity gap. Do not add an unpublished regulariser to fix it.",
+ "summary": "Approved: 0 critical, 0 major, 6 minor. The equations (7)-(11), the C3 variance and every number in supp. Tab. 7 match the paper. The densify interval of 2000 is genuinely the densification interval. The CUDA hash probe chain would catch a wrong kernel. The NeRF-W evaluator follows §5.3, apart from a 1-column half overlap; its steps, lr and init are documented assumptions. The 2k-step transient-opacity deficit traces to learned |delta alpha| growth under the paper's exact formulation, not to a port bug."
+}

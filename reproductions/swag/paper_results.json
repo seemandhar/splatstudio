@@ -1,0 +1,44 @@
+{
+  "paper": "SWAG: Splatting in the Wild images with Appearance-conditioned Gaussians",
+  "arxiv": "2403.10427",
+  "method_label": "SWAG (ours)",
+  "iterations": 60000,
+  "datasets": {
+    "phototourism": {
+      "method": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 26.33, "sacre-coeur": 21.16, "trevi-fountain": 23.10},
+          "ssim": {"brandenburg-gate": 0.929, "sacre-coeur": 0.860, "trevi-fountain": 0.815},
+          "lpips": {"brandenburg-gate": 0.139, "sacre-coeur": 0.185, "trevi-fountain": 0.208}
+        }
+      },
+      "baseline_3dgs": {
+        "per_scene": {
+          "psnr": {"brandenburg-gate": 19.99, "sacre-coeur": 17.57, "trevi-fountain": 18.47},
+          "ssim": {"brandenburg-gate": 0.889, "sacre-coeur": 0.831, "trevi-fountain": 0.761},
+          "lpips": {"brandenburg-gate": 0.180, "sacre-coeur": 0.219, "trevi-fountain": 0.234}
+        }
+      },
+      "ablations": {
+        "swag-a_no_transient": {
+          "psnr": {"brandenburg-gate": 26.44, "sacre-coeur": 21.02, "trevi-fountain": 22.35},
+          "ssim": {"brandenburg-gate": 0.928, "sacre-coeur": 0.855, "trevi-fountain": 0.801},
+          "lpips": {"brandenburg-gate": 0.141, "sacre-coeur": 0.183, "trevi-fountain": 0.223}
+        },
+        "swag-t_no_appearance": {
+          "psnr": {"brandenburg-gate": 24.46, "sacre-coeur": 19.06, "trevi-fountain": 20.13},
+          "ssim": {"brandenburg-gate": 0.914, "sacre-coeur": 0.836, "trevi-fountain": 0.769},
+          "lpips": {"brandenburg-gate": 0.160, "sacre-coeur": 0.205, "trevi-fountain": 0.244}
+        },
+        "affine_colour": {"psnr": {"brandenburg-gate": 18.34, "trevi-fountain": 19.01}},
+        "fourier_pos_emb": {"psnr": {"brandenburg-gate": 18.66, "trevi-fountain": 19.91}}
+      },
+      "gaussians": {"brandenburg-gate": 202082, "sacre-coeur": 275315, "trevi-fountain": 573644},
+      "transient_gaussians": {"brandenburg-gate": 25273, "sacre-coeur": 66754, "trevi-fountain": 109672},
+      "train_time_h_mean": 0.83,
+      "fps_mean": 15.29,
+      "source": "Table 1 (main), Table 3 (ablation), supp. Tab. ablation / Gaussian distribution"
+    }
+  },
+  "notes": "No averages reported for Photo Tourism, per-scene only. 3DGS row is the authors' own 3DGS run. Metrics on the right half of each NeRF-W test image after test-time embedding optimisation on the left half. NeRF-OSR (Table 2) not transcribed: dataset not available. SWAG-T has no appearance yet +4.5 dB over 3DGS on Gate, so the 3DGS row must be read with care."
+}

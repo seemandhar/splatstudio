@@ -1,0 +1,49 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_ms_gs/renderer.py", "where": "Renderer.render / density._visible_full",
+   "problem": "Visibility (radii>0) comes from gsplat 1.5.3's opacity-aware projection (opacity < 1/255 -> radius 0; extent min(3.33, sqrt(2 ln(o/thr)))), not the official fork's 3-sigma radius with no opacity cull. A Gaussian with sigma < 1/255 counts as visible in the official code (its range decays and it adds densify stats) but not in the plugin.",
+   "evidence": "gsplat/cuda/csrc/ProjectionEWA3DGSFused.cu:165-178 vs MS-GS-rasterizer forward.cu:356-385",
+   "fix": "List this explicitly under fidelity gap 2 (it is covered only by the generic 'gsplat rasterizer' line). It applies to every method on the runtime, so the gsplat comparator is unaffected."},
+  {"severity": "minor", "file": "plugin/ss_ms_gs/aggregate.py", "where": "voxel_aggregate",
+   "problem": "The voxel index floor(p/size), with the grid anchored at the origin, is assumed to match Open3D-ML VoxelPooling. ml3d is not installed, so this was not checked against the library. A grid offset would change which Gaussians share a voxel, but not the statistics.",
+   "evidence": "gaussian_model.py:803-818 (ml3d.layers.VoxelPooling(position_fn='center', feature_fn='average'))",
+   "fix": "Note it as an unverified assumption in report.md."},
+  {"severity": "minor", "file": "report.md", "where": "Protocol",
+   "problem": "The official README example uses --ms_train_max_scale 6, while train_all.py (and the plugin) use 7 for Mip-NeRF 360. 7 agrees with 128x being reported in supp. Tab. 360_per_scene, but the report does not mention that the two sources disagree.",
+   "evidence": "source/code/README.md:36 vs train_all.py:213-215",
+   "fix": "Add one line to report.md."},
+  {"severity": "minor", "file": "plugin/ss_ms_gs/losses.py", "where": "resize_target",
+   "problem": "Every non-1x step copies the 1600-px target to the CPU and runs an antialiased bicubic resize there (about 25% of steps). Fidelity is fine (53-84 dB from PIL), but it costs wall-clock time, so the timing is not comparable to the paper's.",
+   "evidence": "losses.py:36-46",
+   "fix": "Optional: cache the resized targets per (frame, level). Leave it as is if the timing is not reported."},
+  {"severity": "minor", "file": "report.md", "where": "Fidelity gaps",
+   "problem": "Densification statistics: the official code counts visibility for non-1x renders in per-level accumulators and updates max_radii2D at every level. The plugin accumulates on 1x steps only. Both are inert: only slot 0 is read, and the 20-px screen-size prune never fires because max_radii2D is zeroed before it is read. This is correct, but the report does not say why.",
+   "evidence": "train.py:248-250, gaussian_model.py:599-625",
+   "fix": "Optional: add one sentence to report.md."}
+ ],
+ "equation_coverage": [
+  {"eq": "pixel coverage S_k (Sec 4.1, Fig 3; forward.cu:240-259)", "status": "exact", "code": "coverage.py:pixel_coverage, csrc/coverage.cu"},
+  {"eq": "(6) range update S^max/S^min, 0.95/1.05, own level only, level 0 no max, coarsest no min, >=250 and >250 after reset", "status": "exact", "code": "coverage.py:update_ranges, density.py:after_backward"},
+  {"eq": "(7) / Alg.2 selection (code: rel_min<0.5 & S<2, or rel_max>2, nested; -1 = never cull)", "status": "exact", "code": "coverage.py:select, renderer.py:render"},
+  {"eq": "Alg.1 aggregation (code: min S at 2^r over cams visible at 1x, <1 px, level 0; one-sided 2-1/x; voxel 0.02 r/4; raw mean; scale x2/clip(S,0.25,2); ranges -1 then refreshed at 2^r)", "status": "exact", "code": "density.py:insert_large, aggregate.py:voxel_aggregate"},
+  {"eq": "MS training schedule (per-epoch level, p=0.75, least-trained of enabled {0,2..7}, enable at >1010/1020/1030; loss x0.1; level-0-only ADC/reset/prune; xyz LR 30k then hold; 40k)", "status": "exact", "code": "schedule.py:MultiScaleSampler, losses.py, density.py"}
+ ],
+ "probe_assessment": [
+  {"probe": "msgs-pixel-coverage", "detects_removal": true, "why": "Analytic case discriminates the 0.3 dilation; z<=0.2 gives 0."},
+  {"probe": "msgs-selection-rule", "detects_removal": true, "why": "Truth table covers uninitialised ranges, the abs threshold, the 2.0 ratio and the nesting."},
+  {"probe": "msgs-range-update", "detects_removal": true, "why": "Checks exact decayed values and the level / coarsest exemptions."},
+  {"probe": "msgs-aggregation", "detects_removal": true, "why": "Compared against an independent grouping loop plus a contraction-side test."},
+  {"probe": "msgs-schedule", "detects_removal": true, "why": "Checks enable steps, 2x never trained, epoch constancy, P(1x), x0.1 and the LR hold."},
+  {"probe": "msgs-densify-fields", "detects_removal": true, "why": "Level-2 Gaussians are protected and split children get /1.6."},
+  {"probe": "msgs-selective-render", "detects_removal": true, "why": "End to end: coarse Gaussians culled at 1x and drawn at 4x, fine ones culled at 4x."},
+  {"probe": "msgs-cuda-kernel", "detects_removal": true, "why": "Kernel compared with the torch reference: relative error and mask flips."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Training targets at 2x-128x are a CPU antialiased bicubic resize of the 1600 frame, not PIL from full res (53-84 dB apart, evidence/gt_resample.json).",
+  "Views are sampled with replacement inside the official per-epoch resolution sequence.",
+  "Densify after the optimizer step; white background (official black); SH degree steps one iteration late.",
+  "gsplat rasterizer: opacity-aware radius / visibility (see issue 1).",
+  "128x not evaluated (12x8 px is below the loader minimum); runtime SSIM uses valid convolution, LPIPS from the lpips package.",
+  "Official code values are used where the paper text differs: S_rel^max 2.0, insertion threshold 1 px, voxel 0.01/0.02/0.03, level-0-only aggregation, one-sided contraction."
+ ],
+ "summary": "Faithful port of MS-GS @50e5040 and the rasterizer @e7a2b4f. (1) Protocol: train_all.py uses 360_v2 'images' full res, -r -1, so width 1600; max_scale 7; the active 'ms' configuration has test scales 2^0..2^7; training_report evaluates test cameras with the same filter_small/filter_large selection. The dataset's test images are byte-identical to PIL Image.resize(int(W/(g*s)), int(H/(g*s))) of the full-res JPEG (checked garden and counter at 1/4/64x, max diff 0); the 1x train frames are also identical. Split: llffhold 8 on name-sorted frames (garden 161/24). The world frame is not reoriented, so the one-sided contraction acts on the same axes as in the official code. Targets were transcribed correctly from supp. Tab. 360_per_scene (garden 27.16/23.99/26.41/24.79, counter 29.17/26.77/23.44/24.59; 3DGS rows 27.27/20.42/16.74/14.92 and 29.15/24.81/17.94/14.32), and the per-scene means reproduce the main Tab. 1 average (27.39). (2) C1-C4 match the official code line by line: ranges are per Gaussian and updated only for visible Gaussians whose level equals the rendered level (training steps >=250 and >250 after a reset, plus the refresh after insertion); the eval renderer applies the same selection. The sampler, the x0.1 loss, level-0-only ADC/reset/prune and the 30k-then-hold position LR were all confirmed, and the runtime's means-LR override is undone in after_backward. (3) Smoke numbers re-derived from evidence test.json: ms-gs 21.98/21.66/21.11/23.06 and gsplat 22.97/20.62/16.26/14.51. 8 unit tests pass and ss-verify (GPU 6) passes all probes. No critical or major issues; 5 minor issues. Ready for benchmark."}

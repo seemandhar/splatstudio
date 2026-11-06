@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-bags"
+version = "0.1.0"
+description = "BAGS (arXiv 2403.04926) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+bags = "ss_bags:method"
+bags-smoke = "ss_bags:method_smoke"
+bags-ball = "ss_bags:method_ball"
+bags-basket = "ss_bags:method_basket"
+bags-buick = "ss_bags:method_buick"
+bags-coffee = "ss_bags:method_coffee"
+bags-decoration = "ss_bags:method_decoration"
+bags-girl = "ss_bags:method_girl"
+bags-heron = "ss_bags:method_heron"
+bags-parterre = "ss_bags:method_parterre"
+bags-puppet = "ss_bags:method_puppet"
+bags-stair = "ss_bags:method_stair"
+bags-cake = "ss_bags:method_cake"
+bags-caps = "ss_bags:method_caps"
+bags-cisco = "ss_bags:method_cisco"
+bags-coral = "ss_bags:method_coral"
+bags-cupcake = "ss_bags:method_cupcake"
+bags-cups = "ss_bags:method_cups"
+bags-daisy = "ss_bags:method_daisy"
+bags-sausage = "ss_bags:method_sausage"
+bags-seal = "ss_bags:method_seal"
+bags-tools = "ss_bags:method_tools"
+bags-ball-nobpn = "ss_bags:method_ball_nobpn"
+bags-caps-nobpn = "ss_bags:method_caps_nobpn"
+
+[tool.setuptools.packages.find]
+include = ["ss_bags*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

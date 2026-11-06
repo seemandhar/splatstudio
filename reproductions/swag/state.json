@@ -1,0 +1,13 @@
+{
+ "paper": "SWAG: Splatting in the Wild images with Appearance-conditioned Gaussians",
+ "slug": "swag",
+ "plan_id": 85,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done"
+ },
+ "outcome": "built",
+ "arxiv": "2403.10427"
+}

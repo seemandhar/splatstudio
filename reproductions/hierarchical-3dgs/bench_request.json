@@ -1,0 +1,37 @@
+{
+ "method": "hierarchical-3dgs",
+ "datasets": {
+  "mipnerf360-1600": [
+   "bicycle",
+   "flowers",
+   "garden",
+   "stump",
+   "treehill",
+   "room",
+   "counter",
+   "kitchen",
+   "bonsai"
+  ]
+ },
+ "steps": 45000,
+ "per_scene_reported": false,
+ "extra": "--max-gaussians 40000000",
+ "post_eval": [
+  "tools/ssenv python -m ss_hierarchical_3dgs.eval_taus --run <run> --taus -0.5 0 3 6 15",
+  "tools/ssenv python -m ss_hierarchical_3dgs.eval_taus --run <run> --basic --taus 0 3 6 15",
+  "tools/ssenv python -m ss_hierarchical_3dgs.summary --ours runs/<exp> --baseline runs/baseline3dgs-mipnerf360-1600-30000 runs/baseline3dgs-mipnerf360-1600b-30000 --channel-baseline --output runs/<exp>/h3dgs_summary.json"
+ ],
+ "baseline": {
+  "garden": "baseline3dgs-mipnerf360-1600-30000",
+  "bicycle": "baseline3dgs-mipnerf360-1600-30000",
+  "counter": "baseline3dgs-mipnerf360-1600-30000",
+  "flowers": "baseline3dgs-mipnerf360-1600b-30000",
+  "stump": "baseline3dgs-mipnerf360-1600b-30000",
+  "treehill": "baseline3dgs-mipnerf360-1600b-30000",
+  "room": "baseline3dgs-mipnerf360-1600b-30000",
+  "kitchen": "baseline3dgs-mipnerf360-1600b-30000",
+  "bonsai": "baseline3dgs-mipnerf360-1600b-30000"
+ },
+ "compare_to": "paper_results.json datasets.mipnerf360. Primary targets: (a) tau-row deltas vs leaves (scene-set independent): opt tau3/6/15 - leaves = -0.09/-0.44/-1.71, basic = -0.10/-0.91/-4.14; (b) leaves - 3DGS on the 7-scene mean (bicycle garden stump room counter kitchen bonsai; their 3DGS 29.11 fits a 7-scene mean with per-channel PSNR, not the 9-scene mean): paper -0.15. Report each for 9-scene and 7-scene scene means and for full-image PSNR (runtime) and per-channel PSNR (official image_utils.psnr on [3,H,W], render_hierarchy.py:111). Files: test_tau-0.5.json = leaves, test_tau0.json = official finest row (1 px threshold), test_tau{3,6,15}.json = Ours opt, test_basic_tau*.json = Ours basic; summary.py computes all of it.",
+ "notes": "Resolution: mipnerf360-1600 = official default (ModelParams resolution -1, images='images', width capped at 1600 px, utils/camera_utils.py:57-74; README eval commands pass no -r/-i); tau is in pixels at the render resolution (render_hierarchy.py:57), so other resolutions would change the tau rows. Config follows the README.md:550 single-chunk eval command: --skip_scale_big_gauss (shrink off), --exposure_lr_init 0 (no exposure), but -d depths (depth regularization) is NOT available here (fidelity gap). Extent = 1.1 x 0.9-quantile camera distance (dataset_readers.py:58), computed inside the density. steps 45000 = 30000 leaf (train_single) + hierarchy build + 15000 hierarchy optimization (train_post); the basic hierarchy is rebuilt from the frozen leaves by eval_taus --basic (guard: every leaf must be an anchor), so no separate 30000-step run. Disk: launch under /bigdata/sejain/runs/<exp> with a symlink at runs/<exp> (CLAUDE.md); keep checkpoints (needed for re-evaluation). Checkpoint size: params only after step 45000 (Adam state cleared), 78 floats = 312 B per hierarchy Gaussian, hierarchy ~1.3x leaves; at 1600 px expect ~3-6M leaves -> ~1.2-2.5 GB per scene, ~10-20 GB for 9 scenes (for scale: the 1600 gsplat baseline garden checkpoint is 3.26 GB). The --channel-baseline step re-renders the 9 baseline checkpoints once (cached in runs/<exp>/baseline_channel/, ~small JSONs). Smoke (images_4): ~65-90 ms/step at 0.4M Gaussians; at 1600 px (~1.6-2x pixels outdoor) estimate ~3-5 h per scene, ~30-40 GPU-h total. A subset average is not comparable (paper reports only the dataset mean)."
+}

@@ -1,0 +1,38 @@
+{
+  "exp": "octree-gs-1600",
+  "datasets": {
+    "mipnerf360-1600": {
+      "scenes": [
+        "counter",
+        "garden"
+      ],
+      "all_scenes": false,
+      "methods": {
+        "octree-gs": {
+          "per_scene": {
+            "garden": {
+              "lpips": 0.141530756217738,
+              "psnr": 27.36218547821045,
+              "ssim": 0.8555072794357935,
+              "gaussians": 720082,
+              "minutes": 94.38467621725674
+            },
+            "counter": {
+              "lpips": 0.24450413237015406,
+              "psnr": 29.758936882019043,
+              "ssim": 0.9177507519721985,
+              "gaussians": 211666,
+              "minutes": 130.40937986125547
+            }
+          },
+          "mean": {
+            "psnr": 28.560561180114746,
+            "ssim": 0.886629015703996,
+            "lpips": 0.19301744429394602
+          }
+        }
+      },
+      "gaps": {}
+    }
+  }
+}

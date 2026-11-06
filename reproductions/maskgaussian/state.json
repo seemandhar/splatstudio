@@ -1,0 +1,14 @@
+{
+ "paper": "MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic Masks",
+ "slug": "maskgaussian",
+ "plan_id": 95,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done"
+ },
+ "outcome": "built",
+ "method": "maskgaussian",
+ "bench_request": "bench_request.json"
+}

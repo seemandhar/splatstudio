@@ -1,0 +1,13 @@
+{
+ "paper": "ResGS: Residual Densification of 3D Gaussian for Efficient Detail Recovery",
+ "slug": "resgs",
+ "plan_id": 96,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done"
+ },
+ "outcome": "built",
+ "method": "resgs"
+}

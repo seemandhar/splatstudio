@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-spec-gaussian"
+version = "0.1.0"
+description = "Spec-Gaussian (Yang et al., NeurIPS 2024) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+spec-gaussian = "ss_spec_gaussian:method"
+spec-gaussian-indoor = "ss_spec_gaussian:method_indoor"
+spec-gaussian-c2f = "ss_spec_gaussian:method_c2f"
+spec-gaussian-indoor-c2f = "ss_spec_gaussian:method_indoor_c2f"
+
+[tool.setuptools.packages.find]
+include = ["ss_spec_gaussian*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

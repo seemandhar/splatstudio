@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-gradient-upscaling"
+version = "0.1.0"
+description = "Lightweight Gradient-Aware Upscaling of 3DGS Images (arXiv 2503.14171) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio", "splatstudio-method-taming-3dgs"]
+
+[project.entry-points."splatstudio.methods"]
+gradient-upscaling-2x = "ss_gradient_upscaling:spline2x"
+gradient-upscaling-4x = "ss_gradient_upscaling:spline4x"
+bicubic-upscaling-2x = "ss_gradient_upscaling:bicubic2x"
+bicubic-upscaling-4x = "ss_gradient_upscaling:bicubic4x"
+gradient-upscaling-3dgs = "ss_gradient_upscaling:control3dgs"
+
+[tool.setuptools]
+packages = ["ss_gradient_upscaling"]
+
+[tool.setuptools.package-data]
+ss_gradient_upscaling = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100

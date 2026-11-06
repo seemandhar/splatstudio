@@ -1,0 +1,23 @@
+{
+  "paper": "Lightweight Gradient-Aware Upscaling of 3D Gaussian Splatting Images",
+  "slug": "gradient-upscaling",
+  "plan_id": 80,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 8 minors)",
+    "benchmark": "running (4x truck+playroom; control needs apply_upscaling post-eval)"
+  },
+  "outcome": "built",
+  "method": "gradient-upscaling-4x",
+  "custom_cuda": true,
+  "bench_request": "bench_request.json",
+  "bench_exps": [
+    "gup4x-tandt",
+    "gup4x-db",
+    "gup4x-ctl-tandt",
+    "gup4x-ctl-db"
+  ]
+}

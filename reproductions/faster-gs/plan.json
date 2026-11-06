@@ -1,0 +1,16 @@
+{"method": "faster-gs", "module": "ss_faster_gs",
+ "components": [
+  {"name": "fastergs-renderer", "kind": "renderer", "factory": "ss_faster_gs.renderer:create_renderer", "requires": ["state.gaussian3d", "camera.pinhole"], "provides": ["render.rgb", "densification.fastergs"]},
+  {"name": "fastergs-density", "kind": "density", "factory": "ss_faster_gs.density:create_density", "requires": ["densification.fastergs"], "provides": []},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric", "requires": ["render.rgb"], "provides": []}],
+ "fields": [],
+ "probes": ["fastergs-render-reference", "fastergs-tile-culling", "fastergs-adam", "fastergs-morton", "fastergs-adc", "fastergs-densification-info", "state-transitions", "photometric-gradient"],
+ "contributions": [
+  {"name": "basis-rasterizer", "source": "§3.1 / supp. Testbed Basis", "probes": ["fastergs-render-reference"]},
+  {"name": "consolidated-culling-bounds", "source": "§3.2 splat bounding + tile-based culling (StopThePop/Speedy-Splat, consolidated)", "probes": ["fastergs-tile-culling", "fastergs-render-reference"]},
+  {"name": "per-gaussian-backward-fused-activations", "source": "§3.2 per-Gaussian backward (Taming, + own shared-memory variant), fused activations, separate SH", "probes": ["fastergs-render-reference", "fastergs-densification-info"]},
+  {"name": "fused-adam", "source": "§3.3 Parameter Updates", "probes": ["fastergs-adam"]},
+  {"name": "morton-ordering", "source": "§3.3 Locality-preserving Densification", "probes": ["fastergs-morton"]},
+  {"name": "3dgs-adc-unchanged", "source": "supp. §A", "probes": ["fastergs-adc"]}],
+ "fidelity_gaps": ["runtime SSIM (valid conv) instead of fused-ssim", "view sampling with replacement", "one-step means-LR offset", "single seed vs 5-run mean", "baseline uses opacity lr 0.05 + white bg", "main-branch kernels include borrowed warp-level culling (lossless)", "shared A6000 / CUDA 12.1 timing", "LPIPS-VGG"],
+ "feasible_natively": true}

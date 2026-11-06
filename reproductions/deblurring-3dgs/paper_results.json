@@ -1,0 +1,195 @@
+{
+ "paper": "Deblurring 3D Gaussian Splatting",
+ "arxiv": "2401.00834",
+ "method_label": "Ours",
+ "iterations": 20000,
+ "datasets": {
+  "deblur3dgs-defocus": {
+   "method": {
+    "average": {
+     "psnr": 23.71,
+     "ssim": 0.7471,
+     "lpips": 0.1068
+    },
+    "per_scene": {
+     "psnr": {
+      "cake": 26.88,
+      "caps": 24.5,
+      "cisco": 20.83,
+      "coral": 19.78,
+      "cupcake": 22.11,
+      "cups": 26.28,
+      "daisy": 23.54,
+      "sausage": 18.99,
+      "seal": 26.18,
+      "tools": 27.96
+     },
+     "ssim": {
+      "cake": 0.8026,
+      "caps": 0.7428,
+      "cisco": 0.7321,
+      "coral": 0.608,
+      "cupcake": 0.7344,
+      "cups": 0.8235,
+      "daisy": 0.731,
+      "sausage": 0.5705,
+      "seal": 0.8166,
+      "tools": 0.9098
+     },
+     "lpips": {
+      "cake": 0.1158,
+      "caps": 0.1491,
+      "cisco": 0.0794,
+      "coral": 0.131,
+      "cupcake": 0.0985,
+      "cups": 0.1028,
+      "daisy": 0.0949,
+      "sausage": 0.1405,
+      "seal": 0.098,
+      "tools": 0.0577
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 20.57,
+     "ssim": 0.6064,
+     "lpips": 0.292
+    },
+    "per_scene": {
+     "psnr": {
+      "cake": 20.16,
+      "caps": 19.08,
+      "cisco": 20.01,
+      "coral": 19.5,
+      "cupcake": 21.53,
+      "cups": 20.55,
+      "daisy": 20.96,
+      "sausage": 17.83,
+      "seal": 22.25,
+      "tools": 23.82
+     },
+     "ssim": {
+      "cake": 0.5903,
+      "caps": 0.4355,
+      "cisco": 0.6931,
+      "coral": 0.5519,
+      "cupcake": 0.6794,
+      "cups": 0.6459,
+      "daisy": 0.6004,
+      "sausage": 0.4718,
+      "seal": 0.5905,
+      "tools": 0.805
+     },
+     "lpips": {
+      "cake": 0.2082,
+      "caps": 0.4329,
+      "cisco": 0.1781,
+      "coral": 0.3111,
+      "cupcake": 0.2081,
+      "cups": 0.3211,
+      "daisy": 0.2629,
+      "sausage": 0.2855,
+      "seal": 0.3057,
+      "tools": 0.1953
+     }
+    }
+   },
+   "source": "Table 1 (PSNR/SSIM), supp. Table (real defocus LPIPS)"
+  },
+  "deblur3dgs-motion": {
+   "method": {
+    "average": {
+     "psnr": 26.61,
+     "ssim": 0.8224,
+     "lpips": 0.1096
+    },
+    "per_scene": {
+     "psnr": {
+      "ball": 28.27,
+      "basket": 28.42,
+      "buick": 25.95,
+      "coffee": 32.84,
+      "decoration": 25.87,
+      "girl": 23.26,
+      "heron": 23.14,
+      "parterre": 26.17,
+      "puppet": 25.67,
+      "stair": 26.46
+     },
+     "ssim": {
+      "ball": 0.8233,
+      "basket": 0.8713,
+      "buick": 0.8367,
+      "coffee": 0.9312,
+      "decoration": 0.854,
+      "girl": 0.839,
+      "heron": 0.7438,
+      "parterre": 0.8144,
+      "puppet": 0.8051,
+      "stair": 0.705
+     },
+     "lpips": {
+      "ball": 0.1413,
+      "basket": 0.1155,
+      "buick": 0.0954,
+      "coffee": 0.0676,
+      "decoration": 0.0933,
+      "girl": 0.1011,
+      "heron": 0.1543,
+      "parterre": 0.1206,
+      "puppet": 0.0941,
+      "stair": 0.1123
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 21.66,
+     "ssim": 0.6154,
+     "lpips": 0.324
+    },
+    "per_scene": {
+     "psnr": {
+      "ball": 22.99,
+      "basket": 23.11,
+      "buick": 21.22,
+      "coffee": 23.53,
+      "decoration": 20.45,
+      "girl": 19.72,
+      "heron": 19.26,
+      "parterre": 22.22,
+      "puppet": 22.18,
+      "stair": 21.88
+     },
+     "ssim": {
+      "ball": 0.6206,
+      "basket": 0.6833,
+      "buick": 0.6519,
+      "coffee": 0.6995,
+      "decoration": 0.6239,
+      "girl": 0.7031,
+      "heron": 0.4767,
+      "parterre": 0.5813,
+      "puppet": 0.6362,
+      "stair": 0.4789
+     },
+     "lpips": {
+      "ball": 0.3505,
+      "basket": 0.2925,
+      "buick": 0.2839,
+      "coffee": 0.3113,
+      "decoration": 0.3141,
+      "girl": 0.2843,
+      "heron": 0.3328,
+      "parterre": 0.3197,
+      "puppet": 0.2607,
+      "stair": 0.3888
+     }
+    }
+   },
+   "source": "Table 2 (PSNR/SSIM), supp. Table (real camera motion LPIPS)"
+  }
+ },
+ "notes": "Deblur-NeRF real defocus / real camera-motion sets as re-released by the authors (COLMAP re-run), 600x400 (-r 4). 3D-GS row = vanilla 3DGS trained on blurry images in this paper's tables. Coral is in the paper's tables and in the release. Averages over all 10 scenes. LPIPS: lpips package (AlexNet default) via Deblur-NeRF metrics.py; SSIM: skimage. Supplementary also has synthetic sets (not used)."
+}

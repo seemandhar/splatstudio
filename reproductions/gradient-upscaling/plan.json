@@ -1,0 +1,11 @@
+{"method": "gradient-upscaling-4x", "module": "ss_gradient_upscaling",
+ "methods": ["gradient-upscaling-2x", "gradient-upscaling-4x", "bicubic-upscaling-2x", "bicubic-upscaling-4x", "gradient-upscaling-3dgs"],
+ "components": [
+  {"name": "upscale-renderer", "kind": "renderer", "factory": "ss_gradient_upscaling.renderer:create_renderer", "config": {"factor": 4, "upscaler": "spline", "tile_size": 16}},
+  {"name": "taming-density", "kind": "density", "factory": "ss_taming_3dgs.density:create_density", "config": {"mode": "final_count", "budget": 1000000, "densification_interval": 100, "high_opacity": "off", "sh_update_every": 1, "lr": {}}},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["jet-value-equals-gsplat", "jet-derivs-vs-finite-diff", "jet-vs-torch-autograd", "spline-equals-paper-matrix", "spline-equals-catmull-rom", "analytic-beats-fd", "renderer-end-to-end"],
+ "contributions": ["C1 gradient-aware spline upscaling", "C2 analytic image gradients in the forward pass", "C3 backprop through analytic gradients (training with upscaling)", "C4 speed (evaluation tool)"],
+ "fidelity_gaps": ["no official code: CUDA derived from paper, gsplat numerics", "Mip-NeRF360 full-res 5187x3361 not benchmarked", "white background; bg term in derivatives", "upscaler border extrapolation", "only Taming densification, interval 100 assumed", "3DGS control via --downscale (LANCZOS)", "PyTorch spline upscaler, A6000 same-GPU ratios"],
+ "feasible_natively": true}

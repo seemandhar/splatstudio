@@ -1,11 +1,18 @@
 {
- "paper": "A Hierarchical 3D Gaussian Representation for Real-Time Rendering of Very Large Datasets",
- "slug": "hierarchical-3dgs",
- "plan_id": 74,
- "stages": {
-  "paper-reader": "done",
-  "planner": "done",
-  "coder": "done"
- },
- "outcome": null
+  "paper": "A Hierarchical 3D Gaussian Representation for Real-Time Rendering of Very Large Datasets",
+  "slug": "hierarchical-3dgs",
+  "plan_id": 74,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (3 majors fixed: shrink off, mipnerf360-1600, 7-scene/per-channel reporting; depth reg = recorded gap)",
+    "benchmark": "running (on /bigdata)"
+  },
+  "outcome": "ready_for_benchmark",
+  "method": "hierarchical-3dgs",
+  "bench_exps": [
+    "h3dgs-mipnerf360-1600"
+  ]
 }

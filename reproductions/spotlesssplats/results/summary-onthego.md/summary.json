@@ -1,0 +1,46 @@
+{
+  "exp": "spotless-onthego",
+  "datasets": {
+    "onthego": {
+      "scenes": [
+        "patio"
+      ],
+      "all_scenes": false,
+      "methods": {
+        "spotlesssplats": {
+          "per_scene": {
+            "patio": {
+              "lpips": 0.12720036449340674,
+              "psnr": 22.29720093653752,
+              "ssim": 0.8590822036449726,
+              "gaussians": 264176,
+              "minutes": 15.01335915758585
+            }
+          },
+          "mean": {
+            "psnr": 22.29720093653752,
+            "ssim": 0.8590822036449726,
+            "lpips": 0.12720036449340674
+          }
+        },
+        "gsplat": {
+          "per_scene": {
+            "patio": {
+              "lpips": 0.26929089484306484,
+              "psnr": 17.23809388967661,
+              "ssim": 0.7004766739331759,
+              "gaussians": 851975,
+              "minutes": 31.623432602640243
+            }
+          },
+          "mean": {
+            "psnr": 17.23809388967661,
+            "ssim": 0.7004766739331759,
+            "lpips": 0.26929089484306484
+          }
+        }
+      },
+      "gaps": {}
+    }
+  }
+}

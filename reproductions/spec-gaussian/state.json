@@ -1,0 +1,12 @@
+{
+ "paper": "Spec-Gaussian: Anisotropic View-Dependent Appearance for 3D Gaussian Splatting",
+ "slug": "spec-gaussian",
+ "plan_id": 90,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done"
+ },
+ "outcome": "ready_for_benchmark"
+}

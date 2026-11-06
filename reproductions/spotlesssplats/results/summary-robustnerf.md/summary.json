@@ -1,0 +1,46 @@
+{
+  "exp": "spotless-robustnerf",
+  "datasets": {
+    "robustnerf": {
+      "scenes": [
+        "android"
+      ],
+      "all_scenes": false,
+      "methods": {
+        "spotlesssplats": {
+          "per_scene": {
+            "android": {
+              "lpips": 0.18383769847844778,
+              "psnr": 25.066966508564196,
+              "ssim": 0.8402969586221796,
+              "gaussians": 250350,
+              "minutes": 14.777956860791893
+            }
+          },
+          "mean": {
+            "psnr": 25.066966508564196,
+            "ssim": 0.8402969586221796,
+            "lpips": 0.18383769847844778
+          }
+        },
+        "gsplat": {
+          "per_scene": {
+            "android": {
+              "lpips": 0.20155174010678342,
+              "psnr": 24.031261845638877,
+              "ssim": 0.8167671937691537,
+              "gaussians": 1084135,
+              "minutes": 24.834948261361568
+            }
+          },
+          "mean": {
+            "psnr": 24.031261845638877,
+            "ssim": 0.8167671937691537,
+            "lpips": 0.20155174010678342
+          }
+        }
+      },
+      "gaps": {}
+    }
+  }
+}

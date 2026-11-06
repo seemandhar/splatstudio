@@ -1,0 +1,65 @@
+{
+  "paper": "Faster and Better 3D Splatting via Group Training",
+  "arxiv": "2412.07608",
+  "venue": "ICCV 2025",
+  "method_label": "Group Training w/ OPS, grouping iterations 0~30K (official default GroupingParams)",
+  "iterations": 30000,
+  "host": "vanilla 3DGS (graphdeco-inria/gaussian-splatting), retrained by the authors on one RTX 3090 (row 3DGS*)",
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.564, "ssim": 0.820, "lpips": 0.2133},
+        "per_scene": {
+          "psnr": {"bicycle": 25.219, "flowers": 21.741, "garden": 27.418, "stump": 26.830, "treehill": 22.522, "bonsai": 32.205, "counter": 28.973, "kitchen": 31.425, "room": 31.744},
+          "ssim": {"bicycle": 0.768, "flowers": 0.616, "garden": 0.868, "stump": 0.786, "treehill": 0.637, "bonsai": 0.944, "counter": 0.909, "kitchen": 0.927, "room": 0.921},
+          "lpips": {"bicycle": 0.2125, "flowers": 0.3307, "garden": 0.1051, "stump": 0.2075, "treehill": 0.3226, "bonsai": 0.1992, "counter": 0.1987, "kitchen": 0.1272, "room": 0.2161},
+          "size_mb": {"bicycle": 1195, "flowers": 790, "garden": 1084, "stump": 1060, "treehill": 921, "bonsai": 267, "counter": 225, "kitchen": 275, "room": 291},
+          "time_min": {"bicycle": 21.8, "flowers": 17.9, "garden": 23.2, "stump": 19.4, "treehill": 18.4, "bonsai": 17.4, "counter": 18.7, "kitchen": 20.4, "room": 18.8},
+          "peak_mem_gb": {"bicycle": 11.1, "flowers": 8.0, "garden": 10.6, "stump": 9.3, "treehill": 8.4, "bonsai": 7.6, "counter": 6.4, "kitchen": 7.6, "room": 8.1}
+        }
+      },
+      "method_ops_0_15k": {
+        "average": {"psnr": 27.582, "ssim": 0.820, "lpips": 0.2103},
+        "per_scene": {"psnr": {"bicycle": 25.260, "flowers": 21.751, "garden": 27.434, "stump": 26.809, "treehill": 22.402, "bonsai": 32.312, "counter": 29.031, "kitchen": 31.539, "room": 31.699}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.445, "ssim": 0.816, "lpips": 0.2155},
+        "per_scene": {
+          "psnr": {"bicycle": 25.205, "flowers": 21.484, "garden": 27.397, "stump": 26.620, "treehill": 22.514, "bonsai": 32.202, "counter": 28.980, "kitchen": 31.222, "room": 31.377},
+          "ssim": {"bicycle": 0.765, "flowers": 0.605, "garden": 0.866, "stump": 0.773, "treehill": 0.634, "bonsai": 0.942, "counter": 0.908, "kitchen": 0.927, "room": 0.919},
+          "lpips": {"bicycle": 0.2103, "flowers": 0.3355, "garden": 0.1069, "stump": 0.2149, "treehill": 0.3240, "bonsai": 0.2036, "counter": 0.2001, "kitchen": 0.1261, "room": 0.2184},
+          "size_mb": {"bicycle": 1450, "flowers": 858, "garden": 1391, "stump": 1163, "treehill": 896, "bonsai": 296, "counter": 284, "kitchen": 428, "room": 366},
+          "time_min": {"bicycle": 34.1, "flowers": 24.0, "garden": 35.9, "stump": 27.2, "treehill": 24.0, "bonsai": 20.5, "counter": 22.8, "kitchen": 28.3, "room": 23.7}
+        }
+      },
+      "source": "Table 3 (tab:3dgs_quality) averages; supp. Table tab:supp_3dgs_MipNerf360 (tables/X_suppl/3dgs_mipNeRF360.tex) per scene; baseline = 3DGS* (retrained)"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.853, "ssim": 0.850, "lpips": 0.1764},
+        "per_scene": {"psnr": {"train": 22.156, "truck": 25.549}, "ssim": {"train": 0.816, "truck": 0.884}, "lpips": {"train": 0.2104, "truck": 0.1424},
+                      "time_min": {"train": 9.3, "truck": 12.6}, "size_mb": {"train": 227, "truck": 540}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.697, "ssim": 0.849, "lpips": 0.1764},
+        "per_scene": {"psnr": {"train": 21.985, "truck": 25.409}, "ssim": {"train": 0.815, "truck": 0.882}, "lpips": {"train": 0.2063, "truck": 0.1464},
+                      "time_min": {"train": 12.5, "truck": 17.5}, "size_mb": {"train": 257, "truck": 610}}
+      },
+      "source": "Table 3 averages; supp. tab:supp_3dgs_T&T"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 29.746, "ssim": 0.907, "lpips": 0.2450},
+        "per_scene": {"psnr": {"drjohnson": 29.309, "playroom": 30.183}, "ssim": {"drjohnson": 0.904, "playroom": 0.910}, "lpips": {"drjohnson": 0.2451, "playroom": 0.2448},
+                      "time_min": {"drjohnson": 18.6, "playroom": 15.1}, "size_mb": {"drjohnson": 594, "playroom": 380}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.586, "ssim": 0.904, "lpips": 0.2437},
+        "per_scene": {"psnr": {"drjohnson": 29.190, "playroom": 29.981}, "ssim": {"drjohnson": 0.901, "playroom": 0.907}, "lpips": {"drjohnson": 0.2442, "playroom": 0.2431},
+                      "time_min": {"drjohnson": 26.8, "playroom": 21.0}, "size_mb": {"drjohnson": 782, "playroom": 549}}
+      },
+      "source": "Table 3 averages; supp. tab:supp_3dgs_deep_blending"
+    }
+  },
+  "notes": "Baseline rows are the authors' retrained 3DGS (3DGS*), not the 3DGS paper. Mip-Splatting-host numbers exist too (Tables 4/5, supp.) but the benchmark uses the vanilla-3DGS host. Time in minutes on RTX 3090; Size in MB of the .ply."
+}

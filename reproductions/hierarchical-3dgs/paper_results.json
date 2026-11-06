@@ -6,36 +6,186 @@
   "post_optimization_iterations": 15000,
   "datasets": {
     "mipnerf360": {
-      "method": {"average": {"psnr": 28.96}},
-      "method_variants": {
-        "leaves": {"average": {"psnr": 28.96}},
-        "tau3px_basic": {"average": {"psnr": 28.86}},
-        "tau3px_opt": {"average": {"psnr": 28.87}},
-        "tau6px_basic": {"average": {"psnr": 28.05}},
-        "tau6px_opt": {"average": {"psnr": 28.52}},
-        "tau15px_basic": {"average": {"psnr": 24.82}},
-        "tau15px_opt": {"average": {"psnr": 27.25}}
+      "method": {
+        "average": {
+          "psnr": 28.96
+        }
       },
-      "baseline_3dgs": {"average": {"psnr": 29.11}},
-      "source": "Section 6.2 text (evaluation.tex), 'average over the entire dataset' (9 scenes); no per-scene, SSIM or LPIPS"
+      "method_variants": {
+        "leaves": {
+          "average": {
+            "psnr": 28.96
+          }
+        },
+        "tau3px_basic": {
+          "average": {
+            "psnr": 28.86
+          }
+        },
+        "tau3px_opt": {
+          "average": {
+            "psnr": 28.87
+          }
+        },
+        "tau6px_basic": {
+          "average": {
+            "psnr": 28.05
+          }
+        },
+        "tau6px_opt": {
+          "average": {
+            "psnr": 28.52
+          }
+        },
+        "tau15px_basic": {
+          "average": {
+            "psnr": 24.82
+          }
+        },
+        "tau15px_opt": {
+          "average": {
+            "psnr": 27.25
+          }
+        }
+      },
+      "baseline_3dgs": {
+        "average": {
+          "psnr": 29.11
+        }
+      },
+      "source": "Section 6.2 text (evaluation.tex:170-171), 'average over the entire dataset'; no per-scene, SSIM or LPIPS, no stated scene set/resolution/PSNR variant",
+      "protocol_notes": {
+        "resolution": "official default: full-res images capped at 1600 px width -> our dataset mipnerf360-1600; tau in px at render resolution",
+        "scene_set": "their 3DGS 29.11 is not reachable as a 9-scene llffhold8 mean (our 9-scene gsplat ~27.2-27.3) but fits the 7 original public scenes (no flowers/treehill: our 7-scene 28.81 at images_4/2, 3DGS paper 28.69) -> compare leaves-3DGS on the 7-scene mean; also report 9-scene",
+        "psnr_variant": "official render_hierarchy.py averages per-channel PSNR (utils/image_utils.psnr on [3,H,W]); >= full-image PSNR (Jensen) -> report both",
+        "finest_row": "official render_hierarchy default taus [0,3,6,15]: tau=0 is a 1 px threshold; 'leaves' = all leaves (our tau -0.5, threshold 0)",
+        "eval_command": "README.md:550 single chunk: -d depths --exposure_lr_init 0.0 --eval --skip_scale_big_gauss"
+      }
     },
     "smallcity_chunk": {
       "method_variants": {
-        "leaves": {"psnr": 26.62, "lpips": 0.259, "ssim": 0.820},
-        "tau3px_basic": {"psnr": 26.49, "lpips": 0.264, "ssim": 0.817},
-        "tau3px_opt": {"psnr": 26.53, "lpips": 0.263, "ssim": 0.817},
-        "tau6px_basic": {"psnr": 25.72, "lpips": 0.297, "ssim": 0.796},
-        "tau6px_opt": {"psnr": 26.29, "lpips": 0.275, "ssim": 0.810},
-        "tau15px_basic": {"psnr": 23.04, "lpips": 0.423, "ssim": 0.699},
-        "tau15px_opt": {"psnr": 25.68, "lpips": 0.324, "ssim": 0.786}
+        "leaves": {
+          "psnr": 26.62,
+          "lpips": 0.259,
+          "ssim": 0.82
+        },
+        "tau3px_basic": {
+          "psnr": 26.49,
+          "lpips": 0.264,
+          "ssim": 0.817
+        },
+        "tau3px_opt": {
+          "psnr": 26.53,
+          "lpips": 0.263,
+          "ssim": 0.817
+        },
+        "tau6px_basic": {
+          "psnr": 25.72,
+          "lpips": 0.297,
+          "ssim": 0.796
+        },
+        "tau6px_opt": {
+          "psnr": 26.29,
+          "lpips": 0.275,
+          "ssim": 0.81
+        },
+        "tau15px_basic": {
+          "psnr": 23.04,
+          "lpips": 0.423,
+          "ssim": 0.699
+        },
+        "tau15px_opt": {
+          "psnr": 25.68,
+          "lpips": 0.324,
+          "ssim": 0.786
+        }
       },
-      "baseline_3dgs": {"psnr": 25.34, "lpips": 0.337, "ssim": 0.776},
+      "baseline_3dgs": {
+        "psnr": 25.34,
+        "lpips": 0.337,
+        "ssim": 0.776
+      },
       "source": "Table 1 (tab:comparisons); chunk not identified; also Wayve/Campus/BigCity columns (data not released)"
     },
-    "wayve_chunk": {"method_variants": {"leaves": {"psnr": 25.35}, "tau3px_opt": {"psnr": 25.25}, "tau6px_opt": {"psnr": 25.03}, "tau15px_opt": {"psnr": 24.49}}, "baseline_3dgs": {"psnr": 25.13}, "source": "Table 1"},
-    "campus_chunk": {"method_variants": {"leaves": {"psnr": 24.61}, "tau3px_opt": {"psnr": 24.59}, "tau6px_opt": {"psnr": 24.50}, "tau15px_opt": {"psnr": 24.12}}, "baseline_3dgs": {"psnr": 23.87}, "source": "Table 1"},
-    "bigcity_chunk": {"method_variants": {"leaves": {"psnr": 23.10}, "tau3px_opt": {"psnr": 23.09}, "tau6px_opt": {"psnr": 23.05}, "tau15px_opt": {"psnr": 22.82}}, "baseline_3dgs": {"psnr": 21.48}, "source": "Table 1"},
-    "mill19": {"method": {"per_scene": {"psnr": {"building": 21.52, "rubble": 24.64}, "ssim": {"building": 0.723, "rubble": 0.755}, "lpips": {"building": 0.297, "rubble": 0.284}}}, "source": "Table 2, Ours opt (tau2)"}
+    "wayve_chunk": {
+      "method_variants": {
+        "leaves": {
+          "psnr": 25.35
+        },
+        "tau3px_opt": {
+          "psnr": 25.25
+        },
+        "tau6px_opt": {
+          "psnr": 25.03
+        },
+        "tau15px_opt": {
+          "psnr": 24.49
+        }
+      },
+      "baseline_3dgs": {
+        "psnr": 25.13
+      },
+      "source": "Table 1"
+    },
+    "campus_chunk": {
+      "method_variants": {
+        "leaves": {
+          "psnr": 24.61
+        },
+        "tau3px_opt": {
+          "psnr": 24.59
+        },
+        "tau6px_opt": {
+          "psnr": 24.5
+        },
+        "tau15px_opt": {
+          "psnr": 24.12
+        }
+      },
+      "baseline_3dgs": {
+        "psnr": 23.87
+      },
+      "source": "Table 1"
+    },
+    "bigcity_chunk": {
+      "method_variants": {
+        "leaves": {
+          "psnr": 23.1
+        },
+        "tau3px_opt": {
+          "psnr": 23.09
+        },
+        "tau6px_opt": {
+          "psnr": 23.05
+        },
+        "tau15px_opt": {
+          "psnr": 22.82
+        }
+      },
+      "baseline_3dgs": {
+        "psnr": 21.48
+      },
+      "source": "Table 1"
+    },
+    "mill19": {
+      "method": {
+        "per_scene": {
+          "psnr": {
+            "building": 21.52,
+            "rubble": 24.64
+          },
+          "ssim": {
+            "building": 0.723,
+            "rubble": 0.755
+          },
+          "lpips": {
+            "building": 0.297,
+            "rubble": 0.284
+          }
+        }
+      },
+      "source": "Table 2, Ours opt (tau2)"
+    }
   },
-  "notes": "Only the Mip-NeRF 360 numbers are on data we have. Their 3DGS (29.11) is the authors' own run (3DGS paper: 27.21), so compare deltas: leaves-3DGS = -0.15; opt tau3/6/15 - leaves = -0.09/-0.44/-1.71; basic tau3/6/15 - leaves = -0.10/-0.91/-4.14. Wayve no-interpolation ablation: 25.21/24.73/23.44."
+  "notes": "Only the Mip-NeRF 360 numbers are on data we have. Their 3DGS (29.11) is the authors' own run (3DGS paper 9-scene 27.21, 7-scene 28.69) and most likely a 7-scene mean with per-channel PSNR. Primary comparisons: tau deltas (scene-set independent) opt tau3/6/15 - leaves = -0.09/-0.44/-1.71, basic tau3/6/15 - leaves = -0.10/-0.91/-4.14; leaves - 3DGS = -0.15 on the 7-scene mean. Wayve no-interpolation ablation: 25.21/24.73/23.44."
 }

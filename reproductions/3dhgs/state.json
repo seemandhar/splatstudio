@@ -1,0 +1,32 @@
+{
+  "paper": "3D-HGS: 3D Half-Gaussian Splatting",
+  "slug": "3dhgs",
+  "plan_id": 78,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 5 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "ready_for_benchmark",
+  "arxiv": "2406.02720",
+  "official_code_commit": "dde1bd5",
+  "method": "3dhgs",
+  "custom_cuda": true,
+  "benchmark_target": "mipnerf360 garden (27.50) + counter (29.84) per scene vs baseline3dgs-mipnerf360-30000",
+  "smoke": {
+    "3dhgs": 23.555,
+    "baseline": 23.035,
+    "steps": 2000,
+    "scene": "garden",
+    "gaussians": {
+      "3dhgs": 867977,
+      "baseline": 845386
+    }
+  },
+  "bench_exps": [
+    "3dhgs-mipnerf360"
+  ]
+}

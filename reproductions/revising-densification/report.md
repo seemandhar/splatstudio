@@ -66,3 +66,18 @@ Garden and room are compared per scene. The T&T truck and train runs are compare
 - **Check after the 30k runs:** confirm in the training log that the Gaussian count reaches the cap and holds it until 27k.
 - **Cap source:** the cap is the final count of a single run of our baseline. The paper uses the median of 5 runs.
 - **Error scale:** the paper does not specify the scale of the per-pixel error ("e.g. SSIM"). Because the per-run budget binds and ranking does not depend on scale, this has no practical effect.
+
+## Benchmark results (30k) — PARTIAL (2 of 3 targets within ±0.5 dB)
+| target | ours | paper | Δ | our gsplat baseline | gain ours / paper |
+|---|---|---|---|---|---|
+| garden | 27.44 | 27.62 | −0.18 | 26.89 | +0.55 / +0.29 |
+| room | 31.83 | 31.90 | −0.07 | 31.52 | +0.31 / +0.51 |
+| T&T average (train 21.43, truck 25.36) | 23.40 | 23.93 | −0.53 | 23.36 | +0.04 / +0.49 |
+- The Gaussian count reaches the cap by 9k and holds it to 30k: train 1.26M, truck 2.49M. The budget mechanism works as intended.
+- On T&T the method gives almost no gain over our baseline, against +0.49 in the paper. train is −0.09 vs baseline, truck +0.15.
+- Our baseline's T&T average (23.36) is close to the paper's 3DGS (23.44), so the shortfall is in the method's gain, not the baseline.
+- Likely contributors (none of them tested):
+  - Our cap is a single-run baseline count, while the paper uses the median of 5 runs.
+  - Single seed (the paper's std is up to 0.16).
+  - The paper does not specify the error-map scale.
+- No grounded fix is available, so no iteration was made. Mip-NeRF 360 garden and room match.

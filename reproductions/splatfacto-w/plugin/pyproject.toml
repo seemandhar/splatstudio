@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-splatfacto-w"
+version = "0.1.0"
+description = "Splatfacto-W (arXiv 2407.12306) native SplatStudio port from the paper and official code; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy", "lpips"]
+
+[project.entry-points."splatstudio.methods"]
+splatfacto-w = "ss_splatfactow:method"
+splatfacto-w-a = "ss_splatfactow:method_a"
+splatfacto-w-t = "ss_splatfactow:method_t"
+
+[tool.setuptools.packages.find]
+include = ["ss_splatfactow*"]
+
+[tool.ruff]
+line-length = 100

@@ -1,11 +1,15 @@
 {
- "paper": "DeblurGS: Gaussian Splatting for Camera Motion Blur",
- "slug": "deblurgs",
- "plan_id": 76,
- "stages": {
-  "paper-reader": "done",
-  "planner": "done",
-  "coder": "done"
- },
- "outcome": null
+  "paper": "DeblurGS: Gaussian Splatting for Camera Motion Blur",
+  "slug": "deblurgs",
+  "plan_id": 76,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (major fixed: official metric conventions in evaluate.py; 6 minors)",
+    "benchmark": "waiting for data (8/10 scenes downloading) and GPU budget OK (~60-100 GPU-h)"
+  },
+  "outcome": "built",
+  "notes": "awaiting data (8/10 scenes downloading) and benchmark"
 }

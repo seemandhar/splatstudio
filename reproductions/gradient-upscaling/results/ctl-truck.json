@@ -1,0 +1,466 @@
+{
+ "run": "/home/sejain/splatify/runs/gup4x-ctl-tandt/gradient-upscaling-3dgs/tandt-truck",
+ "run_method": "gradient-upscaling-3dgs",
+ "run_downscale": 4,
+ "data": "/home/sejain/datasets/tandt_db/native/truck",
+ "scene": "truck",
+ "split": "test",
+ "views": 32,
+ "gaussians": 999957,
+ "sh_degree": 3,
+ "factors": [
+  4.0
+ ],
+ "gpu": {
+  "name": "NVIDIA RTX A6000",
+  "nvidia_smi": [
+   "0, 97 %, 35099 MiB",
+   "1, 100 %, 43806 MiB",
+   "2, 98 %, 22870 MiB",
+   "3, 89 %, 9926 MiB",
+   "4, 93 %, 39288 MiB",
+   "5, 98 %, 35006 MiB",
+   "6, 99 %, 34483 MiB",
+   "7, 97 %, 34921 MiB"
+  ]
+ },
+ "timing_note": "same-GPU medians on a shared GPU; compare ratios, not absolute ms",
+ "quality": {
+  "native": {
+   "psnr": 18.750417351722717,
+   "ssim": 0.6340175364166498,
+   "lpips": 0.3974381145089865
+  },
+  "4x": {
+   "spline": {
+    "psnr": 22.807642579078674,
+    "ssim": 0.7178732417523861,
+    "lpips": 0.3860727474093437
+   },
+   "spline_fd": {
+    "psnr": 22.397600412368774,
+    "ssim": 0.6892120335251093,
+    "lpips": 0.40919629856944084
+   },
+   "bicubic": {
+    "psnr": 22.43224537372589,
+    "ssim": 0.690697206184268,
+    "lpips": 0.41039680130779743
+   }
+  }
+ },
+ "quality_seconds": 19.177500969730318,
+ "speed": {
+  "native_ms": 8.26019648462534,
+  "4x": {
+   "render_gsplat_ms": 10.396078009158373,
+   "render_jets_ms": 11.486179456114769,
+   "upscale_bicubic_ms": 0.0524509996175766,
+   "upscale_spline_ms": 0.5078410035930574,
+   "spline_total_ms": 13.141758002340794,
+   "bicubic_total_ms": 10.669142499566078,
+   "speedup_spline": 0.6285457762313111,
+   "speedup_bicubic": 0.7742137182028722,
+   "jets_overhead": 1.1048569899144731
+  }
+ },
+ "speed_per_view": [
+  {
+   "frame": "images/000001.jpg",
+   "native_ms": 8.665600299835205,
+   "4x": {
+    "render_gsplat_ms": 10.69158411026001,
+    "render_jets_ms": 13.601263999938965,
+    "upscale_bicubic_ms": 0.039904000237584114,
+    "upscale_spline_ms": 0.45715199410915375,
+    "spline_total_ms": 14.02675199508667,
+    "bicubic_total_ms": 13.123744010925293
+   }
+  },
+  {
+   "frame": "images/000009.jpg",
+   "native_ms": 8.833439826965332,
+   "4x": {
+    "render_gsplat_ms": 12.436480045318604,
+    "render_jets_ms": 9.433599948883057,
+    "upscale_bicubic_ms": 0.04044799879193306,
+    "upscale_spline_ms": 0.4556800127029419,
+    "spline_total_ms": 13.384704113006592,
+    "bicubic_total_ms": 8.960511922836304
+   }
+  },
+  {
+   "frame": "images/000017.jpg",
+   "native_ms": 8.713696002960205,
+   "4x": {
+    "render_gsplat_ms": 8.911328315734863,
+    "render_jets_ms": 9.85753583908081,
+    "upscale_bicubic_ms": 0.03993599861860275,
+    "upscale_spline_ms": 0.4596799910068512,
+    "spline_total_ms": 12.929920196533203,
+    "bicubic_total_ms": 8.971104145050049
+   }
+  },
+  {
+   "frame": "images/000025.jpg",
+   "native_ms": 8.903775691986084,
+   "4x": {
+    "render_gsplat_ms": 8.124895811080933,
+    "render_jets_ms": 8.577023983001709,
+    "upscale_bicubic_ms": 0.03892799839377403,
+    "upscale_spline_ms": 0.45552000403404236,
+    "spline_total_ms": 9.133520126342773,
+    "bicubic_total_ms": 8.402944087982178
+   }
+  },
+  {
+   "frame": "images/000033.jpg",
+   "native_ms": 8.732672214508057,
+   "4x": {
+    "render_gsplat_ms": 7.863695859909058,
+    "render_jets_ms": 12.105215549468994,
+    "upscale_bicubic_ms": 0.039823999628424644,
+    "upscale_spline_ms": 0.4556320011615753,
+    "spline_total_ms": 7.261696100234985,
+    "bicubic_total_ms": 9.30350399017334
+   }
+  },
+  {
+   "frame": "images/000041.jpg",
+   "native_ms": 8.676208019256592,
+   "4x": {
+    "render_gsplat_ms": 11.769856452941895,
+    "render_jets_ms": 12.497312068939209,
+    "upscale_bicubic_ms": 0.11892800033092499,
+    "upscale_spline_ms": 0.45662400126457214,
+    "spline_total_ms": 12.777551651000977,
+    "bicubic_total_ms": 12.051455974578857
+   }
+  },
+  {
+   "frame": "images/000049.jpg",
+   "native_ms": 8.5032320022583,
+   "4x": {
+    "render_gsplat_ms": 8.95078420639038,
+    "render_jets_ms": 7.943167686462402,
+    "upscale_bicubic_ms": 0.11536000110208988,
+    "upscale_spline_ms": 0.45657598972320557,
+    "spline_total_ms": 12.935072422027588,
+    "bicubic_total_ms": 9.034687995910645
+   }
+  },
+  {
+   "frame": "images/000057.jpg",
+   "native_ms": 9.128959655761719,
+   "4x": {
+    "render_gsplat_ms": 12.848511695861816,
+    "render_jets_ms": 13.147583961486816,
+    "upscale_bicubic_ms": 0.039904000237584114,
+    "upscale_spline_ms": 0.4567039906978607,
+    "spline_total_ms": 12.956160068511963,
+    "bicubic_total_ms": 12.790256023406982
+   }
+  },
+  {
+   "frame": "images/000065.jpg",
+   "native_ms": 5.892608165740967,
+   "4x": {
+    "render_gsplat_ms": 12.170592308044434,
+    "render_jets_ms": 12.468208312988281,
+    "upscale_bicubic_ms": 0.10951999947428703,
+    "upscale_spline_ms": 0.4572159945964813,
+    "spline_total_ms": 12.996528148651123,
+    "bicubic_total_ms": 12.431359767913818
+   }
+  },
+  {
+   "frame": "images/000073.jpg",
+   "native_ms": 8.793600082397461,
+   "4x": {
+    "render_gsplat_ms": 9.099071979522705,
+    "render_jets_ms": 9.07871961593628,
+    "upscale_bicubic_ms": 0.03931199945509434,
+    "upscale_spline_ms": 0.4575839936733246,
+    "spline_total_ms": 12.334592342376709,
+    "bicubic_total_ms": 9.039360046386719
+   }
+  },
+  {
+   "frame": "images/000081.jpg",
+   "native_ms": 8.664576053619385,
+   "4x": {
+    "render_gsplat_ms": 7.6296961307525635,
+    "render_jets_ms": 12.544000148773193,
+    "upscale_bicubic_ms": 0.039744000881910324,
+    "upscale_spline_ms": 0.46080000698566437,
+    "spline_total_ms": 12.893584251403809,
+    "bicubic_total_ms": 12.16755199432373
+   }
+  },
+  {
+   "frame": "images/000089.jpg",
+   "native_ms": 8.672768115997314,
+   "4x": {
+    "render_gsplat_ms": 8.843264102935791,
+    "render_jets_ms": 9.407968044281006,
+    "upscale_bicubic_ms": 0.03972800076007843,
+    "upscale_spline_ms": 0.4556800127029419,
+    "spline_total_ms": 12.1943039894104,
+    "bicubic_total_ms": 9.153887748718262
+   }
+  },
+  {
+   "frame": "images/000097.jpg",
+   "native_ms": 8.777152061462402,
+   "4x": {
+    "render_gsplat_ms": 9.17136001586914,
+    "render_jets_ms": 11.897280216217041,
+    "upscale_bicubic_ms": 0.10548799857497215,
+    "upscale_spline_ms": 1.6871840357780457,
+    "spline_total_ms": 12.45030403137207,
+    "bicubic_total_ms": 9.250304222106934
+   }
+  },
+  {
+   "frame": "images/000105.jpg",
+   "native_ms": 6.328319787979126,
+   "4x": {
+    "render_gsplat_ms": 12.213712215423584,
+    "render_jets_ms": 7.693327903747559,
+    "upscale_bicubic_ms": 0.03980799950659275,
+    "upscale_spline_ms": 0.4556800127029419,
+    "spline_total_ms": 13.067136287689209,
+    "bicubic_total_ms": 12.473296165466309
+   }
+  },
+  {
+   "frame": "images/000113.jpg",
+   "native_ms": 8.984384059906006,
+   "4x": {
+    "render_gsplat_ms": 13.999216079711914,
+    "render_jets_ms": 16.93079948425293,
+    "upscale_bicubic_ms": 0.039871999993920326,
+    "upscale_spline_ms": 0.6420479863882065,
+    "spline_total_ms": 17.268207550048828,
+    "bicubic_total_ms": 13.762415885925293
+   }
+  },
+  {
+   "frame": "images/000121.jpg",
+   "native_ms": 8.919552326202393,
+   "4x": {
+    "render_gsplat_ms": 14.05137586593628,
+    "render_jets_ms": 16.268288135528564,
+    "upscale_bicubic_ms": 0.039744000881910324,
+    "upscale_spline_ms": 0.45558400452136993,
+    "spline_total_ms": 15.273472309112549,
+    "bicubic_total_ms": 13.990400314331055
+   }
+  },
+  {
+   "frame": "images/000129.jpg",
+   "native_ms": 8.711695671081543,
+   "4x": {
+    "render_gsplat_ms": 17.052672386169434,
+    "render_jets_ms": 15.02462387084961,
+    "upscale_bicubic_ms": 0.03935999982059002,
+    "upscale_spline_ms": 0.46028800308704376,
+    "spline_total_ms": 18.388976097106934,
+    "bicubic_total_ms": 17.167840003967285
+   }
+  },
+  {
+   "frame": "images/000137.jpg",
+   "native_ms": 8.600575923919678,
+   "4x": {
+    "render_gsplat_ms": 4.7918078899383545,
+    "render_jets_ms": 12.093952178955078,
+    "upscale_bicubic_ms": 0.0398080013692379,
+    "upscale_spline_ms": 0.4551680088043213,
+    "spline_total_ms": 12.402175903320312,
+    "bicubic_total_ms": 9.334271907806396
+   }
+  },
+  {
+   "frame": "images/000145.jpg",
+   "native_ms": 5.731184005737305,
+   "4x": {
+    "render_gsplat_ms": 3.867807984352112,
+    "render_jets_ms": 8.656335830688477,
+    "upscale_bicubic_ms": 0.03991999849677086,
+    "upscale_spline_ms": 0.4556800127029419,
+    "spline_total_ms": 8.757231712341309,
+    "bicubic_total_ms": 8.53656005859375
+   }
+  },
+  {
+   "frame": "images/000153.jpg",
+   "native_ms": 9.051648139953613,
+   "4x": {
+    "render_gsplat_ms": 12.26531171798706,
+    "render_jets_ms": 12.843519687652588,
+    "upscale_bicubic_ms": 0.10188799723982811,
+    "upscale_spline_ms": 0.4556320011615753,
+    "spline_total_ms": 13.301760196685791,
+    "bicubic_total_ms": 12.418560028076172
+   }
+  },
+  {
+   "frame": "images/000161.jpg",
+   "native_ms": 8.780175685882568,
+   "4x": {
+    "render_gsplat_ms": 9.176064014434814,
+    "render_jets_ms": 8.827503681182861,
+    "upscale_bicubic_ms": 0.0676640011370182,
+    "upscale_spline_ms": 0.4567039906978607,
+    "spline_total_ms": 12.543999671936035,
+    "bicubic_total_ms": 9.205248355865479
+   }
+  },
+  {
+   "frame": "images/000169.jpg",
+   "native_ms": 8.56115198135376,
+   "4x": {
+    "render_gsplat_ms": 8.904111862182617,
+    "render_jets_ms": 8.085392236709595,
+    "upscale_bicubic_ms": 0.03686400130391121,
+    "upscale_spline_ms": 0.4556800127029419,
+    "spline_total_ms": 12.715983867645264,
+    "bicubic_total_ms": 6.842992067337036
+   }
+  },
+  {
+   "frame": "images/000177.jpg",
+   "native_ms": 8.231791973114014,
+   "4x": {
+    "render_gsplat_ms": 9.1386399269104,
+    "render_jets_ms": 9.492480278015137,
+    "upscale_bicubic_ms": 0.03891199827194214,
+    "upscale_spline_ms": 0.45478400588035583,
+    "spline_total_ms": 12.388351917266846,
+    "bicubic_total_ms": 9.09343957901001
+   }
+  },
+  {
+   "frame": "images/000185.jpg",
+   "native_ms": 9.019743919372559,
+   "4x": {
+    "render_gsplat_ms": 9.886208057403564,
+    "render_jets_ms": 13.075984001159668,
+    "upscale_bicubic_ms": 0.03968000039458275,
+    "upscale_spline_ms": 0.4556800127029419,
+    "spline_total_ms": 13.602816104888916,
+    "bicubic_total_ms": 12.681679725646973
+   }
+  },
+  {
+   "frame": "images/000193.jpg",
+   "native_ms": 4.79475212097168,
+   "4x": {
+    "render_gsplat_ms": 13.488639831542969,
+    "render_jets_ms": 15.834159851074219,
+    "upscale_bicubic_ms": 0.039295999333262444,
+    "upscale_spline_ms": 0.45815999805927277,
+    "spline_total_ms": 17.493423461914062,
+    "bicubic_total_ms": 13.53007984161377
+   }
+  },
+  {
+   "frame": "images/000201.jpg",
+   "native_ms": 8.836080074310303,
+   "4x": {
+    "render_gsplat_ms": 13.095424175262451,
+    "render_jets_ms": 13.82041597366333,
+    "upscale_bicubic_ms": 0.07383999973535538,
+    "upscale_spline_ms": 0.45663999021053314,
+    "spline_total_ms": 17.338272094726562,
+    "bicubic_total_ms": 10.199552297592163
+   }
+  },
+  {
+   "frame": "images/000209.jpg",
+   "native_ms": 8.619440078735352,
+   "4x": {
+    "render_gsplat_ms": 8.87398386001587,
+    "render_jets_ms": 9.126863956451416,
+    "upscale_bicubic_ms": 0.036639999598264694,
+    "upscale_spline_ms": 0.45558400452136993,
+    "spline_total_ms": 12.652096271514893,
+    "bicubic_total_ms": 7.813072204589844
+   }
+  },
+  {
+   "frame": "images/000217.jpg",
+   "native_ms": 8.447487831115723,
+   "4x": {
+    "render_gsplat_ms": 8.831439971923828,
+    "render_jets_ms": 7.2928478717803955,
+    "upscale_bicubic_ms": 0.03891199827194214,
+    "upscale_spline_ms": 0.4567520022392273,
+    "spline_total_ms": 12.65675163269043,
+    "bicubic_total_ms": 5.08569598197937
+   }
+  },
+  {
+   "frame": "images/000225.jpg",
+   "native_ms": 9.074207782745361,
+   "4x": {
+    "render_gsplat_ms": 13.260687828063965,
+    "render_jets_ms": 13.702144145965576,
+    "upscale_bicubic_ms": 0.03993599861860275,
+    "upscale_spline_ms": 0.4556320011615753,
+    "spline_total_ms": 15.758335590362549,
+    "bicubic_total_ms": 13.320575714111328
+   }
+  },
+  {
+   "frame": "images/000233.jpg",
+   "native_ms": 8.549839973449707,
+   "4x": {
+    "render_gsplat_ms": 9.268735885620117,
+    "render_jets_ms": 10.869760036468506,
+    "upscale_bicubic_ms": 0.03993599861860275,
+    "upscale_spline_ms": 0.4561760127544403,
+    "spline_total_ms": 10.464767932891846,
+    "bicubic_total_ms": 9.158495903015137
+   }
+  },
+  {
+   "frame": "images/000241.jpg",
+   "native_ms": 8.52017593383789,
+   "4x": {
+    "render_gsplat_ms": 9.075200080871582,
+    "render_jets_ms": 11.825744152069092,
+    "upscale_bicubic_ms": 0.039423998445272446,
+    "upscale_spline_ms": 0.6814560145139694,
+    "spline_total_ms": 12.389455795288086,
+    "bicubic_total_ms": 9.233808040618896
+   }
+  },
+  {
+   "frame": "images/000249.jpg",
+   "native_ms": 5.605792045593262,
+   "4x": {
+    "render_gsplat_ms": 12.922335624694824,
+    "render_jets_ms": 13.534719944000244,
+    "upscale_bicubic_ms": 0.039904000237584114,
+    "upscale_spline_ms": 0.45555201172828674,
+    "spline_total_ms": 13.798352241516113,
+    "bicubic_total_ms": 12.883903980255127
+   }
+  }
+ ],
+ "gpu_after": {
+  "name": "NVIDIA RTX A6000",
+  "nvidia_smi": [
+   "0, 96 %, 35093 MiB",
+   "1, 100 %, 43806 MiB",
+   "2, 96 %, 22858 MiB",
+   "3, 100 %, 11440 MiB",
+   "4, 97 %, 39263 MiB",
+   "5, 98 %, 34920 MiB",
+   "6, 97 %, 36763 MiB",
+   "7, 97 %, 42547 MiB"
+  ]
+ }
+}

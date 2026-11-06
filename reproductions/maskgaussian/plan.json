@@ -1,0 +1,7 @@
+{"method": "maskgaussian", "module": "ss_maskgaussian",
+ "components": ["maskgs-renderer (vendored mask-diff-gaussian-rasterization)", "maskgs-density (3DGS ADC + mask pruning)", "photometric", "maskgs-mask-loss"],
+ "fields": [{"name": "mask_scores", "shape": [2], "lr": 0.01, "init": "0 + offset [10,1]"}],
+ "probes": ["maskgs-raster-exact", "maskgs-unsampled-gradient", "maskgs-gumbel", "maskgs-mask-loss", "maskgs-prune-schedule"],
+ "contributions": ["masked-rasterization", "gumbel-probabilistic-mask", "squared-mask-loss", "mask-sampling-pruning"],
+ "fidelity_gaps": ["optimizer step before density op", "random view sampling with replacement", "final-step optimizer step not skipped", "RNG differs (stochastic final sample)", "runtime metric implementations"],
+ "feasible_natively": true}

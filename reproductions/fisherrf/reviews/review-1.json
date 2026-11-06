@@ -1,0 +1,55 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "plugin/ss_fisherrf/active.py", "where": "ActiveController.fisher_select (lines ~176-182, single-view branch)",
+   "problem": "The single-view (M=1, the benchmarked Table 2 path) scoring is re-implemented inline (reciprocal(h_train+lam), sort descending) instead of calling selection.eig_scores, so the eig-selection probe does not cover the code that actually runs; active-loop (fisher) only checks budget/restore/pool, not that the pick is the argmax of an independent score or that H_train sums the selected views.",
+   "evidence": "probes.eig_selection tests selection.eig_scores/greedy_batch only; probes.active_loop never recomputes the Fisher score. Code inspection shows the inline formula is correct (matches H_reg.select_single_view: sum(H_c * 1/(H_train+1e-6)), descending sort, H_train over current train_idxs before extend).",
+   "fix": "Route the M=1 branch through selection.eig_scores (streamed) or add to active_loop a check that the fisher pick equals argmax of independently computed sum_k H_c/(sum_{s in S} H_s + lam) from fisher.diag_hessian."},
+  {"severity": "minor", "file": "report.md", "where": "Smoke test",
+   "problem": "The lego smoke (Fisher 22.33 < random 22.82) is not diagnostic: 2000 effective its, all four acquisitions (it 100/225/375/550) happen at cur_iter <= ~175 after a restore, before any densification (gaussians=100000 at every selection), i.e. Fisher is scoring an almost untrained random 100k cloud whose score is dominated by 1/(0+1e-6) terms of Gaussians unseen by the train views. I found no sign/normalisation/H_train bug that would make Fisher systematically worse.",
+   "evidence": "evidence/smoke-fisher.log fisherrf_selection rows: gaussians 100000, best_score 3.97e7 -> 3.4e5.",
+   "fix": "State this in the report; judge only the 8-scene benchmark gain vs +0.79 dB."},
+  {"severity": "minor", "file": "plugin/ss_fisherrf/__init__.py", "where": "fisherrf-v10 / fisherrf-v10-random",
+   "problem": "With 10 views the last round (25600 effective its at p=0.1) needs ~256k loop steps alone; total expected ~336k loop steps, so --steps 230000 would fail (loudly, at evaluation). Seq1 (mean 218.0k, sd 1.3k, max 222.7k over 5000 simulations) and seq4 (~210k) are fine with 230000.",
+   "evidence": "Simulation of negative-binomial loop counts per round with the official load_its.",
+   "fix": "Document the required --steps per variant (v10 ~ 360000) in README/plan."},
+  {"severity": "minor", "file": "plan.md", "where": "Fidelity gaps",
+   "problem": "Two small official-loop differences are not listed: (a) official densify_and_prune/reset run before optimizer.step on the same iteration's grads (runtime steps Adam first, as in the shared gsplat baseline); (b) official viewpoint_stack is not refreshed after an acquisition, so the new view is first used only after the stale stack empties (listed only as 'with replacement').",
+   "evidence": "source/code/active_train.py:136-196 vs splatstudio runtime.train lines 198-211.",
+   "fix": "Add one line each to the fidelity gaps."},
+  {"severity": "minor", "file": "plugin/ss_fisherrf/probes.py", "where": "fisher_kernel",
+   "problem": "Kernel probe runs a 40x32 image with 10 Gaussians (few tiles); the 800x800 multi-tile path is only exercised in the smoke. Kernel source is byte-identical to the official diff/, so risk is low.",
+   "evidence": "diff -r source/code/diff plugin/ss_fisherrf/csrc: only packaging files differ.",
+   "fix": "Optional: one larger-resolution case."}
+ ],
+ "equation_coverage": [
+  {"eq": "(1)-(2),(6)-(7) Fisher = J^T J under unit Gaussian likelihood", "status": "exact", "code": "csrc/cuda_rasterizer/backward.cu:renderCUDAFused (acc_func=atomicAddSquare, fused-only path in rasterizer_impl.cu) + fisher.py:diag_hessian (backward of rendered RGB with grad=ones, no photometric loss/GT; activated inputs, autograd chains once through sigmoid/exp like official)"},
+  {"eq": "(8) diag + lambda I", "status": "exact", "code": "active.py:fisher_select (lam=reg_lambda=1e-6 added to H_train only; I_acq_reg off, as official default)"},
+  {"eq": "(5) argmax tr(H_c H_train^-1)", "status": "exact", "code": "active.py:fisher_select (M=1) / selection.eig_scores"},
+  {"eq": "Alg. 1 greedy batch", "status": "exact", "code": "selection.greedy_batch (H_train += H_pick after each pick, candidates on CPU)"},
+  {"eq": "Parameters covered", "status": "exact", "code": "fisher.FIELDS minus quats = xyz, f_dc, f_rest (all 15 SH rest coeffs; inactive bands get 0), log-scale, opacity logit = official capture()[1:7] minus --filter_out_grad rotation"},
+  {"eq": "VNSeqMInplace schedule + init views", "status": "exact", "code": "selection.schedule / initial_views (400..18400 for seq1; 1200/3600/7200/12000 seq4; view 0 + 3 farthest centres)"},
+  {"eq": "Restore init.ckpt after acquisition, base_iter=it-1", "status": "exact", "code": "active.py:_restore + begin (params, fresh Adam, fresh ADC stats, SH degree 0, xyz LR per cur_iter); paper text 'reset opacity' superseded by code"},
+  {"eq": "RandSelector", "status": "exact", "code": "selection.random_select (random.Random(0) on sorted pool each round)"}
+ ],
+ "probe_assessment": [
+  {"probe": "fisher-kernel", "detects_removal": true, "why": "Independent per-pixel autograd over gsplat; replacing squared accumulation with plain atomicAdd changes means by 99.8%; re-ran ss-verify on GPU 3: passed."},
+  {"probe": "eig-selection", "detects_removal": true, "why": "numpy reference for score, brute-force greedy, Random(0) shuffle; but does not exercise the inline M=1 path in active.py (minor issue 1)."},
+  {"probe": "active-schedule", "detects_removal": true, "why": "Exact official load_its for seq1/seq4/v10 and farthest-point init on a ring."},
+  {"probe": "active-loop", "detects_removal": true, "why": "Checks skipped steps produce no grads/updates, restore to initial params + empty Adam state, LR on cur_iter despite runtime overwrite, pool = training cameras, early eval refused, random selector official. Does not check Fisher argmax."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "View sampling with replacement inside the selected set (official epoch stack, stale after acquisition).",
+  "gsplat trains the model; only scoring uses the official Inria-based kernel; SSIM valid conv; LPIPS from lpips package.",
+  "No 20-px screen-space prune (official size_threshold=20 after cur_iter 3000).",
+  "Different RNG -> different trajectories/selected views.",
+  "Mip-NeRF 360 not benchmarked (black bg, 20000 its in scripts).",
+  "Densification after (not before) Adam step on the same iteration (runtime ordering, shared with baseline)."
+ ],
+ "verified_claims": {
+  "fisher_statistic": "Official H = sum over pixels of squared d(R+G+B)_p/dtheta of the candidate's rendered colour (pred_img.backward(ones)), no GT/photometric loss, white bg; port uses the byte-identical kernel and the same activation chaining.",
+  "scoring": "sum H_c/(H_train+1e-6); H_train = sum over currently selected views (recomputed each round with the current model, before adding the new view); no extra prior beyond lambda.",
+  "schedule": "Table 2 seq1: 4 init, +1 at 100*|S| -> 400..18400, 30000 iterations (scripts/blender_seq1.sh); SH +1 every 5000 absolute its, degree 0 after restore; densify 500..10000 on cur_iter, reset at cur%3000 and cur==500.",
+  "steps_accounting": "Runtime means-LR overwrite (runtime.py:209) is overridden by the controller before every training step; SH degree, density, and LR all use the effective/cur_iter clock; run fails at evaluation if <30000 effective its. seq1 expected loop steps 218.0k +- 1.3k (max 222.7k / 5000 sims) < 230000.",
+  "data": "100 train views in file order (index 0 = r_0), 200 test, white composite truncated to 8 bit, 800x800, 100k U[-1.3,1.3]^3 points with np seed 0, SH2RGB colours via uint8 storePly; runtime 3dgs recipe gives opacity 0.1, 3-NN scales, camera extent 1.1*max radius."
+ },
+ "summary": "Faithful port of the official FisherRF GS code. The Fisher kernel is the official diff/ unchanged and is driven exactly like H_reg (colour render backprop with ones, squared per-pixel grads, rotation filtered, all SH bands, lambda=1e-6 on H_train). The schedule, restore-to-init, LR/densify/SH clocks and data prep match active_train.py and the Blender loader; the loop-step budget is sufficient for seq1/seq4. No critical or major issues; minors are probe coverage of the inline M=1 scoring, a non-diagnostic smoke, v10 step budget, and two unlisted small loop-ordering gaps. Unit tests (5) and ss-verify (7/7, CUDA) re-run and pass."}

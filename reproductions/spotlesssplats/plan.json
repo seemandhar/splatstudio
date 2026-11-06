@@ -1,0 +1,12 @@
+{"method": "spotlesssplats", "module": "ss_spotlesssplats",
+ "variants": ["spotlesssplats", "spotlesssplats-noubp", "spotlesssplats-agg"],
+ "components": [
+  {"name": "sls-renderer", "kind": "renderer", "factory": "ss_spotlesssplats.renderer:create_renderer"},
+  {"name": "sls-density", "kind": "density", "factory": "ss_spotlesssplats.density:create_density"},
+  {"name": "sls-robust", "kind": "loss", "factory": "ss_spotlesssplats.losses:create_robust"},
+  {"name": "sls-mlp", "kind": "loss", "factory": "ss_spotlesssplats.losses:create_mlp_loss"}],
+ "fields": [],
+ "probes": ["robust-mask", "quantile-histogram", "mlp-equivalence", "warmup-schedule", "agg-vote", "ubp-kernel", "density-ubp", "state-transitions"],
+ "contributions": ["robust-masked-l1", "sls-mlp-classifier", "sls-agg-clustering", "bernoulli-warmup", "histogram-quantile", "utilization-pruning", "no-opacity-reset-sh-reset"],
+ "fidelity_gaps": ["GLO appearance not implemented (absent in official code)", "UBP uses official loss-gradient formulation/threshold", "view sampling with replacement", "optimizer step before density", "scene_scale from train cameras only", "identity initial quats", "LPIPS VGG vs official AlexNet", "single seed vs 5"],
+ "feasible_natively": true}

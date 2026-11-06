@@ -1,0 +1,53 @@
+{
+ "method": "laplacian-gs",
+ "module": "ss_laplacian_gs",
+ "components": [
+  {
+   "name": "lap-renderer",
+   "kind": "renderer",
+   "factory": "ss_laplacian_gs.renderer:create_renderer"
+  },
+  {
+   "name": "lap-density",
+   "kind": "density",
+   "factory": "ss_laplacian_gs.density:create_density"
+  },
+  {
+   "name": "lap-photometric",
+   "kind": "loss",
+   "factory": "ss_laplacian_gs.losses:create_loss"
+  }
+ ],
+ "fields": [
+  {
+   "name": "lap_level",
+   "shape": [],
+   "lr": 1e-12,
+   "init": "L-1"
+  }
+ ],
+ "probes": [
+  "lap-pyramid",
+  "lap-signed-residual",
+  "lap-composition",
+  "lap-staging",
+  "lap-loss",
+  "renderer-gradient",
+  "state-transitions"
+ ],
+ "contributions": [
+  "laplacian-hierarchy (C1)",
+  "staged-archiving + reconstructed supervision (C2)",
+  "xyz-only inheritance (C3)"
+ ],
+ "fidelity_gaps": [
+  "gsplat+dense Adam instead of Taming fast backward + SparseGaussianAdam",
+  "archived field kept on GPU, cache re-rendered each step (speed/memory not reproduced)",
+  "white background for base render",
+  "random view sampling with replacement",
+  "optimizer step on last stage iteration",
+  "cKDTree exact 3-NN vs distCUDA2",
+  "FastGS backbone not ported"
+ ],
+ "feasible_natively": true
+}

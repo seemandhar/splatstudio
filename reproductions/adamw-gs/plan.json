@@ -1,0 +1,55 @@
+{
+ "method": "adamw-gs",
+ "module": "ss_adamw_gs",
+ "variants": [
+  "adamw-gs",
+  "adamw-gs-indoor"
+ ],
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "gsplat",
+   "factory": "splatstudio.backends.gsplat:create_renderer"
+  },
+  {
+   "kind": "density",
+   "name": "adamw-gs-density",
+   "factory": "ss_adamw_gs.density:create_density",
+   "requires": [
+    "gradient.screen.signed"
+   ],
+   "note": "replaces runtime Adam optimizers with SparseAdamWGS at initialize; 3DGS ADC + RSR + noise"
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "adamwgs-sparse-step",
+  "adamwgs-dar",
+  "adamwgs-img-scale",
+  "adamwgs-rsr",
+  "adamwgs-topology",
+  "adamwgs-noise"
+ ],
+ "contributions": [
+  "sparse-adam",
+  "re-state-regularization",
+  "decoupled-attribute-regularization",
+  "adamw-gs-recoupling"
+ ],
+ "fidelity_gaps": [
+  "white background etc. (runtime)",
+  "optimizer step before densification",
+  "means lr off-by-one",
+  "torch ops instead of fused CUDA kernel",
+  "alpha2 0.01 code vs 0.04 paper",
+  "headline GS8/GS7 rows lack released configs; target GS9 (outdoor) and GS7/GS8 (indoor)",
+  "T&T/DB per-scene configs not packaged",
+  "gsplat vs diff-gauss rasterizer"
+ ],
+ "feasible_natively": true
+}

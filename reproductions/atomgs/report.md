@@ -33,3 +33,19 @@
 - **Resolution protocol:** inferred, because the repo has no eval script. The supplementary 3DGS LPIPS matches images_4/2.
 - **Atom-scale initialisation:** uses exact KNN rather than the official approximate `distCUDA2`, so S0 may differ slightly.
 - **Small expected gains:** the paper's gains on these two scenes are small (+0.26 on garden, +0.08 on room). Our baseline room (31.52) already exceeds the paper's AtomGS room (31.30), so absolute numbers matter here more than deltas.
+
+
+## Benchmark results
+**Outcome: matched.** PSNR is within 0.05 dB of the paper on both scenes.
+
+Setup: `mipnerf360` (images_4 for garden, images_2 for room), 30k steps. Runs are in `runs/atomgs-mipnerf360/`. Baseline: `baseline3dgs-mipnerf360-30000`.
+
+| scene | PSNR ours / paper (Δ) | SSIM | LPIPS | #G ours / baseline | gain over our 3DGS | paper gain over its 3DGS |
+|---|---|---|---|---|---|---|
+| garden | **27.39 / 27.44 (−0.05)** | 0.864 | 0.120 | 5.34M / 4.76M | +0.50 | +0.26 |
+| room | **31.32 / 31.30 (+0.02)** | 0.916 | 0.301 | 1.26M / 1.73M | −0.20 | +0.08 |
+
+**Notes**
+- **Baseline mismatch on room.** Our gsplat baseline on room (31.52) already exceeds both the paper's 3DGS row (31.22) and the paper's AtomGS. So the room delta mostly reflects our baseline. The absolute AtomGS numbers match on both scenes.
+- **Gaussian count.** AtomGS ends with more Gaussians than our baseline on garden and fewer on room.
+- **Memory.** Peak memory stayed far below the 15M Gaussian cap.

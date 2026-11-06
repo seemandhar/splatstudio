@@ -1,0 +1,23 @@
+{
+ "method": "swag",
+ "datasets": {
+  "phototourism": [
+   "brandenburg-gate",
+   "sacre-coeur"
+  ]
+ },
+ "steps": 60000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "data_roots": {
+  "brandenburg-gate": "/home/sejain/datasets/phototourism/native/brandenburg-gate",
+  "sacre-coeur": "/home/sejain/datasets/phototourism/native/sacre-coeur"
+ },
+ "post_train_eval": "tools/ssenv python -m ss_swag.evaluate --run RUN  (headline = RUN/test_swag.json metrics.nerfw; ss-eval numbers are NOT the paper protocol)",
+ "optional_ablations": [
+  "swag-a (recommended on brandenburg-gate: paper 26.44; smoke shows full swag < swag-a at 2k)",
+  "swag-t"
+ ],
+ "baseline": "no shared gsplat baseline exists for phototourism; optionally run gsplat with the same args for reference (full-image metrics, no appearance)",
+ "notes": "phototourism is not registered in tools/datasets.json; pass --data explicitly or register. Paper targets PSNR: brandenburg-gate 26.33, sacre-coeur 21.16."
+}

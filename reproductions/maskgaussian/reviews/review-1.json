@@ -1,0 +1,42 @@
+{"approved": true,
+ "issues": [
+  {"severity": "minor", "file": "report.md / plugin/README.md", "where": "report.md:24-27, README.md:31-40 (kernel-bug note)",
+   "problem": "The released-kernel bug is described as a dL/dM error. It also corrupts dL/dalpha, so the opacity, mean and covariance gradients of sampled (M=1) Gaussians are wrong whenever a neighbour in depth order has a different mask. The plan (paper.md §7) says this, but the report and README do not.",
+   "evidence": "Reviewer check (3 stacked G≈1 Gaussians, every mask pattern): official build dL/dM rel err 0.09-0.52 and dL/dopacity rel err 0.16-1.05 for mixed patterns (e.g. M=(0,1,0): dO err 1.05). Both errors are 0 for all-0/all-1 patterns. The exact build matches autograd to <1e-3 in all 8 patterns.",
+   "fix": "Reword: 'the accum_rec recursion uses the wrong mask, which biases dL/dM and dL/dalpha (hence opacity/geometry grads) when adjacent masks differ'."},
+  {"severity": "minor", "file": "report.md", "where": "report.md:35-41 smoke table",
+   "problem": "The 461k of the compressed run comes mostly from stopping densification at step 1500, not from masking. The count is set beside 785k (densifying to step 2000), which invites a misreading.",
+   "evidence": "training.jsonl: compressed 471,966 vs smoke-1 470,858 at step 1400 (no masking reduction through the λ window). mask_prune removed ~460 and the final sample ~10.7k (471,507→460,808).",
+   "fix": "Report the masking-attributable removal (~11k, 2.3 %) explicitly, or compare with an uncompressed-density control."},
+  {"severity": "minor", "file": "plugin/ss_maskgaussian/density.py", "where": "MaskDensity._densify / whole ADC",
+   "problem": "The plugin uses a re-implemented Inria ADC, while the baseline is gsplat DefaultStrategy (+reset). The Δ-PSNR and the count ratio vs baseline3dgs-mipnerf360-1600 therefore also include ADC-implementation differences, not just MaskGaussian.",
+   "evidence": "Smoke at 2k: 785k (plugin ADC) vs 779k (gsplat) is similar, but at 30k the paper's 3DGS garden count is 5.81M vs our gsplat 4.55M.",
+   "fix": "Optionally run a mask-off control (lambda 0, mask_prune_in_densify false, no mask_prune/final_sample) on one scene, or state the confound in the report."},
+  {"severity": "minor", "file": "plugin/ss_maskgaussian/renderer.py", "where": "DEFAULTS background",
+   "problem": "Black background (official) vs the white-background gsplat baseline: a small confound in the baseline delta, not listed among the fidelity gaps.", "evidence": "renderer.py DEFAULTS background [0,0,0]; CLAUDE.md runtime baseline white", "fix": "List it in report.md fidelity gaps."},
+  {"severity": "minor", "file": "plugin/ss_maskgaussian/density.py", "where": "after_backward final_sample (line ~124)",
+   "problem": "total_steps is not tied to the runtime --steps. Any other --steps silently skips the final single-sample keep (this is documented).", "evidence": "density.py:124 step == cfg['total_steps']", "fix": "Raise in after_backward if step > total_steps, or warn at initialize; bench_request already pins 30000."}
+ ],
+ "equation_coverage": [
+  {"eq": "render3/render4 (C = Σ M c α T, T_{i+1} = (1-Mα)T)", "status": "exact", "code": "csrc/maskrast/cuda_rasterizer/forward.cu (vendored, byte-identical to 540dc11); raster.py:_MaskedRasterize"},
+  {"eq": "gradient dL/dM = αT dL/dc (c - b_{i+1}) + bg term", "status": "deviates", "code": "backward.cu renderCUDA accum_rec uses the current mask (released kernel, kept intentionally as default; exact via -DMASKGS_EXACT_ACCUM in maskgaussian-exactgrad)"},
+  {"eq": "M = gumbel_softmax(log_softmax(score), tau=1, hard=True)[:,0]", "status": "exact", "code": "renderer.py:sample_mask (offset [10,1] + zero-init field; Adam shift-invariant)"},
+  {"eq": "L_m = (mean_i M_i)^2 over all N, λ window inclusive", "status": "exact", "code": "losses.py:mask_loss/lambda_at"},
+  {"eq": "pruning: never sampled in 10 draws at densify steps (601..14901 cadence 100) and s>=15000, s%1000==0; final save = one sample", "status": "exact", "code": "density.py:MaskDensity.after_backward/_densify/never_sampled"}
+ ],
+ "probe_assessment": [
+  {"probe": "maskgs-raster-exact", "detects_removal": true, "why": "Compares kernel image and dL/dM/dL/dopacity to a float64 autograd compositor and to a backward.cu replica. Ignoring the mask, or a wrong accumulation, fails it. It also asserts that the official build deviates under mixed masks, which pins down which kernel is built."},
+  {"probe": "maskgs-unsampled-gradient", "detects_removal": true, "why": "Zero mask gradients on visible unsampled Gaussians fail it. The naive mask×opacity control does fail (0/32)."},
+  {"probe": "maskgs-gumbel", "detects_removal": true, "why": "A deterministic/thresholded mask fails the 4σ rate test, a missing ST gradient fails the Jacobian test, and a wrong init fails the σ(9) check."},
+  {"probe": "maskgs-mask-loss", "detects_removal": true, "why": "Checks the value and gradient inside and at the inclusive window edges, and zero outside."},
+  {"probe": "maskgs-prune-schedule", "detects_removal": true, "why": "A fixture with p≈0 Gaussians must be pruned at 600 and 16000 and not off-cadence. It has a control with the mask test disabled, the final single sample, and mask-score copying on clone/split."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Per-scene supp. tables = MaskGaussian-α (main Table 1 caption: λ_m=0.1 on 19k–20k; the per-scene averages 27.43/1.205M equal the α row). run_all.py's active setting is β, but the α block is commented in and matches the tables.",
+  "Resolution: run_all.py passes no -r, so the -r -1 default rescales images/ to width 1600. mipnerf360-1600 and baseline3dgs-mipnerf360-1600-30000 are correct (garden 26.93/4.55M, counter 29.04/1.19M verified).",
+  "Mask enters only α-blending (not opacity), with the mask mean over all N Gaussians; τ=1; mask lr 0.01, Adam eps 1e-15; init [10,1].",
+  "Official schedule verified in train.py: densify_and_prune at it>500, it%100==0, it<15000 (opacity|never-sampled|big-ws after 3000; screen-size test is dead because max_radii2D is zeroed in densification_postfix, as the plugin notes). mask_prune in the elif branch at it>=15000, it%1000==0. scene.save (save_ply_default = one Gumbel sample) at 30000 precedes that step's mask_prune.",
+  "Runtime order (optimizer step before density), with-replacement view sampling, final-iteration optimizer step, RNG, SSIM/LPIPS, SH-degree bump at step 1001 vs 1000: all negligible.",
+  "Default = released kernel is the right choice: it produced the paper numbers, and the exact variant is a separate diagnostic."
+ ],
+ "summary": "Faithful port. Setting (α), resolution (1600) and baseline are correct. The vendored kernel is byte-identical to 540dc11 apart from an #ifdef. Mask sampling, loss and pruning schedule match the official train.py/gaussian_model.py. The claimed backward bug is independently confirmed: accum_rec uses the current Gaussian's mask, and it affects dL/dalpha as well as dL/dM. Keeping the released kernel as default is correct. 10/10 tests pass. Only minor documentation/confound issues."}

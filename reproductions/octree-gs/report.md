@@ -62,3 +62,12 @@ in `set_training_cameras`, because it needs the training cameras.
 - Adding the paper's gain over its own baseline (+0.22 on garden, +0.97 on counter) to our baseline gives implied targets of about 27.15 (garden) and 30.01 (counter).
 
 **Corrected wording.** The initialisation uses the vendored simple-knn `distCUDA2`, not an exact 3-NN.
+
+## Benchmark result (octree-gs-1600, 40k steps, mipnerf360-1600) — MATCHED
+| scene | ours PSNR | paper (Octree-Scaffold) | Δ | gsplat baseline (30k) | paper 3DGS (40k) | #GS/view ours vs paper |
+|---|---|---|---|---|---|---|
+| garden | 27.36 | 27.67 | −0.31 | 26.93 | 27.45 | 1350k vs 1475k |
+| counter | 29.76 | 30.19 | −0.43 | 29.04 | 29.22 | 306k vs 409k |
+Both scenes are within ±0.5 dB. Gain over our baseline: +0.43 / +0.72 dB. The paper's gain over its 3DGS row is +0.22 / +0.97 (that baseline was trained for 40k steps, ours for 30k).
+Anchors: garden 720k (6 levels), counter 212k (5 levels). FPS: 13.6 / 21.6 (shared GPU, not comparable to the paper's FPS).
+Counts: runs/octree-gs-1600/octree-gs/*/octree_gs_counts.json. Summary: results/summary.md.

@@ -1,0 +1,15 @@
+{
+  "method": "swag",
+  "module": "ss_swag",
+  "variants": ["swag-a", "swag-t"],
+  "components": [
+    {"name": "swag-renderer", "kind": "renderer", "factory": "ss_swag.renderer:create_renderer"},
+    {"name": "swag-density", "kind": "density", "factory": "ss_swag.density:create_density"},
+    {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [],
+  "probes": ["state-transitions", "hash-grid", "appearance-mlp", "concrete-opacity", "transient-variance", "nerfw-protocol", "bank-training"],
+  "contributions": ["appearance-conditioned-colour", "transient-opacity", "transient-decomposition", "nerfw-test-time-appearance"],
+  "fidelity_gaps": ["no official code: assumptions A1-A11 in plan.md", "pure-PyTorch hash grid", "runtime SSIM/view sampling", "gsplat rasteriser", "no gsplat PT baseline", "ss-eval cannot run NeRF-W protocol"],
+  "feasible_natively": true
+}

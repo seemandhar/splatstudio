@@ -1,0 +1,28 @@
+{
+  "paper": "3DGUT: Enabling Distorted Cameras and Secondary Rays in Gaussian Splatting",
+  "slug": "3dgut",
+  "plan_id": 81,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (approved, 6 minors)",
+    "benchmark": "running"
+  },
+  "outcome": "ready_for_benchmark",
+  "arxiv": "2412.12507",
+  "official_code_commit": "bb203b1",
+  "method": "3dgut",
+  "custom_cuda": false,
+  "smoke": {
+    "3dgut": 22.81,
+    "baseline": 23.07,
+    "steps": 2000,
+    "scene": "garden"
+  },
+  "benchmark_target": "mipnerf360 garden (26.90) + counter (29.03) per scene vs baseline3dgs-mipnerf360-30000",
+  "bench_exps": [
+    "3dgut-mipnerf360"
+  ]
+}

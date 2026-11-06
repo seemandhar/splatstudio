@@ -1,0 +1,195 @@
+{
+ "paper": "3D-HGS: 3D Half-Gaussian Splatting",
+ "arxiv": "2406.02720",
+ "method_label": "3D-HGS",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 29.66,
+     "ssim": 0.873,
+     "lpips": 0.178
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.84,
+      "stump": 26.64,
+      "kitchen": 32.22,
+      "bicycle": 25.25,
+      "bonsai": 33.52,
+      "room": 32.52,
+      "garden": 27.5,
+      "flowers": 21.55,
+      "treehill": 22.63
+     },
+     "ssim": {
+      "counter": 0.92,
+      "stump": 0.76,
+      "kitchen": 0.936,
+      "bicycle": 0.75,
+      "bonsai": 0.95,
+      "room": 0.931,
+      "garden": 0.86,
+      "flowers": 0.61,
+      "treehill": 0.64
+     },
+     "lpips": {
+      "counter": 0.177,
+      "stump": 0.242,
+      "kitchen": 0.113,
+      "bicycle": 0.23,
+      "bonsai": 0.18,
+      "room": 0.193,
+      "garden": 0.11,
+      "flowers": 0.25,
+      "treehill": 0.33
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 28.88,
+     "ssim": 0.87,
+     "lpips": 0.182
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 28.7,
+      "stump": 26.56,
+      "kitchen": 30.8,
+      "bicycle": 25.21,
+      "bonsai": 32.2,
+      "room": 31.4,
+      "garden": 27.3,
+      "flowers": 21.52,
+      "treehill": 22.49
+     },
+     "ssim": {
+      "counter": 0.905,
+      "stump": 0.77,
+      "kitchen": 0.927,
+      "bicycle": 0.765,
+      "bonsai": 0.946,
+      "room": 0.918,
+      "garden": 0.865,
+      "flowers": 0.605,
+      "treehill": 0.638
+     },
+     "lpips": {
+      "counter": 0.204,
+      "stump": 0.217,
+      "kitchen": 0.127,
+      "bicycle": 0.209,
+      "bonsai": 0.183,
+      "room": 0.223,
+      "garden": 0.107,
+      "flowers": 0.336,
+      "treehill": 0.317
+     }
+    }
+   },
+   "source": "supp. Table tab:all (per scene) / main Table 1; average over 7 scenes (no flowers, treehill), which are listed separately in supp.",
+   "average_scenes": [
+    "bicycle",
+    "garden",
+    "stump",
+    "room",
+    "counter",
+    "kitchen",
+    "bonsai"
+   ]
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.45,
+     "ssim": 0.857,
+     "lpips": 0.169
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.65,
+      "truck": 26.25
+     },
+     "ssim": {
+      "train": 0.826,
+      "truck": 0.887
+     },
+     "lpips": {
+      "train": 0.193,
+      "truck": 0.138
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.6,
+     "ssim": 0.847,
+     "lpips": 0.181
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.91,
+      "truck": 25.3
+     },
+     "ssim": {
+      "train": 0.815,
+      "truck": 0.88
+     },
+     "lpips": {
+      "train": 0.21,
+      "truck": 0.152
+     }
+    }
+   },
+   "source": "supp. Table tab:all / main Table 1"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.76,
+     "ssim": 0.905,
+     "lpips": 0.242
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.3,
+      "playroom": 30.22
+     },
+     "ssim": {
+      "drjohnson": 0.903,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.24,
+      "playroom": 0.244
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.41,
+     "ssim": 0.903,
+     "lpips": 0.243
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.02,
+      "playroom": 29.81
+     },
+     "ssim": {
+      "drjohnson": 0.902,
+      "playroom": 0.904
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.242
+     }
+    }
+   },
+   "source": "supp. Table tab:all / main Table 1"
+  }
+ },
+ "notes": "3DGS row is the paper's own table (partly retrained: room 31.40, kitchen 30.80 differ from the 3DGS paper). Main Table 3 lists slightly different 3DGS DB numbers (playroom 29.98, drjohnson 29.09) than supp. Mip-NeRF 360 res: images_4 outdoor / images_2 indoor (official full_eval.py). Supp. rendering ablation: 29.56 (w/o efficient rasterizer) vs 29.66 (with) on Mip-NeRF 360."
+}

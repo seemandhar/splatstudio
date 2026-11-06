@@ -57,3 +57,42 @@ def test_ply_layout(tmp_path):
 
 def test_leaf_training_probe_cpu():
     probes.leaf_training(method(), "cpu")
+
+
+def test_channel_psnr_matches_official_formula():
+    from ss_hierarchical_3dgs.eval_taus import channel_psnr
+
+    g = torch.Generator().manual_seed(0)
+    a, b = torch.rand(8, 9, 3, generator=g), torch.rand(8, 9, 3, generator=g)
+    x, y = a.permute(2, 0, 1), b.permute(2, 0, 1)  # image_utils.psnr on [3,H,W]
+    mse = ((x - y) ** 2).view(3, -1).mean(1, keepdim=True)
+    ref = float((20 * torch.log10(1.0 / torch.sqrt(mse))).mean())
+    assert math.isclose(channel_psnr(a, b), ref, rel_tol=1e-6)
+    full = float(-10 * torch.log10((a - b).square().mean()))
+    assert channel_psnr(a, b) >= full  # Jensen
+
+
+def test_summary_scene_sets(tmp_path):
+    import json
+
+    from ss_hierarchical_3dgs import summary
+
+    for root, files in (("ours", {"test_tau-0.5.json": 30.0, "test_tau3.json": 29.0}),
+                        ("base", {"test.json": 31.0})):
+        for i, s in enumerate(summary.SCENES9):
+            d = tmp_path / root / "m" / f"mipnerf360-1600-{s}"
+            d.mkdir(parents=True)
+            (d / "config.json").write_text("{}")
+            bump = 1.0 if s in ("flowers", "treehill") else 0.0
+            for f, v in files.items():
+                views = [{"psnr": v - bump, "psnr_channel": v + 0.1}]
+                (d / f).write_text(json.dumps({"per_view": views}))
+    table, _, _ = summary.collect(tmp_path / "ours", [tmp_path / "base"])
+    means, head = summary.summarize(table)
+    assert math.isclose(means["leaves"]["psnr"]["7"], 30.0)
+    assert math.isclose(means["leaves"]["psnr"]["9"], 30.0 - 2 / 9)
+    assert math.isclose(head["psnr"]["leaves_minus_3dgs_7scene"], -1.0)
+    assert math.isclose(head["psnr"]["tau_deltas"]["opt_tau3"]["ours_7scene"], -1.0)
+    assert math.isclose(head["psnr"]["tau_deltas"]["opt_tau3"]["paper"], 28.87 - 28.96)
+    assert means["opt_tau6"]["psnr"]["9"] is None  # missing rows are not averaged
+    assert means["3dgs"]["psnr_channel"]["9"] is None  # no --channel-baseline

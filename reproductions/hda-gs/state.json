@@ -1,0 +1,3 @@
+{"paper": "HDA-GS: Hierarchical Density-Controlled for Anisotropic 3D Gaussian Splatting", "slug": "hda-gs", "plan_id": 97,
+ "stages": {"read": "blocked"}, "outcome": "blocked",
+ "blocked_reason": "Full text unavailable: IEEE Xplore only (closed access per OpenAlex; ieeexplore returns HTTP 418 to scripted access), no arXiv/author/open-access copy, no official code. Method equations, hyper-parameters and result tables cannot be read."}

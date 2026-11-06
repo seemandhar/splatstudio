@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-fisherrf"
+version = "0.1.0"
+description = "FisherRF (arXiv 2311.17874) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+fisherrf = "ss_fisherrf:method"
+fisherrf-random = "ss_fisherrf:random_baseline"
+fisherrf-batch = "ss_fisherrf:batch"
+fisherrf-batch-random = "ss_fisherrf:batch_random"
+fisherrf-v10 = "ss_fisherrf:v10"
+fisherrf-v10-random = "ss_fisherrf:v10_random"
+
+[tool.setuptools.packages.find]
+include = ["ss_fisherrf*"]
+
+[tool.setuptools.package-data]
+ss_fisherrf = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.h", "csrc/*.md", "csrc/cuda_rasterizer/*", "csrc/third_party/glm/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_fisherrf/csrc"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

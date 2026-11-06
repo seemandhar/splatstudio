@@ -1,0 +1,33 @@
+{
+ "paper": "GS-IR: 3D Gaussian Splatting for Inverse Rendering",
+ "slug": "gs-ir",
+ "plan_id": 91,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "report": "done"
+ },
+ "outcome": "built",
+ "arxiv": "2311.16473",
+ "official_code_commit": "e5a030b",
+ "method": "gs-ir",
+ "methods": [
+  "gs-ir",
+  "gs-ir-smoke"
+ ],
+ "custom_cuda": true,
+ "dataset": "mipnerf360",
+ "benchmark_target": "Mip-NeRF 360 PBR NVS PSNR garden 25.72, counter 26.22 (supp. Table 360psnr), 40000 steps",
+ "smoke": {
+  "scene": "garden",
+  "steps": 2000,
+  "psnr": 21.22,
+  "gsplat_psnr": 23.0,
+  "baking_seconds": 275.5
+ },
+ "extra_deps": {
+  "nvdiffrast": "not used: pip install into the shared env was refused by the permission classifier; texture ops re-implemented in torch"
+ }
+}

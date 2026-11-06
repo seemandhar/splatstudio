@@ -1,0 +1,7 @@
+{"method": "gaussianpro", "datasets": {"mipnerf360": ["garden", "room"]}, "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": "baseline3dgs-mipnerf360-30000",
+ "paper_target": {"room": {"psnr": 31.98, "ssim": 0.927, "lpips": 0.192}, "garden": {"psnr": 28.70, "ssim": 0.890, "lpips": 0.107}},
+ "paper_3dgs_row": {"room": 31.71, "garden": 28.77},
+ "notes": "Paper App. D Table 14; its 3DGS row was retrained on the authors' unreleased re-run COLMAP (garden 28.77 vs our baseline 26.89), so compare the gain over baseline3dgs-mipnerf360-30000 (paper: room +0.27, garden -0.07). The density reloads the training images from --data and reads COLMAP images.bin from ~/datasets/mipnerf360/360_v2/<scene>/sparse/0. The propagation kernel needs the GPU exposed as device 0 (bench.py does this). The first job JIT-compiles two extensions (~2.5 min). Expect it to train slower than gsplat."}

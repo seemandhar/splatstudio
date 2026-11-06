@@ -1,0 +1,7 @@
+{"method": "gs-ir", "module": "ss_gsir",
+ "components": ["gsir-renderer (renderer)", "gsir-density (density, owns GSIRBank)", "photometric (stage-aware color loss)", "gsir-normal (loss)", "gsir-material (loss)", "gsir-light (loss)"],
+ "fields": ["gsir_normal (3)", "gsir_albedo (3)", "gsir_roughness (1)", "gsir_metallic (1)"],
+ "probes": ["depth-linear-interp", "normal-from-depth", "occlusion-baking", "cube-ops", "pbr-shading", "indirect-volumes", "stage-switch"],
+ "contributions": ["C1 linear-interpolated depth", "C2 depth-derived normal supervision of Gaussian normals", "C3 baked SH occlusion volumes", "C4 learnable SH irradiance volumes (indirect diffuse)", "C5 split-sum PBR decomposition with cube-map light"],
+ "fidelity_gaps": ["gsplat rasterizer conventions (alpha 0.999, near 0.01 in training renders, white stage-1 bg)", "runtime view sampling with replacement", "cube texture sampling/mips re-implemented without nvdiffrast (corner approximation)", "runtime metric conventions (whole-image PSNR, LPIPS on [-1,1])", "deterministic dilation", "TensoIR not benchmarked"],
+ "feasible_natively": true}

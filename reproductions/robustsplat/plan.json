@@ -1,0 +1,56 @@
+{
+ "method": "robustsplat",
+ "module": "ss_robustsplat",
+ "components": [
+  "rs-renderer",
+  "rs-density",
+  "rs-masked-photometric",
+  "rs-mask-mlp"
+ ],
+ "fields": [],
+ "probes": [
+  "delayed-growth",
+  "bootstrap-scale",
+  "mask-supervision",
+  "masked-photometric",
+  "mlp-schedule",
+  "dino-parity",
+  "pipeline-step"
+ ],
+ "contributions": [
+  {
+   "name": "delayed-gaussian-growth",
+   "components": [
+    "rs-density"
+   ]
+  },
+  {
+   "name": "scale-cascaded-mask-bootstrapping",
+   "components": [
+    "rs-mask-mlp"
+   ]
+  },
+  {
+   "name": "mask-mlp-residual-cosine-supervision",
+   "components": [
+    "rs-masked-photometric",
+    "rs-mask-mlp"
+   ]
+  },
+  {
+   "name": "early-mask-regularisation",
+   "components": [
+    "rs-mask-mlp"
+   ]
+  }
+ ],
+ "fidelity_gaps": [
+  "optimizer step before densification",
+  "view sampling with replacement",
+  "SH degree step off by one",
+  "runtime eval SSIM valid-conv / lpips package",
+  "single seed",
+  "no xFormers"
+ ],
+ "feasible_natively": true
+}

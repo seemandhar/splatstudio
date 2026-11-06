@@ -1,0 +1,11 @@
+{"method": "group-training",
+ "datasets": {"mipnerf360": ["garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "launch": ["bench.py launch --exp group-training-mipnerf360 --methods group-training gsplat --dataset mipnerf360 --scenes garden counter --steps 30000"],
+ "baseline": "baseline3dgs-mipnerf360-30000 for quality (garden 26.893, counter 28.846). Include gsplat in the same experiment (as in the launch line) only to get a same-period/same-GPU-pool timing reference; drop it if GPU time is short.",
+ "paper_reference": {
+   "garden": {"method_row": "Group Training w/ OPS 0~30K (3DGS host, supp. tab:supp_3dgs_MipNerf360)", "psnr": 27.418, "ssim": 0.868, "lpips": 0.1051, "baseline_3dgs_star_psnr": 27.397, "delta": 0.021, "time_ratio": 0.646, "size_ratio": 0.779},
+   "counter": {"method_row": "Group Training w/ OPS 0~30K", "psnr": 28.973, "ssim": 0.909, "lpips": 0.1987, "baseline_3dgs_star_psnr": 28.980, "delta": -0.007, "time_ratio": 0.820, "size_ratio": 0.792}},
+ "notes": "Images_4 outdoor / images_2 indoor = official full_eval.py protocol (our native default). Expect PSNR within ~0.0 +- 0.5 dB of our baseline, ~20% fewer Gaussians and a 20-35% shorter training_seconds vs gsplat. Compare training_seconds only between runs on comparable GPU load."}

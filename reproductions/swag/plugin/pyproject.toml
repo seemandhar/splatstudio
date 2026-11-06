@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-swag"
+version = "0.1.0"
+description = "SWAG (arXiv 2403.10427) native SplatStudio port from the paper only; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy", "lpips"]
+
+[project.entry-points."splatstudio.methods"]
+swag = "ss_swag:method"
+swag-a = "ss_swag:method_a"
+swag-t = "ss_swag:method_t"
+
+[tool.setuptools.packages.find]
+include = ["ss_swag*"]
+
+[tool.ruff]
+line-length = 100

@@ -1,0 +1,14 @@
+{
+ "paper": "BAGS: Blur Agnostic Gaussian Splatting through Multi-Scale Kernel Modeling",
+ "slug": "bags",
+ "plan_id": 89,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done",
+  "review-1": "fixes applied (evaluator SSIM convention, nobpn controls, report gaps)"
+ },
+ "outcome": "built",
+ "notes": "awaiting benchmark (ball 49k, caps 12k) + gsplat baseline on same scenes"
+}

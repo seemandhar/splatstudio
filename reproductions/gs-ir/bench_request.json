@@ -1,0 +1,19 @@
+{
+ "method": "gs-ir",
+ "datasets": {"mipnerf360": ["garden", "counter"]},
+ "steps": 40000,
+ "per_scene_reported": true,
+ "extra": "",
+ "recipe": "3dgs",
+ "primary_metric": "ss-eval --split test PSNR of the PBR rendering vs paper supp. Table 360psnr (garden 25.72, counter 26.22); compare the drop vs our gsplat baseline (baseline3dgs-mipnerf360-30000: garden 26.89, counter 28.85) with the paper's drop vs 3DGS (garden -1.69, counter -2.48)",
+ "baseline": "baseline3dgs-mipnerf360-30000 (same images_4 / images_2 folders, -r 1 = official GS-IR resolution protocol); no new baseline run needed",
+ "paper_reference": {
+  "psnr": {"garden": 25.72, "counter": 26.22},
+  "ssim": {"garden": 0.804, "counter": 0.839},
+  "lpips": {"garden": 0.158, "counter": 0.260},
+  "3dgs_row_psnr": {"garden": 27.41, "counter": 28.70},
+  "source": "supp. Tables 360psnr / 360ssim / 360lpips"
+ },
+ "notes": "--steps 40000 is required (30000 initial stage + baking + 10000 decomposition; stage switch hard-coded at pbr_start 30000). Default bench.py args (--recipe 3dgs --num-gaussians 10000000) are correct. Baking at step 30000 runs inside ss-train (garden ~480k probes, counter ~216k; ~5-20 min depending on GPU load). First use JIT-compiles ss_gsir/csrc/gsir_kernels.cu (~1 min, cached). ss-eval restores the GS-IR bank from <run>/checkpoint.pt via its --run argument (works with bench.py's ss-eval call unchanged). Official LPIPS fed [0,1] images; runtime uses [-1,1] (LPIPS not directly comparable).",
+ "min_free_gb": 12
+}

@@ -1,0 +1,21 @@
+{
+ "method": "gradient-upscaling-4x",
+ "datasets": {"tandt": ["truck", "train"], "db": ["drjohnson", "playroom"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "experiments": [
+  {"exp": "gradient-upscaling-tandt", "dataset": "tandt", "methods": ["gradient-upscaling-2x", "gradient-upscaling-4x", "bicubic-upscaling-2x", "bicubic-upscaling-4x"], "extra": ""},
+  {"exp": "gradient-upscaling-db", "dataset": "db", "methods": ["gradient-upscaling-2x", "gradient-upscaling-4x", "bicubic-upscaling-2x", "bicubic-upscaling-4x"], "extra": ""},
+  {"exp": "gradient-upscaling-ctrl-ds2-tandt", "dataset": "tandt", "methods": ["gradient-upscaling-3dgs"], "extra": "--downscale 2"},
+  {"exp": "gradient-upscaling-ctrl-ds4-tandt", "dataset": "tandt", "methods": ["gradient-upscaling-3dgs"], "extra": "--downscale 4"},
+  {"exp": "gradient-upscaling-ctrl-ds2-db", "dataset": "db", "methods": ["gradient-upscaling-3dgs"], "extra": "--downscale 2"},
+  {"exp": "gradient-upscaling-ctrl-ds4-db", "dataset": "db", "methods": ["gradient-upscaling-3dgs"], "extra": "--downscale 4"}
+ ],
+ "post_eval": [
+  "For every control run (trained with --downscale s): CUDA_VISIBLE_DEVICES=<least-busy> tools/ssenv python reproductions/gradient-upscaling/plugin/apply_upscaling.py --run runs/<exp>/gradient-upscaling-3dgs/<dataset>-<scene> --data ~/datasets/tandt_db/native/<scene> --factor <s> --out reproductions/gradient-upscaling/results/ctrl-ds<s>-<scene>.json   -> quality.native = paper '3DGS' row, quality.<s>x.spline = paper 'Spline (3DGS)' (averages only), speed ratios",
+  "Optional speed on a finished spline run: apply_upscaling.py --run runs/gradient-upscaling-tandt/gradient-upscaling-4x/tandt-truck --factor 4 --out results/speed-truck-4x.json (speed.4x.speedup_spline)"
+ ],
+ "comparison_mapping": "paper_results.json factors.{2x,4x}.{tandt,db}: spline <- ss-eval of gradient-upscaling-{s}x (full-res test); bicubic <- bicubic-upscaling-{s}x; baseline_3dgs_lowres_train <- apply_upscaling quality.native on the --downscale s control. Compare per scene and dPSNR(spline - 3DGS) vs paper's.",
+ "notes": "Runs train at full native resolution (979x546 / 980x545 T&T, 1332x876 drjohnson, 1264x832 playroom) with loss at full res; rendering at W//s. All rows use Taming growth to 1M Gaussians. Mip-NeRF360 not requested: paper evaluates at 5187x3361 with 5M Gaussians (no native conversion; prohibitive). Keep the 4 control exps on the same density as the methods. Put runs on /bigdata per CLAUDE.md Disk section."
+}

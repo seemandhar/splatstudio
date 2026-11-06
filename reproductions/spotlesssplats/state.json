@@ -1,0 +1,19 @@
+{
+  "paper": "SpotLessSplats: Ignoring Distractors in 3D Gaussian Splatting",
+  "slug": "spotlesssplats",
+  "plan_id": 77,
+  "stages": {
+    "paper-reader": "done",
+    "planner": "done",
+    "coder": "done",
+    "tester": "done",
+    "review": "done (approved, 5 minors)",
+    "benchmark": "running"
+  },
+  "outcome": null,
+  "method": "spotlesssplats",
+  "bench_exps": [
+    "spotless-robustnerf",
+    "spotless-onthego"
+  ]
+}

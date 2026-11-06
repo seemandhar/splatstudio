@@ -1,0 +1,46 @@
+{
+  "exp": "gup4x-tandt",
+  "datasets": {
+    "tandt": {
+      "scenes": [
+        "truck"
+      ],
+      "all_scenes": false,
+      "methods": {
+        "gradient-upscaling-4x": {
+          "per_scene": {
+            "truck": {
+              "lpips": 0.3388157496228814,
+              "psnr": 22.816375195980072,
+              "ssim": 0.7669540159404278,
+              "gaussians": 999957,
+              "minutes": 47.4492596418752
+            }
+          },
+          "mean": {
+            "psnr": 22.816375195980072,
+            "ssim": 0.7669540159404278,
+            "lpips": 0.3388157496228814
+          }
+        },
+        "bicubic-upscaling-4x": {
+          "per_scene": {
+            "truck": {
+              "lpips": 0.40209341049194336,
+              "psnr": 22.225139915943146,
+              "ssim": 0.7075422499328852,
+              "gaussians": 999957,
+              "minutes": 27.7435580828848
+            }
+          },
+          "mean": {
+            "psnr": 22.225139915943146,
+            "ssim": 0.7075422499328852,
+            "lpips": 0.40209341049194336
+          }
+        }
+      },
+      "gaps": {}
+    }
+  }
+}

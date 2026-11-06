@@ -1,0 +1,75 @@
+{
+ "approved": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "plugin/ss_bags/evaluate.py",
+   "where": "ssim_skimage (46-61) / metrics (71)",
+   "problem": "The 'official' SSIM is not the official metric. metrics.py -t deblur-nerf maps images to [-1,1] and calls skimage 0.19.0 structural_similarity with no data_range. For float input that version takes data_range = dtype_range span = 2. The covariance term is unchanged by that mapping, but the luminance term (2*ux*uy + C1)/(ux^2 + uy^2 + C1) is not shift-invariant. The port computes SSIM on [0,1] with data_range 1, which systematically overstates SSIM.",
+   "evidence": "source/code/requirements.txt pins scikit-image==0.19.0; metrics.py compute_img_metric does im*2-1 and then structural_similarity(im1, im2, multichannel=True, full=True). Re-scoring existing checkpoints on GPU, port vs official ([-1,1], data_range 2): bags-smoke 0.7183 vs 0.6771; smoke gsplat 0.6587 vs 0.6218; caps gsplat-40k 0.4285 vs 0.3249. Paper targets are SSIM 0.799 (ball) and 0.725 (caps), so the headline SSIM would be biased by +0.04 to +0.10. PSNR is unaffected: skimage PSNR on [-1,1] uses data_range 2, which gives the same value. LPIPS-Alex on [-1,1] matches.",
+   "fix": "In metrics(): ssim = ssim_skimage(q*2-1, gt*2-1, data_range=2.0). Update the docstring and report.md (fidelity gap 4 / Protocol). Add a probe or unit test that checks ssim_skimage against an independent closed-form value on a non-zero-mean pair under the [-1,1] convention."
+  },
+  {
+   "severity": "minor",
+   "file": "bench_request.json",
+   "where": "baseline",
+   "problem": "The baselines are inconsistent: ball gets a fresh gsplat run at 30k steps, while caps reuses a 40k gsplat run from DOF-GS that scores 15.61, against the paper's Mip-Splatting row of 21.00. That run is not broken in code (see summary), but it is an outlier and was trained at a different step budget.",
+   "evidence": "runs/baseline-gsplat-deblurnerf-40000/gsplat/deblurnerf-real-caps: current runtime hash, opacity reset active (loss jumps and Gaussian count drops at 3000/6000), white background, 423k Gaussians. Training views fit 23-35 dB. Test views 12.0-18.4 dB; view 000 (nearest training camera 2.09 units away) renders as garbage on the left, and the background is smeared everywhere because it was fitted to defocused training images. The same data gives 24.39 with DOF-GS, so poses and split are fine.",
+   "fix": "Run a fresh gsplat control on caps with the same settings as ball (30k, same extra). Ideally also run a BPN-off BAGS control on both scenes (bags-<scene> with bpn_start >= total_steps = Mip-Splatting under the BAGS schedule): it is the paper's comparison row and isolates the BPN gain."
+  },
+  {
+   "severity": "minor",
+   "file": "report.md",
+   "where": "Fidelity gaps",
+   "problem": "One small schedule difference is not listed. The runtime applies an Adam update to the Gaussians at the final step; the official code saves point_cloud/iteration_N before the final optimizer.step and skips that step anyway (ori_iter < iterations).",
+   "evidence": "runtime.py:205-208 vs train.py 'if ori_iter < opt.iterations: optimizer.step()' and scene.save before densification.",
+   "fix": "Add one line to the gaps list. Negligible effect."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_bags/renderer.py",
+   "where": "render_sharp",
+   "problem": "Sorting differs: the official rasterizer depth-sorts tiles by Euclidean distance (depths = dist), gsplat sorts by camera z. Undocumented, negligible.",
+   "evidence": "submodules/diff-gaussian-rasterization/cuda_rasterizer/forward.cu:263",
+   "fix": "Mention it in the report gaps."
+  },
+  {
+   "severity": "minor",
+   "file": "plugin/ss_bags/evaluate.py",
+   "where": "whole module",
+   "problem": "No probe or test covers the headline evaluator, which is why the SSIM convention error went unnoticed.",
+   "evidence": "probes.py and tests/test_bags.py have no evaluate checks.",
+   "fix": "Add a unit test (see the major issue)."
+  }
+ ],
+ "equation_coverage": [
+  {"eq": "(1) spatially varying convolution, sum h = 1", "status": "exact", "code": "blur.py:spatial_conv (Unfold, zero pad, correlation order); softmax in bank.py:BlurKernelMS.forward"},
+  {"eq": "(2) h, m = F_kernel(l(i) + p(x) + F_feat(C + D)), 0 <= m <= 1", "status": "exact", "code": "bank.py:_Embed._mmf, rgbd_cnn, get_2d_emb; input = rendered C and min-max normalised rendered distance depth, detached (losses.py:306-307)"},
+  {"eq": "(3) C_out = (1-m) C + m (h * C)", "status": "exact", "code": "losses.py:bpn_forward:310"},
+  {"eq": "(4) multi-scale base/heads, softmax kernels, sigmoid masks", "status": "exact", "code": "bank.py:BlurKernelMS (base1 -> head1/mask1; base2 -> head2; base2,base3 -> head3; 1x1 convs, no bias)"},
+  {"eq": "(5) 0.8 L1 + 0.2 D-SSIM + lambda_mask ||m|| (code: 0.001 mean m) + depth/RGB TV", "status": "exact", "code": "losses.py:create_objective/create_mask_loss/create_depth_tv/create_rgb_tv; plain 3DGS loss on sharp C for phase-local it <= 250"},
+  {"eq": "coarse-to-fine 1/4 -> 1/2 (3000) -> 1 (6000), K 5/9/17", "status": "exact", "code": "schedule.py:resolution_divisor/kernel_level; renderer.py:scaled_camera; density.py resolution-change filter update"},
+  {"eq": "two-phase clock (ms_steps restart: xyz LR, densify/reset/filter, BPN start, dgt init_dgt -> 2e-4)", "status": "exact", "code": "schedule.py:phase_iteration/step_actions/densify_thresholds; density.py:xyz_lr"},
+  {"eq": "Mip-Splatting 3D filter (current-scale cameras), 2D filter 0.1, filter-aware reset", "status": "exact", "code": "filters.py; renderer.py eps2d=0.1 antialiased; density.py:update_filter/reset_opacity"},
+  {"eq": "metrics -t deblur-nerf (PSNR / skimage SSIM / LPIPS-Alex)", "status": "deviates", "code": "evaluate.py:metrics (SSIM on [0,1] with data_range 1, official [-1,1] with data_range 2)"}
+ ],
+ "probe_assessment": [
+  {"probe": "spatial-conv-reference", "detects_removal": true, "why": "Compares against an independent float64 shift-and-add loop (values and grads), checks impulse orientation, and asserts the conv is not an identity."},
+  {"probe": "bpn-architecture", "detects_removal": true, "why": "Checks layer shapes, no bias, softmax sums, sigmoid range, independent PE formula, detached input and the blend formula."},
+  {"probe": "objective-terms", "detects_removal": true, "why": "Asserts that the loss differs from the sharp loss when the BPN is active, and checks mask/TV values against numpy."},
+  {"probe": "multiscale-schedule", "detects_removal": true, "why": "Checks render size and K per step against an explicit-K render, and that test views are full-res with no view."},
+  {"probe": "phase-schedule", "detects_removal": true, "why": "Compares step sets against an independent transcription of the official loop. Shares author with the code but transcribes train.py separately."},
+  {"probe": "density-recipe", "detects_removal": true, "why": "Checks clone/split counts, prune threshold, NDC grad scaling, coarse filter = 4x full filter, and the filter-aware reset."},
+  {"probe": "official-config", "detects_removal": true, "why": "Per-scene values. I independently re-checked all 20 scripts and they match variants.py."}
+ ],
+ "fidelity_gaps_confirmed": [
+  "Coarse targets come from resizing the stored 600x400 image instead of the 2400x1600 JPG. Measured: port vs official 150x100 / 300x200 targets agree to 56-58.6 dB PSNR (mean abs diff 0.001), i.e. at 8-bit quantisation level. The stored 600x400 PNGs are bit-identical to PIL resize of the JPGs. Negligible.",
+  "Runtime Adam step precedes densification (official: no Gaussian Adam update on densify/reset steps, because the replaced tensors have no grad). Negligible.",
+  "SH degree raised one step later. Negligible.",
+  "Screen-size prune never fires officially: densification_postfix zeroes max_radii2D before the prune. Verified in gaussian_model.py:484/533-543.",
+  "Per-scene script values (ball 49000/9000/8e-4; caps 12000/9000/6e-4 + depth TV 0.001 + RGB TV) override the paper's 40k.",
+  "Split: sorted idx % llffhold, which equals int(name) % hold for the contiguous names (ball 27 images, test 000/007/014/021; caps 34, test every 5th).",
+  "Runtime xyz LR override (runtime.py:209) is superseded by density.after_backward, which runs afterwards and sets xyz_lr(step+1) on the phase-local clock."
+ ],
+ "summary": "The core port is faithful to snldmt/BAGS@ed04144. BPN: verbatim architecture, softmax kernels, sigmoid masks. Its input is the detached rendered RGB plus min-max normalised rendered Euclidean-distance depth (matches forward.cu depths = dist). Unfold correlation, mask blend, 0.001*mean(m), and depth/RGB TV on the BPN-active steps only. Coarse-to-fine with scaled intrinsics, K 5/9/17 on the global clock, and a two-phase clock for LR, densify, reset, late 3D filter, BPN start and dgt. Base: Mip filter recomputed per scale, black background, prune < 0.1, no Gaussian change at the final step. Test renders are sharp and full-res. All 20 per-scene configs match the scripts. pytest 12/12. One major issue: the 'official' SSIM uses [0,1] with data_range 1, while official skimage 0.19 on [-1,1] uses data_range 2. That inflates SSIM by 0.04-0.10 on existing checkpoints. PSNR and LPIPS-Alex are correct. The caps gsplat 15.61 baseline is not a code bug (reset active, poses OK, train views fit). It is overfitting to defocused training views, catastrophic on extrapolated view 000, and was trained at 40k steps. A fresh caps control matching ball's (and ideally a BPN-off Mip-Splatting control) is recommended. Fix the SSIM, then benchmarking can proceed."
+}

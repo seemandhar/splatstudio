@@ -1,0 +1,37 @@
+{
+  "paper": "Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering",
+  "slug": "ms-gs",
+  "plan_id": 98,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done"
+  },
+  "outcome": "ready_for_benchmark",
+  "arxiv": "2311.17089",
+  "official_code_commit": "50e5040 (rasterizer e7a2b4f)",
+  "method": "ms-gs",
+  "custom_cuda": true,
+  "dataset": "mipnerf360-msgs (new, tools/make_multiscale_msgs.py)",
+  "smoke": {
+    "scene": "garden (mipnerf360-msgs)",
+    "steps": 2000,
+    "ms-gs_psnr": {
+      "1x": 21.98,
+      "4x": 21.66,
+      "16x": 21.11,
+      "64x": 23.06
+    },
+    "gsplat_psnr": {
+      "1x": 22.97,
+      "4x": 20.62,
+      "16x": 16.26,
+      "64x": 14.51
+    }
+  },
+  "bench_exps": [
+    "ms-gs-msgs",
+    "ms-gs-msgs-3dgs"
+  ]
+}
