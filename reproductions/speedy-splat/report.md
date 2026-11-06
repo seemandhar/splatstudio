@@ -62,3 +62,14 @@ Approved, with 0 critical and 0 major issues. The benchmark is launched: `speedy
 - **LPIPS:** our absolute LPIPS is not comparable with the paper's, so we judge it by its change against our baseline.
 
 **Correction.** The SH-degree note in `plan.md` was wrong: degree 3 is used at every prune step.
+
+## Benchmark result (speedy-splat-1600, 30k, mipnerf360-1600) — MATCHED
+| scene | speedy-splat | paper | Δ | stock control | paper 3D-GS | drop ours / paper | Gaussians speedy / stock (ratio) |
+|---|---|---|---|---|---|---|---|
+| garden | 26.71 / 0.815 / 0.250 | 26.70 | +0.01 | 27.27 | 27.31 | −0.56 / −0.61 | 520k / 5.91M (11.4×) |
+| counter | 28.25 / 0.877 / 0.331 | 28.28 | −0.03 | 29.06 | 29.14 | −0.80 / −0.86 | 97k / 1.22M (12.5×) |
+
+- Both scenes are within ±0.05 dB of the paper.
+- The stock control matches the paper's 3D-GS within 0.08 dB.
+- The quality drop and the compression (11–12.5× vs the paper's 10.6× Mip-NeRF 360 mean) match.
+- The FPS post-step (ss_speedysplat.fps) was not run. It is the secondary speed claim, which the shared GPUs make noisy.

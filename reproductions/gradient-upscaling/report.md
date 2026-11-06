@@ -108,3 +108,23 @@ The comparison is mainly on these per-scene deltas.
 - **Control (3DGS at 4× downscale):** spline 28.68 / bicubic 28.51 / native at full res 26.74 / scored at its own low resolution 29.84.
 - **Paper:** spline 29.42, bicubic 28.96, "3DGS" 29.18.
 - **Still pending:** the method runs (gup4x-db: gradient-upscaling-4x and bicubic-upscaling-4x).
+
+## Final verdict: PARTIAL (truck matched, playroom not)
+| row (4×) | truck ours / paper | Δ | playroom ours / paper | Δ |
+|---|---|---|---|---|
+| spline, method trained with the spline (`gradient-upscaling-4x`) | 22.82 / 23.00 | −0.18 | 28.25 / 29.42 | **−1.17** |
+| bicubic (`bicubic-upscaling-4x`) | 22.23 / 22.10 | +0.13 | 28.14 / 28.96 | **−0.82** |
+| spline − bicubic | +0.59 / +0.91 | | +0.11 / +0.47 | |
+| 3DGS control + spline at inference | 22.81 | | 28.68 | |
+| 3DGS control, native full res | 18.75 / 21.68 | | 26.74 / 29.18 | |
+
+- **Truck:** matches within ±0.5 dB.
+- **Playroom:** both upscaled rows are 0.8–1.2 dB low, and the spline advantage over bicubic is smaller (+0.11 vs +0.47).
+- **Training-time vs inference-time spline:** on playroom, training with the spline loss gives a lower score (28.25) than plain 3DGS trained at low res with the spline applied at inference (28.68). The paper's method row is not reproduced there.
+- **The "3DGS" row** (native full-res render of the low-res model) stays far below the paper on both scenes, as noted earlier.
+- **Possible contributors** (no official code, so none of these is verified):
+  - (Image size is not a cause: playroom is natively 1264×832, the size the paper gives.)
+  - Our floor() vs the authors' rounding for the low-res size.
+  - Border-cell extrapolation.
+  - The densification interval of 100, which is an assumption.
+- No grounded fix, so no iteration was made.

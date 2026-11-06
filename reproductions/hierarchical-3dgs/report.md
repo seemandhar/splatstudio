@@ -96,3 +96,27 @@ about 1.3× as many hierarchy Gaussians as leaves. At 1600 px we expect 1.2-2.5 
 10-20 GB for 9 scenes.
 
 Benchmark: see bench_request.json — mipnerf360-1600, 9 scenes × 45k steps, about 30-40 GPU-h.
+
+## Benchmark result (h3dgs-mipnerf360-1600, 45k = 30k leaves + 15k hierarchy optimisation; all 9 scenes) — PARTIAL
+Compared on the 7-scene mean (the paper's 3DGS 29.11 fits the 7 public scenes) with per-channel PSNR (the official render_hierarchy.py metric). 9-scene values are in runs/h3dgs-mipnerf360-1600/h3dgs_summary.json.
+
+| row | ours (7-scene, per-channel) | paper | Δ | Δ vs leaves ours / paper |
+|---|---|---|---|---|
+| leaves | 29.17 | 28.96 | +0.21 | — |
+| opt τ=3 px | 29.15 | 28.87 | +0.28 | −0.02 / −0.09 |
+| opt τ=6 px | 28.91 | 28.52 | +0.39 | −0.26 / −0.44 |
+| opt τ=15 px | 27.80 | 27.25 | **+0.55** | −1.37 / −1.71 |
+| basic τ=3 px | 29.14 | 28.86 | +0.28 | −0.03 / −0.10 |
+| basic τ=6 px | 28.60 | 28.05 | **+0.55** | −0.57 / −0.91 |
+| basic τ=15 px | 25.74 | 24.82 | **+0.92** | −3.43 / −4.14 |
+| our 3DGS (gsplat baseline) | 28.84 | 29.11 | −0.27 | |
+| leaves − 3DGS | +0.33 | −0.15 | | |
+
+- **Within ±0.5 dB:** leaves and the τ = 3/6 opt rows, plus basic τ = 3. τ = 15 opt and the basic τ = 6/15 rows are 0.55–0.92 dB high.
+- **Degradation is milder:** coarsening costs consistently less quality than in the paper, about 60–80% of its drop at τ = 6/15. The hierarchy-optimisation benefit (basic − opt at τ = 15) is +2.06 vs the paper's +2.43, so it is reproduced in kind.
+- **Leaves vs 3DGS:** the leaves beat our 3DGS by +0.33, while the paper has −0.15.
+- **Known contributors:**
+  - no depth regularisation (`-d depths` is unavailable here);
+  - single-chunk training;
+  - gsplat-based leaves (the leaf model is already stronger).
+- **Verdict:** under the absolute rule, 4 of the 7 method rows match, so partial. The fine rows match; the coarse LOD rows are better than the paper.

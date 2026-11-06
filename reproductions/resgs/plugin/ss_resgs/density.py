@@ -77,17 +77,21 @@ def residual_split(params, optimizers, state, mask, scale_div, opacity_weight, l
     parent_opacity = torch.logit(torch.sigmoid(params["opacities"][sel]) * opacity_weight)
 
     def param_fn(name, p):
+        base = p
         if name == "means":
             extra = new_means
         elif name == "scales":
             extra = new_log_scales
         elif name == "opacities":
-            p = p.clone()
+            # Under no_grad a clone has requires_grad=False: keep the flag of the Parameter `p`
+            # (an earlier version took it from the clone and froze all opacities after the first
+            # residual split).
+            base = p.detach().clone()
             extra = child_opacity
-            p[sel] = parent_opacity
+            base[sel] = parent_opacity
         else:
             extra = p[sel]
-        return torch.nn.Parameter(torch.cat([p, extra]), requires_grad=p.requires_grad)
+        return torch.nn.Parameter(torch.cat([base, extra]), requires_grad=p.requires_grad)
 
     def zeros_fn(key, v):
         return torch.cat([v, torch.zeros((n_new, *v.shape[1:]), device=device, dtype=v.dtype)])
@@ -193,6 +197,10 @@ class ResGSDensity:
                 self._prune(params, optimizers)
             reduce_opacity(params, optimizers, c["opacity_reduce_factor"])
         s.end_iteration(t)
+        if self.history and self.history[-1]["step"] == t or reduce:
+            frozen = [k for k, p in params.items() if not p.requires_grad]
+            if frozen:
+                raise RuntimeError(f"resgs density op left non-trainable fields: {frozen}")
         self._sync_state()
 
     # ---- densification ------------------------------------------------------------------

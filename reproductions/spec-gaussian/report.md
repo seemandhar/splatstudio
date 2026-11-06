@@ -57,3 +57,30 @@ A bug was fixed during testing: ss-eval had switched on the untrained decoder be
 - **Minor, not fixed:**
   - The official 20-px screen prune and `>=` threshold are not used.
   - The c2f camera ignores the half-pixel principal-point offset.
+
+## Result: counter (spec-gaussian-indoor, 30k, mipnerf360-pilr) — within tolerance
+- **Result:** 29.69 / 0.921 / 0.226, with 1.19M Gaussians.
+- **Paper:** 30.12 (Δ −0.43).
+- **Gain:** +0.66 over our pilr baseline (29.03), vs the paper's +1.00 over its own 3D-GS row.
+- **Still pending:** garden.
+
+## Result: garden (spec-gaussian, 30k, mipnerf360-pilr) — outside tolerance
+- **Result:** 27.26 / 0.873 / 0.117, vs paper 28.07 (Δ **−0.81**).
+- **Gain:** −0.09 vs our baseline (27.35), where the paper reports +0.34 vs its 3D-GS row.
+
+## Fix iteration 1: paper-text coarse-to-fine resolution schedule
+- **Why:** the paper describes resolution coarse-to-fine (1/4 → full over 5k steps) as part of the method. Its supp. ablation lists "w/o c2f" at 28.01 against Full at 28.18, so the paper's headline row used it, but the released train.py lacks it (review-1 minor 4).
+- **What:** spec-gaussian-c2f (garden) and spec-gaussian-indoor-c2f (counter) are run at 30k as the paper-text configuration (exps specgs-c2f-garden / specgs-c2f-counter).
+- **Kept:** the code-faithful runs.
+- **c2f counter (spec-gaussian-indoor-c2f):** 29.90 / 0.922 / 0.227 vs paper 30.12 (Δ −0.22). The code-path run gave 29.69, so c2f adds +0.21.
+- **c2f garden (spec-gaussian-c2f):** 27.56 / 0.874 / 0.118, vs paper 28.07 (Δ −0.51). The code-path run gave 27.26, so c2f adds +0.30.
+
+## Final verdict: PARTIAL (counter within ±0.5 dB; garden 0.01 dB outside)
+| scene | code path (train.py) | paper-text c2f (fix 1) | paper | Δ (c2f) | our baseline | gain c2f / paper |
+|---|---|---|---|---|---|---|
+| garden | 27.26 | **27.56** | 28.07 | −0.51 | 27.35 | +0.21 / +0.34 |
+| counter | 29.69 | **29.90** | 30.12 | −0.22 | 29.03 | +0.87 / +1.00 |
+
+- The paper's c2f schedule (fix iteration 1, grounded in the paper text and its ablation) improves both scenes by +0.2–0.3 dB.
+- **Garden** is −0.51, at the tolerance edge. Part of the residual is the paper's stronger 3D-GS (27.73 vs our 27.35); the gain is +0.21 vs the paper's +0.34.
+- **No further iteration:** the batch allows 1–2 grounded fixes and no further grounded change is identified.

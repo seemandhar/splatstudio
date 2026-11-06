@@ -61,3 +61,19 @@ Faster-GS is 1.37× faster in forward, 2.1× in backward and 2.3× in the update
   - Primary: absolute PSNR within ±0.5 dB of the full-dataset averages (T&T 23.75, DB 29.78).
   - Secondary: our gain over our baseline (23.36 / 29.28, which sit 0.41 / 0.53 below the paper's 3DGS) vs the paper's ≈0.
 - **Benchmark:** faster-gs-tandt and faster-gs-db at 30k.
+
+## Result: Deep Blending (faster-gs-db, 30k) — within tolerance
+- **Complete DB average:** **29.78** (drjohnson 29.47, playroom 30.09), SSIM 0.907, LPIPS 0.310, vs paper 29.78 (Δ 0.00).
+- **Gain:** +0.50 over our baseline (29.28), vs the paper's −0.03 over its 3DGS.
+  - Our gsplat baseline sits 0.53 below the paper's 3DGS. The difference is consistent with the training-recipe differences listed in gap 5 (opacity lr, black background).
+- **Still pending:** T&T.
+
+## Final verdict: MATCHED (both complete dataset averages within ±0.5 dB)
+| dataset | ours | paper | Δ | our baseline | paper 3DGS | gain ours / paper |
+|---|---|---|---|---|---|---|
+| T&T (truck 25.39, train 21.91) | 23.65 / 0.852 / 0.204 | 23.75 | −0.10 | 23.36 | 23.77 | +0.29 / −0.02 |
+| DB (drjohnson 29.47, playroom 30.09) | 29.78 / 0.907 / 0.310 | 29.78 | 0.00 | 29.28 | 29.81 | +0.50 / −0.03 |
+
+- **Quality:** our port of the official kernels reproduces the paper's quality.
+- **Gains:** our positive gains come from the training-recipe differences against our gsplat baseline (opacity lr, black background), not from Faster-GS.
+- **Speed:** the per-phase speed-up from the 2k smoke (forward 1.37×, backward 2.1×, update 2.3×) was measured on a shared GPU. `ss_faster_gs.profile` was not rerun on the final checkpoints.

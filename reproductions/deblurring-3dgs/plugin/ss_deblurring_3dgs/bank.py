@@ -24,7 +24,7 @@ BANK_DEFAULTS = {
     "lambda_s": 0.01,      # paper Sec. 4.1; configs lambda_s
     "lambda_p": 0.01,      # paper Sec. 4.1; configs lambda_p
     "max_clamp": 1.1,      # arguments max_clamp (code only)
-    "seed": 0,
+    "seed": 0,             # utils.general_utils.safe_state torch.manual_seed(0)
 }
 
 
@@ -37,13 +37,11 @@ def embed(x, multires):
     return torch.cat(out, dim=-1)
 
 
-def init_linear_weights(m):
+def init_linear_weights(m, generator=None):
     """blur_kernel.init_linear_weights: xavier_normal (gain 0.1 if out_features in {2, 3})."""
     if isinstance(m, nn.Linear):
-        if m.weight.shape[0] in (2, 3):
-            nn.init.xavier_normal_(m.weight, 0.1)
-        else:
-            nn.init.xavier_normal_(m.weight)
+        gain = 0.1 if m.weight.shape[0] in (2, 3) else 1.0
+        nn.init.xavier_normal_(m.weight, gain, generator=generator)
         nn.init.constant_(m.bias, 0)
 
 
@@ -52,7 +50,7 @@ class GTnet(nn.Module):
     delta. Defocus heads: s 3, r 4. Motion heads: s 3(M+1), r 4(M+1), p 3M (M = num_moments)."""
 
     def __init__(self, res_pos=3, res_view=10, num_hidden=3, width=64, pos_delta=False,
-                 num_moments=4):
+                 num_moments=4, device="cpu", generator=None):
         super().__init__()
         self.res_pos, self.res_view = res_pos, res_view
         self.pos_delta, self.num_moments = bool(pos_delta), int(num_moments)
@@ -68,7 +66,15 @@ class GTnet(nn.Module):
         else:
             self.s, self.r = nn.Linear(width, 3 * (m + 1)), nn.Linear(width, 4 * (m + 1))
             self.p = nn.Linear(width, 3 * m)
-        self.apply(init_linear_weights)
+        # Official order (blur_kernel.GTnet): every layer is moved to the device first, then
+        # xavier draws on that device: trunk (module order), s, r, p. With a fresh generator
+        # seeded 0 on CUDA this is exactly the official draw (safe_state torch.manual_seed(0); no
+        # CUDA random op precedes create_GTnet in train.py).
+        self.to(device)
+        heads = [self.linears, self.s, self.r] + ([self.p] if self.pos_delta else [])
+        for module in heads:
+            for layer in module.modules():
+                init_linear_weights(layer, generator)
 
     def forward(self, pos, scales, rotations, viewdirs):
         x = torch.cat([embed(pos, self.res_pos), embed(viewdirs, self.res_view), scales,
@@ -89,11 +95,9 @@ class BlurBank:
         if c["mode"] not in ("defocus", "motion"):
             raise ValueError("blur mode must be 'defocus' or 'motion'")
         self.motion = c["mode"] == "motion"
-        with torch.random.fork_rng(devices=[]):
-            torch.manual_seed(int(c["seed"]))
-            self.net = GTnet(int(c["res_pos"]), int(c["res_view"]), int(c["hidden"]),
-                             int(c["width"]), self.motion, int(c["num_moments"]))
-        self.net.to(device)
+        gen = torch.Generator(device=device).manual_seed(int(c["seed"]))
+        self.net = GTnet(int(c["res_pos"]), int(c["res_view"]), int(c["hidden"]),
+                         int(c["width"]), self.motion, int(c["num_moments"]), device, gen)
         self.reset_optimizer()
         self.counts = {"mlp_steps": 0, "optimizer_resets": 0}
 

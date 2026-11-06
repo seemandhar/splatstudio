@@ -6,8 +6,9 @@
     "paper-reader": "done",
     "planner": "done",
     "coder": "done",
-    "tester": "done"
+    "tester": "done",
+    "gap-analysis": "done: caps MLP dead (official-init fix); cake residual unresolved"
   },
-  "outcome": "built",
-  "notes": "awaiting benchmark (bench_request.json)"
+  "outcome": "built (fix pending re-benchmark)",
+  "notes": "Gap fix: official CUDA seed-0 GTnet init draw (bank.py). Relaunch the 4 method runs (d3dgs-defocus cake/caps, d3dgs-motion ball/girl); controls unchanged."
 }

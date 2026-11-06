@@ -75,3 +75,13 @@ Approved, with 0 critical and 0 major issues. The benchmark is launched on room 
 **Speed.**
 - Propagation costs about 0.93 s per call, inherent to the method.
 - The masked photometric loss adds 10–25 ms per step through host syncs. This can be optimised later; the maths would not change.
+
+## Benchmark result (gaussianpro-mipnerf360, 30k, images_4/2) — MATCHED (room absolute; garden on the pre-registered gain criterion)
+| scene | ours | paper | Δ abs | our baseline | paper 3DGS | gain ours / paper |
+|---|---|---|---|---|---|---|
+| room | 31.72 / 0.918 / 0.295 | 31.98 / 0.927 / 0.192 | −0.26 | 31.52 | 31.71 | +0.20 / +0.27 |
+| garden | 26.82 / 0.860 / 0.128 | 28.70 / 0.890 / 0.107 | **−1.88** | 26.89 | 28.77 | −0.07 / −0.07 |
+
+- **Room:** within ±0.5 dB absolute.
+- **Garden:** not comparable in absolute terms. The paper's garden rows (3DGS 28.77 and Ours 28.70) were trained on the authors' unreleased re-run COLMAP, 1.9 dB above any 3DGS on the public data. This was recorded in bench_request.json before the run, with the gain as the criterion. Our garden gain equals the paper's exactly (−0.07).
+- **Caveat:** the absolute garden number is a −1.88 dB miss, kept visible here; the verdict relies on the gain criterion for that scene.

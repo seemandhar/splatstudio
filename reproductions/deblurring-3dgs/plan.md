@@ -50,3 +50,14 @@ config} so the checkpoint carries it). `ss-eval` has no bank → sharp render (C
 6. Baseline: the existing `baseline-gsplat-deblurnerf-40000` uses the original Deblur-NeRF
    COLMAP points, 40k steps — not this protocol; a new gsplat baseline on `deblur3dgs-*` at
    20k is requested.
+
+## Gap analysis (after benchmark)
+- Official released models (weights.zip) evaluated with our renderer/split reproduce the paper
+  (cake 26.89, caps 24.47, ball 28.24, girl 23.26) → data, split, background, eval are right.
+- caps: our MLP was dead (all outputs clamped, Adam moments ~1e-45); official checkpoint's
+  GTnet Adam moments are live at 20k. Cause: init draw. Fixed: official CUDA seed-0 xavier
+  draw (bank.GTnet). 5k diagnostic caps 22.4-23.0 → 23.7.
+- cake: MLP alive in both; residual ~2 dB unexplained (ours fits blurry train views 1.5 dB
+  better with the sharp latent → less blur explained by the MLP). Candidates: runtime-level
+  ordering (official skips Gaussian updates at densify iterations), with-replacement sampling,
+  more Gaussians (327k vs 265k).

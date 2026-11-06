@@ -32,3 +32,39 @@
   All three are negligible.
 - **Probe gap:** no probe pins the gradient scaling or the LR overrides; the code itself is correct.
 - **Benchmark:** resgs-mipnerf360 (garden, counter, 30k). Compare gains: paper +0.41 / +0.80 vs its 3DGS; our baseline is 26.89 / 28.85.
+
+## Benchmark attempt 1 (resgs-mipnerf360, 30k) — FAILED, collapse
+- **Failure:** both scenes stopped at about 14000 with "Density control removed all Gaussians".
+- **Trace:** the loss jumps after each resolution switch (stage 2 at 3000: 0.022 → 0.088; stage 3 at 6000: 0.038 → 0.12) and never recovers. The opacity reductions plus the < 0.005 prune then empty the population (garden 1.02M at 7000 → 2.2k at 14000).
+- **Next step:** sent back to the builder for root-cause analysis; render/target misalignment at the higher pyramid levels is suspected. The failed run directories are kept.
+
+## Fix round 1 (benchmark collapse)
+- Symptom: 30k runs on garden/counter died at about 14000 ("Density control removed all Gaussians").
+- Root cause: `ss_resgs/density.py` `residual_split.param_fn` (old line 85, `p = p.clone()`). Under
+  `no_grad` the clone has `requires_grad=False`, and the new opacity Parameter took that flag →
+  **opacities were frozen from the first densify (step 800)**. Only the x0.3 split and x0.8
+  reductions acted on them, so the population decayed and was pruned away. Probes missed it because
+  they checked values and moments, not trainability.
+- Fix: build the tensor from `p.detach().clone()`, keep `requires_grad` from the Parameter; a runtime
+  guard raises if a density op leaves a non-trainable field. New check `_assert_trainable` in the
+  residual-split and opacity-reduce probes fails on the old code.
+- Evidence: real schedule on garden to 9000 steps: 1.31M → 4.72M Gaussians, loss 0.067 just after
+  the 6000 switch → 0.038 by 8000, opacity median 0.16–0.19 (pre-fix: 0.006, collapsing).
+  Compressed-schedule smoke: 24.41 dB (pre-fix 22.60; gsplat baseline 23.05). The earlier smoke
+  numbers are invalid. The loss jump at each switch is mostly resolution (gsplat full-res loss is ~0.10 at 2k steps).
+
+## Fix iteration 1 (orchestrator)
+- **Root cause:** residual_split rebuilt the opacity Parameter from a clone made under torch.no_grad, so opacity stopped training from step 800.
+- **Fix:** build from `p.detach().clone()` and keep `requires_grad`, matching the official replace_tensor_to_optimizer_with_mask.
+- **Guard and probe:** a runtime guard and an `_assert_trainable` probe now catch this; the probe fails on the old code.
+- **Earlier smoke numbers:** invalid. The compressed smoke is now 24.41 vs gsplat 23.05.
+- **Relaunched** as resgs-mipnerf360-v2 (garden, counter, 30k). The failed v1 run dirs are kept.
+
+## Benchmark result after fix 1 (resgs-mipnerf360-v2, 30k, images_4/2) — MATCHED
+| scene | ours | paper Ours (AbsGS) | Δ | our baseline | paper 3DGS | gain ours / paper | Gaussians |
+|---|---|---|---|---|---|---|---|
+| garden | 27.76 / 0.878 / 0.102 | 27.82 / 0.876 / 0.089 | −0.06 | 26.89 | 27.41 | +0.87 / +0.41 | 4.17M |
+| counter | 29.41 / 0.919 / 0.227 | 29.50 / 0.918 / 0.172 | −0.09 | 28.85 | 28.70 | +0.56 / +0.80 | 1.64M |
+
+- Both scenes are within ±0.1 dB, with SSIM matching.
+- The single grounded fix (frozen opacity in residual_split) took the run from a collapse at 14k to a match.

@@ -55,3 +55,26 @@ Approved, with 0 critical, 0 major and 5 minor issues. Every builder claim was c
   - Densification runs after the Adam step.
   - The official viewpoint stack is stale after an acquisition.
 - **Benchmark:** fisherrf-blender, fisherrf and fisherrf-random on all 8 Blender scenes at 230k loop steps. Compare with Table 2 (29.525 / 28.732, gain +0.79).
+
+## Benchmark result (fisherrf-blender, sequential 4→20 views, 30k training iterations; all 8 Blender scenes) — MATCHED
+| selector | ours (8-scene mean) PSNR / SSIM / LPIPS | paper Table 2 | Δ |
+|---|---|---|---|
+| Fisher (fisherrf) | **29.48** / 0.943 / 0.058 | 29.525 | −0.05 |
+| random (fisherrf-random) | **28.71** / 0.938 / 0.062 | 28.732 | −0.02 |
+| gain from active selection | **+0.77** | +0.79 | |
+
+Per scene (Fisher / random):
+
+| scene | Fisher | random |
+|---|---|---|
+| chair | 32.57 | 31.72 |
+| drums | 23.19 | 23.33 |
+| ficus | 30.27 | 30.63 |
+| hotdog | 33.99 | 31.91 |
+| lego | 30.66 | 29.69 |
+| materials | 26.47 | 24.49 |
+| mic | 31.71 | 31.35 |
+| ship | 26.98 | 26.54 |
+
+- Both complete averages and the active-selection gain are reproduced within 0.05 dB.
+- The earlier 2k smoke result (Fisher < random) was not representative, as the review predicted.

@@ -53,6 +53,22 @@ def _quat_to_rot(q):
     ], -1).reshape(-1, 3, 3)
 
 
+def _assert_trainable(params, opts, what):
+    """Every field must stay a trainable leaf owned by its optimizer and actually move on a step."""
+    for k, p in params.items():
+        if not (p.requires_grad and p.is_leaf):
+            raise AssertionError(f"{what}: {k} is no longer trainable (requires_grad=False)")
+    before = {k: p.detach().clone() for k, p in params.items()}
+    sum((p * torch.randn_like(p)).sum() for p in params.values()).backward()
+    for o in opts.values():
+        o.step()
+        o.zero_grad(set_to_none=True)
+    for k, p in params.items():
+        moved = (p.detach() != before[k]).reshape(len(p), -1).any(dim=1).float().mean().item()
+        if moved < 0.99:
+            raise AssertionError(f"{what}: only {moved:.2%} of {k} moved on an optimizer step")
+
+
 # ---- C1 residual split -------------------------------------------------------------------
 def residual_split_probe(method, device):
     cfg = _spec(method, "density").config
@@ -106,6 +122,7 @@ def residual_split_probe(method, device):
     torch.testing.assert_close(state["levels"][:n], levels0)
     from splatstudio.state import check_state
     check_state(method, params, opts)
+    _assert_trainable(params, opts, "after residual split")
     return {"selected": m, "gaussians_after": len(params["means"]), "lambda_s": lam, "beta": beta,
             "whitened_mean": mean, "whitened_std": std}
 
@@ -344,6 +361,7 @@ def opacity_reduce_probe(method, device):
     st = opts["opacities"].state[params["opacities"]]
     if torch.count_nonzero(st["exp_avg"]) or torch.count_nonzero(st["exp_avg_sq"]):
         raise AssertionError("opacity moments must be zeroed by reduce_opacity")
+    _assert_trainable(params, opts, "after reduce_opacity")
     # Controller: at 12000 prune (< min_opacity) happens before the x0.8 reduction.
     from .schedule import ResGSSchedule
     d = ResGSDensity(_spec(method, "density"))

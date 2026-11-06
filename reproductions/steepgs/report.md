@@ -70,3 +70,22 @@ Report PSNR and the Gaussian count against our baseline. The paper's shape is a 
   - It drops the paper's σ weighting and the outer-product term, and flips the sign of the dominant term.
   - Selection therefore reduces to "c < 0 and high screen gradient".
   - This is a difference between the paper and the code; the port follows the code.
+
+## Benchmark result (steepgs-mipnerf360, 30k, images_4/2) — MATCHED on PSNR; compaction weaker than the paper
+| scene | steepgs | paper SteepGS | Δ | steepgs-adc control | paper 3DGS | ΔPSNR vs control ours / paper |
+|---|---|---|---|---|---|---|
+| garden | 27.11 / 0.856 / 0.143 | 27.16 / 0.851 / 0.142 | −0.05 | 27.36 | 27.42 | −0.26 / −0.26 |
+| counter | 28.75 / 0.903 / 0.277 | 28.74 / 0.900 / 0.217 | +0.02 | 28.98 | 29.01 | −0.23 / −0.27 |
+
+| scene | steepgs Gaussians | control Gaussians | ratio ours | paper SteepGS | paper 3DGS | ratio paper |
+|---|---|---|---|---|---|---|
+| garden | 3.74M | 6.09M | 0.61 | 2.20M | 5.85M | 0.38 |
+| counter | 0.77M | 1.24M | 0.62 | 0.59M | 1.20M | 0.49 |
+
+- PSNR and the quality cost of compaction both match the paper closely: −0.26 / −0.23 vs −0.26 / −0.27.
+- The control matches the paper's 3DGS within 0.06 dB.
+- Our Gaussian count is 1.6× (garden) and 1.3× (counter) the paper's, so the count reduction is weaker: about 39% vs 51–62%.
+- Not investigated (no grounded fix identified). Candidates:
+  - the split-direction / negative-eigenvalue threshold numerics in our port;
+  - gsplat's tighter radii, which affect the screen-space gradient statistics.
+- The garden run OOMed twice because other users shared the GPU; the third attempt completed.

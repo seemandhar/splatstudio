@@ -80,3 +80,18 @@ Approved, with 0 critical, 0 major and 7 minor issues. Every stage was checked a
   - The train vs eval path is selected by grad mode.
   - Half-pixel offset in the depth back-projection.
 - **Benchmark:** gsir-mipnerf360 (garden, counter, 40k). Compare our drop vs baseline3dgs-mipnerf360-30000 with the paper's drop (−1.69 / −2.48).
+
+## Benchmark result (gsir-mipnerf360, 40k, PBR render) — PARTIAL
+| scene | ours | paper | Δ | our baseline | paper 3DGS | drop ours / paper |
+|---|---|---|---|---|---|---|
+| garden | 24.92 / 0.780 / 0.199 | 25.72 | **−0.80** | 26.89 | 27.41 | −1.97 / −1.69 |
+| counter | 25.86 / 0.841 / 0.327 | 26.22 | −0.36 | 28.85 | 28.70 | −2.99 / −2.48 |
+
+- **Counter:** within ±0.5 dB.
+- **Garden:** 0.80 dB short. Correcting for the known PSNR-metric bias (ours is about 0.05–0.15 dB low against the official per-channel mean) leaves it at about −0.65, still outside.
+- **Drop below 3DGS:** about 0.3–0.5 dB larger than the paper's on both scenes.
+- **Candidates** (not tested):
+  - the PyTorch cube-texture replacement for nvdiffrast, with corner texels approximated (the reviewer estimated ≪0.05 dB);
+  - the white stage-1 background;
+  - gsplat's 0.999 vs 0.99 alpha clamp in the normal/depth renders.
+- **No grounded fix:** none was identified, so there was no iteration.

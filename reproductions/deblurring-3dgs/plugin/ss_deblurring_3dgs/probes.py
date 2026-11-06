@@ -108,6 +108,25 @@ def _bank_for(method, device):
     return BlurBank(cfg, device)
 
 
+def official_init_reference(bank, device):
+    """train.py: safe_state -> torch.manual_seed(0); GTnet layers .to('cuda') then xavier_normal_
+    on the device's *global* generator in module order (trunk, s, r, p). Re-done here with the
+    global RNG on fresh tensors (fork_rng keeps the caller's RNG state)."""
+    net = bank.net
+    layers = [m for m in net.linears if isinstance(m, torch.nn.Linear)] + [net.s, net.r]
+    layers += [net.p] if net.pos_delta else []
+    dev = torch.device(device)
+    with torch.random.fork_rng(devices=[dev] if dev.type == "cuda" else []):
+        torch.manual_seed(int(bank.cfg["seed"]))
+        ref = []
+        for m in layers:
+            w = torch.empty_like(m.weight)
+            fan_in, fan_out = w.shape[1], w.shape[0]
+            gain = 0.1 if fan_out in (2, 3) else 1.0
+            ref.append(w.normal_(0.0, gain * math.sqrt(2.0 / (fan_in + fan_out))))
+    return layers, ref
+
+
 # -- probes --------------------------------------------------------------------------------------
 def mlp_architecture(method, device):
     """GTnet: 91 input channels (PE pos 3 / view 10 with input, + s 3 + q 4), 3 shared
@@ -127,6 +146,13 @@ def mlp_architecture(method, device):
         std = gain * math.sqrt(2.0 / (64 + out))
         _check(abs(float(layer.weight.std()) / std - 1) < 0.5, f"head {name} init std")
         _check(float(layer.bias.abs().max()) == 0.0, f"head {name} bias not zero")
+    layers, ref = official_init_reference(bank, device)
+    _check(all(torch.equal(m.weight, w) for m, w in zip(layers, ref)),
+           "MLP init is not the official seed-0 draw on the training device")
+    if torch.device(device).type == "cuda":  # official CUDA draw, first trunk weights
+        w0 = [-0.10503458976745605, -0.048315856605768204, -0.30032068490982056]
+        _check(torch.allclose(net.linears[0].weight[0, :3].cpu(), torch.tensor(w0)),
+               "CUDA seed-0 draw differs from the recorded official init")
     x = torch.rand(5, 3, device=device)
     _check(torch.allclose(bank_mod.embed(x, 3), ref_embed(x, 3)), "positional encoding differs")
     gen = torch.Generator(device="cpu").manual_seed(11)

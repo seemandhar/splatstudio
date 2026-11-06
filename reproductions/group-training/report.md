@@ -68,3 +68,20 @@ Approved, with 0 critical, 0 major and 5 minor issues. Confirmed against the off
   - The probe does not cover the reset/cache interaction.
   - The 2k smoke gap is not informative.
 - **Benchmark:** group-training-mipnerf360 (group-training and gsplat, garden and counter, 30k). The gsplat run is a same-load timing reference.
+
+## Benchmark result (group-training-mipnerf360, 30k) — PARTIAL (absolute); gains match
+| scene | group-training | paper OPS 0~30K | Δ abs | gsplat same exp | shared baseline | paper 3DGS* | gain vs shared baseline ours / paper |
+|---|---|---|---|---|---|---|---|
+| garden | 26.78 / 0.860 / 0.132 | 27.418 | **−0.64** | 26.96 | 26.89 | 27.397 | −0.11 / +0.02 |
+| counter | 28.92 / 0.908 / 0.261 | 28.973 | −0.06 | 28.95 | 28.85 | 28.980 | +0.07 / −0.01 |
+
+| scene | training s, GT / gsplat (ratio) | paper ratio | Gaussians, GT / gsplat (ratio) | paper ratio |
+|---|---|---|---|---|
+| garden | 4180 / 2753 (1.52×) | 0.65× | 4.24M / 4.76M (0.89) | 0.78 |
+| counter | 1287 / 1598 (0.81×) | 0.82× | 1.01M / 1.21M (0.84) | 0.79 |
+
+- **Quality:** the gain is ≈0 on both scenes, as in the paper.
+  - Garden's absolute miss comes from our gsplat garden baseline sitting 0.5 dB below the paper's 3DGS* (26.89 vs 27.40). Group Training itself is within 0.11 dB of that baseline.
+  - Under the absolute ±0.5 dB rule, garden fails, so the verdict is partial.
+- **Speed:** counter reproduces the paper's ×0.82 time ratio. Garden ran 1.5× slower than its gsplat pair. Wall time on shared GPUs is unreliable (the two runs were on different GPUs and loads), so the speed claim is inconclusive.
+- **Model size:** about 11–16% fewer Gaussians, vs the paper's ~22%.

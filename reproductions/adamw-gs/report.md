@@ -37,3 +37,28 @@ Benchmark (one launch per method), compared on the gain over baseline3dgs-mipner
 - adamw-gs-gs8 on bicycle: primary, 25.454 (+0.216 vs GS1).
 - adamw-gs on bicycle: secondary, GS9 25.481 (+0.243).
 - adamw-gs-indoor on counter: 29.112 (+0.066).
+
+## Result: counter (adamw-gs-indoor, 30k) — within tolerance
+- **Result:** 29.08 / 0.907 / 0.268, with 577k Gaussians.
+- **Paper GS7/GS8:** 29.112 / 0.907 / 0.206, with 535k Gaussians (Δ −0.03).
+- **Gain:** +0.24 over our baseline (28.85), vs the paper's +0.07 over GS1.
+- **Gaussian count:** 0.49× the baseline's 1.19M, vs the paper's 0.49× (535k / 1.09M).
+- **Still pending:** bicycle (gs8, gs9).
+
+## Result: bicycle with the released config (adamw-gs = GS9, 30k) — within tolerance
+- **Result:** 25.40 / 0.778 / 0.247, with 3.47M Gaussians.
+- **Paper GS9:** 25.481 (Δ −0.08).
+- **Gain:** +0.48 over our baseline (24.92), vs the paper's +0.24 over GS1.
+- **Still pending:** the primary headline variant adamw-gs-gs8 (target 25.454).
+
+## Result: bicycle with the headline config (adamw-gs-gs8, 30k) — within tolerance
+25.27 / 0.769 / 0.258, with 3.11M Gaussians, vs paper GS8 25.454 / 0.778 / 0.219, with 2.72M (Δ −0.18). The gain over our baseline is +0.35, vs the paper's +0.22.
+
+## Verdict: MATCHED (all 3 runs within ±0.5 dB)
+| run | ours | paper | Δ | gain ours / paper | Gaussians ours / paper |
+|---|---|---|---|---|---|
+| bicycle GS8 (primary) | 25.27 | 25.454 | −0.18 | +0.35 / +0.22 | 3.11M / 2.72M |
+| bicycle GS9 (released config) | 25.40 | 25.481 | −0.08 | +0.48 / +0.24 | 3.47M / — |
+| counter GS7/GS8 | 29.08 | 29.112 | −0.03 | +0.24 / +0.07 | 0.58M / 0.54M |
+
+Our gains over our gsplat baseline are larger than the paper's gains over its GS1. That fits our baseline sitting below the paper's 3DGS (bicycle 24.92 vs 25.24).

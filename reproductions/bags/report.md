@@ -85,3 +85,34 @@ Official metrics: **28.00 / SSIM 0.812 / LPIPS-Alex 0.163**, vs paper 27.68 / 0.
 | caps (defocus) | 24.40 | 24.16 | +0.24 |
 
 Still pending: the -nobpn controls (paper Mip-Splatting ball 23.22, caps 21.00) and the gsplat controls, which give the gain comparison.
+
+### Control: gsplat on ball (bags-ctl, 30k), official metrics
+- **Result:** 22.73 / 0.605 / 0.358 (paper Mip-Splatting 23.22).
+- **Gain:** BAGS gains +5.27 dB over our gsplat; the paper gains +4.46 over Mip-Splatting.
+- **Still pending:** the bags-ball-nobpn and caps controls.
+
+### Control: gsplat on caps (bags-ctl-caps, 30k), official metrics
+- **Result:** 16.78 / 0.361 / 0.467, vs the paper's Mip-Splatting 21.00.
+- **Consistent with the old 40k run (15.61):** plain gsplat on caps is poor. The review found it fits the defocused training background, and test view 000 extrapolates badly.
+- **Fair comparison row:** the -nobpn control (Mip-Splatting under the BAGS schedule) is still pending.
+
+### Control: BPN off on ball (bags-ball-nobpn = Mip-Splatting under the BAGS schedule, 49k), official metrics
+- **Result:** 23.61 / 0.643 / 0.307, vs the paper's Mip-Splatting 23.22 (Δ +0.39). The control matches the paper's row.
+- **Gain from the BPN:** +4.39 dB (28.00 − 23.61), vs the paper's +4.46.
+- **Still pending:** bags-caps-nobpn.
+
+### Control: BPN off on caps (bags-caps-nobpn, 12k), official metrics
+- **Result:** 22.88 / 0.641 / 0.322, vs the paper's Mip-Splatting 21.00 (Δ +1.88).
+- **Gain from the BPN:** +1.52 dB (24.40 − 22.88), vs the paper's +3.16.
+
+## Controls summary
+| scene | BAGS | BPN off (ours) | paper Mip-Splatting | BPN gain ours / paper | gsplat 30k |
+|---|---|---|---|---|---|
+| ball | 28.00 | 23.61 | 23.22 | +4.39 / +4.46 | 22.73 |
+| caps | 24.40 | 22.88 | 21.00 | +1.52 / +3.16 | 16.78 |
+
+- **Verdict:** stays MATCHED, because both method rows are within ±0.5 dB.
+- **Ball:** the BPN's contribution is reproduced.
+- **Caps:** the BAGS schedule with the BPN off is much stronger than the paper's Mip-Splatting row, so our BPN gain there is half the paper's.
+  - The paper's Mip-Splatting row comes from Mip-Splatting's own pipeline, not the BAGS schedule (coarse-to-fine resolution, per-scene thresholds, depth/RGB TV). The BAGS schedule itself already helps on defocus.
+  - So the "BPN off" control is not the same experiment as the paper's comparison row.

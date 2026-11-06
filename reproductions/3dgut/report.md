@@ -59,3 +59,13 @@ extension; renderer side is ready and probed).
   - alpha clamps at 0.999 with no 0.0113 minimum response;
   - observer points and the scene extent use training cameras only;
   - the background is white.
+
+## Benchmark result (3dgut-mipnerf360, 30k, images_4/2) — MATCHED
+| scene | ours | paper (Ours) | Δ | gsplat baseline |
+|---|---|---|---|---|
+| garden | 26.92 / 0.850 / 0.148 | 26.90 / 0.851 / 0.121 | +0.02 | 26.89 |
+| counter | 28.97 / 0.910 / 0.255 | 29.03 / 0.908 / 0.197 | −0.06 | 28.85 |
+- Both scenes are within ±0.5 dB, and SSIM matches.
+- LPIPS is higher because the runtime uses LPIPS-VGG and the paper a different net.
+- As in the paper, the unscented transform costs nothing in quality vs EWA splatting on pinhole images (gain over our baseline +0.03 / +0.13).
+- The distorted-camera and secondary-ray claims were not benchmarked.

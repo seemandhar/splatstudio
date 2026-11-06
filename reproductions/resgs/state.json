@@ -9,5 +9,6 @@
   "test": "done"
  },
  "outcome": "built",
- "method": "resgs"
+ "method": "resgs",
+ "fix_round_1": "frozen-opacity bug fixed (density.py residual_split); rebench needed"
 }

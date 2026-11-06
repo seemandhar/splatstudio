@@ -59,3 +59,20 @@ Compare like for like: full-image PSNR against gsplat. The right-half number is 
   - Crop-view statistics now use the full width.
   - Alpha-selection counters are logged.
 - Benchmark: sfw-pt (splatfacto-w, phototourism-sfw, brandenburg-gate + sacre-coeur, 55k steps). Score with ss_splatfactow.evaluate and report the alpha_* counters.
+
+## Benchmark result (sfw-pt, 55k, phototourism-sfw) — MATCHED
+NeRF-W protocol, scored on the right half of each test image with its jointly trained embedding:
+
+| scene | ours PSNR / SSIM / LPIPS-Alex | paper | Δ | full image |
+|---|---|---|---|---|
+| brandenburg-gate | 26.49 / 0.931 / 0.128 | 26.87 / 0.932 / 0.124 | −0.38 | 27.49 |
+| sacre-coeur | 22.31 / 0.878 / 0.154 | 22.53 / 0.876 / 0.158 | −0.22 | 23.71 |
+
+- Both scenes are within ±0.5 dB, and SSIM and LPIPS are close.
+- The paper's 3DGS row is 19.99 / 17.57, so the method's +6.5 / +4.7 dB gain is reproduced.
+- **Alpha loss (C3) was active:**
+  - brandenburg-gate: on 35,920 of 55,000 steps (130M selected pixels);
+  - sacre-coeur: on 26,813 steps (75M pixels);
+  - it was active up to the last step in both.
+- **Final Gaussians:** 203k and 241k.
+- **Evaluation:** bench.py's generic ss-eval step fails for this method (the renderer needs the bank), so both jobs show "failed" in bench status. The training runs completed, and the headline numbers come from ss_splatfactow.evaluate (test_sfw.json).

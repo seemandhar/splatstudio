@@ -69,3 +69,13 @@ SSIM/LPIPS; schedules are absolute, so `--steps` must be 30000.
   A mask-off control was not run, so the count ratio includes the density-implementation difference.
 - **Steps:** total_steps is not tied to --steps, so the benchmark must use exactly 30000.
 - **Benchmark:** maskgaussian-1600 (maskgaussian and maskgaussian-exactgrad, garden and counter, 30k). Targets: garden 27.34 / 2.13M, counter 29.01 / 0.328M.
+
+## Benchmark result (maskgaussian-1600, 30k, mipnerf360-1600) — MATCHED (PSNR and count)
+| scene | maskgaussian | Gaussians | paper | Δ PSNR | count ratio vs our baseline / paper | exactgrad |
+|---|---|---|---|---|---|---|
+| garden | 27.27 / 0.856 / 0.146 | 2.20M | 27.34 / 2.13M | −0.07 | 0.48 / 0.37 | 27.29, 2.20M |
+| counter | 29.03 / 0.914 / 0.255 | 0.339M | 29.01 / 0.328M | +0.02 | 0.29 / 0.28 | 29.00, 0.336M |
+
+- Both PSNR and the absolute Gaussian counts match the paper (within 3% and 3%).
+- **Ratio caveat:** our baseline has fewer Gaussians than the paper's 3DGS on garden (4.55M vs 5.81M), so the garden ratio looks weaker. The absolute counts agree.
+- **Exactgrad:** fixing the official backward-kernel bug changes PSNR by ±0.03 and the count by <1%. The bug has no practical effect at this setting.

@@ -45,3 +45,5 @@ PSNR per scale (ours / paper):
 - gsplat control on counter: 27.98 avg (paper 3DGS 28.51), with 26.89 at 8×. That is the aliasing failure the method fixes; the paper's 3DGS gets 27.66 at 8×.
 - Our gain on counter: +1.89 dB avg vs the paper's +1.49, and +3.82 at 8× vs +3.24.
 - The garden gsplat control OOMed twice because other users shared the GPU. It has been re-queued with --min-free-gb 20.
+- **gsplat control on garden** (re-queued after the OOMs): 26.13 / 28.22 / 28.75 / 28.30 at 1×/2×/4×/8×, avg 27.85, vs the paper's 3DGS 26.16 / 28.54 / 29.13 / 28.66, avg 28.12.
+  - Our garden gain is +2.03 dB avg vs the paper's +1.89, and +3.77 vs +3.53 at 8×.

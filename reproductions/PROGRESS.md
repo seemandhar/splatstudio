@@ -1,6 +1,6 @@
 # Reproduction progress
 
-75/100 started: 4 blocked, 11 built, 5 built (benchmark pending), 5 in progress, 24 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 2 matched (iter 1), 3 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 1 partial, 2 partial (2/3 scenes), 11 ready_for_benchmark, 1 skipped
+76/100 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 4 in progress, 24 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 2 matched (iter 1), 3 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 1 partial, 2 partial (2/3 scenes), 13 ready_for_benchmark, 1 skipped
 
 | # | paper | stage | outcome | ours vs paper (PSNR) |
 |---:|---|---|---|---|
@@ -91,7 +91,7 @@
 | 85 | [SWAG: Splatting in the Wild images with Appearance-conditioned Gaussia](swag/report.md) | tester | built |  |
 | 86 | [Splatfacto-W: A Nerfstudio Implementation of Gaussian Splatting for Un](splatfacto-w/report.md) | tester | built |  |
 | 87 | [RobustSplat: Decoupling Densification and Dynamics for Transient-Free ](robustsplat/report.md) | tester | in progress |  |
-| 88 | [Deblurring 3D Gaussian Splatting](deblurring-3dgs/report.md) | tester | built |  |
+| 88 | [Deblurring 3D Gaussian Splatting](deblurring-3dgs/report.md) | gap-analysis | built (fix pending re-benchmark) |  |
 | 89 | [BAGS: Blur Agnostic Gaussian Splatting through Multi-Scale Kernel Mode](bags/report.md) | tester | built |  |
 | 90 | [Spec-Gaussian: Anisotropic View-Dependent Appearance for 3D Gaussian S](spec-gaussian/report.md) | tester | ready_for_benchmark |  |
 | 91 | [GS-IR: 3D Gaussian Splatting for Inverse Rendering](gs-ir/report.md) | report | built |  |
@@ -101,6 +101,6 @@
 | 95 | [MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic M](maskgaussian/report.md) | test | built |  |
 | 96 | [ResGS: Residual Densification of 3D Gaussian for Efficient Detail Reco](resgs/report.md) | test | built |  |
 | 97 | [HDA-GS: Hierarchical Density-Controlled for Anisotropic 3D Gaussian Sp](hda-gs/report.md) | started | blocked |  |
-| 98 | [Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering](ms-gs/report.md) | started | in progress |  |
+| 98 | [Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering](ms-gs/report.md) | test | ready_for_benchmark |  |
 | 99 | [DRGSplat: Depth-Regularized 3D Gaussian Splatting](drgsplat/report.md) | started | blocked |  |
-| 100 | Faster-GS: Analyzing and Improving Gaussian Splatting Optimization | — | — | |
+| 100 | [Faster-GS: Analyzing and Improving Gaussian Splatting Optimization](faster-gs/report.md) | test | ready_for_benchmark | smoke garden 2k: 23.42 vs gsplat 22.99 dB, 65 s vs 150 s |

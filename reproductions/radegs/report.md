@@ -48,3 +48,27 @@
   1. Opacity reset at 3000/6000/9000/12000 uses the 3D filter from before densification (official order: densify → recompute filter → reset). Negligible.
   2. The pinned kernel carries the upstream `dL_dconic`/`conic_opacity` argument bug fixed later in 5f5cd3b (`rasterizer_impl.cu:530`). It is kept as-is, because the paper's numbers came from this kernel; it is nearly harmless with kernel_size 0.
   3. The normal→means backward quirk (relative error ~4 vs finite difference) is kept unmodified for the same reason.
+
+## Benchmark result (radegs-mipnerf360, 30k, all 9 scenes, images_4/2) — MATCHED
+| group | ours | paper | Δ | our baseline | paper 3DGS | gain ours / paper |
+|---|---|---|---|---|---|---|
+| outdoor (5) | 24.77 | 25.17 | −0.40 | 24.39 | 24.64 | +0.38 / +0.53 |
+| indoor (4) | 30.53 | 30.74 | −0.21 | 30.90 | 30.41 | −0.37 / +0.33 |
+
+- **Per scene:**
+
+  | scene | PSNR |
+  |---|---|
+  | bicycle | 25.50 |
+  | flowers | 21.67 |
+  | garden | 27.44 |
+  | stump | 27.04 |
+  | treehill | 22.21 |
+  | room | 30.53 |
+  | counter | 28.74 |
+  | kitchen | 31.03 |
+  | bonsai | 31.81 |
+
+- Both complete group averages are within ±0.5 dB; outdoor sits near the edge.
+- **Indoor:** RaDe-GS lands below our stronger indoor baseline (30.90 vs the paper's 3DGS 30.41), so the indoor gain is not reproduced.
+- Geometry (DTU / T&T F1) was not benchmarked.

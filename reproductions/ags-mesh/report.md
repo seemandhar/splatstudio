@@ -79,3 +79,30 @@
 **Within-split sizes.** COLMAP dropped 3 test frames in coffee_room and 1 in honka, so their within splits have 35 and 32 frames. The official split does the same.
 
 **Smoke run.** The 2k compressed smoke run is a plumbing check only and says nothing about final quality.
+
+## Benchmark result (6 MuSHRoom rooms, 30k) — MATCHED on absolute PSNR; gain over the Splatfacto control NOT reproduced
+| | within (test) | cross (validation) |
+|---|---|---|
+| ags-mesh (ours) | **25.13** | **22.44** |
+| paper AGS-Mesh | 24.83 | 22.24 |
+| Δ | +0.30 | +0.20 |
+| dn-splatter-splatfacto control (ours) | 25.13 | 22.30 |
+| paper Splatfacto | 24.47 | 21.66 |
+| gain over control, ours / paper | **−0.01 / +0.36** | **+0.14 / +0.58** |
+
+- **Per room (within, ags-mesh / control):**
+
+  | room | ags-mesh | control |
+  |---|---|---|
+  | coffee_room | 25.72 | 25.82 |
+  | honka | 23.79 | 23.73 |
+  | kokko | 23.32 | 23.27 |
+  | sauna | 24.92 | 24.79 |
+  | computer | 25.46 | 25.51 |
+  | vr_room | 27.54 | 27.69 |
+
+- **Absolute PSNR:** both 6-room means are within ±0.5 dB, so the verdict under the batch rule is matched.
+- **Gain caveat:** our vanilla-Splatfacto control is 0.65 dB stronger than the paper's Splatfacto row, and AGS-Mesh adds about nothing on top of it.
+  - The paper's NVS improvement from the depth/normal priors is therefore not reproduced.
+  - The absolute match probably comes from our stronger base pipeline, not from the method.
+- Mesh and geometry metrics were not benchmarked.

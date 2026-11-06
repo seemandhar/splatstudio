@@ -60,3 +60,27 @@ Approved, with 0 critical, 0 major and 6 minor issues.
   - The robustsplat-nodg ablation keeps bootstrap at 20000, which is an interpretation.
   - Eval PSNR is computed on float renders, not the official 8-bit PNGs.
 - **Benchmark:** robustsplat-onthego (patio-high) and robustsplat-robustnerf (crab2), robustsplat and gsplat at 30k. Compare each gain over gsplat with the paper's gain over its 3DGS row (17.04 / 31.76).
+
+## Result: patio-high (robustsplat-onthego, 30k) — outside tolerance
+| | ours | paper | Δ |
+|---|---|---|---|
+| robustsplat | 22.06 / 0.817 / 0.180 | 22.87 / 0.837 / 0.146 | **−0.81** |
+| gsplat control | 17.30 / 0.638 / 0.356 | 3DGS 17.04 | +0.26 |
+| gain | +4.76 | +5.83 | |
+
+- The control matches the paper's 3DGS, so the shortfall is in the method's gain (−1.07 dB).
+- **Caveat recalled from review-1:** the released patio-high checkpoint (22.868) comes from a different experiment path (ykb/…/ours3, data onthego_undist_ours) than crab2/patio, so the target may reflect a different code state.
+- Crab2 is still pending.
+
+## Result: crab2 (robustsplat-robustnerf, 30k) — within tolerance
+- **Result:** robustsplat 34.63 / 0.939 / 0.221, vs paper 34.88 / 0.940 / 0.154 (Δ −0.25).
+- **gsplat control:** 27.70, vs the paper's 3DGS 31.76. Our plain gsplat is hit much harder by crab2's distractors, so our gain (+6.93) is far larger than the paper's (+3.12).
+
+## Verdict: PARTIAL (1 of 2 scenes within ±0.5 dB)
+| scene | ours | paper | Δ |
+|---|---|---|---|
+| crab2 | 34.63 | 34.88 | −0.25 |
+| patio-high | 22.06 | 22.87 | **−0.81** |
+
+- **patio-high:** the released checkpoint for this scene comes from a different experiment path than crab2/patio (review-1). The target may therefore reflect a different code state.
+- **No grounded fix:** none was identified, so there was no iteration.

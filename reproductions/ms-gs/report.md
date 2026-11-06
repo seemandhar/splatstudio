@@ -84,3 +84,36 @@ smoke-1 crashed on the 128× target resize; this is fixed (CPU resize) and the r
   - ms-gs-msgs: ms-gs at 40k on garden and counter.
   - ms-gs-msgs-3dgs: gsplat at 30k, the paper's single-scale 3DGS row.
   - Summarise with `tools/multiscale_summary.py --dataset mipnerf360-msgs --scales 1,4,16,64`.
+
+## Control: single-scale gsplat (ms-gs-msgs-3dgs, 30k) — matches the paper's 3DGS row
+| PSNR | 1× | 4× | 16× | 64× |
+|---|---|---|---|---|
+| garden ours | 26.94 | 21.24 | 17.47 | 15.55 |
+| garden paper 3DGS | 27.27 | 20.42 | 16.74 | 14.92 |
+| counter ours | 28.99 | 24.90 | 18.15 | 14.36 |
+| counter paper 3DGS | 29.15 | 24.81 | 17.94 | 14.32 |
+
+The control is within 0.9 dB of the paper's 3DGS at every scale, which supports the mipnerf360-msgs protocol. The ms-gs runs (40k) are still pending.
+
+## Benchmark result (ms-gs-msgs, 40k) — PARTIAL
+PSNR per scale (ours / paper):
+
+| scene | 1× | 4× | 16× | 64× | mean of 4 |
+|---|---|---|---|---|---|
+| garden | 26.79 / 27.16 (−0.37) | 23.90 / 23.99 (−0.09) | 24.70 / 26.41 (**−1.71**) | 26.24 / 24.79 (**+1.45**) | 25.41 / 25.59 (−0.18) |
+| counter | 28.70 / 29.17 (−0.47) | 26.60 / 26.77 (−0.17) | 24.73 / 23.44 (**+1.29**) | 27.36 / 24.59 (**+2.77**) | 26.85 / 25.99 (+0.86) |
+
+- **1× and 4×:** within ±0.5 dB on both scenes.
+- **16× and 64×:** off by 1.3–2.8 dB, in both directions:
+  - garden is too low at 16× and too high at 64×;
+  - counter is too high at both.
+  So the per-scale numbers do not match, even though garden's 4-scale mean does.
+- **Gain over the single-scale control:** large, as in the paper.
+  - At 64×: +10.7 (garden) and +13.0 (counter) dB, vs the paper's +9.9 / +10.3.
+  - At 16×: +7.2 / +6.6, vs +9.7 / +5.5.
+- **Final Gaussians:** 4.22M (garden), 1.07M (counter).
+- **Not explained.** The test images are byte-identical to the official ones and the control matches the paper's 3DGS within 0.9 dB, so the difference lies in how the coarse levels are produced and selected. Candidates, none of them tested:
+  - Selection uses gsplat visibility (opacity < 1/255 culled, narrower radii), which changes the per-Gaussian S_min/S_max ranges.
+  - The voxel grid anchoring is assumed to match Open3D-ML.
+  - Single seed: the paper's own 16× > 64× ordering on garden and 64× > 16× on counter suggests the low scales are noisy.
+- No grounded fix was found, so no iteration was made.

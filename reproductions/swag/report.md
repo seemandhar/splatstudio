@@ -28,3 +28,19 @@ NeRF-W protocol (right half, embedding optimised on the left): **26.22** / 0.930
 - No test-time optimisation: 18.76.
 - Full image with the optimised embedding: 27.00.
 The full swag runs (swag-pt) are still pending.
+
+## Benchmark result (swag-pt, 60k, NeRF-W protocol) — PARTIAL (one scene within ±0.5 dB, one 1.0 dB above)
+| scene | swag | paper | Δ | swag-a ours / paper | no test-time optimisation | full image (optimised) |
+|---|---|---|---|---|---|---|
+| brandenburg-gate | **26.41** | 26.33 | +0.08 | 26.22 / 26.44 | 17.83 | 27.07 |
+| sacre-coeur | **22.20** | 21.16 | **+1.04** | — | 16.46 | 23.15 |
+
+- **The transient-opacity risk did not materialise.** Full swag ended slightly above swag-a on Brandenburg Gate (+0.19), close to the paper's −0.11.
+- **Transient statistics** (fraction of Gaussians with opacity-variation variance > 1e-4 across training images):
+  - brandenburg-gate: 6.9% (9,551 of 139k), vs the paper's ~12.5% transient split;
+  - sacre-coeur: 15.6% (28,426 of 182k).
+- **Sacré-Cœur is above the paper's number by 1.04 dB.** No official code exists, so this cannot be traced. Plausible causes:
+  - full-resolution training (the paper never states its resolution; its comparison baselines use downscale 2);
+  - our test-time optimisation settings (A7/A8: mean-embedding init, 128 steps, lr 0.1), which are assumptions.
+  A beneficial unstated choice still counts as a mismatch, so the scene is reported outside tolerance.
+- **No grounded fix:** none is available, and tuning against the target would be fishing, so there is no iteration.

@@ -20,3 +20,6 @@ Official `densification_postfix` (called by clone and split) zeroes `max_radii2D
 only the world-size prune (scale > 0.1·extent) acts. Ports that implement a real screen-size prune
 over-prune (SparseGS 12-view: test PSNR 18.3 -> 12.2 after step 3000). Check other ports that copied
 the Inria density (`max_screen_size` / `size_threshold = 20`).
+
+## Plugin pitfall: density ops that rebuild a Parameter under torch.no_grad
+`p.clone()` inside `torch.no_grad()` returns a tensor with requires_grad=False. Building the new Parameter from it silently freezes that field. ResGS hit this: opacities were frozen from the first densify, and the population collapsed to zero by 14k. Build from `p.detach().clone()` and copy `requires_grad` from the original Parameter, or use gsplat.strategy.ops. A runtime check that every field is still a trainable leaf after `after_backward` would catch this for all plugins (the ResGS plugin now has one).

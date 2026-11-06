@@ -53,3 +53,32 @@ Methods:
   - Sky logit 20 vs +inf.
   - Single seed.
   - ss-eval reports raw untoned renders (no bank).
+
+## Control: gsplat on brandenburg-gate (wg-gsplat-pt, 30k), scored with ss_wildgaussians.evaluate
+- **Result:** right half, no test-time optimisation: 19.38 / 0.864 / 0.173.
+- **Paper's 3DGS row:** 19.37, so the control matches exactly.
+- **Still pending:** wildgaussians-pt (200k, target 27.77) and the On-the-go runs.
+
+## Result: brandenburg-gate (wildgaussians-pt, 200k) — within tolerance
+- **Result:** official NeRF-W protocol, with test-time appearance optimised on the left half and scored on the right: **27.87 / 0.928 / LPIPS-Alex 0.121**.
+- **Paper:** 27.77 / 0.927 / 0.133 (Δ +0.10).
+- **Without test-time optimisation:** 20.81.
+- **vs our gsplat control:** +8.49 dB over 19.38. The paper's gain is +8.40 over its 19.37.
+- **Final Gaussians:** 595k.
+- **Still pending:** the On-the-go runs (wg-onthego).
+
+## Result: On-the-go (wg-onthego, 30k; ss_wildgaussians.evaluate official metrics)
+| scene | wildgaussians (appearance on) | paper | Δ | wildgaussians-noapp | gsplat | paper 3DGS |
+|---|---|---|---|---|---|---|
+| patio-high | 21.89 / 0.731 / 0.201 | 22.23 / 0.725 / 0.206 | −0.34 | 21.35 | 17.22 | 17.29 |
+| patio | 21.32 / 0.813 / 0.122 | 21.44 / 0.800 / 0.138 | −0.12 | 21.06 | 16.80 | 17.48 |
+
+## Verdict: MATCHED (3/3 scenes within ±0.5 dB)
+| scene | ours | paper | Δ | gain over gsplat ours / paper |
+|---|---|---|---|---|
+| brandenburg-gate (200k) | 27.87 | 27.77 | +0.10 | +8.49 / +8.40 |
+| patio-high | 21.89 | 22.23 | −0.34 | +4.67 / +4.94 |
+| patio | 21.32 | 21.44 | −0.12 | +4.52 / +3.96 |
+
+- **Paper vs code conflict:** appearance-on (the paper's "Ours") beats the released no-appearance config by +0.54 / +0.27 dB, consistent with the paper's Tab. 4 "w/o app." row being lower. So the paper's headline row uses appearance, as the review concluded.
+- **Controls:** the gsplat controls match the paper's 3DGS rows within 0.7 dB.
