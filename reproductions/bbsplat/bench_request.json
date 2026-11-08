@@ -1,0 +1,60 @@
+{
+ "method": "bbsplat",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle"
+  ],
+  "tandt": [
+   "truck"
+  ]
+ },
+ "steps": 32000,
+ "per_scene_reported": true,
+ "extra": "",
+ "method_per_scene": {
+  "mipnerf360/bicycle": "bbsplat",
+  "tandt/truck": "bbsplat-tnt"
+ },
+ "recipe": "3dgs",
+ "paper_reference": {
+  "psnr": {
+   "bicycle": 23.28,
+   "truck": 24.19
+  },
+  "ssim": {
+   "bicycle": 0.652,
+   "truck": 0.8418
+  },
+  "lpips": {
+   "bicycle": 0.3096,
+   "truck": 0.1957
+  },
+  "budget_matched_3dgs_mcmc_in_paper": {
+   "psnr": {
+    "bicycle": 23.87,
+    "truck": 23.91
+   }
+  },
+  "budget_matched_3dgs_in_paper": {
+   "psnr": {
+    "bicycle": 23.04,
+    "truck": 20.43
+   }
+  },
+  "source": "Table 1 (fixed storage) + Supp. per-scene table (tab:scene_results, active version)"
+ },
+ "compare_baseline": "baseline3dgs-mipnerf360-30000 / baseline3dgs-tandt-30000 (unconstrained; NOT comparable to the paper's budget-constrained 3DGS row)",
+ "min_free_gb": 12,
+ "notes": "32000 = 30000 + 2000 SH-rest fine-tune (official). Budgets: bicycle cap 60K (50K FPS SfM + 10K sky), truck cap 30K (20K FPS SfM + 10K sky) = paper Tab. 1 'Points'; the exact Tab.1 commands are unpublished. Smoke: ~0.32 s/step on a shared busy A6000 at 60K billboards (~2 GB peak) -> expect ~3 h for bicycle, less for truck. First job JIT-compiles the rasterizer (~1 min, cached). Evaluation renders 8-bit quantised textures (official). Optional extra variant bbsplat-300k = scripts/train_all.sh budget (paper Tab. 2 regime, averages only).",
+ "iteration_1": {
+  "method": "bbsplat-tnt-sky2k",
+  "datasets": {
+   "tandt": [
+    "truck"
+   ]
+  },
+  "steps": 32000,
+  "recipe": "3dgs",
+  "label": "post-hoc (gap-analysis-1.md)"
+ }
+}

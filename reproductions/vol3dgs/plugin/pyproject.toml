@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-vol3dgs"
+version = "0.1.0"
+description = "Volumetrically Consistent 3D Gaussian Rasterization (arXiv 2412.03378) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+vol3dgs = "ss_vol3dgs:vol3dgs"
+vol3dgs-black = "ss_vol3dgs:vol3dgs_black"
+
+[tool.setuptools]
+packages = ["ss_vol3dgs"]
+
+[tool.setuptools.package-data]
+ss_vol3dgs = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100

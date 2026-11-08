@@ -1,0 +1,9 @@
+{"method": "perceptual-gs",
+ "datasets": {"mipnerf360-pilr": ["bicycle", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000",
+ "paper_psnr": {"bicycle": 25.956, "counter": 29.452},
+ "paper_3dgs_psnr": {"bicycle": 25.617, "counter": 29.144},
+ "note": "Official run.py uses -r 4 (outdoor) / -r 2 (indoor) PIL resizing = mipnerf360-pilr. Requires sensitivity sidecars (built: /bigdata/sejain/perceptual-gs-sens/mipnerf360/pilr/{bicycle,counter}); other scenes need tools/ssenv ss-pgs-prep --data <native> --raw ~/datasets/mipnerf360/360_v2/<scene>. First job JIT-compiles the CUDA extension (cached). Training ~1.7x slower than gsplat (second render branch + all-view weight statistics every 1000/1500 steps)."}

@@ -1,0 +1,7 @@
+{"method": "mh-3dgs", "module": "ss_mh_3dgs",
+ "components": ["mh-raster (renderer, black bg)", "mh-density (MH birth + relocation)", "photometric", "mcmc-regularizers"],
+ "fields": [],
+ "probes": ["importance-formula", "voxel-acceptance", "birth-proposals", "relocation", "schedules", "multiview-maps", "regularizers"],
+ "contributions": ["multi-view importance", "coarse-fine MH birth with voxel prior", "low-opacity relocation", "annealed schedules", "MCMC regularisers (inherited)"],
+ "fidelity_gaps": ["gsplat rasterizer vs MCMC/Inria rasterizer", "view sampling with replacement", "valid-conv SSIM in loss", "maps rendered after optimizer step", "different camera shuffle/RNG", "SH step offset by 1", "LPIPS implementation"],
+ "feasible_natively": true}

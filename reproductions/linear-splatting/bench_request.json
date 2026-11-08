@@ -1,0 +1,16 @@
+{
+ "method": "3dls-aags",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "kitchen"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "optional_methods": [
+  "3dls"
+ ],
+ "notes": "3dls-aags = AGS on lam-aligned distance (labelled interpretation); 3dls = paper-literal AGS, expected to under-densify (2k smoke 20.93 vs 23.07). Paper targets garden 27.40 / kitchen 31.78; paper gsplat-3DGS 27.41 / 31.40; our baseline 26.89 / 31.34."
+}

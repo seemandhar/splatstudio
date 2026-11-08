@@ -1,0 +1,48 @@
+{
+ "method": "nerf-init-gs",
+ "datasets": {
+  "mipnerf360-nerfinit": [
+   "garden",
+   "room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe splatstudio",
+ "data_paths": {
+  "mipnerf360-nerfinit/garden": "/home/sejain/datasets/nerfinit-gs/mipnerf360/garden",
+  "mipnerf360-nerfinit/room": "/home/sejain/datasets/nerfinit-gs/mipnerf360/room"
+ },
+ "baseline_dataset_alias": {
+  "mipnerf360-nerfinit": "mipnerf360"
+ },
+ "proposed_datasets_json_entries": {
+  "mipnerf360-nerfinit": {
+   "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+   "native_root": "/home/sejain/datasets/nerfinit-gs/mipnerf360",
+   "scenes": {
+    "garden": "images_4",
+    "room": "images_2"
+   },
+   "_note": "Foroutan et al. (2404.12547) NerfAcc-iNGP@5k-initialized copy: same transforms.json + hard-linked images => same protocol_id as mipnerf360; points.npz = 500k volume-weight samples; nerfinit/ = depth sidecar + 3-NN scales. Built by ss-nerfinit-prep, not bench.py prepare."
+  }
+ },
+ "paper_targets_psnr": {
+  "garden": 27.37,
+  "room": 31.63,
+  "paper_3dgs_rerun": {
+   "garden": 27.29,
+   "room": 31.43
+  },
+  "nodepth_variant": {
+   "garden": 27.21,
+   "room": 32.11
+  }
+ },
+ "optional_ablation": {
+  "method": "nerf-init-gs-nodepth",
+  "same datasets": true
+ },
+ "prerequisite": "room copy: ss-nerfinit-prep running in background (pid 316466, GPU 5, log reproductions/nerf-init-gs/evidence/prep-room.log); confirm ~/datasets/nerfinit-gs/mipnerf360/room/nerfinit/nerfinit.json exists before launching. garden copy done.",
+ "note": "--num-gaussians 10000000 keeps all 500k init points (SHA-checked; required). '--recipe splatstudio' is equivalent to 3dgs here (density restores camera extent + exact 3-NN scales) and avoids the runtime's ~16 GB kNN at 500k. Add NeRF preprocessing seconds from nerfinit/nerfinit.json to training time (garden 836 s). Compare to baseline3dgs-mipnerf360-30000."
+}

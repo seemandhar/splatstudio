@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-gabsplat"
+version = "0.1.0"
+description = "3DGabSplat (arXiv 2508.05343) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+gabsplat = "ss_gabsplat:gabsplat"
+gabsplat-noreset = "ss_gabsplat:gabsplat_noreset"
+
+[tool.setuptools]
+packages = ["ss_gabsplat"]
+
+[tool.setuptools.package-data]
+ss_gabsplat = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100

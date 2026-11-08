@@ -1,0 +1,11 @@
+{"method": "aaa-gaussians", "module": "ss_aaa_gaussians",
+ "components": [
+  {"kind": "renderer", "name": "aaa-renderer", "factory": "ss_aaa_gaussians.renderer:create_renderer", "provides": ["render.rgb"]},
+  {"kind": "density", "name": "aaa-mcmc-density", "factory": "ss_aaa_gaussians.density:create_density"},
+  {"kind": "loss", "name": "photometric", "note": "base L1 + 0.2 D-SSIM"},
+  {"kind": "loss", "name": "aaa-mcmc-reg", "factory": "ss_aaa_gaussians.losses:create_reg"}],
+ "fields": [{"name": "filter_3d", "shape": [], "lr": 1e-8, "init": 0.0}],
+ "probes": ["aaa-forward-reference", "aaa-backward-reference", "aaa-perp-scaling", "aaa-adaptive-filter", "aaa-frustum-bounds", "aaa-filter-train", "aaa-mcmc-schedule"],
+ "contributions": ["adaptive-3d-filter", "view-space-bounding", "frustum-culling", "3d-eval-hierarchical-sort", "mcmc-densification"],
+ "fidelity_gaps": ["optimizer-before-density order", "runtime sampling/SSIM/LPIPS/SH timing", "cap from --data basename", "popping/FOV/multires evals not run", "timings not comparable"],
+ "feasible_natively": true}

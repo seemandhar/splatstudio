@@ -1,0 +1,40 @@
+{
+ "method": "gaussianpop",
+ "module": "ss_gaussianpop",
+ "components": [
+  {
+   "name": "gsplat",
+   "kind": "renderer",
+   "factory": "splatstudio.backends.gsplat:create_renderer"
+  },
+  {
+   "name": "pop-density",
+   "kind": "density",
+   "factory": "ss_gaussianpop.density:create_density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "delta-se-oracle",
+  "prune-cycles"
+ ],
+ "contributions": [
+  "C1 removal-error criterion (Eq.4)",
+  "C2 single-pass prefix-cache CUDA computation (Alg.1)",
+  "C3 post-training iterative re-quantification + prune + 5k fine-tune"
+ ],
+ "fidelity_gaps": [
+  "gsplat base model below paper 3DGS row",
+  "per-cycle split / N_max semantics unstated",
+  "fine-tune LR/optimizer unstated",
+  "white bg in C_render",
+  "pre-prune not evaluated in-run",
+  "on-training mode not reproduced"
+ ],
+ "feasible_natively": true
+}

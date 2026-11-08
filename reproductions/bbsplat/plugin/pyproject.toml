@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-bbsplat"
+version = "0.1.0"
+description = "BBSplat (arXiv 2411.08508) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+bbsplat = "ss_bbsplat:method"
+bbsplat-tnt = "ss_bbsplat:method_tnt"
+bbsplat-300k = "ss_bbsplat:method_300k"
+bbsplat-tnt-sky2k = "ss_bbsplat:method_tnt_sky2k"
+
+[tool.setuptools.packages.find]
+include = ["ss_bbsplat*"]
+
+[tool.setuptools.package-data]
+ss_bbsplat = ["*.png", "csrc/*", "csrc/cuda_rasterizer/*", "csrc/cuda_rasterizer/stopthepop_2DGS/*", "csrc/third_party/*.txt", "csrc/third_party/glm/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_bbsplat/csrc"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

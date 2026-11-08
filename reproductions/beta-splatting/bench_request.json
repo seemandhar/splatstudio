@@ -1,0 +1,13 @@
+{"method": "beta-splatting-garden",
+ "datasets": {"mipnerf360-pilr": ["garden", "room"]},
+ "steps": 30000, "per_scene_reported": true, "extra": "",
+ "methods_by_scene": {"garden": ["beta-splatting-garden"], "room": ["beta-splatting-room"]},
+ "launch": [
+  "bench.py launch --exp beta-splatting-garden-pilr --methods beta-splatting-garden --dataset mipnerf360-pilr --scenes garden --steps 30000",
+  "bench.py launch --exp beta-splatting-room-pilr --methods beta-splatting-room --dataset mipnerf360-pilr --scenes room --steps 30000"],
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000 (official benchmark.py uses -r 4 outdoor / -r 2 indoor PIL resize of full-res images = mipnerf360-pilr); gsplat garden 27.351, room 31.687",
+ "paper_reference": {"garden": {"psnr": 28.15, "ssim": 0.882, "lpips": 0.096, "cap_max": 5000000},
+                     "room": {"psnr": 32.83, "ssim": 0.941, "lpips": 0.168, "cap_max": 1500000},
+                     "source": "supp. Table allmetrics, (Ours, 30K, sb=2) column = main-table 'Ours (30k)' variant",
+                     "paper_3dgs_baseline_per_scene_from_3dgs_paper": {"garden": 27.41, "room": 30.632}},
+ "notes": "One method per launch (cap_max differs per scene). Compare delta over our gsplat baseline to paper delta over published 3DGS (garden +0.74, room +2.20). Not the 'full' (test-set early-stopping) column."}

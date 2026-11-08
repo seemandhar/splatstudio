@@ -1,0 +1,19 @@
+{
+ "paper": "GaussianPOP: Principled Simplification Framework for Compact 3D Gaussian Splatting via Error Quantification",
+ "slug": "gaussianpop",
+ "plan_id": 112,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "method": "gaussianpop",
+ "bench_exps": [
+  "gaussianpop-mipnerf360"
+ ],
+ "headline": "P=0.8 post-training: bicycle 25.01 (-0.11), counter 28.87 (-0.13) vs paper"
+}

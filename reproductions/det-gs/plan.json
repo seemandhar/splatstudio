@@ -1,0 +1,34 @@
+{
+ "method": "det-gs",
+ "module": "ss_det_gs",
+ "components": [
+  "det-gs-renderer",
+  "adaptive-density",
+  "photometric",
+  "det-gs-depth",
+  "det-gs-edge",
+  "det-gs-tv"
+ ],
+ "fields": [],
+ "probes": [
+  "depth-formula",
+  "depth-schedule",
+  "edge-formula",
+  "tv-formula"
+ ],
+ "contributions": [
+  "hierarchical-depth",
+  "edge-aware-depth",
+  "rgb-guided-tv"
+ ],
+ "fidelity_gaps": [
+  "error tolerance unspecified: 0.2 = DNGaussian code default (alternatives 0.01, 2.5e-4)",
+  "depth vs disparity space unspecified (default depth, option disparity)",
+  "shared optimizer step vs DNG separate depth step",
+  "delta/lambda/omega from DNGaussian/3DGS",
+  "z-depth vs ray distance",
+  "runtime differences (view sampling, background, SSIM)",
+  "TV channel averaging; edge-loss soft depth; tiny L_edge magnitude in COLMAP units"
+ ],
+ "feasible_natively": true
+}

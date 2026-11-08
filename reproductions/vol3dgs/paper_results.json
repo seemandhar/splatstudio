@@ -1,0 +1,48 @@
+{
+  "paper": "Volumetrically Consistent 3D Gaussian Rasterization",
+  "arxiv": "2412.03378",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.30, "ssim": 0.813, "lpips": 0.209},
+        "per_scene": {
+          "psnr": {"bicycle": 25.04, "bonsai": 32.17, "counter": 28.92, "garden": 27.29, "flowers": 21.41,
+                   "stump": 26.70, "treehill": 21.94, "room": 32.00, "kitchen": 31.51},
+          "ssim": {"bicycle": 0.7594, "bonsai": 0.9498, "counter": 0.9206, "garden": 0.858, "flowers": 0.615,
+                   "stump": 0.778, "treehill": 0.627, "room": 0.9358, "kitchen": 0.935},
+          "lpips": {"bicycle": 0.2155, "bonsai": 0.1704, "counter": 0.1699, "garden": 0.122, "flowers": 0.306,
+                    "stump": 0.219, "treehill": 0.329, "room": 0.1845, "kitchen": 0.113},
+          "points_millions": {"bicycle": 3.7, "bonsai": 1.5, "counter": 1.6, "garden": 3.18, "flowers": 3.8,
+                              "stump": 5.3, "treehill": 3.6, "room": 1.6, "kitchen": 2.1}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.52, "ssim": 0.813, "lpips": 0.222},
+        "per_scene": {"psnr": {"flowers": 21.38}, "ssim": {"flowers": 0.588}, "lpips": {"flowers": 0.360}}
+      },
+      "source": "Table 1 (averages; 3DGS-Slang row retrained by authors); Supp. E Table (per scene); Supp. H Table (flowers ablation incl. 3DGS)",
+      "resolution": "official default -r -1: full-res images PIL-resized to width 1600 (our dataset key mipnerf360-1600)"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.74, "ssim": 0.854, "lpips": 0.167},
+        "per_scene": {"psnr": {"train": 22.16, "truck": 25.31}, "ssim": {"train": 0.825, "truck": 0.8838},
+                      "lpips": {"train": 0.195, "truck": 0.139}}
+      },
+      "baseline_3dgs": {"average": {"psnr": 23.64, "ssim": 0.850, "lpips": 0.176}},
+      "source": "Table 1; Supp. E"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 29.72, "ssim": 0.908, "lpips": 0.247},
+        "per_scene": {"psnr": {"playroom": 30.23, "drjohnson": 29.22}, "ssim": {"playroom": 0.909, "drjohnson": 0.906},
+                      "lpips": {"playroom": 0.250, "drjohnson": 0.244}}
+      },
+      "baseline_3dgs": {"average": {"psnr": 29.78, "ssim": 0.906, "lpips": 0.248}},
+      "source": "Table 1; Supp. E"
+    }
+  },
+  "notes": "3DGS-Slang baseline is the authors' retrain with the slang.D rasterizer (averages only). The LaTeX contains two copies of the supplement; garden PSNR is 27.29 in the CVPR copy and 26.87 in the older copy (bicycle/room identical). Paper improvement over its 3DGS on Mip-NeRF 360 average: -0.22 dB PSNR, 0.000 SSIM, -0.013 LPIPS."
+}

@@ -1,0 +1,35 @@
+{
+ "paper": "WE-GS: An In-the-wild Efficient 3D Gaussian Representation for Unconstrained Photo Collections",
+ "slug": "we-gs",
+ "plan_id": 113,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done",
+  "benchmark": "done",
+  "gap-analysis-1": "done"
+ },
+ "outcome": "not-matched",
+ "arxiv": "2406.02407",
+ "method": "we-gs",
+ "custom_cuda": false,
+ "official_code": "none for training; released WE-GS inference model in github.com/yuzewang1998/takinglangsplatw used for omitted values",
+ "results": {
+  "brandenburg-gate": {
+   "psnr": 25.21,
+   "ssim": 0.922,
+   "lpips": 0.114,
+   "paper": 27.74,
+   "gsplat_ds2_10k": 19.63
+  },
+  "sacre-coeur": {
+   "psnr": 22.98,
+   "ssim": 0.878,
+   "lpips": 0.136,
+   "paper": 23.62,
+   "gsplat_ds2_10k": 16.74
+  }
+ },
+ "not_matched_reason": "brandenburg -2.53 (baseline offset -1.09, method -1.44: feed-forward test-appearance generalisation; no grounded fix); sacre -0.64 explained by baseline offset (delta +0.19)"
+}

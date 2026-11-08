@@ -1,0 +1,270 @@
+{
+ "paper": "Beyond Gaussians: Fast and High-Fidelity 3D Splatting with Linear Kernels",
+ "arxiv": "2411.12440",
+ "method_label": "3DLS (Ours)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "ssim": 0.822,
+     "psnr": 27.57,
+     "lpips": 0.196
+    },
+    "per_scene": {
+     "ssim": {
+      "bicycle": 0.773,
+      "garden": 0.869,
+      "stump": 0.778,
+      "room": 0.924,
+      "counter": 0.911,
+      "kitchen": 0.931,
+      "bonsai": 0.945,
+      "flowers": 0.627,
+      "treehill": 0.635
+     },
+     "psnr": {
+      "bicycle": 25.19,
+      "garden": 27.4,
+      "stump": 26.61,
+      "room": 31.39,
+      "counter": 29.06,
+      "kitchen": 31.78,
+      "bonsai": 32.32,
+      "flowers": 21.9,
+      "treehill": 22.45
+     },
+     "lpips": {
+      "bicycle": 0.179,
+      "garden": 0.1,
+      "stump": 0.194,
+      "room": 0.206,
+      "counter": 0.19,
+      "kitchen": 0.12,
+      "bonsai": 0.195,
+      "flowers": 0.299,
+      "treehill": 0.284
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.815,
+     "psnr": 27.47,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "ssim": {
+      "bicycle": 0.76,
+      "garden": 0.867,
+      "stump": 0.773,
+      "room": 0.92,
+      "counter": 0.908,
+      "kitchen": 0.928,
+      "bonsai": 0.942,
+      "flowers": 0.603,
+      "treehill": 0.634
+     },
+     "psnr": {
+      "bicycle": 25.11,
+      "garden": 27.41,
+      "stump": 26.6,
+      "room": 31.48,
+      "counter": 28.99,
+      "kitchen": 31.4,
+      "bonsai": 32.17,
+      "flowers": 21.56,
+      "treehill": 22.51
+     },
+     "lpips": {
+      "bicycle": 0.208,
+      "garden": 0.107,
+      "stump": 0.214,
+      "room": 0.221,
+      "counter": 0.201,
+      "kitchen": 0.127,
+      "bonsai": 0.208,
+      "flowers": 0.336,
+      "treehill": 0.323
+     }
+    }
+   },
+   "variant_3dls_aa": {
+    "average": {
+     "ssim": 0.823,
+     "psnr": 27.63,
+     "lpips": 0.196
+    },
+    "per_scene": {
+     "ssim": {
+      "bicycle": 0.776,
+      "garden": 0.872,
+      "stump": 0.779,
+      "room": 0.925,
+      "counter": 0.913,
+      "kitchen": 0.924,
+      "bonsai": 0.946,
+      "flowers": 0.631,
+      "treehill": 0.64
+     },
+     "psnr": {
+      "bicycle": 25.27,
+      "garden": 27.5,
+      "stump": 26.63,
+      "room": 31.53,
+      "counter": 29.25,
+      "kitchen": 31.3,
+      "bonsai": 32.58,
+      "flowers": 22.04,
+      "treehill": 22.57
+     },
+     "lpips": {
+      "bicycle": 0.179,
+      "garden": 0.098,
+      "stump": 0.191,
+      "room": 0.204,
+      "counter": 0.188,
+      "kitchen": 0.125,
+      "bonsai": 0.193,
+      "flowers": 0.299,
+      "treehill": 0.284
+     }
+    }
+   },
+   "source": "supp. Table 7 (per-scene, 30k); averages match main Table 1"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "ssim": 0.855,
+     "psnr": 23.71,
+     "lpips": 0.16
+    },
+    "per_scene": {
+     "ssim": {
+      "truck": 0.885,
+      "train": 0.825
+     },
+     "psnr": {
+      "truck": 25.49,
+      "train": 21.93
+     },
+     "lpips": {
+      "truck": 0.136,
+      "train": 0.183
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.847,
+     "psnr": 23.62,
+     "lpips": 0.178
+    },
+    "per_scene": {
+     "ssim": {
+      "truck": 0.881,
+      "train": 0.814
+     },
+     "psnr": {
+      "truck": 25.36,
+      "train": 21.88
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.207
+     }
+    }
+   },
+   "variant_3dls_aa": {
+    "average": {
+     "ssim": 0.86,
+     "psnr": 23.89,
+     "lpips": 0.157
+    },
+    "per_scene": {
+     "ssim": {
+      "truck": 0.89,
+      "train": 0.83
+     },
+     "psnr": {
+      "truck": 25.79,
+      "train": 21.98
+     },
+     "lpips": {
+      "truck": 0.133,
+      "train": 0.18
+     }
+    }
+   },
+   "source": "supp. Table 7 (per-scene, 30k); averages match main Table 1"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "ssim": 0.902,
+     "psnr": 29.44,
+     "lpips": 0.244
+    },
+    "per_scene": {
+     "ssim": {
+      "drjohnson": 0.897,
+      "playroom": 0.907
+     },
+     "psnr": {
+      "drjohnson": 28.87,
+      "playroom": 30.02
+     },
+     "lpips": {
+      "drjohnson": 0.247,
+      "playroom": 0.242
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "ssim": 0.905,
+     "psnr": 29.49,
+     "lpips": 0.247
+    },
+    "per_scene": {
+     "ssim": {
+      "drjohnson": 0.902,
+      "playroom": 0.908
+     },
+     "psnr": {
+      "drjohnson": 28.99,
+      "playroom": 29.99
+     },
+     "lpips": {
+      "drjohnson": 0.246,
+      "playroom": 0.248
+     }
+    }
+   },
+   "variant_3dls_aa": {
+    "average": {
+     "ssim": 0.904,
+     "psnr": 29.5,
+     "lpips": 0.24
+    },
+    "per_scene": {
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.908
+     },
+     "psnr": {
+      "drjohnson": 29.01,
+      "playroom": 29.99
+     },
+     "lpips": {
+      "drjohnson": 0.243,
+      "playroom": 0.238
+     }
+    }
+   },
+   "source": "supp. Table 7 (per-scene, 30k); averages match main Table 1"
+  }
+ },
+ "notes": "Baseline 3DGS row = authors' gsplat v1.3 retrain (Table 1 '3DGS' without dagger; 3DGS-30K dagger row 27.21/23.14/29.41 is from the 3DGS paper). Main-text ablation (Table 2, kitchen/train 30k): base 31.40/21.88, LK 31.18/21.62, LK+DA 31.75/21.51, LK+DA+AGS 31.78/21.93. Scout's 'truck 27.57' was the Mip-NeRF360 mean; truck=25.49."
+}

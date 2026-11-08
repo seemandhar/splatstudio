@@ -1,0 +1,6 @@
+{"method": "sort-free-gs",
+ "datasets": {"mipnerf360": ["bicycle"], "tandt": ["train"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Main method only (review-1 M2; DIR ablation not run). LC-WSR per-scene targets (appendix Table 6): bicycle 24.20 (paper 3DGS 25.25, delta -1.05), train 21.93 (paper 3DGS 21.09, delta +0.84). Our baselines: bicycle 24.92, train 21.52 (baseline3dgs-mipnerf360-30000 / baseline3dgs-tandt-30000). Second reference, unofficial port (README, 3DGS protocol): bicycle 23.89. Post-M1 (scalar-Adam-equivalent globals), c_B black."}

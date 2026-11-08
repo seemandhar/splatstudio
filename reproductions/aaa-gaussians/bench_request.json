@@ -1,0 +1,7 @@
+{"method": "aaa-gaussians",
+ "datasets": {"mipnerf360": ["garden", "room"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "baseline": {"garden": "baseline3dgs-mipnerf360-30000", "room": "baseline3dgs-mipnerf360-30000"},
+ "notes": "Paper supp. per-scene table (single-scale, images_4/images_2, llffhold8, 30k, MCMC caps from full_eval.py): Ours garden 27.50 / room 31.45; paper 3DGS row garden 27.30 / room 31.48; paper MCMC garden 27.87 / room 32.25. Cap is looked up from the --data basename (garden 5,834,784; room 1,593,376) -- bench default --max-gaussians 12000000 suffices. Also reported: bicycle 25.74, truck 25.43 (alternatives). Compare to the same-cap MCMC row (mh-3dgs used gsplat-mcmc-like control) to separate renderer from densification effects."}

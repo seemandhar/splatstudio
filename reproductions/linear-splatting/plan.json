@@ -1,0 +1,60 @@
+{
+ "method": "3dls",
+ "module": "ss_linear_splatting",
+ "components": [
+  {
+   "name": "linear-renderer",
+   "kind": "renderer",
+   "factory": "ss_linear_splatting.renderer:create_renderer",
+   "config": {
+    "lam": 2.5,
+    "ags": true,
+    "tile_size": 16,
+    "eps2d": 0.3
+   }
+  },
+  {
+   "name": "adaptive-density",
+   "kind": "density",
+   "factory": "splatstudio.backends.gsplat:create_density",
+   "config": {
+    "grow_grad2d": 0.0002,
+    "grow_scale3d": 0.006,
+    "prune_scale3d": 0.4,
+    "prune_opa": 0.025
+   }
+  },
+  {
+   "name": "l1-l2-ssim",
+   "kind": "loss",
+   "factory": "ss_linear_splatting.losses:create_loss",
+   "config": {
+    "l1_weight": 0.6,
+    "l2_weight": 0.2,
+    "ssim_weight": 0.2
+   }
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "linear-forward-vs-dense",
+  "linear-backward-vs-dense",
+  "alignment-footprint",
+  "ags-gradient-scaling",
+  "loss-weights",
+  "density-thresholds"
+ ],
+ "contributions": [
+  "linear-kernel (C1)",
+  "distribution-alignment (C2)",
+  "adaptive-gradient-scaling (C3)",
+  "training-recipe"
+ ],
+ "fidelity_gaps": [
+  "no official code: radius/AGS scope/saturation gate inferred",
+  "gsplat 1.3 vs 1.5.3",
+  "white bg, sampling with replacement, valid-conv SSIM",
+  "3DLS+AA not implemented"
+ ],
+ "feasible_natively": true
+}

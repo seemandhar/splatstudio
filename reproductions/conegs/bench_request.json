@@ -1,0 +1,52 @@
+{
+ "method": "conegs",
+ "datasets": {
+  "mipnerf360-conegs": [
+   "garden",
+   "room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe splatstudio",
+ "data_paths": {
+  "mipnerf360-conegs/garden": "/home/sejain/datasets/conegs-init/mipnerf360/garden",
+  "mipnerf360-conegs/room": "/home/sejain/datasets/conegs-init/mipnerf360/room"
+ },
+ "baseline_dataset_alias": {
+  "mipnerf360-conegs": "mipnerf360"
+ },
+ "proposed_datasets_json_entries": {
+  "mipnerf360-conegs": {
+   "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+   "native_root": "/home/sejain/datasets/conegs-init/mipnerf360",
+   "scenes": {
+    "garden": "images_4",
+    "room": "images_2"
+   },
+   "_note": "ConeGS iNGP-initialized copy (same transforms.json + hard-linked images => same protocol_id; points.npz = 1M iNGP points). Built by ss-conegs-init, not bench.py prepare."
+  }
+ },
+ "paper_targets_psnr": {
+  "budget": "1M (appendix 1M table)",
+  "garden": 27.42,
+  "room": 32.3,
+  "paper_3dgs_1M_budget": {
+   "garden": 26.7,
+   "room": 31.62
+  }
+ },
+ "prerequisite": "room copy: ss-conegs-init launched in background on GPU 5 (log reproductions/conegs/evidence/init-room.log); confirm ~/datasets/conegs-init/mipnerf360/room/conegs_init.json exists before launching. garden copy done.",
+ "note": "'--recipe splatstudio' REQUIRED (3dgs recipe kNN on 1M points ~32 GB); conegs-density restores the 3DGS camera-extent means LR. --num-gaussians 10000000 keeps all 1M init points; --max-gaussians >= 1M. Report iNGP+init seconds from each conegs_init.json as part of training time. Compare to baseline3dgs-mipnerf360-30000 (unbudgeted; paper's 3DGS row is 1M-budgeted).",
+ "iteration_1": {
+  "method": "conegs-blackbg",
+  "datasets": {
+   "mipnerf360-conegs": [
+    "garden"
+   ]
+  },
+  "steps": 30000,
+  "extra": "--recipe splatstudio",
+  "label": "post-hoc (gap-analysis-1): official black background"
+ }
+}

@@ -1,0 +1,47 @@
+{
+  "paper": "Denoising-GS: Gaussian Splatting with Spatial-aware Denoising",
+  "arxiv": "2605.14880",
+  "method_label": "Denoising-GS",
+  "iterations": 35000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 29.925, "ssim": 0.897, "lpips": 0.142},
+        "per_scene": {"psnr": {"bicycle": 26.17, "bonsai": 32.94, "counter": 29.57, "garden": 28.27,
+                               "kitchen": 32.34, "room": 32.58, "stump": 27.60},
+                      "gaussians_M": {"bicycle": 5.32, "bonsai": 1.17, "counter": 1.08, "garden": 4.69,
+                                      "kitchen": 1.62, "room": 1.35, "stump": 4.29}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.258, "ssim": 0.880, "lpips": 0.168},
+        "per_scene": {"psnr": {"bicycle": 25.64, "bonsai": 32.29, "counter": 29.08, "garden": 27.73,
+                               "kitchen": 31.35, "room": 31.75, "stump": 26.97}}
+      },
+      "baseline_mcmc": {
+        "average": {"psnr": 29.893, "ssim": 0.896, "lpips": 0.186},
+        "per_scene": {"psnr": {"bicycle": 26.15, "bonsai": 32.88, "counter": 29.51, "garden": 28.16,
+                               "kitchen": 32.27, "room": 32.48, "stump": 27.80},
+                      "gaussians_M": {"bicycle": 5.90, "bonsai": 1.30, "counter": 1.20, "garden": 5.20,
+                                      "kitchen": 1.80, "room": 1.50, "stump": 4.75}}
+      },
+      "scenes": ["bicycle", "bonsai", "counter", "garden", "kitchen", "room", "stump"],
+      "iterations": 35000,
+      "source": "Table 1 (averages, 7 scenes) / Table 2 (per-scene PSNR + primitive counts)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.561, "ssim": 0.868, "lpips": 0.149}},
+      "baseline_3dgs": {"average": {"psnr": 23.649, "ssim": 0.845, "lpips": 0.178}},
+      "baseline_mcmc": {"average": {"psnr": 24.290, "ssim": 0.860, "lpips": 0.190}},
+      "iterations": 30000,
+      "source": "Table 1"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.872, "ssim": 0.906, "lpips": 0.239}},
+      "baseline_3dgs": {"average": {"psnr": 29.475, "ssim": 0.900, "lpips": 0.247}},
+      "baseline_mcmc": {"average": {"psnr": 29.665, "ssim": 0.895, "lpips": 0.320}},
+      "iterations": 30000,
+      "source": "Table 1"
+    }
+  },
+  "notes": "Mip-NeRF 360 average is over 7 scenes (no flowers/treehill). Baseline rows are the original 3DGS / 3DGS-MCMC papers' numbers. Per-scene SSIM/LPIPS not reported. Paper gain over its MCMC: bicycle +0.02, bonsai +0.06, counter +0.06, avg +0.03 dB."
+}

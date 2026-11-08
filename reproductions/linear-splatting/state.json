@@ -1,0 +1,48 @@
+{
+ "paper": "Beyond Gaussians: Fast and High-Fidelity 3D Splatting with Linear Kernels",
+ "slug": "linear-splatting",
+ "plan_id": 107,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "review": "done (approved; M1 wording fixed)",
+  "gap_analysis": "done"
+ },
+ "outcome": "not-matched",
+ "arxiv": "2411.12440",
+ "official_code": null,
+ "method": "3dls-aags",
+ "custom_cuda": true,
+ "methods": {
+  "3dls": "paper-literal AGS",
+  "3dls-aags": "AGS on aligned distance (interpretation, benchmark primary)",
+  "3dls-noags": "ablation LK+DA"
+ },
+ "benchmark_target": "mipnerf360 garden (27.40; paper gsplat-3DGS 27.41) + kitchen (31.78; 31.40) per scene vs baseline3dgs-mipnerf360-30000",
+ "smoke": {
+  "method_3dls_literal": 20.9267,
+  "method_3dls_aags": 22.7997,
+  "ablation_3dls_noags": 22.8402,
+  "baseline": 23.0726
+ },
+ "results": {
+  "garden": {
+   "3dls-aags": 26.76,
+   "paper": 27.4,
+   "baseline": 26.89,
+   "paper_3dgs": 27.41
+  },
+  "kitchen": {
+   "3dls-aags": 31.17,
+   "paper": 31.78,
+   "baseline": 31.34,
+   "paper_3dgs": 31.4
+  },
+  "garden_literal_3dls": 21.53
+ },
+ "gap_summary": "AGS: literal omega cannot train; inferred aags halves N (0.4x baseline at 30k vs paper +26%) and costs 0.25-0.5 dB vs LK+DA at 7k (train views); loss swap ~-0.1; DA, radius, gsplat-version ruled out; runtime garden baseline offset -0.52. No grounded fix.",
+ "report_md": "not written: subagent tool policy blocks report files; content returned to coordinator"
+}

@@ -1,0 +1,19 @@
+{
+ "paper": "Optimized Minimal 3D Gaussian Splatting",
+ "slug": "omg",
+ "plan_id": 121,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "bench_exps": [
+  "omg-mipnerf360",
+  "omg-indoor-mipnerf360"
+ ],
+ "headline": "OMG-XS decoded: bicycle 24.68/24.95 (-0.27), counter 27.94/28.40 (-0.46); 421k/299k G (paper 481k/310k); 4.18/2.94 MB (paper 4.61/2.95)"
+}

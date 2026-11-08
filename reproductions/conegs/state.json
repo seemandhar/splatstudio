@@ -1,0 +1,23 @@
+{
+ "paper": "ConeGS: Error-Guided Densification Using Pixel Cones for Improved Reconstruction With Fewer Primitives",
+ "slug": "conegs",
+ "plan_id": 105,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done (garden 26.35, room 32.15)",
+  "gap_analysis": "done (gap-analysis-1.md)",
+  "iteration_1": "done: conegs-blackbg garden 27.46 (+0.04)",
+  "report": "done"
+ },
+ "outcome": "matched (iter 1)",
+ "official_code": "https://github.com/baranowskibrt/conegs @ f86df2f",
+ "method": "conegs",
+ "headline": "garden 27.46 vs 27.42 (iter 1, post-hoc black bg); room 32.15 vs 32.30 (iter 0)",
+ "bench_exps": [
+  "conegs-mipnerf360-conegs",
+  "conegs-blackbg-mipnerf360-conegs"
+ ]
+}

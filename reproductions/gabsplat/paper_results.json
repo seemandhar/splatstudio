@@ -1,0 +1,191 @@
+{
+ "paper": "3DGabSplat: 3D Gabor Splatting for Frequency-adaptive Radiance Field Rendering",
+ "arxiv": "2508.05343",
+ "method_label": "3DGabSplat (Proposed)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.85,
+     "ssim": 0.818,
+     "lpips": 0.21
+    },
+    "groups": {
+     "outdoor_psnr": 24.7263,
+     "indoor_psnr": 31.7427
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.2893,
+      "flowers": 21.6571,
+      "garden": 27.6648,
+      "stump": 26.6425,
+      "treehill": 22.378,
+      "room": 32.2731,
+      "counter": 29.567,
+      "kitchen": 32.0546,
+      "bonsai": 33.0762
+     },
+     "ssim": {
+      "bicycle": 0.768,
+      "flowers": 0.6089,
+      "garden": 0.8703,
+      "stump": 0.7689,
+      "treehill": 0.6324,
+      "room": 0.9253,
+      "counter": 0.9136,
+      "kitchen": 0.9306,
+      "bonsai": 0.9467
+     },
+     "lpips": {
+      "bicycle": 0.2031,
+      "flowers": 0.3299,
+      "garden": 0.1036,
+      "stump": 0.214,
+      "treehill": 0.3174,
+      "room": 0.2111,
+      "counter": 0.1936,
+      "kitchen": 0.1224,
+      "bonsai": 0.1975
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.41,
+     "ssim": 0.814,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.1461,
+      "flowers": 21.496,
+      "garden": 27.4257,
+      "stump": 26.5519,
+      "treehill": 22.4008,
+      "room": 31.4579,
+      "counter": 29.0153,
+      "kitchen": 31.0659,
+      "bonsai": 32.1138
+     },
+     "ssim": {
+      "bicycle": 0.764,
+      "flowers": 0.6044,
+      "garden": 0.8667,
+      "stump": 0.7715,
+      "treehill": 0.6318,
+      "room": 0.9191,
+      "counter": 0.9084,
+      "kitchen": 0.9267,
+      "bonsai": 0.941
+     },
+     "lpips": {
+      "bicycle": 0.2106,
+      "flowers": 0.3352,
+      "garden": 0.1067,
+      "stump": 0.2161,
+      "treehill": 0.3253,
+      "room": 0.2185,
+      "counter": 0.1998,
+      "kitchen": 0.1267,
+      "bonsai": 0.2035
+     }
+    }
+   },
+   "source": "main Table 1; supp. Tables 'Per-scene SSIM/PSNR/LPIPS comparison on Mip-NeRF360' (tab:mip360-*); baseline = 3DGS* (authors' reproduction)",
+   "resolution": "outdoor images_4, indoor images_2 (official downsampled images)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.49,
+     "ssim": 0.855,
+     "lpips": 0.17
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.8756,
+      "train": 23.1018
+     },
+     "ssim": {
+      "truck": 0.8851,
+      "train": 0.8256
+     },
+     "lpips": {
+      "truck": 0.143,
+      "train": 0.1969
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.69,
+     "ssim": 0.848,
+     "lpips": 0.176
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.4067,
+      "train": 21.9817
+     },
+     "ssim": {
+      "truck": 0.8821,
+      "train": 0.8138
+     },
+     "lpips": {
+      "truck": 0.1465,
+      "train": 0.2057
+     }
+    }
+   },
+   "source": "main Table 1; supp. tab:tnt-*"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.09,
+     "ssim": 0.909,
+     "lpips": 0.237
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.6138,
+      "playroom": 30.5647
+     },
+     "ssim": {
+      "drjohnson": 0.9068,
+      "playroom": 0.911
+     },
+     "lpips": {
+      "drjohnson": 0.2349,
+      "playroom": 0.2402
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.55,
+     "ssim": 0.904,
+     "lpips": 0.244
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.0785,
+      "playroom": 30.022
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.9071
+     },
+     "lpips": {
+      "drjohnson": 0.2443,
+      "playroom": 0.2432
+     }
+    }
+   },
+   "source": "main Table 1; supp. tab:tnt-*"
+  }
+ },
+ "notes": "baseline_3dgs = '3DGS*' rows (authors' reproduction). Per-scene numbers re-verified against Supplementary.tex lines 470-643. Scout values bicycle 25.29 / garden 27.66 / room 32.27 confirmed."
+}

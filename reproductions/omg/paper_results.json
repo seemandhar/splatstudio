@@ -1,0 +1,419 @@
+{
+ "paper": "Optimized Minimal 3D Gaussian Splatting",
+ "arxiv": "2503.16924",
+ "method_label": "OMG-XS",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.06,
+     "ssim": 0.807,
+     "lpips": 0.243,
+     "gaussians": 427371,
+     "size_mb": 4.06
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.95,
+      "bonsai": 30.9,
+      "counter": 28.4,
+      "flowers": 21.32,
+      "garden": 26.42,
+      "kitchen": 30.81,
+      "room": 31.09,
+      "stump": 27.0,
+      "treehill": 22.6
+     },
+     "ssim": {
+      "bicycle": 0.743,
+      "bonsai": 0.932,
+      "counter": 0.899,
+      "flowers": 0.596,
+      "garden": 0.818,
+      "kitchen": 0.919,
+      "room": 0.918,
+      "stump": 0.788,
+      "treehill": 0.647
+     },
+     "lpips": {
+      "bicycle": 0.276,
+      "bonsai": 0.202,
+      "counter": 0.206,
+      "flowers": 0.368,
+      "garden": 0.19,
+      "kitchen": 0.137,
+      "room": 0.208,
+      "stump": 0.247,
+      "treehill": 0.357
+     },
+     "gaussians": {
+      "bicycle": 480772,
+      "bonsai": 263892,
+      "counter": 310056,
+      "flowers": 543034,
+      "garden": 607254,
+      "kitchen": 356752,
+      "room": 281236,
+      "stump": 523821,
+      "treehill": 479520
+     },
+     "size_mb": {
+      "bicycle": 4.61,
+      "bonsai": 2.53,
+      "counter": 2.95,
+      "flowers": 5.24,
+      "garden": 5.65,
+      "kitchen": 3.33,
+      "room": 2.67,
+      "stump": 4.95,
+      "treehill": 4.64
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.44,
+     "ssim": 0.813,
+     "lpips": 0.218,
+     "size_mb": 822.6
+    }
+   },
+   "mini_splatting": {
+    "average": {
+     "psnr": 27.39,
+     "ssim": 0.822,
+     "lpips": 0.216,
+     "size_mb": 119.5,
+     "gaussians": 531000
+    }
+   },
+   "variants": {
+    "XS": {
+     "average": {
+      "psnr": 27.06,
+      "ssim": 0.807,
+      "lpips": 0.243,
+      "gaussians": 427371,
+      "size_mb": 4.06
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.95,
+       "bonsai": 30.9,
+       "counter": 28.4,
+       "flowers": 21.32,
+       "garden": 26.42,
+       "kitchen": 30.81,
+       "room": 31.09,
+       "stump": 27.0,
+       "treehill": 22.6
+      },
+      "ssim": {
+       "bicycle": 0.743,
+       "bonsai": 0.932,
+       "counter": 0.899,
+       "flowers": 0.596,
+       "garden": 0.818,
+       "kitchen": 0.919,
+       "room": 0.918,
+       "stump": 0.788,
+       "treehill": 0.647
+      },
+      "lpips": {
+       "bicycle": 0.276,
+       "bonsai": 0.202,
+       "counter": 0.206,
+       "flowers": 0.368,
+       "garden": 0.19,
+       "kitchen": 0.137,
+       "room": 0.208,
+       "stump": 0.247,
+       "treehill": 0.357
+      },
+      "gaussians": {
+       "bicycle": 480772,
+       "bonsai": 263892,
+       "counter": 310056,
+       "flowers": 543034,
+       "garden": 607254,
+       "kitchen": 356752,
+       "room": 281236,
+       "stump": 523821,
+       "treehill": 479520
+      },
+      "size_mb": {
+       "bicycle": 4.61,
+       "bonsai": 2.53,
+       "counter": 2.95,
+       "flowers": 5.24,
+       "garden": 5.65,
+       "kitchen": 3.33,
+       "room": 2.67,
+       "stump": 4.95,
+       "treehill": 4.64
+      }
+     }
+    },
+    "S": {
+     "average": {
+      "psnr": 27.14,
+      "gaussians": 501485,
+      "size_mb": 4.75
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.08,
+       "bonsai": 31.05,
+       "counter": 28.56,
+       "flowers": 21.18,
+       "garden": 26.56,
+       "kitchen": 30.89,
+       "room": 31.2,
+       "stump": 27.08,
+       "treehill": 22.64
+      },
+      "gaussians": {
+       "bicycle": 573126,
+       "bonsai": 310096,
+       "counter": 360930,
+       "flowers": 633607,
+       "garden": 691441,
+       "kitchen": 412126,
+       "room": 338884,
+       "stump": 619734,
+       "treehill": 573425
+      },
+      "size_mb": {
+       "bicycle": 5.46,
+       "bonsai": 2.94,
+       "counter": 3.41,
+       "flowers": 6.1,
+       "garden": 6.43,
+       "kitchen": 3.83,
+       "room": 3.19,
+       "stump": 5.83,
+       "treehill": 5.54
+      }
+     }
+    },
+    "M": {
+     "average": {
+      "psnr": 27.21,
+      "gaussians": 562504,
+      "size_mb": 5.31
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.14,
+       "bonsai": 31.06,
+       "counter": 28.62,
+       "flowers": 21.4,
+       "garden": 26.71,
+       "kitchen": 31.05,
+       "room": 31.3,
+       "stump": 27.06,
+       "treehill": 22.55
+      },
+      "gaussians": {
+       "bicycle": 646191,
+       "bonsai": 350999,
+       "counter": 400442,
+       "flowers": 708074,
+       "garden": 772338,
+       "kitchen": 454908,
+       "room": 375520,
+       "stump": 704907,
+       "treehill": 649157
+      },
+      "size_mb": {
+       "bicycle": 6.15,
+       "bonsai": 3.33,
+       "counter": 3.76,
+       "flowers": 6.79,
+       "garden": 7.18,
+       "kitchen": 4.21,
+       "room": 3.53,
+       "stump": 6.61,
+       "treehill": 6.24
+      }
+     }
+    },
+    "L": {
+     "average": {
+      "psnr": 27.28,
+      "gaussians": 696071,
+      "size_mb": 6.52
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.24,
+       "bonsai": 31.47,
+       "counter": 28.66,
+       "flowers": 21.45,
+       "garden": 26.83,
+       "kitchen": 31.03,
+       "room": 31.26,
+       "stump": 27.05,
+       "treehill": 22.57
+      },
+      "gaussians": {
+       "bicycle": 813561,
+       "bonsai": 463285,
+       "counter": 480133,
+       "flowers": 859963,
+       "garden": 909961,
+       "kitchen": 524457,
+       "room": 524457,
+       "stump": 869388,
+       "treehill": 819435
+      },
+      "size_mb": {
+       "bicycle": 7.69,
+       "bonsai": 4.32,
+       "counter": 4.48,
+       "flowers": 8.23,
+       "garden": 8.42,
+       "kitchen": 4.82,
+       "room": 4.82,
+       "stump": 8.14,
+       "treehill": 7.81
+      }
+     }
+    },
+    "XL": {
+     "average": {
+      "psnr": 27.34,
+      "gaussians": 727129,
+      "size_mb": 6.82
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.22,
+       "bonsai": 31.51,
+       "counter": 28.78,
+       "flowers": 21.52,
+       "garden": 26.93,
+       "kitchen": 31.15,
+       "room": 31.25,
+       "stump": 27.0,
+       "treehill": 22.69
+      },
+      "gaussians": {
+       "bicycle": 864124,
+       "bonsai": 450246,
+       "counter": 507473,
+       "flowers": 922061,
+       "garden": 953050,
+       "kitchen": 547636,
+       "room": 493754,
+       "stump": 920589,
+       "treehill": 885229
+      },
+      "size_mb": {
+       "bicycle": 8.15,
+       "bonsai": 4.22,
+       "counter": 4.72,
+       "flowers": 8.81,
+       "garden": 8.82,
+       "kitchen": 5.02,
+       "room": 4.58,
+       "stump": 8.59,
+       "treehill": 8.44
+      }
+     }
+    }
+   },
+   "source": "main Table tab:mip (averages), supp. Table tab:perscene360 (per scene, all variants), Table tab:eff"
+  },
+  "tandt": {
+   "variants": {
+    "M": {
+     "average": {
+      "psnr": 23.52,
+      "ssim": 0.842,
+      "lpips": 0.189,
+      "size_mb": 3.22
+     },
+     "per_scene": {
+      "psnr": {
+       "train": 21.78,
+       "truck": 25.25
+      },
+      "size_mb": {
+       "train": 2.95,
+       "truck": 3.49
+      }
+     }
+    },
+    "L": {
+     "average": {
+      "psnr": 23.6,
+      "ssim": 0.846,
+      "lpips": 0.181,
+      "size_mb": 3.93
+     },
+     "per_scene": {
+      "psnr": {
+       "train": 21.85,
+       "truck": 25.36
+      },
+      "size_mb": {
+       "train": 3.58,
+       "truck": 4.28
+      }
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.67,
+     "ssim": 0.844,
+     "lpips": 0.179
+    }
+   },
+   "source": "Table tab:tntdb, supp. tab:perscenetntdb (OMG-M/L only)"
+  },
+  "db": {
+   "variants": {
+    "M": {
+     "average": {
+      "psnr": 29.77,
+      "ssim": 0.908,
+      "lpips": 0.253,
+      "size_mb": 4.34
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.37,
+       "playroom": 30.18
+      }
+     }
+    },
+    "L": {
+     "average": {
+      "psnr": 29.88,
+      "ssim": 0.91,
+      "lpips": 0.247,
+      "size_mb": 5.21
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.44,
+       "playroom": 30.32
+      }
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.48,
+     "ssim": 0.9,
+     "lpips": 0.246
+    }
+   },
+   "source": "Table tab:tntdb, supp. tab:perscenetntdb"
+  }
+ },
+ "notes": "Sizes in MB = 2^20 bytes (official 'Actual storage', LZMA file incl. G-PCC xyz). 3DGS rows are from the LocoGS paper (averages only, no per-scene 3DGS in this paper); use tools/reference_results.json for per-scene 3DGS. Note the paper text says XL tau=0.9999 in the main text and 0.999 for both L and XL in the supplement; README says 0.9999 for XL. Chosen benchmark variant: OMG-XS (tau=0.96, official default)."
+}

@@ -1,0 +1,57 @@
+{
+ "paper": "Effective Rank Analysis and Regularization for Enhanced 3D Gaussian Splatting",
+ "slug": "erank-gs",
+ "plan_id": 130,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done",
+  "review": "review-1 minor 1 addressed (train split evaluated; test split matches protocol)"
+ },
+ "outcome": "not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced)",
+ "official_code": "https://github.com/junhahyung/erank_gs@99fd128",
+ "method": "erank-gs",
+ "dataset": "dtu-2dgs",
+ "smoke": {
+  "scene": "scan24",
+  "steps": 2000,
+  "psnr": 25.19,
+  "baseline_psnr": 26.68
+ },
+ "bench_exps": [
+  "erank-gs-dtu"
+ ],
+ "result": {
+  "split": "test (llffhold8)",
+  "psnr": {
+   "scan24": 30.25,
+   "scan122": 37.38
+  },
+  "paper": {
+   "scan24": 30.9,
+   "scan122": 38.23
+  },
+  "control_psnr": {
+   "scan24": 30.27,
+   "scan122": 37.56
+  },
+  "control_paper": {
+   "scan24": 30.45,
+   "scan122": 38.07
+  },
+  "train_split_psnr": {
+   "erank-gs": {
+    "scan24": 36.28,
+    "scan122": 42.99
+   },
+   "erank-gs-3dgs": {
+    "scan24": 37.69,
+    "scan122": 43.65
+   }
+  }
+ },
+ "next": "optional: benchmark erank-gs-adc (+a) on scan24/122 to locate the deficit"
+}

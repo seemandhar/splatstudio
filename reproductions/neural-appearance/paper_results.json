@@ -1,0 +1,42 @@
+{
+  "paper": "Compact Neural Appearance Models for Efficient Gaussian Splatting",
+  "arxiv": "2609.05255",
+  "method_label": "Neural",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 28.55, "ssim": 0.831, "lpips": 0.227},
+        "per_scene": {
+          "psnr": {"bicycle": 25.93, "flowers": 21.87, "garden": 28.06, "stump": 27.53, "treehill": 23.28, "bonsai": 33.94, "counter": 30.38, "kitchen": 32.69, "room": 33.23},
+          "ssim": {"bicycle": 0.788, "flowers": 0.633, "garden": 0.872, "stump": 0.798, "treehill": 0.649, "bonsai": 0.951, "counter": 0.922, "kitchen": 0.933, "room": 0.933},
+          "lpips": {"bicycle": 0.194, "flowers": 0.324, "garden": 0.118, "stump": 0.209, "treehill": 0.328, "bonsai": 0.232, "counter": 0.232, "kitchen": 0.149, "room": 0.258}
+        }
+      },
+      "baseline_sh_same_pipeline": {
+        "average": {"psnr": 28.36, "ssim": 0.836, "lpips": 0.222},
+        "per_scene": {
+          "psnr": {"bicycle": 26.19, "flowers": 22.15, "garden": 27.96, "stump": 27.73, "treehill": 23.40, "bonsai": 32.97, "counter": 29.49, "kitchen": 32.35, "room": 32.98},
+          "ssim": {"bicycle": 0.802, "flowers": 0.643, "garden": 0.874, "stump": 0.809, "treehill": 0.659, "bonsai": 0.949, "counter": 0.919, "kitchen": 0.933, "room": 0.932},
+          "lpips": {"bicycle": 0.184, "flowers": 0.317, "garden": 0.112, "stump": 0.201, "treehill": 0.312, "bonsai": 0.232, "counter": 0.232, "kitchen": 0.148, "room": 0.258}
+        }
+      },
+      "none_degree0_same_pipeline": {
+        "average": {"psnr": 27.73},
+        "per_scene": {"psnr": {"bicycle": 25.65, "flowers": 21.66, "garden": 27.50, "stump": 27.14, "treehill": 23.29, "bonsai": 31.89, "counter": 28.39, "kitchen": 31.47, "room": 32.58}}
+      },
+      "source": "supp. Table tab:per_scene_m360 (tables/X_per_scene_results.tex), mean of 5 runs; averages Table 1 (tables/0_training.tex)"
+    },
+    "tandt": {
+      "method": {"per_scene": {"psnr": {"train": 24.49, "truck": 27.23}, "ssim": {"train": 0.854, "truck": 0.904}, "lpips": {"train": 0.202, "truck": 0.118}}},
+      "baseline_sh_same_pipeline": {"per_scene": {"psnr": {"train": 24.48, "truck": 27.13}, "ssim": {"train": 0.856, "truck": 0.904}, "lpips": {"train": 0.197, "truck": 0.117}}},
+      "source": "supp. Table tab:per_scene_tandt_db"
+    },
+    "db": {
+      "method": {"per_scene": {"psnr": {"drjohnson": 29.72, "playroom": 31.08}, "ssim": {"drjohnson": 0.903, "playroom": 0.910}, "lpips": {"drjohnson": 0.303, "playroom": 0.289}}},
+      "baseline_sh_same_pipeline": {"per_scene": {"psnr": {"drjohnson": 29.43, "playroom": 30.80}, "ssim": {"drjohnson": 0.902, "playroom": 0.910}, "lpips": {"drjohnson": 0.305, "playroom": 0.290}}},
+      "source": "supp. Table tab:per_scene_tandt_db"
+    }
+  },
+  "notes": "There is NO 3DGS row: every row is the same Faster-GS + MCMC (scene-specific caps from Beta Splatting) + PPISP (with controller distillation, 5000 extra steps) pipeline with only the appearance model swapped. 'baseline_sh_same_pipeline' = the paper's SH row (degree-3 SH, same pipeline) — the comparison baseline for the Neural gain. Numbers are means of 5 runs. Resolution: M360 outdoor x0.25, indoor x0.5 (3DGS images_4/images_2), T&T/DB as distributed by 3DGS; llffhold 8; black background; RTX 4090. PPISP is applied to test renders through its distilled controller (novel views)."
+}

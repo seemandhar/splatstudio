@@ -1,0 +1,41 @@
+{
+ "paper": "Pushing Rendering Boundaries: Hard Gaussian Splatting",
+ "slug": "hard-gs",
+ "plan_id": 103,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done (approved, 6 minors)",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "arxiv": "2412.04826",
+ "official_code": null,
+ "method": "hard-gs",
+ "custom_cuda": true,
+ "custom_cuda_note": "Mini-Splatting max-contribution kernel reused (JIT)",
+ "bench_request": "bench_request.json",
+ "feasible_natively": true,
+ "ss_eval_transport": "hgs_blob per-anchor field",
+ "bench_dataset": "mipnerf360-pilr",
+ "bench_exps": [
+  "hard-gs-mipnerf360-pilr"
+ ],
+ "result": {
+  "psnr_delta": {
+   "garden": -0.22,
+   "counter": -0.05
+  },
+  "gain_over_scaffold": {
+   "garden": 0.4,
+   "counter": 0.59
+  },
+  "paper_gain_over_scaffold": {
+   "garden": 0.5,
+   "counter": 0.6
+  }
+ }
+}

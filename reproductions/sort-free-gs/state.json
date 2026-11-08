@@ -1,0 +1,40 @@
+{
+ "paper": "Sort-free Gaussian Splatting via Weighted Sum Rendering",
+ "slug": "sort-free-gs",
+ "plan_id": 116,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "review-1 approved with changes; M1,m1,m2,m6,M2 applied",
+  "benchmark": "done",
+  "gap_analysis": "done"
+ },
+ "outcome": "partial",
+ "arxiv": "2410.18931",
+ "official_code": null,
+ "method": "sort-free-gs",
+ "custom_cuda": true,
+ "smoke": {
+  "method": 22.861,
+  "baseline": 23.073,
+  "run": "smoke-3"
+ },
+ "benchmark_target": "mipnerf360 bicycle 24.20 (paper 3DGS 25.25) + tandt train 21.93 (21.09); main method only",
+ "results": {
+  "bicycle": {
+   "sort-free-gs": 23.77,
+   "paper": 24.2,
+   "baseline": 24.92,
+   "paper_3dgs": 25.25
+  },
+  "train": {
+   "sort-free-gs": 21.12,
+   "paper": 21.93,
+   "baseline": 21.52,
+   "paper_3dgs": 21.09
+  }
+ },
+ "gap_summary": "bicycle matched (-0.43, delta -1.15 vs -1.05); train -0.82: WSR fits train views +1.96 dB above gsplat but generalises worse with 3.1x Gaussians (no opacity prune; paper reports fewer than 3DGS). w_B negative but negligible (median S_w 55), sigma stable, 55% culled u<=0 (inert). No grounded >=0.5 dB fix; unofficial alpha threshold (m3) is the only candidate, not attempted."
+}

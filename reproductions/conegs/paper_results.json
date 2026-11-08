@@ -1,0 +1,1637 @@
+{
+ "paper": "ConeGS: Error-Guided Densification Using Pixel Cones for Improved Reconstruction With Fewer Primitives",
+ "arxiv": "2511.06810",
+ "method_label": "Ours",
+ "iterations": 30000,
+ "budget": 1000000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 29.37,
+     "ssim": 0.88,
+     "lpips": 0.168,
+     "fps": 140.0
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.45,
+      "garden": 27.42,
+      "stump": 27.23,
+      "room": 32.3,
+      "counter": 29.21,
+      "kitchen": 31.66,
+      "bonsai": 32.33
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "garden": 0.861,
+      "stump": 0.802,
+      "room": 0.928,
+      "counter": 0.911,
+      "kitchen": 0.932,
+      "bonsai": 0.945
+     },
+     "lpips": {
+      "bicycle": 0.198,
+      "garden": 0.115,
+      "stump": 0.184,
+      "room": 0.196,
+      "counter": 0.181,
+      "kitchen": 0.117,
+      "bonsai": 0.183
+     },
+     "fps": {
+      "bicycle": 156.0,
+      "garden": 162.0,
+      "stump": 164.0,
+      "room": 139.0,
+      "counter": 107.0,
+      "kitchen": 118.0,
+      "bonsai": 132.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 28.71,
+     "ssim": 0.846,
+     "lpips": 0.222,
+     "fps": 109.0
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.4,
+      "garden": 26.7,
+      "stump": 25.64,
+      "room": 31.62,
+      "counter": 29.11,
+      "kitchen": 31.18,
+      "bonsai": 32.34
+     },
+     "ssim": {
+      "bicycle": 0.688,
+      "garden": 0.827,
+      "stump": 0.719,
+      "room": 0.918,
+      "counter": 0.907,
+      "kitchen": 0.924,
+      "bonsai": 0.941
+     },
+     "lpips": {
+      "bicycle": 0.325,
+      "garden": 0.172,
+      "stump": 0.301,
+      "room": 0.221,
+      "counter": 0.201,
+      "kitchen": 0.131,
+      "bonsai": 0.205
+     },
+     "fps": {
+      "bicycle": 129.0,
+      "garden": 142.0,
+      "stump": 162.0,
+      "room": 82.0,
+      "counter": 75.0,
+      "kitchen": 78.0,
+      "bonsai": 95.0
+     }
+    }
+   },
+   "mcmc_sfm": {
+    "average": {
+     "psnr": 29.23,
+     "ssim": 0.875,
+     "lpips": 0.189,
+     "fps": 92.0
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.34,
+      "garden": 26.83,
+      "stump": 27.21,
+      "room": 32.09,
+      "counter": 29.24,
+      "kitchen": 31.44,
+      "bonsai": 32.46
+     },
+     "ssim": {
+      "bicycle": 0.768,
+      "garden": 0.847,
+      "stump": 0.798,
+      "room": 0.926,
+      "counter": 0.913,
+      "kitchen": 0.927,
+      "bonsai": 0.944
+     },
+     "lpips": {
+      "bicycle": 0.238,
+      "garden": 0.147,
+      "stump": 0.213,
+      "room": 0.208,
+      "counter": 0.191,
+      "kitchen": 0.13,
+      "bonsai": 0.199
+     },
+     "fps": {
+      "bicycle": 106.0,
+      "garden": 135.0,
+      "stump": 110.0,
+      "room": 79.0,
+      "counter": 61.0,
+      "kitchen": 72.0,
+      "bonsai": 81.0
+     }
+    }
+   },
+   "edgs": {
+    "average": {
+     "psnr": 29.18,
+     "ssim": 0.878,
+     "lpips": 0.168,
+     "fps": 131.0
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.26,
+      "garden": 27.05,
+      "stump": 26.71,
+      "room": 31.71,
+      "counter": 29.27,
+      "kitchen": 31.83,
+      "bonsai": 32.44
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "garden": 0.857,
+      "stump": 0.783,
+      "room": 0.928,
+      "counter": 0.917,
+      "kitchen": 0.933,
+      "bonsai": 0.947
+     },
+     "lpips": {
+      "bicycle": 0.199,
+      "garden": 0.118,
+      "stump": 0.203,
+      "room": 0.191,
+      "counter": 0.171,
+      "kitchen": 0.114,
+      "bonsai": 0.181
+     },
+     "fps": {
+      "bicycle": 161.0,
+      "garden": 158.0,
+      "stump": 179.0,
+      "room": 111.0,
+      "counter": 94.0,
+      "kitchen": 101.0,
+      "bonsai": 115.0
+     }
+    }
+   },
+   "source": "supp. Table (lines 549-592, 1M); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.7,
+     "ssim": 0.835,
+     "lpips": 0.207,
+     "fps": 103.0
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.34,
+      "train": 22.05
+     },
+     "ssim": {
+      "truck": 0.864,
+      "train": 0.805
+     },
+     "lpips": {
+      "truck": 0.181,
+      "train": 0.232
+     },
+     "fps": {
+      "truck": 97.0,
+      "train": 109.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.6,
+     "ssim": 0.826,
+     "lpips": 0.245,
+     "fps": 60.0
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.06,
+      "train": 22.13
+     },
+     "ssim": {
+      "truck": 0.851,
+      "train": 0.801
+     },
+     "lpips": {
+      "truck": 0.234,
+      "train": 0.255
+     },
+     "fps": {
+      "truck": 70.0,
+      "train": 51.0
+     }
+    }
+   },
+   "mcmc_sfm": {
+    "average": {
+     "psnr": 23.93,
+     "ssim": 0.837,
+     "lpips": 0.233,
+     "fps": 46.0
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.57,
+      "train": 22.29
+     },
+     "ssim": {
+      "truck": 0.862,
+      "train": 0.811
+     },
+     "lpips": {
+      "truck": 0.217,
+      "train": 0.249
+     },
+     "fps": {
+      "truck": 45.0,
+      "train": 47.0
+     }
+    }
+   },
+   "edgs": {
+    "average": {
+     "psnr": 23.66,
+     "ssim": 0.843,
+     "lpips": 0.201,
+     "fps": 80.0
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.02,
+      "train": 22.29
+     },
+     "ssim": {
+      "truck": 0.862,
+      "train": 0.823
+     },
+     "lpips": {
+      "truck": 0.181,
+      "train": 0.22
+     },
+     "fps": {
+      "truck": 82.0,
+      "train": 78.0
+     }
+    }
+   },
+   "source": "supp. Table (lines 549-592, 1M); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.69,
+     "ssim": 0.889,
+     "lpips": 0.273,
+     "fps": 197.0
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.98,
+      "playroom": 30.39
+     },
+     "ssim": {
+      "drjohnson": 0.886,
+      "playroom": 0.891
+     },
+     "lpips": {
+      "drjohnson": 0.282,
+      "playroom": 0.264
+     },
+     "fps": {
+      "drjohnson": 194.0,
+      "playroom": 200.0
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 28.94,
+     "ssim": 0.881,
+     "lpips": 0.292,
+     "fps": 109.0
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.85,
+      "playroom": 29.02
+     },
+     "ssim": {
+      "drjohnson": 0.884,
+      "playroom": 0.877
+     },
+     "lpips": {
+      "drjohnson": 0.293,
+      "playroom": 0.29
+     },
+     "fps": {
+      "drjohnson": 106.0,
+      "playroom": 112.0
+     }
+    }
+   },
+   "mcmc_sfm": {
+    "average": {
+     "psnr": 29.67,
+     "ssim": 0.887,
+     "lpips": 0.288,
+     "fps": 168.0
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.06,
+      "playroom": 30.28
+     },
+     "ssim": {
+      "drjohnson": 0.884,
+      "playroom": 0.89
+     },
+     "lpips": {
+      "drjohnson": 0.291,
+      "playroom": 0.284
+     },
+     "fps": {
+      "drjohnson": 164.0,
+      "playroom": 173.0
+     }
+    }
+   },
+   "edgs": {
+    "average": {
+     "psnr": 29.43,
+     "ssim": 0.89,
+     "lpips": 0.271,
+     "fps": 181.0
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.75,
+      "playroom": 30.11
+     },
+     "ssim": {
+      "drjohnson": 0.89,
+      "playroom": 0.889
+     },
+     "lpips": {
+      "drjohnson": 0.277,
+      "playroom": 0.265
+     },
+     "fps": {
+      "drjohnson": 180.0,
+      "playroom": 182.0
+     }
+    }
+   },
+   "source": "supp. Table (lines 549-592, 1M); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+  }
+ },
+ "other_budgets": {
+  "100k": {
+   "mipnerf360": {
+    "method": {
+     "average": {
+      "psnr": 27.74,
+      "ssim": 0.809,
+      "lpips": 0.285,
+      "fps": 325.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.05,
+       "garden": 24.69,
+       "stump": 25.71,
+       "room": 31.09,
+       "counter": 28.22,
+       "kitchen": 29.73,
+       "bonsai": 30.67
+      },
+      "ssim": {
+       "bicycle": 0.652,
+       "garden": 0.709,
+       "stump": 0.707,
+       "room": 0.903,
+       "counter": 0.879,
+       "kitchen": 0.896,
+       "bonsai": 0.92
+      },
+      "lpips": {
+       "bicycle": 0.379,
+       "garden": 0.336,
+       "stump": 0.351,
+       "room": 0.254,
+       "counter": 0.251,
+       "kitchen": 0.183,
+       "bonsai": 0.241
+      },
+      "fps": {
+       "bicycle": 368.0,
+       "garden": 431.0,
+       "stump": 456.0,
+       "room": 275.0,
+       "counter": 229.0,
+       "kitchen": 239.0,
+       "bonsai": 276.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 23.61,
+      "ssim": 0.692,
+      "lpips": 0.413,
+      "fps": 363.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 20.99,
+       "garden": 22.87,
+       "stump": 22.79,
+       "room": 27.02,
+       "counter": 25.64,
+       "kitchen": 20.53,
+       "bonsai": 25.41
+      },
+      "ssim": {
+       "bicycle": 0.47,
+       "garden": 0.589,
+       "stump": 0.547,
+       "room": 0.859,
+       "counter": 0.845,
+       "kitchen": 0.671,
+       "bonsai": 0.866
+      },
+      "lpips": {
+       "bicycle": 0.543,
+       "garden": 0.445,
+       "stump": 0.498,
+       "room": 0.328,
+       "counter": 0.307,
+       "kitchen": 0.44,
+       "bonsai": 0.331
+      },
+      "fps": {
+       "bicycle": 466.0,
+       "garden": 430.0,
+       "stump": 506.0,
+       "room": 267.0,
+       "counter": 252.0,
+       "kitchen": 297.0,
+       "bonsai": 326.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 27.06,
+      "ssim": 0.8,
+      "lpips": 0.303,
+      "fps": 323.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 23.34,
+       "garden": 24.51,
+       "stump": 25.16,
+       "room": 30.37,
+       "counter": 27.83,
+       "kitchen": 28.37,
+       "bonsai": 29.84
+      },
+      "ssim": {
+       "bicycle": 0.63,
+       "garden": 0.71,
+       "stump": 0.68,
+       "room": 0.9,
+       "counter": 0.88,
+       "kitchen": 0.89,
+       "bonsai": 0.91
+      },
+      "lpips": {
+       "bicycle": 0.4,
+       "garden": 0.35,
+       "stump": 0.37,
+       "room": 0.27,
+       "counter": 0.26,
+       "kitchen": 0.21,
+       "bonsai": 0.26
+      },
+      "fps": {
+       "bicycle": 339.0,
+       "garden": 569.0,
+       "stump": 402.0,
+       "room": 224.0,
+       "counter": 198.0,
+       "kitchen": 246.0,
+       "bonsai": 281.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 27.09,
+      "ssim": 0.798,
+      "lpips": 0.296,
+      "fps": 379.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 23.68,
+       "garden": 24.47,
+       "stump": 25.08,
+       "room": 30.08,
+       "counter": 27.77,
+       "kitchen": 28.84,
+       "bonsai": 29.73
+      },
+      "ssim": {
+       "bicycle": 0.635,
+       "garden": 0.706,
+       "stump": 0.673,
+       "room": 0.896,
+       "counter": 0.877,
+       "kitchen": 0.891,
+       "bonsai": 0.906
+      },
+      "lpips": {
+       "bicycle": 0.393,
+       "garden": 0.341,
+       "stump": 0.377,
+       "room": 0.265,
+       "counter": 0.251,
+       "kitchen": 0.186,
+       "bonsai": 0.256
+      },
+      "fps": {
+       "bicycle": 444.0,
+       "garden": 493.0,
+       "stump": 588.0,
+       "room": 317.0,
+       "counter": 245.0,
+       "kitchen": 269.0,
+       "bonsai": 298.0
+      }
+     }
+    },
+    "source": "supp. Table (tex lines 449-495, caption: limited to 100k); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   },
+   "tandt": {
+    "method": {
+     "average": {
+      "psnr": 23.12,
+      "ssim": 0.79,
+      "lpips": 0.309,
+      "fps": 194.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 24.54,
+       "train": 21.7
+      },
+      "ssim": {
+       "truck": 0.822,
+       "train": 0.759
+      },
+      "lpips": {
+       "truck": 0.291,
+       "train": 0.328
+      },
+      "fps": {
+       "truck": 184.0,
+       "train": 204.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 22.38,
+      "ssim": 0.774,
+      "lpips": 0.334,
+      "fps": 123.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 23.59,
+       "train": 21.17
+      },
+      "ssim": {
+       "truck": 0.803,
+       "train": 0.744
+      },
+      "lpips": {
+       "truck": 0.318,
+       "train": 0.349
+      },
+      "fps": {
+       "truck": 128.0,
+       "train": 118.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 22.49,
+      "ssim": 0.78,
+      "lpips": 0.332,
+      "fps": 158.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 23.86,
+       "train": 21.13
+      },
+      "ssim": {
+       "truck": 0.81,
+       "train": 0.749
+      },
+      "lpips": {
+       "truck": 0.316,
+       "train": 0.347
+      },
+      "fps": {
+       "truck": 155.0,
+       "train": 160.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 22.32,
+      "ssim": 0.778,
+      "lpips": 0.324,
+      "fps": 182.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 23.33,
+       "train": 21.31
+      },
+      "ssim": {
+       "truck": 0.799,
+       "train": 0.756
+      },
+      "lpips": {
+       "truck": 0.314,
+       "train": 0.334
+      },
+      "fps": {
+       "truck": 183.0,
+       "train": 180.0
+      }
+     }
+    },
+    "source": "supp. Table (tex lines 449-495, caption: limited to 100k); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   },
+   "db": {
+    "method": {
+     "average": {
+      "psnr": 29.44,
+      "ssim": 0.88,
+      "lpips": 0.328,
+      "fps": 468.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.78,
+       "playroom": 30.09
+      },
+      "ssim": {
+       "drjohnson": 0.875,
+       "playroom": 0.885
+      },
+      "lpips": {
+       "drjohnson": 0.338,
+       "playroom": 0.318
+      },
+      "fps": {
+       "drjohnson": 447.0,
+       "playroom": 489.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 24.65,
+      "ssim": 0.827,
+      "lpips": 0.412,
+      "fps": 505.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 23.58,
+       "playroom": 25.72
+      },
+      "ssim": {
+       "drjohnson": 0.808,
+       "playroom": 0.845
+      },
+      "lpips": {
+       "drjohnson": 0.44,
+       "playroom": 0.384
+      },
+      "fps": {
+       "drjohnson": 521.0,
+       "playroom": 489.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 28.94,
+      "ssim": 0.876,
+      "lpips": 0.333,
+      "fps": 551.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.16,
+       "playroom": 29.72
+      },
+      "ssim": {
+       "drjohnson": 0.869,
+       "playroom": 0.883
+      },
+      "lpips": {
+       "drjohnson": 0.343,
+       "playroom": 0.323
+      },
+      "fps": {
+       "drjohnson": 550.0,
+       "playroom": 552.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 28.43,
+      "ssim": 0.872,
+      "lpips": 0.337,
+      "fps": 465.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 27.66,
+       "playroom": 29.19
+      },
+      "ssim": {
+       "drjohnson": 0.865,
+       "playroom": 0.879
+      },
+      "lpips": {
+       "drjohnson": 0.347,
+       "playroom": 0.327
+      },
+      "fps": {
+       "drjohnson": 444.0,
+       "playroom": 486.0
+      }
+     }
+    },
+    "source": "supp. Table (tex lines 449-495, caption: limited to 100k); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   }
+  },
+  "500k": {
+   "mipnerf360": {
+    "method": {
+     "average": {
+      "psnr": 29.08,
+      "ssim": 0.87,
+      "lpips": 0.19,
+      "fps": 205.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.25,
+       "garden": 26.87,
+       "stump": 27.03,
+       "room": 32.02,
+       "counter": 28.87,
+       "kitchen": 31.38,
+       "bonsai": 32.16
+      },
+      "ssim": {
+       "bicycle": 0.758,
+       "garden": 0.837,
+       "stump": 0.793,
+       "room": 0.924,
+       "counter": 0.906,
+       "kitchen": 0.929,
+       "bonsai": 0.944
+      },
+      "lpips": {
+       "bicycle": 0.242,
+       "garden": 0.157,
+       "stump": 0.215,
+       "room": 0.205,
+       "counter": 0.194,
+       "kitchen": 0.124,
+       "bonsai": 0.191
+      },
+      "fps": {
+       "bicycle": 234.0,
+       "garden": 246.0,
+       "stump": 255.0,
+       "room": 192.0,
+       "counter": 148.0,
+       "kitchen": 172.0,
+       "bonsai": 190.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 28.22,
+      "ssim": 0.821,
+      "lpips": 0.26,
+      "fps": 167.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.06,
+       "garden": 25.16,
+       "stump": 25.27,
+       "room": 31.47,
+       "counter": 28.86,
+       "kitchen": 30.76,
+       "bonsai": 31.95
+      },
+      "ssim": {
+       "bicycle": 0.651,
+       "garden": 0.743,
+       "stump": 0.688,
+       "room": 0.913,
+       "counter": 0.901,
+       "kitchen": 0.918,
+       "bonsai": 0.936
+      },
+      "lpips": {
+       "bicycle": 0.37,
+       "garden": 0.296,
+       "stump": 0.348,
+       "room": 0.234,
+       "counter": 0.213,
+       "kitchen": 0.143,
+       "bonsai": 0.218
+      },
+      "fps": {
+       "bicycle": 174.0,
+       "garden": 297.0,
+       "stump": 226.0,
+       "room": 112.0,
+       "counter": 113.0,
+       "kitchen": 111.0,
+       "bonsai": 135.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 28.82,
+      "ssim": 0.861,
+      "lpips": 0.214,
+      "fps": 143.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.9,
+       "garden": 26.36,
+       "stump": 26.81,
+       "room": 31.72,
+       "counter": 28.95,
+       "kitchen": 31.04,
+       "bonsai": 31.97
+      },
+      "ssim": {
+       "bicycle": 0.74,
+       "garden": 0.823,
+       "stump": 0.779,
+       "room": 0.921,
+       "counter": 0.907,
+       "kitchen": 0.921,
+       "bonsai": 0.939
+      },
+      "lpips": {
+       "bicycle": 0.282,
+       "garden": 0.189,
+       "stump": 0.25,
+       "room": 0.221,
+       "counter": 0.205,
+       "kitchen": 0.141,
+       "bonsai": 0.21
+      },
+      "fps": {
+       "bicycle": 162.0,
+       "garden": 221.0,
+       "stump": 175.0,
+       "room": 114.0,
+       "counter": 93.0,
+       "kitchen": 111.0,
+       "bonsai": 128.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 28.82,
+      "ssim": 0.865,
+      "lpips": 0.193,
+      "fps": 204.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.95,
+       "garden": 26.49,
+       "stump": 26.5,
+       "room": 31.36,
+       "counter": 29.05,
+       "kitchen": 31.35,
+       "bonsai": 32.02
+      },
+      "ssim": {
+       "bicycle": 0.751,
+       "garden": 0.833,
+       "stump": 0.768,
+       "room": 0.923,
+       "counter": 0.912,
+       "kitchen": 0.928,
+       "bonsai": 0.942
+      },
+      "lpips": {
+       "bicycle": 0.251,
+       "garden": 0.161,
+       "stump": 0.237,
+       "room": 0.203,
+       "counter": 0.184,
+       "kitchen": 0.122,
+       "bonsai": 0.191
+      },
+      "fps": {
+       "bicycle": 248.0,
+       "garden": 252.0,
+       "stump": 296.0,
+       "room": 168.0,
+       "counter": 137.0,
+       "kitchen": 154.0,
+       "bonsai": 170.0
+      }
+     }
+    },
+    "source": "supp. Table (lines 500-544, 500k); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   },
+   "tandt": {
+    "method": {
+     "average": {
+      "psnr": 23.69,
+      "ssim": 0.829,
+      "lpips": 0.229,
+      "fps": 131.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 25.41,
+       "train": 21.97
+      },
+      "ssim": {
+       "truck": 0.858,
+       "train": 0.799
+      },
+      "lpips": {
+       "truck": 0.204,
+       "train": 0.253
+      },
+      "fps": {
+       "truck": 122.0,
+       "train": 140.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 23.54,
+      "ssim": 0.816,
+      "lpips": 0.265,
+      "fps": 82.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 24.8,
+       "train": 22.28
+      },
+      "ssim": {
+       "truck": 0.842,
+       "train": 0.79
+      },
+      "lpips": {
+       "truck": 0.253,
+       "train": 0.277
+      },
+      "fps": {
+       "truck": 93.0,
+       "train": 72.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 23.68,
+      "ssim": 0.825,
+      "lpips": 0.259,
+      "fps": 77.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 25.24,
+       "train": 22.12
+      },
+      "ssim": {
+       "truck": 0.851,
+       "train": 0.798
+      },
+      "lpips": {
+       "truck": 0.242,
+       "train": 0.275
+      },
+      "fps": {
+       "truck": 68.0,
+       "train": 86.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 23.47,
+      "ssim": 0.831,
+      "lpips": 0.229,
+      "fps": 109.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 24.66,
+       "train": 22.27
+      },
+      "ssim": {
+       "truck": 0.85,
+       "train": 0.812
+      },
+      "lpips": {
+       "truck": 0.212,
+       "train": 0.246
+      },
+      "fps": {
+       "truck": 114.0,
+       "train": 104.0
+      }
+     }
+    },
+    "source": "supp. Table (lines 500-544, 500k); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   },
+   "db": {
+    "method": {
+     "average": {
+      "psnr": 29.86,
+      "ssim": 0.891,
+      "lpips": 0.285,
+      "fps": 278.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.2,
+       "playroom": 30.51
+      },
+      "ssim": {
+       "drjohnson": 0.89,
+       "playroom": 0.892
+      },
+      "lpips": {
+       "drjohnson": 0.291,
+       "playroom": 0.279
+      },
+      "fps": {
+       "drjohnson": 270.0,
+       "playroom": 287.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 29.26,
+      "ssim": 0.882,
+      "lpips": 0.303,
+      "fps": 156.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.85,
+       "playroom": 29.66
+      },
+      "ssim": {
+       "drjohnson": 0.881,
+       "playroom": 0.883
+      },
+      "lpips": {
+       "drjohnson": 0.307,
+       "playroom": 0.298
+      },
+      "fps": {
+       "drjohnson": 151.0,
+       "playroom": 161.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 29.44,
+      "ssim": 0.887,
+      "lpips": 0.308,
+      "fps": 194.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.71,
+       "playroom": 30.16
+      },
+      "ssim": {
+       "drjohnson": 0.884,
+       "playroom": 0.889
+      },
+      "lpips": {
+       "drjohnson": 0.313,
+       "playroom": 0.303
+      },
+      "fps": {
+       "drjohnson": 180.0,
+       "playroom": 209.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 29.33,
+      "ssim": 0.889,
+      "lpips": 0.287,
+      "fps": 273.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.6,
+       "playroom": 30.06
+      },
+      "ssim": {
+       "drjohnson": 0.888,
+       "playroom": 0.89
+      },
+      "lpips": {
+       "drjohnson": 0.292,
+       "playroom": 0.281
+      },
+      "fps": {
+       "drjohnson": 269.0,
+       "playroom": 277.0
+      }
+     }
+    },
+    "source": "supp. Table (lines 500-544, 500k); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   }
+  },
+  "2M": {
+   "mipnerf360": {
+    "method": {
+     "average": {
+      "psnr": 29.43,
+      "ssim": 0.881,
+      "lpips": 0.158,
+      "fps": 88.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.43,
+       "garden": 27.59,
+       "stump": 27.03,
+       "room": 32.32,
+       "counter": 29.23,
+       "kitchen": 31.8,
+       "bonsai": 32.63
+      },
+      "ssim": {
+       "bicycle": 0.781,
+       "garden": 0.87,
+       "stump": 0.796,
+       "room": 0.929,
+       "counter": 0.912,
+       "kitchen": 0.934,
+       "bonsai": 0.948
+      },
+      "lpips": {
+       "bicycle": 0.175,
+       "garden": 0.097,
+       "stump": 0.177,
+       "room": 0.189,
+       "counter": 0.175,
+       "kitchen": 0.114,
+       "bonsai": 0.177
+      },
+      "fps": {
+       "bicycle": 99.0,
+       "garden": 97.0,
+       "stump": 100.0,
+       "room": 92.0,
+       "counter": 70.0,
+       "kitchen": 72.0,
+       "bonsai": 84.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 29.01,
+      "ssim": 0.861,
+      "lpips": 0.2,
+      "fps": 76.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.85,
+       "garden": 27.22,
+       "stump": 26.18,
+       "room": 31.8,
+       "counter": 29.07,
+       "kitchen": 31.6,
+       "bonsai": 32.34
+      },
+      "ssim": {
+       "bicycle": 0.729,
+       "garden": 0.852,
+       "stump": 0.749,
+       "room": 0.919,
+       "counter": 0.907,
+       "kitchen": 0.927,
+       "bonsai": 0.941
+      },
+      "lpips": {
+       "bicycle": 0.267,
+       "garden": 0.129,
+       "stump": 0.255,
+       "room": 0.218,
+       "counter": 0.201,
+       "kitchen": 0.126,
+       "bonsai": 0.204
+      },
+      "fps": {
+       "bicycle": 79.0,
+       "garden": 84.0,
+       "stump": 100.0,
+       "room": 63.0,
+       "counter": 68.0,
+       "kitchen": 54.0,
+       "bonsai": 84.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 29.52,
+      "ssim": 0.883,
+      "lpips": 0.172,
+      "fps": 60.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.56,
+       "garden": 27.33,
+       "stump": 27.39,
+       "room": 32.14,
+       "counter": 29.41,
+       "kitchen": 32.0,
+       "bonsai": 32.8
+      },
+      "ssim": {
+       "bicycle": 0.786,
+       "garden": 0.862,
+       "stump": 0.808,
+       "room": 0.929,
+       "counter": 0.917,
+       "kitchen": 0.931,
+       "bonsai": 0.948
+      },
+      "lpips": {
+       "bicycle": 0.205,
+       "garden": 0.122,
+       "stump": 0.189,
+       "room": 0.199,
+       "counter": 0.181,
+       "kitchen": 0.122,
+       "bonsai": 0.189
+      },
+      "fps": {
+       "bicycle": 71.0,
+       "garden": 82.0,
+       "stump": 69.0,
+       "room": 53.0,
+       "counter": 42.0,
+       "kitchen": 47.0,
+       "bonsai": 53.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 29.38,
+      "ssim": 0.883,
+      "lpips": 0.155,
+      "fps": 83.0
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.48,
+       "garden": 27.46,
+       "stump": 26.79,
+       "room": 31.89,
+       "counter": 29.37,
+       "kitchen": 32.06,
+       "bonsai": 32.62
+      },
+      "ssim": {
+       "bicycle": 0.792,
+       "garden": 0.87,
+       "stump": 0.788,
+       "room": 0.93,
+       "counter": 0.918,
+       "kitchen": 0.935,
+       "bonsai": 0.947
+      },
+      "lpips": {
+       "bicycle": 0.168,
+       "garden": 0.097,
+       "stump": 0.186,
+       "room": 0.184,
+       "counter": 0.164,
+       "kitchen": 0.111,
+       "bonsai": 0.175
+      },
+      "fps": {
+       "bicycle": 93.0,
+       "garden": 89.0,
+       "stump": 100.0,
+       "room": 81.0,
+       "counter": 65.0,
+       "kitchen": 65.0,
+       "bonsai": 85.0
+      }
+     }
+    },
+    "source": "supp. Table (lines 598-642, 2M); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   },
+   "tandt": {
+    "method": {
+     "average": {
+      "psnr": 23.69,
+      "ssim": 0.837,
+      "lpips": 0.192,
+      "fps": 73.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 25.43,
+       "train": 21.95
+      },
+      "ssim": {
+       "truck": 0.865,
+       "train": 0.809
+      },
+      "lpips": {
+       "truck": 0.167,
+       "train": 0.217
+      },
+      "fps": {
+       "truck": 69.0,
+       "train": 77.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 23.84,
+      "ssim": 0.831,
+      "lpips": 0.235,
+      "fps": 54.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 25.39,
+       "train": 22.29
+      },
+      "ssim": {
+       "truck": 0.859,
+       "train": 0.802
+      },
+      "lpips": {
+       "truck": 0.217,
+       "train": 0.253
+      },
+      "fps": {
+       "truck": 53.0,
+       "train": 55.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 24.11,
+      "ssim": 0.846,
+      "lpips": 0.211,
+      "fps": 39.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 25.86,
+       "train": 22.35
+      },
+      "ssim": {
+       "truck": 0.869,
+       "train": 0.822
+      },
+      "lpips": {
+       "truck": 0.193,
+       "train": 0.228
+      },
+      "fps": {
+       "truck": 38.0,
+       "train": 40.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 23.47,
+      "ssim": 0.846,
+      "lpips": 0.183,
+      "fps": 56.0
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 25.09,
+       "train": 21.84
+      },
+      "ssim": {
+       "truck": 0.865,
+       "train": 0.827
+      },
+      "lpips": {
+       "truck": 0.162,
+       "train": 0.204
+      },
+      "fps": {
+       "truck": 55.0,
+       "train": 58.0
+      }
+     }
+    },
+    "source": "supp. Table (lines 598-642, 2M); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   },
+   "db": {
+    "method": {
+     "average": {
+      "psnr": 29.76,
+      "ssim": 0.886,
+      "lpips": 0.261,
+      "fps": 127.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.01,
+       "playroom": 30.5
+      },
+      "ssim": {
+       "drjohnson": 0.884,
+       "playroom": 0.887
+      },
+      "lpips": {
+       "drjohnson": 0.274,
+       "playroom": 0.247
+      },
+      "fps": {
+       "drjohnson": 127.0,
+       "playroom": 127.0
+      }
+     }
+    },
+    "baseline_3dgs": {
+     "average": {
+      "psnr": 29.04,
+      "ssim": 0.883,
+      "lpips": 0.281,
+      "fps": 80.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.75,
+       "playroom": 29.32
+      },
+      "ssim": {
+       "drjohnson": 0.886,
+       "playroom": 0.88
+      },
+      "lpips": {
+       "drjohnson": 0.282,
+       "playroom": 0.279
+      },
+      "fps": {
+       "drjohnson": 77.0,
+       "playroom": 83.0
+      }
+     }
+    },
+    "mcmc_sfm": {
+     "average": {
+      "psnr": 29.53,
+      "ssim": 0.886,
+      "lpips": 0.279,
+      "fps": 104.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.83,
+       "playroom": 30.22
+      },
+      "ssim": {
+       "drjohnson": 0.882,
+       "playroom": 0.89
+      },
+      "lpips": {
+       "drjohnson": 0.285,
+       "playroom": 0.272
+      },
+      "fps": {
+       "drjohnson": 104.0,
+       "playroom": 105.0
+      }
+     }
+    },
+    "edgs": {
+     "average": {
+      "psnr": 29.38,
+      "ssim": 0.887,
+      "lpips": 0.258,
+      "fps": 112.0
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 28.65,
+       "playroom": 30.11
+      },
+      "ssim": {
+       "drjohnson": 0.887,
+       "playroom": 0.886
+      },
+      "lpips": {
+       "drjohnson": 0.268,
+       "playroom": 0.248
+      },
+      "fps": {
+       "drjohnson": 113.0,
+       "playroom": 112.0
+      }
+     }
+    },
+    "source": "supp. Table (lines 598-642, 2M); columns Ours / 3DGS (SfM) / MCMC (SfM) / EDGS, all limited to the budget"
+   }
+  }
+ },
+ "main_table_averages_psnr": {
+  "100k": {
+   "mipnerf360": 27.74,
+   "tandt": 23.12,
+   "db": 29.44
+  },
+  "500k": {
+   "mipnerf360": 29.08,
+   "tandt": 23.69,
+   "db": 29.86
+  },
+  "1M (Table 2 timing)": {
+   "mipnerf360": 29.37
+  }
+ },
+ "notes": "Primary entry = fixed budget 1M (paper default init size; Table 2 timing table). Mip-NeRF 360 = 7 public scenes (no flowers/treehill), images_4 outdoor / images_2 indoor. baseline_3dgs is 3DGS (SfM init) with densification stopped at the same 1M budget (authors retrained), NOT unbudgeted 3DGS. T&T/DB use the original releases (full-res T&T; DB not the 3DGS tandt_db copy) per the official README, so our tandt/db data differ. The scout-quoted bicycle 25.43 / garden 27.59 are the 2M row."
+}

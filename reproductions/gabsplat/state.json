@@ -1,0 +1,36 @@
+{
+ "paper": "3DGabSplat: 3D Gabor Splatting for Frequency-adaptive Radiance Field Rendering",
+ "slug": "gabsplat",
+ "plan_id": 108,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "gap_analysis": "done"
+ },
+ "outcome": "not-matched",
+ "arxiv": "2508.05343",
+ "official_code": null,
+ "method": "gabsplat",
+ "custom_cuda": true,
+ "benchmark_target": "mipnerf360 garden 27.66 + room 32.27 vs baseline3dgs-mipnerf360-30000",
+ "smoke": {
+  "method": 23.0279,
+  "baseline": 23.0726
+ },
+ "results": {
+  "garden": {
+   "ours": 27.07,
+   "paper": 27.66,
+   "baseline": 26.89
+  },
+  "room": {
+   "ours": 31.51,
+   "paper": 32.27,
+   "baseline": 31.52
+  }
+ },
+ "notes": "garden gain matches (+0.18 vs +0.24); room gain missing; Gabor term contributes 0.11 dB on room train views; no grounded fix"
+}

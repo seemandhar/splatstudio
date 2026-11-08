@@ -1,0 +1,67 @@
+{
+ "method": "augs",
+ "module": "ss_augs",
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "augs-renderer",
+   "factory": "ss_augs.renderer:create_renderer"
+  },
+  {
+   "kind": "density",
+   "name": "augs-density",
+   "factory": "ss_augs.density:create_density"
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [
+  {
+   "name": "lobe_dir",
+   "shape": [
+    3
+   ]
+  },
+  {
+   "name": "lobe_t",
+   "shape": []
+  },
+  {
+   "name": "lobe_beta",
+   "shape": []
+  },
+  {
+   "name": "aug_flag",
+   "shape": []
+  }
+ ],
+ "probes": [
+  "lobe-opacity",
+  "median-depth",
+  "error-driven-2d",
+  "inverse-splatting",
+  "joint-optimisation"
+ ],
+ "contributions": [
+  "view-dependent-opacity",
+  "error-driven-2d-training",
+  "inverse-gaussian-splatting",
+  "joint-optimisation"
+ ],
+ "fidelity_gaps": [
+  "white background",
+  "sampling with replacement",
+  "valid-conv SSIM in photometric loss",
+  "gsplat 3DGS base vs official train_3dgs.py",
+  "gsplat 2D rasterize (0.999 clamp, exclusive stop) vs Inria 2D rasterizer",
+  "is_used via nonzero opacity grad",
+  "budget additions >=1",
+  "scale-fit assertion -> tiny scale",
+  "K-based back-projection",
+  "RNG streams"
+ ],
+ "feasible_natively": true
+}

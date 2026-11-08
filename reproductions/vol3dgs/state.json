@@ -1,0 +1,27 @@
+{
+ "paper": "Volumetrically Consistent 3D Gaussian Rasterization",
+ "slug": "vol3dgs",
+ "plan_id": 122,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "smoke": "done",
+  "review": "done",
+  "benchmark": "done",
+  "report": "markdown returned to coordinator (write blocked)"
+ },
+ "outcome": "matched",
+ "results": {
+  "bicycle": {
+   "psnr": 25.0,
+   "paper": 25.04
+  },
+  "room": {
+   "psnr": 31.73,
+   "paper": 32.0
+  },
+  "method": "vol3dgs-black",
+  "exp": "vol3dgs-mipnerf360-1600-30000"
+ }
+}

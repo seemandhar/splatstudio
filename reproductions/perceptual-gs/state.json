@@ -1,0 +1,25 @@
+{
+ "paper": "Perceptual-GS: Scene-adaptive Perceptual Densification for Gaussian Splatting",
+ "slug": "perceptual-gs",
+ "plan_id": 119,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done",
+  "report": "markdown returned to coordinator (write blocked)"
+ },
+ "outcome": "matched",
+ "bench_scenes": {
+  "mipnerf360-pilr": [
+   "bicycle",
+   "counter"
+  ]
+ },
+ "bench_exps": [
+  "perceptual-gs-mipnerf360-pilr-30000"
+ ],
+ "headline": "pilr 30k: bicycle 25.79 (\u22120.17), counter 29.21 (\u22120.24) vs paper; both within \u00b10.5"
+}

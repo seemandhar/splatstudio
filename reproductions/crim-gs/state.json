@@ -1,0 +1,16 @@
+{
+ "paper": "CRiM-GS: Continuous Rigid Motion-Aware Gaussian Splatting from Motion-Blurred Images",
+ "slug": "crim-gs",
+ "plan_id": 114,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done",
+  "review-1": "approved",
+  "benchmark": "done: ball 27.80 (-0.45), cozy2room 31.91 (-1.10)",
+  "gap-analysis": "done (gap-analysis-1.md): no method defect found; likely COLMAP/test-pose protocol offset; no iteration"
+ },
+ "outcome": "partial",
+ "notes": "ball matched within 0.5 dB; cozy2room -1.10 dB; CoMo-grounded ODE/embedding fixes not expected to close >=0.5 dB"
+}

@@ -1,0 +1,53 @@
+{
+ "method": "conegs",
+ "module": "ss_conegs",
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "conegs-gsplat",
+   "factory": "ss_conegs.renderer:create_renderer"
+  },
+  {
+   "kind": "density",
+   "name": "conegs-density",
+   "factory": "ss_conegs.density:create_density"
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "splatstudio.losses:create_photometric"
+  },
+  {
+   "kind": "loss",
+   "name": "conegs-opacity",
+   "factory": "ss_conegs.losses:create_opacity_penalty"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "conegs-hashgrid",
+  "conegs-cone-scale",
+  "conegs-median-depth",
+  "conegs-error-sampling",
+  "conegs-budget",
+  "conegs-opacity-penalty",
+  "conegs-proposal"
+ ],
+ "contributions": [
+  "ingp-initialization",
+  "error-guided-cone-densification",
+  "pixel-footprint-scaling",
+  "primitive-budget",
+  "preactivation-opacity-penalty"
+ ],
+ "fidelity_gaps": [
+  "view sampling with replacement",
+  "white background",
+  "gsplat rasterizer",
+  "fp32 torch iNGP + own hash kernel vs tcnn",
+  "exact kNN vs simple-knn",
+  "SSIM valid conv"
+ ],
+ "feasible_natively": true,
+ "preprocessing": "ss-conegs-init (iNGP + 1M init points), dataset copy"
+}

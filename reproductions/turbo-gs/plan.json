@@ -1,0 +1,7 @@
+{"method": "turbo-gs", "module": "ss_turbo_gs",
+ "components": ["turbo-dilated-renderer", "photometric", "turbo-density"],
+ "fields": [],
+ "probes": ["turbo-dilated-merge", "turbo-dilated-target", "turbo-budget-schedule", "turbo-color-densify", "turbo-color-grad"],
+ "contributions": ["dilated-rendering", "convergence-aware-budget", "position-appearance-densification"],
+ "fidelity_gaps": ["no official code: budget t-normalization, deviation sign, colour attribute, top-k cap are interpretations", "3DGS densification schedule assumed", "batched training / better init not ported", "Taming speed kernel not ported", "sensitivity pruning off (dagger rows only)", "only DB average compared"],
+ "feasible_natively": true}

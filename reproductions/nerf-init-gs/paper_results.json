@@ -1,0 +1,283 @@
+{
+ "paper": "Evaluating Alternatives to SFM Point Cloud Initialization for Gaussian Splatting",
+ "arxiv": "2404.12547",
+ "method_label": "NerfAcc @ 5k + Depth Loss",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 29.1,
+     "ssim": 0.8743,
+     "lpips": 0.1296
+    },
+    "per_scene": {
+     "psnr": {
+      "garden": 27.37,
+      "bicycle": 25.22,
+      "stump": 27.21,
+      "counter": 28.85,
+      "kitchen": 31.87,
+      "bonsai": 31.54,
+      "room": 31.63
+     },
+     "ssim": {
+      "garden": 0.8622,
+      "bicycle": 0.7656,
+      "stump": 0.7927,
+      "counter": 0.9026,
+      "kitchen": 0.9334,
+      "bonsai": 0.9415,
+      "room": 0.922
+     },
+     "lpips": {
+      "garden": 0.0868,
+      "bicycle": 0.1809,
+      "stump": 0.1466,
+      "counter": 0.1446,
+      "kitchen": 0.0839,
+      "bonsai": 0.111,
+      "room": 0.1536
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.09,
+     "ssim": 0.869,
+     "lpips": 0.1366
+    },
+    "per_scene": {
+     "psnr": {
+      "garden": 27.29,
+      "bicycle": 25.16,
+      "stump": 26.82,
+      "counter": 29.19,
+      "kitchen": 31.5,
+      "bonsai": 32.25,
+      "room": 31.43
+     },
+     "ssim": {
+      "garden": 0.8598,
+      "bicycle": 0.7517,
+      "stump": 0.7669,
+      "counter": 0.9085,
+      "kitchen": 0.9312,
+      "bonsai": 0.9423,
+      "room": 0.9227
+     },
+     "lpips": {
+      "garden": 0.0865,
+      "bicycle": 0.1957,
+      "stump": 0.1718,
+      "counter": 0.1439,
+      "kitchen": 0.0878,
+      "bonsai": 0.1175,
+      "room": 0.1533
+     }
+    }
+   },
+   "baseline_3dgs_from_3dgs_paper": {
+    "average": {
+     "psnr": 28.69
+    },
+    "per_scene": {
+     "psnr": {
+      "garden": 27.41,
+      "bicycle": 25.25,
+      "stump": 26.55,
+      "counter": 28.7,
+      "kitchen": 30.32,
+      "bonsai": 31.98,
+      "room": 30.63
+     }
+    }
+   },
+   "variants": {
+    "nerfacc5k_no_depth": {
+     "average": {
+      "psnr": 28.96,
+      "ssim": 0.8758,
+      "lpips": 0.1281
+     },
+     "per_scene": {
+      "psnr": {
+       "garden": 27.21,
+       "bicycle": 23.9,
+       "stump": 27.35,
+       "counter": 28.47,
+       "kitchen": 31.82,
+       "bonsai": 31.88,
+       "room": 32.11
+      },
+      "ssim": {
+       "garden": 0.8598,
+       "bicycle": 0.7723,
+       "stump": 0.7927,
+       "counter": 0.9042,
+       "kitchen": 0.9325,
+       "bonsai": 0.9436,
+       "room": 0.9253
+      },
+      "lpips": {
+       "garden": 0.0869,
+       "bicycle": 0.1722,
+       "stump": 0.1466,
+       "counter": 0.1458,
+       "kitchen": 0.0845,
+       "bonsai": 0.1131,
+       "room": 0.1473
+      }
+     }
+    },
+    "random50_plus_depth": {
+     "average": {
+      "psnr": 28.44,
+      "ssim": 0.8482,
+      "lpips": 0.1531
+     },
+     "per_scene": {
+      "psnr": {
+       "garden": 26.75,
+       "bicycle": 24.05,
+       "stump": 25.63,
+       "counter": 28.56,
+       "kitchen": 31.6,
+       "bonsai": 31.29,
+       "room": 31.19
+      },
+      "ssim": {
+       "garden": 0.8433,
+       "bicycle": 0.701,
+       "stump": 0.7348,
+       "counter": 0.8863,
+       "kitchen": 0.9262,
+       "bonsai": 0.9385,
+       "room": 0.9075
+      },
+      "lpips": {
+       "garden": 0.1057,
+       "bicycle": 0.2087,
+       "stump": 0.1796,
+       "counter": 0.1764,
+       "kitchen": 0.0955,
+       "bonsai": 0.1203,
+       "room": 0.1852
+      }
+     }
+    },
+    "random50_no_depth": {
+     "average": {
+      "psnr": 27.75
+     },
+     "per_scene": {
+      "psnr": {
+       "garden": 26.31,
+       "bicycle": 24.12,
+       "stump": 24.63,
+       "counter": 28.04,
+       "kitchen": 30.54,
+       "bonsai": 30.74,
+       "room": 29.9
+      }
+     }
+    },
+    "nerfacc10k_no_depth": {
+     "average": {
+      "psnr": 29.12
+     },
+     "per_scene": {
+      "psnr": {
+       "garden": 27.29,
+       "bicycle": 24.14,
+       "stump": 27.37,
+       "counter": 28.77,
+       "kitchen": 31.97,
+       "bonsai": 32.27,
+       "room": 32.01
+      }
+     }
+    },
+    "nerfacc30k_no_depth": {
+     "average": {
+      "psnr": 28.96
+     },
+     "per_scene": {
+      "psnr": {
+       "garden": 27.28,
+       "bicycle": 24.11,
+       "stump": 27.38,
+       "counter": 28.5,
+       "kitchen": 31.71,
+       "bonsai": 31.78,
+       "room": 31.93
+      }
+     }
+    }
+   },
+   "source": "PSNR: tab/depth_loss_360.tex (Table 4) and tab/nerfacc_init_360.tex (Table 2), rand_init.tex (Table 1); SSIM/LPIPS: supp tab/ssim_360.tex, tab/lpips_360.tex",
+   "scenes_note": "7 scenes only (no flowers, treehill); average is over these 7"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.99,
+     "ssim": 0.8956,
+     "lpips": 0.163
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.65,
+      "playroom": 30.33
+     },
+     "ssim": {
+      "drjohnson": 0.8965,
+      "playroom": 0.8946
+     },
+     "lpips": {
+      "drjohnson": 0.1691,
+      "playroom": 0.1569
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.56,
+     "ssim": 0.895,
+     "lpips": 0.1675
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.03,
+      "playroom": 30.1
+     },
+     "ssim": {
+      "drjohnson": 0.89,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.1763,
+      "playroom": 0.1587
+     }
+    }
+   },
+   "variants": {
+    "nerfacc5k_no_depth": {
+     "average": {
+      "psnr": 30.09,
+      "ssim": 0.899,
+      "lpips": 0.1604
+     },
+     "per_scene": {
+      "psnr": {
+       "drjohnson": 29.53,
+       "playroom": 30.66
+      }
+     }
+    }
+   },
+   "source": "supp tab/depth_loss_db.tex"
+  }
+ },
+ "notes": "baseline_3dgs = 'COLMAP (Re-run)' row: authors re-ran the official 3DGS code. LPIPS of re-runs likely from the 3DGS code's VGG LPIPS. Tanks&Temples not reported (NeRF failed). OMMO/TUM/Replica not available locally."
+}

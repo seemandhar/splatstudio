@@ -1,0 +1,58 @@
+{
+ "method": "neural-appearance",
+ "module": "ss_neural_appearance",
+ "methods": [
+  "neural-appearance-garden",
+  "neural-appearance-room",
+  "neural-appearance-sh-garden",
+  "neural-appearance-sh-room",
+  "neural-appearance-bicycle",
+  "neural-appearance-truck",
+  "neural-appearance-sh-bicycle",
+  "neural-appearance-sh-truck"
+ ],
+ "components": [
+  "na-renderer",
+  "na-mcmc",
+  "photometric",
+  "na-regularizers"
+ ],
+ "fields": [
+  {
+   "name": "na_features",
+   "shape": [
+    8
+   ],
+   "lr": 0.008
+  },
+  {
+   "name": "na_blob",
+   "shape": [
+    4
+   ],
+   "lr": 0.0
+  }
+ ],
+ "probes": [
+  "na-neural-decoder",
+  "na-direction-gradient",
+  "na-render-composition",
+  "na-mcmc",
+  "na-schedules",
+  "na-ppisp"
+ ],
+ "contributions": [
+  "neural-appearance",
+  "sh-baseline-interface",
+  "shared-pipeline-mcmc-ppisp"
+ ],
+ "fidelity_gaps": [
+  "fp32 unfused MLP",
+  "tcnn init RNG",
+  "runtime SSIM / sampling",
+  "MCMC noise RNG",
+  "single seed",
+  "loader resolution"
+ ],
+ "feasible_natively": true
+}

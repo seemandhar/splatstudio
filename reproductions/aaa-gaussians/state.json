@@ -1,0 +1,42 @@
+{
+ "paper": "AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering",
+ "slug": "aaa-gaussians",
+ "plan_id": 127,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done (approved, 6 minors)",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "method": "aaa-gaussians",
+ "arxiv": "2504.12811",
+ "official_code_commit": "dc5b3f2 (rasterizer d03ce2d)",
+ "custom_cuda": true,
+ "smoke": {
+  "aaa": 22.81,
+  "baseline": 23.02,
+  "steps": 2000,
+  "scene": "garden"
+ },
+ "bench_exps": [
+  "aaa-gaussians-30k"
+ ],
+ "result": {
+  "psnr": {
+   "garden": 27.66,
+   "room": 31.32
+  },
+  "psnr_delta": {
+   "garden": 0.16,
+   "room": -0.13
+  },
+  "baseline": {
+   "garden": 26.89,
+   "room": 31.52
+  }
+ }
+}

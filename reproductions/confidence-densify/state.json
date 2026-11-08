@@ -1,0 +1,28 @@
+{
+ "paper": "Efficient Confidence-Aware Densification for 3D Gaussian Splatting",
+ "slug": "confidence-densify",
+ "plan_id": 102,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "smoke": "done",
+  "benchmark": "done",
+  "gap_analysis": "done"
+ },
+ "outcome": "not-matched",
+ "results": {
+  "garden": {
+   "ours": 27.15,
+   "paper": 27.68,
+   "control": 26.64,
+   "paper_mcmc": 26.86
+  },
+  "kitchen": {
+   "ours": 31.59,
+   "paper": 32.39,
+   "control": 31.63,
+   "paper_mcmc": 31.63
+  }
+ }
+}

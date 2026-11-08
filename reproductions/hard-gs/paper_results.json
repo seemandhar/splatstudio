@@ -1,0 +1,361 @@
+{
+ "paper": "Pushing Rendering Boundaries: Hard Gaussian Splatting",
+ "arxiv": "2412.04826",
+ "method_label": "HGS (Ours)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.3,
+     "ssim": 0.837,
+     "lpips": 0.166
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.94,
+      "flowers": 21.94,
+      "garden": 28.33,
+      "stump": 27.28,
+      "treehill": 23.06,
+      "room": 32.61,
+      "counter": 30.26,
+      "kitchen": 31.63,
+      "bonsai": 33.64
+     },
+     "ssim": {
+      "bicycle": 0.797,
+      "flowers": 0.646,
+      "garden": 0.884,
+      "stump": 0.797,
+      "treehill": 0.652,
+      "room": 0.938,
+      "counter": 0.928,
+      "kitchen": 0.932,
+      "bonsai": 0.956
+     },
+     "lpips": {
+      "bicycle": 0.165,
+      "flowers": 0.247,
+      "garden": 0.086,
+      "stump": 0.183,
+      "treehill": 0.242,
+      "room": 0.163,
+      "counter": 0.149,
+      "kitchen": 0.112,
+      "bonsai": 0.148
+     }
+    }
+   },
+   "method_effi_hgs": {
+    "average": {
+     "psnr": 28.14,
+     "ssim": 0.831,
+     "lpips": 0.179
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.88,
+      "flowers": 21.66,
+      "garden": 28.06,
+      "stump": 27.23,
+      "treehill": 23.14,
+      "room": 32.38,
+      "counter": 29.88,
+      "kitchen": 31.94,
+      "bonsai": 33.13
+     },
+     "ssim": {
+      "bicycle": 0.787,
+      "flowers": 0.631,
+      "garden": 0.877,
+      "stump": 0.793,
+      "treehill": 0.644,
+      "room": 0.934,
+      "counter": 0.922,
+      "kitchen": 0.934,
+      "bonsai": 0.952
+     },
+     "lpips": {
+      "bicycle": 0.186,
+      "flowers": 0.265,
+      "garden": 0.097,
+      "stump": 0.19,
+      "treehill": 0.265,
+      "room": 0.174,
+      "counter": 0.164,
+      "kitchen": 0.11,
+      "bonsai": 0.162
+     }
+    }
+   },
+   "baseline_scaffold_gs": {
+    "average": {
+     "psnr": 27.98,
+     "ssim": 0.825,
+     "lpips": 0.208
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.68,
+      "flowers": 21.71,
+      "garden": 27.83,
+      "stump": 26.83,
+      "treehill": 23.45,
+      "room": 32.1,
+      "counter": 29.66,
+      "kitchen": 31.8,
+      "bonsai": 32.74
+     },
+     "ssim": {
+      "bicycle": 0.773,
+      "flowers": 0.611,
+      "garden": 0.869,
+      "stump": 0.777,
+      "treehill": 0.661,
+      "room": 0.931,
+      "counter": 0.918,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.223,
+      "flowers": 0.34,
+      "garden": 0.111,
+      "stump": 0.229,
+      "treehill": 0.315,
+      "room": 0.183,
+      "counter": 0.177,
+      "kitchen": 0.115,
+      "bonsai": 0.173
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.71,
+     "ssim": 0.825,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.59,
+      "flowers": 21.84,
+      "garden": 27.74,
+      "stump": 26.92,
+      "treehill": 22.8,
+      "room": 31.63,
+      "counter": 29.11,
+      "kitchen": 31.45,
+      "bonsai": 32.3
+     },
+     "ssim": {
+      "bicycle": 0.777,
+      "flowers": 0.621,
+      "garden": 0.874,
+      "stump": 0.784,
+      "treehill": 0.653,
+      "room": 0.927,
+      "counter": 0.914,
+      "kitchen": 0.932,
+      "bonsai": 0.947
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.33,
+      "garden": 0.103,
+      "stump": 0.207,
+      "treehill": 0.318,
+      "room": 0.192,
+      "counter": 0.179,
+      "kitchen": 0.114,
+      "bonsai": 0.174
+     }
+    }
+   },
+   "source": "Table 1 (tab/mip360_tnt_db.tex) averages; supp. Table mip360_perscene (tab/mipnerf360.tex) per scene. Protocol: 3DGS-repo PIL downsampling -r4 outdoor / -r2 indoor (supp. Implementation Details) = our mipnerf360-pilr"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 26.36,
+     "ssim": 0.88,
+     "lpips": 0.126
+    },
+    "per_scene": {
+     "psnr": {
+      "barn": 30.49,
+      "caterpillar": 25.53,
+      "courthouse": 24.26,
+      "ignatius": 23.78,
+      "meetingroom": 27.63,
+      "truck": 26.46
+     },
+     "ssim": {
+      "barn": 0.914,
+      "caterpillar": 0.867,
+      "courthouse": 0.841,
+      "ignatius": 0.845,
+      "meetingroom": 0.911,
+      "truck": 0.9
+     },
+     "lpips": {
+      "barn": 0.1,
+      "caterpillar": 0.134,
+      "courthouse": 0.18,
+      "ignatius": 0.122,
+      "meetingroom": 0.129,
+      "truck": 0.092
+     }
+    }
+   },
+   "baseline_scaffold_gs": {
+    "average": {
+     "psnr": 25.74,
+     "ssim": 0.861,
+     "lpips": 0.17
+    },
+    "per_scene": {
+     "psnr": {
+      "barn": 29.57,
+      "caterpillar": 24.6,
+      "courthouse": 23.57,
+      "ignatius": 23.38,
+      "meetingroom": 27.12,
+      "truck": 26.18
+     },
+     "ssim": {
+      "barn": 0.889,
+      "caterpillar": 0.828,
+      "courthouse": 0.821,
+      "ignatius": 0.833,
+      "meetingroom": 0.902,
+      "truck": 0.891
+     },
+     "lpips": {
+      "barn": 0.156,
+      "caterpillar": 0.2,
+      "courthouse": 0.215,
+      "ignatius": 0.156,
+      "meetingroom": 0.159,
+      "truck": 0.132
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 24.9,
+     "ssim": 0.85,
+     "lpips": 0.178
+    },
+    "per_scene": {
+     "psnr": {
+      "barn": 28.79,
+      "caterpillar": 24.08,
+      "courthouse": 22.57,
+      "ignatius": 22.31,
+      "meetingroom": 26.04,
+      "truck": 25.61
+     },
+     "ssim": {
+      "barn": 0.879,
+      "caterpillar": 0.822,
+      "courthouse": 0.797,
+      "ignatius": 0.824,
+      "meetingroom": 0.89,
+      "truck": 0.886
+     },
+     "lpips": {
+      "barn": 0.17,
+      "caterpillar": 0.198,
+      "courthouse": 0.245,
+      "ignatius": 0.159,
+      "meetingroom": 0.16,
+      "truck": 0.137
+     }
+    }
+   },
+   "source": "Table 1 averages (6 T&T scenes, x2 downsampled; NOT the 3DGS truck/train pair); supp. tab/tnt.tex per scene. Only truck is in our tandt set; train is not reported."
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.4,
+     "ssim": 0.908,
+     "lpips": 0.225
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.92,
+      "playroom": 30.89
+     },
+     "ssim": {
+      "drjohnson": 0.908,
+      "playroom": 0.908
+     },
+     "lpips": {
+      "drjohnson": 0.225,
+      "playroom": 0.225
+     }
+    }
+   },
+   "baseline_scaffold_gs": {
+    "average": {
+     "psnr": 30.23,
+     "ssim": 0.907,
+     "lpips": 0.245
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.74,
+      "playroom": 30.73
+     },
+     "ssim": {
+      "drjohnson": 0.906,
+      "playroom": 0.908
+     },
+     "lpips": {
+      "drjohnson": 0.243,
+      "playroom": 0.247
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.46,
+     "ssim": 0.899,
+     "lpips": 0.247
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.05,
+      "playroom": 29.88
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.247,
+      "playroom": 0.246
+     }
+    }
+   },
+   "source": "Table 1 averages; supp. tab/db.tex per scene"
+  }
+ },
+ "generalization_tandt_6scene_avg": {
+  "3DGS": {
+   "psnr": 24.9,
+   "ssim": 0.85,
+   "lpips": 0.178
+  },
+  "3DGS+Effi-HGS": {
+   "psnr": 25.04,
+   "ssim": 0.856,
+   "lpips": 0.163
+  },
+  "source": "Table generalization (tab/generalization.tex), 6-scene T&T average"
+ },
+ "notes": "HGS is built on Scaffold-GS (anchors + MLP-decoded neural Gaussians); all per-scene HGS rows are Scaffold-GS+HGS. 3DGS/Scaffold-GS rows were retrained by the authors on the same platform (RTX 3090). No official code (github.com/GhiXu/HGS 404, re-checked 2026-11-06)."
+}

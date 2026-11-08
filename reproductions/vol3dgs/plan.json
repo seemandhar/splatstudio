@@ -1,0 +1,23 @@
+{
+  "method": "vol3dgs",
+  "module": "ss_vol3dgs",
+  "components": [
+    {"kind": "renderer", "name": "vol-renderer", "factory": "ss_vol3dgs.renderer:create_renderer",
+     "provides": ["render.rgb", "render.depth.expected_z", "gradient.world.means"]},
+    {"kind": "density", "name": "vol-density", "factory": "ss_vol3dgs.density:create_density",
+     "requires": ["gradient.world.means"]},
+    {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric"}
+  ],
+  "fields": [],
+  "probes": ["vol-forward-vs-dense", "vol-backward-vs-dense", "analytic-transmittance", "density-reparam",
+             "densify-rules", "world-gradient", "recipe-colour", "state-transitions", "photometric-gradient"],
+  "contributions": ["volumetric-alpha", "density-reparameterisation", "densification-heuristics", "training-recipe"],
+  "fidelity_gaps": [
+    "white background (runtime convention) vs official black",
+    "runtime view sampling with replacement, valid-conv SSIM, optimizer step before densification",
+    "gsplat projection for tile boxes (same 3-sigma + 0.3 formula as official)",
+    "principal point from K instead of image centre",
+    "fast-math CUDA vs slang autodiff; NaN skip also skips inf"
+  ],
+  "feasible_natively": true
+}

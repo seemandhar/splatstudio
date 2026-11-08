@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-confidence-densify"
+version = "0.1.0"
+description = "Efficient Confidence-Aware Densification for 3DGS (arXiv 2610.13541) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+confidence-densify = "ss_confidence_densify:method"
+cad-mcmc-control = "ss_confidence_densify:mcmc_control"
+confidence-densify-sep = "ss_confidence_densify:method_sep"
+
+[tool.setuptools.packages.find]
+include = ["ss_confidence_densify*"]
+
+[tool.setuptools.package-data]
+ss_confidence_densify = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,155 @@
+{
+ "paper": "Low-Frequency First: Eliminating Floating Artifacts in 3D Gaussian Splatting",
+ "arxiv": "2508.02493",
+ "method_label": "EFA-GS(Mip, default) / 'EFA-GS(ours)' in appendix per-scene tables",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.94,
+     "ssim": 0.84,
+     "lpips": 0.18
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.86,
+      "bonsai": 32.56,
+      "counter": 29.36,
+      "flowers": 21.98,
+      "garden": 28.02,
+      "kitchen": 31.81,
+      "room": 32.13,
+      "stump": 27.11,
+      "treehill": 22.62
+     },
+     "ssim": {
+      "bicycle": 0.8,
+      "bonsai": 0.95,
+      "counter": 0.92,
+      "flowers": 0.65,
+      "garden": 0.88,
+      "kitchen": 0.93,
+      "room": 0.93,
+      "stump": 0.8,
+      "treehill": 0.66
+     },
+     "lpips": {
+      "bicycle": 0.17,
+      "bonsai": 0.16,
+      "counter": 0.17,
+      "flowers": 0.28,
+      "garden": 0.09,
+      "kitchen": 0.11,
+      "room": 0.18,
+      "stump": 0.19,
+      "treehill": 0.28
+     }
+    }
+   },
+   "baseline_mip_splatting": {
+    "average": {
+     "psnr": 27.92,
+     "ssim": 0.84,
+     "lpips": 0.18
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.96,
+      "bonsai": 32.34,
+      "counter": 29.29,
+      "flowers": 22.01,
+      "garden": 28.04,
+      "kitchen": 31.91,
+      "room": 31.94,
+      "stump": 27.16,
+      "treehill": 22.6
+     },
+     "ssim": {
+      "bicycle": 0.8,
+      "bonsai": 0.95,
+      "counter": 0.92,
+      "flowers": 0.66,
+      "garden": 0.88,
+      "kitchen": 0.94,
+      "room": 0.93,
+      "stump": 0.8,
+      "treehill": 0.66
+     },
+     "lpips": {
+      "bicycle": 0.16,
+      "bonsai": 0.16,
+      "counter": 0.17,
+      "flowers": 0.27,
+      "garden": 0.09,
+      "kitchen": 0.11,
+      "room": 0.18,
+      "stump": 0.18,
+      "treehill": 0.27
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.58,
+     "ssim": 0.82,
+     "lpips": 0.21
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.39,
+      "bonsai": 32.26,
+      "counter": 28.96,
+      "flowers": 21.89,
+      "garden": 27.28,
+      "kitchen": 31.43,
+      "room": 31.75,
+      "stump": 26.6,
+      "treehill": 22.69
+     },
+     "ssim": {
+      "bicycle": 0.76,
+      "bonsai": 0.95,
+      "counter": 0.91,
+      "flowers": 0.62,
+      "garden": 0.87,
+      "kitchen": 0.93,
+      "room": 0.93,
+      "stump": 0.77,
+      "treehill": 0.65
+     },
+     "lpips": {
+      "bicycle": 0.22,
+      "bonsai": 0.17,
+      "counter": 0.18,
+      "flowers": 0.33,
+      "garden": 0.11,
+      "kitchen": 0.12,
+      "room": 0.19,
+      "stump": 0.22,
+      "treehill": 0.32
+     }
+    }
+   },
+   "efa_gs_3dgs_variant": {
+    "average": {
+     "psnr": 27.52,
+     "ssim": 0.82,
+     "lpips": 0.21
+    }
+   },
+   "source": "Main Table resofmip (averages); Appendix tables resofmippsnr/resofmipssim/resofmiplpips (per scene, all 9 scenes incl. outdoor; EFA row = EFA-GS(Mip), its mean 27.94 equals the default Mip row). LaTeX cw_main.tex lines 1050-1105."
+  },
+  "mipnerf360_bonsai_extra": {
+   "efa_gs": 32.56,
+   "mip_splatting_i_inf": 32.34,
+   "efa_i500": 32.59,
+   "efa_i100": 32.19,
+   "source": "Tab. speed / ablation2 (bonsai)"
+  },
+  "tandt_advanced": {
+   "note": "6 advanced T&T scenes (Auditorium..Temple) - not available locally; not benchmarked"
+  }
+ },
+ "notes": "Per-scene tables use the Mip-Splatting base (EFA-GS(Mip)); no per-scene table for EFA-GS(3DGS). Paper's 3DGS and Mip-splatting rows were retrained by the authors with their codebase (Mip base includes GOF abs-grad densification). SSIM/LPIPS only 2 decimals. Single run, A100."
+}

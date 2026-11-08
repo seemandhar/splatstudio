@@ -1,0 +1,26 @@
+{
+  "paper": "Turbo-GS: Accelerating 3D Gaussian Fitting for High-Quality Radiance Fields",
+  "arxiv": "2412.13547",
+  "method_label": "Turbo-3DGS (Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.39, "ssim": 0.814, "lpips": 0.205}},
+      "baseline_3dgs": {"average": {"psnr": 27.45, "ssim": 0.814, "lpips": 0.217},
+                        "per_scene": {"psnr": {"bicycle": 25.23, "garden": 27.38, "stump": 26.59, "flowers": 21.44, "treehill": 22.49, "counter": 29.08, "kitchen": 31.09, "room": 31.48, "bonsai": 32.31}}},
+      "source": "Table 2 (main, 1K setting); 3DGS per-scene from supp. Table 4"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.21, "ssim": 0.905, "lpips": 0.240}},
+      "baseline_3dgs": {"average": {"psnr": 29.75, "ssim": 0.902, "lpips": 0.241},
+                        "per_scene": {"psnr": {"drjohnson": 29.49, "playroom": 30.02}}},
+      "source": "Table 2 (main); 3DGS per-scene from supp. Table 4 (per-scene mean 29.76)"
+    },
+    "turbo_scaffold_gs_per_scene": {
+      "method": {"average": {"psnr_db": 30.48, "psnr_mipnerf360": 27.43},
+                 "per_scene": {"psnr": {"drjohnson": 29.85, "playroom": 31.12, "train": 21.75, "truck": 25.11, "bicycle": 25.01, "garden": 27.41, "stump": 26.64, "flowers": 21.18, "treehill": 22.91, "counter": 29.29, "kitchen": 30.86, "room": 31.50, "bonsai": 32.06}}},
+      "source": "supp. Table 4 rows 'Turbo-Scaffold-GS' and 'Turbo-3DGS' (identical)"
+    }
+  },
+  "notes": "Supp. per-scene Table 4 lists identical PSNR rows for Turbo-Scaffold-GS and Turbo-3DGS; their means (DB 30.49, M360 27.43) match Table 2's Turbo-Scaffold-GS averages (30.48/27.43), not Turbo-3DGS (29.21/27.39), so per-scene numbers are Turbo-Scaffold-GS (10k steps, anchor MLP) and unusable for the 3DGS variant. The scout's 'Turbo-3DGS drjohnson=29.85...' is this duplicated row. Turbo-3DGS is compared by dataset average (DB, 2 scenes). The 3DGS row in Table 2 is the authors' retrained/quoted 3DGS (DB 29.75 vs the 3DGS paper's 29.41). Paper Turbo-3DGS - 3DGS: M360 -0.06 dB, DB -0.54 dB. The 4K results (Table 1) are out of scope."
+}

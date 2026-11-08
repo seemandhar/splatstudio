@@ -1,0 +1,11 @@
+{"method": "crim-gs", "module": "ss_crim_gs",
+ "components": [
+  {"kind": "renderer", "name": "crimgs-renderer", "factory": "ss_crim_gs.renderer:create_renderer"},
+  {"kind": "density", "name": "crimgs-density", "factory": "ss_crim_gs.density:create_density"},
+  {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric", "config": {"ssim_weight": 0.3}},
+  {"kind": "loss", "name": "crimgs-regularizers", "factory": "ss_crim_gs.losses:create_regularizers"}],
+ "fields": [{"name": "filter_3d", "shape": [], "lr": 1e-8, "init": 0.0}],
+ "probes": ["state-transitions", "dopri5", "screw-se3", "kernel-poses", "blur-synthesis", "objective", "kernel-schedule", "density-schedule", "filter3d"],
+ "contributions": ["continuous-rigid-motion", "adaptive-distortion-transform", "pixel-weights-and-mask", "objective-and-schedule", "mip-splatting-base"],
+ "fidelity_gaps": ["no official code; CoMoGaussian defaults for kernel lr/rtol/CNN norm/no reset/densify 20k", "ODE time grid tau=0..8 forward, autonomous f", "own dopri5 (exact output times, detached step control)", "c2w right-multiplication convention", "runtime: with-replacement sampling, valid-conv SSIM, LPIPS-VGG", "gsplat rasterizer instead of iComMa pose-backprop Inria"],
+ "feasible_natively": true}

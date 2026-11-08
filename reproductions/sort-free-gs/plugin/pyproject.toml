@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-sort-free-gs"
+version = "0.1.0"
+description = "Sort-free Gaussian Splatting via Weighted Sum Rendering (arXiv 2410.18931) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+sort-free-gs = "ss_sort_free_gs:sort_free_gs"
+sort-free-gs-dir = "ss_sort_free_gs:sort_free_gs_dir"
+
+[tool.setuptools]
+packages = ["ss_sort_free_gs"]
+
+[tool.setuptools.package-data]
+ss_sort_free_gs = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100

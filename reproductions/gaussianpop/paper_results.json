@@ -1,0 +1,424 @@
+{
+ "paper": "GaussianPOP: Principled Simplification Framework for Compact 3D Gaussian Splatting via Error Quantification",
+ "arxiv": "2602.06830",
+ "method_label": "Ours (POP), post-training, C=8, +5k FT",
+ "iterations": 35000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.12,
+      "bonsai": 32.09,
+      "counter": 29.0,
+      "flowers": 21.51,
+      "garden": 27.15,
+      "kitchen": 31.38,
+      "room": 31.62,
+      "stump": 26.73,
+      "treehill": 22.53
+     },
+     "ssim": {
+      "bicycle": 0.747,
+      "bonsai": 0.936,
+      "counter": 0.902,
+      "flowers": 0.589,
+      "garden": 0.849,
+      "kitchen": 0.922,
+      "room": 0.918,
+      "stump": 0.776,
+      "treehill": 0.604
+     },
+     "lpips": {
+      "bicycle": 0.252,
+      "bonsai": 0.223,
+      "counter": 0.219,
+      "flowers": 0.375,
+      "garden": 0.144,
+      "kitchen": 0.141,
+      "room": 0.23,
+      "stump": 0.233,
+      "treehill": 0.413
+     },
+     "gaussians_M": {
+      "bicycle": 0.973,
+      "bonsai": 0.214,
+      "counter": 0.216,
+      "flowers": 0.584,
+      "garden": 0.828,
+      "kitchen": 0.32,
+      "room": 0.261,
+      "stump": 0.857,
+      "treehill": 0.65
+     }
+    }
+   },
+   "variants": {
+    "P0.7": {
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.17,
+       "bonsai": 32.18,
+       "counter": 29.14,
+       "flowers": 21.58,
+       "garden": 27.39,
+       "kitchen": 31.57,
+       "room": 31.72,
+       "stump": 26.7,
+       "treehill": 22.6
+      },
+      "ssim": {
+       "bicycle": 0.751,
+       "bonsai": 0.941,
+       "counter": 0.908,
+       "flowers": 0.602,
+       "garden": 0.863,
+       "kitchen": 0.927,
+       "room": 0.921,
+       "stump": 0.776,
+       "treehill": 0.63
+      },
+      "lpips": {
+       "bicycle": 0.249,
+       "bonsai": 0.213,
+       "counter": 0.207,
+       "flowers": 0.354,
+       "garden": 0.12,
+       "kitchen": 0.131,
+       "room": 0.224,
+       "stump": 0.227,
+       "treehill": 0.363
+      },
+      "gaussians_M": {
+       "bicycle": 1.46,
+       "bonsai": 0.321,
+       "counter": 0.324,
+       "flowers": 0.876,
+       "garden": 1.243,
+       "kitchen": 0.48,
+       "room": 0.392,
+       "stump": 1.285,
+       "treehill": 0.975
+      }
+     }
+    },
+    "P0.9": {
+     "per_scene": {
+      "psnr": {
+       "bicycle": 24.32,
+       "bonsai": 30.98,
+       "counter": 28.4,
+       "flowers": 21.08,
+       "garden": 26.28,
+       "kitchen": 30.56,
+       "room": 31.26,
+       "stump": 26.36,
+       "treehill": 22.13
+      },
+      "ssim": {
+       "bicycle": 0.672,
+       "bonsai": 0.914,
+       "counter": 0.875,
+       "flowers": 0.542,
+       "garden": 0.799,
+       "kitchen": 0.902,
+       "room": 0.907,
+       "stump": 0.747,
+       "treehill": 0.526
+      },
+      "lpips": {
+       "bicycle": 0.35,
+       "bonsai": 0.262,
+       "counter": 0.263,
+       "flowers": 0.428,
+       "garden": 0.221,
+       "kitchen": 0.179,
+       "room": 0.259,
+       "stump": 0.287,
+       "treehill": 0.503
+      },
+      "gaussians_M": {
+       "bicycle": 0.487,
+       "bonsai": 0.107,
+       "counter": 0.108,
+       "flowers": 0.292,
+       "garden": 0.414,
+       "kitchen": 0.16,
+       "room": 0.131,
+       "stump": 0.428,
+       "treehill": 0.325
+      }
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.13,
+      "bonsai": 32.19,
+      "counter": 29.11,
+      "flowers": 21.37,
+      "garden": 27.32,
+      "kitchen": 31.53,
+      "room": 31.59,
+      "stump": 26.73,
+      "treehill": 22.61
+     },
+     "ssim": {
+      "bicycle": 0.75,
+      "bonsai": 0.95,
+      "counter": 0.91,
+      "flowers": 0.59,
+      "garden": 0.86,
+      "kitchen": 0.93,
+      "room": 0.92,
+      "stump": 0.77,
+      "treehill": 0.64
+     },
+     "lpips": {
+      "bicycle": 0.24,
+      "bonsai": 0.18,
+      "counter": 0.18,
+      "flowers": 0.36,
+      "garden": 0.12,
+      "kitchen": 0.12,
+      "room": 0.2,
+      "stump": 0.24,
+      "treehill": 0.35
+     },
+     "gaussians_M": {
+      "bicycle": 5.31,
+      "bonsai": 1.25,
+      "counter": 1.17,
+      "flowers": 3.47,
+      "garden": 5.69,
+      "kitchen": 1.77,
+      "room": 1.5,
+      "stump": 4.42,
+      "treehill": 3.42
+     }
+    }
+   },
+   "source": "Supp. Table 8 (post-training, C=8, 5k fine-tune; method = P=0.8); baseline = Supp. Table 7/9 3DGS row (on-training tables)"
+  },
+  "tandt": {
+   "method": {
+    "per_scene": {
+     "psnr": {
+      "train": 22.06,
+      "truck": 25.34
+     },
+     "ssim": {
+      "train": 0.802,
+      "truck": 0.879
+     },
+     "lpips": {
+      "train": 0.237,
+      "truck": 0.161
+     },
+     "gaussians_M": {
+      "train": 0.218,
+      "truck": 0.411
+     }
+    }
+   },
+   "variants": {
+    "P0.7": {
+     "per_scene": {
+      "psnr": {
+       "train": 22.13,
+       "truck": 25.39
+      },
+      "ssim": {
+       "train": 0.813,
+       "truck": 0.884
+      },
+      "lpips": {
+       "train": 0.214,
+       "truck": 0.152
+      },
+      "gaussians_M": {
+       "train": 0.326,
+       "truck": 0.616
+      }
+     }
+    },
+    "P0.9": {
+     "per_scene": {
+      "psnr": {
+       "train": 21.8,
+       "truck": 25.16
+      },
+      "ssim": {
+       "train": 0.768,
+       "truck": 0.859
+      },
+      "lpips": {
+       "train": 0.292,
+       "truck": 0.205
+      },
+      "gaussians_M": {
+       "train": 0.109,
+       "truck": 0.205
+      }
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "train": 21.94,
+      "truck": 25.31
+     },
+     "ssim": {
+      "train": 0.815,
+      "truck": 0.885
+     },
+     "lpips": {
+      "train": 0.21,
+      "truck": 0.15
+     },
+     "gaussians_M": {
+      "train": 1.11,
+      "truck": 2.54
+     }
+    }
+   },
+   "source": "Supp. Table 8 (post-training, C=8, 5k fine-tune; method = P=0.8); baseline = Supp. Table 7/9 3DGS row (on-training tables)"
+  },
+  "db": {
+   "method": {
+    "per_scene": {
+     "psnr": {
+      "playroom": 30.19,
+      "drjohnson": 29.47
+     },
+     "ssim": {
+      "playroom": 0.909,
+      "drjohnson": 0.906
+     },
+     "lpips": {
+      "playroom": 0.255,
+      "drjohnson": 0.245
+     },
+     "gaussians_M": {
+      "playroom": 0.369,
+      "drjohnson": 0.625
+     }
+    }
+   },
+   "variants": {
+    "P0.7": {
+     "per_scene": {
+      "psnr": {
+       "playroom": 30.18,
+       "drjohnson": 29.46
+      },
+      "ssim": {
+       "playroom": 0.909,
+       "drjohnson": 0.906
+      },
+      "lpips": {
+       "playroom": 0.251,
+       "drjohnson": 0.243
+      },
+      "gaussians_M": {
+       "playroom": 0.554,
+       "drjohnson": 0.938
+      }
+     }
+    },
+    "P0.9": {
+     "per_scene": {
+      "psnr": {
+       "playroom": 30.11,
+       "drjohnson": 29.38
+      },
+      "ssim": {
+       "playroom": 0.906,
+       "drjohnson": 0.901
+      },
+      "lpips": {
+       "playroom": 0.27,
+       "drjohnson": 0.261
+      },
+      "gaussians_M": {
+       "playroom": 0.185,
+       "drjohnson": 0.313
+      }
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "playroom": 30.07,
+      "drjohnson": 28.77
+     },
+     "ssim": {
+      "playroom": 0.9,
+      "drjohnson": 0.9
+     },
+     "lpips": {
+      "playroom": 0.25,
+      "drjohnson": 0.25
+     },
+     "gaussians_M": {
+      "playroom": 2.29,
+      "drjohnson": 3.26
+     }
+    }
+   },
+   "source": "Supp. Table 8 (post-training, C=8, 5k fine-tune; method = P=0.8); baseline = Supp. Table 7/9 3DGS row (on-training tables)"
+  }
+ },
+ "extra": {
+  "bicycle_post_training_tab3_P0.8": {
+   "post_prune": {
+    "psnr": 20.71,
+    "ssim": 0.616,
+    "lpips": 0.332
+   },
+   "finetuned": {
+    "psnr": 25.11,
+    "ssim": 0.747,
+    "lpips": 0.251
+   },
+   "gaussians_M": 0.97
+  },
+  "tandt_avg_post_training_tab5b_P0.9": {
+   "pretrained": {
+    "psnr": 23.62,
+    "gaussians_M": 1.812
+   },
+   "C8": {
+    "post_prune_psnr": 19.62,
+    "finetuned_psnr": 23.54
+   }
+  },
+  "on_training_40k_tab7_ours_psnr": {
+   "bicycle": 25.08,
+   "bonsai": 32.05,
+   "counter": 29.01,
+   "flowers": 21.55,
+   "garden": 26.81,
+   "kitchen": 31.75,
+   "room": 31.5,
+   "stump": 27.04,
+   "treehill": 22.79
+  },
+  "on_training_avg_tab2": {
+   "30k": {
+    "mipnerf360": 27.36,
+    "tandt": 23.64,
+    "db": 29.95
+   },
+   "40k": {
+    "mipnerf360": 27.51,
+    "tandt": 23.75,
+    "db": 30.18
+   }
+  }
+ },
+ "notes": "Post-training Table 8 has no unpruned row; the 3DGS rows of the on-training tables (authors' own 3DGS runs, images_4/images_2 pre-downsampled) are the nearest reference (gaussian counts there differ from Tab.5a bicycle 4.87M). Tab.8 bicycle P=0.8 25.12 vs Tab.3 25.11 (minor inconsistency)."
+}

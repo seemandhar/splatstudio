@@ -1,0 +1,13 @@
+{
+ "method": "gaussianpop",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "counter"
+  ]
+ },
+ "steps": 35000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Post-training GaussianPOP (Supp. Tab. 8, P=0.8, C=8, +5k FT) as one 35k run: 3DGS 1-30000 (same recipe/LR as baseline3dgs-mipnerf360-30000), 8-cycle prune at step 30000, fine-tune 30001-35000. Targets: bicycle 25.12, counter 29.00 (paper 3DGS row 25.13/29.11 -> paper delta -0.01/-0.11); our pre-prune reference baseline3dgs-mipnerf360-30000: 24.92/28.85. Optional: same method with --steps 30000 gives post-prune-only (Tab. 3 bicycle 80%: 20.71 dB); gaussianpop-p07/-p09 cover the other Tab. 8 rows."
+}

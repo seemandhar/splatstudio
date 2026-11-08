@@ -1,0 +1,281 @@
+{
+ "paper": "Sort-free Gaussian Splatting via Weighted Sum Rendering",
+ "arxiv": "2410.18931",
+ "method_label": "LC-WSR (Ours / Ours-LC)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.19,
+     "ssim": 0.804,
+     "lpips": 0.211
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.2,
+      "flowers": 20.45,
+      "garden": 27.78,
+      "stump": 25.39,
+      "treehill": 22.01,
+      "room": 31.93,
+      "counter": 29.53,
+      "kitchen": 31.38,
+      "bonsai": 32.05
+     },
+     "ssim": {
+      "bicycle": 0.744,
+      "flowers": 0.58,
+      "garden": 0.872,
+      "stump": 0.728,
+      "treehill": 0.614,
+      "room": 0.925,
+      "counter": 0.909,
+      "kitchen": 0.923,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.342,
+      "garden": 0.097,
+      "stump": 0.235,
+      "treehill": 0.311,
+      "room": 0.197,
+      "counter": 0.191,
+      "kitchen": 0.125,
+      "bonsai": 0.199
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.21,
+     "ssim": 0.815,
+     "lpips": 0.214
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.25,
+      "flowers": 21.52,
+      "garden": 27.41,
+      "stump": 26.55,
+      "treehill": 22.49,
+      "room": 30.63,
+      "counter": 28.7,
+      "kitchen": 30.32,
+      "bonsai": 31.98
+     },
+     "ssim": {
+      "bicycle": 0.771,
+      "flowers": 0.605,
+      "garden": 0.868,
+      "stump": 0.775,
+      "treehill": 0.638,
+      "room": 0.914,
+      "counter": 0.905,
+      "kitchen": 0.922,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.336,
+      "garden": 0.103,
+      "stump": 0.21,
+      "treehill": 0.317,
+      "room": 0.22,
+      "counter": 0.204,
+      "kitchen": 0.129,
+      "bonsai": 0.205
+     }
+    }
+   },
+   "source": "Table 1 (averages), appendix Tables 6/7/8 (per scene; latex appendix/exp.tex)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.61,
+     "ssim": 0.842,
+     "lpips": 0.177
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.28,
+      "train": 21.93
+     },
+     "ssim": {
+      "truck": 0.882,
+      "train": 0.802
+     },
+     "lpips": {
+      "truck": 0.136,
+      "train": 0.219
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.14,
+     "ssim": 0.841,
+     "lpips": 0.183
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.18,
+      "train": 21.09
+     },
+     "ssim": {
+      "truck": 0.879,
+      "train": 0.802
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.218
+     }
+    }
+   },
+   "source": "Table 1, appendix Tables 6-8"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.63,
+     "ssim": 0.902,
+     "lpips": 0.229
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.25,
+      "playroom": 30.0
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.906
+     },
+     "lpips": {
+      "drjohnson": 0.233,
+      "playroom": 0.225
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.41,
+     "ssim": 0.903,
+     "lpips": 0.243
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.77,
+      "playroom": 30.04
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.906
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.241
+     }
+    }
+   },
+   "source": "Table 1, appendix Tables 6-8"
+  }
+ },
+ "variants": {
+  "note": "Table 4 (averages only): WSR variants and Table 5 ablations",
+  "DIR-WSR": {
+   "mipnerf360": {
+    "psnr": 25.99,
+    "ssim": 0.778,
+    "lpips": 0.262
+   },
+   "tandt": {
+    "psnr": 22.8,
+    "ssim": 0.821,
+    "lpips": 0.218
+   },
+   "db": {
+    "psnr": 28.85,
+    "ssim": 0.899,
+    "lpips": 0.254
+   }
+  },
+  "EXP-WSR": {
+   "mipnerf360": {
+    "psnr": 26.97,
+    "ssim": 0.801,
+    "lpips": 0.216
+   },
+   "tandt": {
+    "psnr": 23.32,
+    "ssim": 0.833,
+    "lpips": 0.183
+   },
+   "db": {
+    "psnr": 29.77,
+    "ssim": 0.902,
+    "lpips": 0.229
+   }
+  },
+  "w/o learnable parameters": {
+   "mipnerf360": {
+    "psnr": 23.19,
+    "ssim": 0.711,
+    "lpips": 0.318
+   },
+   "tandt": {
+    "psnr": 21.55,
+    "ssim": 0.788,
+    "lpips": 0.245
+   },
+   "db": {
+    "psnr": 27.92,
+    "ssim": 0.893,
+    "lpips": 0.26
+   }
+  },
+  "w/o view-dependent opacity": {
+   "mipnerf360": {
+    "psnr": 25.88,
+    "ssim": 0.784,
+    "lpips": 0.251
+   },
+   "tandt": {
+    "psnr": 21.83,
+    "ssim": 0.798,
+    "lpips": 0.237
+   },
+   "db": {
+    "psnr": 29.27,
+    "ssim": 0.902,
+    "lpips": 0.249
+   }
+  }
+ },
+ "notes": "Per-scene tables are LC-WSR only (rebuttal labels the row 'Ours-LC'). The 3DGS row is copied from the 3DGS paper (identical numbers). The SSIM table's Compact/Compressed/LightGaussian rows in the camera-ready latex are PSNR values (copy error); the rebuttal has the correct ones; irrelevant here. Fig. 4 PSNRs are single-view crops, not metrics.",
+ "benchmark_scenes": {
+  "mipnerf360": [
+   "bicycle"
+  ],
+  "tandt": [
+   "train"
+  ],
+  "targets_psnr": {
+   "bicycle": 24.2,
+   "train": 21.93
+  },
+  "paper_3dgs_psnr": {
+   "bicycle": 25.25,
+   "train": 21.09
+  },
+  "our_baseline_psnr": {
+   "bicycle": 24.92,
+   "train": 21.52
+  },
+  "unofficial_port_psnr": {
+   "bicycle": 23.89
+  },
+  "reason": "review-1 M2: garden/truck deltas (+0.37/+0.10) within run noise"
+ }
+}

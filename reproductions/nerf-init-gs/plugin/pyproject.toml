@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-nerf-init-gs"
+version = "0.1.0"
+description = "Foroutan et al. (arXiv 2404.12547) NeRF-initialized 3DGS native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+# No tiny-cuda-nn / nerfacc: the iNGP (JIT CUDA hash grid + nerfacc proposal sampler port) is
+# copied from the SPLATIFY ConeGS plugin (reproductions/conegs/plugin/ss_conegs).
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+nerf-init-gs = "ss_nerf_init_gs:method"
+nerf-init-gs-nodepth = "ss_nerf_init_gs:nodepth"
+nerf-init-gs-nerfunits = "ss_nerf_init_gs:nerfunits"
+
+[project.scripts]
+ss-nerfinit-prep = "ss_nerf_init_gs.preprocess:main"
+
+[tool.setuptools.packages.find]
+include = ["ss_nerf_init_gs*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

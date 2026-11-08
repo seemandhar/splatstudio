@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-augs"
+version = "0.1.0"
+description = "AuGS: Augmented Radiance Field (arXiv 2602.19916) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+augs = "ss_augs:method"
+augs-smoke = "ss_augs:method_smoke"
+
+[tool.setuptools]
+packages = ["ss_augs"]
+
+[tool.setuptools.package-data]
+ss_augs = ["csrc/*.cu", "csrc/*.cpp", "csrc/fused_ssim/*"]
+
+[tool.ruff]
+line-length = 110

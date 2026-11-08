@@ -1,0 +1,27 @@
+{
+ "paper": "Compact Neural Appearance Models for Efficient Gaussian Splatting",
+ "slug": "neural-appearance",
+ "plan_id": 124,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done",
+  "analysis": "done"
+ },
+ "outcome": "matched",
+ "method": "neural-appearance-garden",
+ "headline": "Neural garden 28.05 (paper 28.06), room 33.05 (33.23); Neural-SH +0.10/+0.25 = paper",
+ "results": {
+  "garden": {
+   "neural": 28.05,
+   "sh": 27.94
+  },
+  "room": {
+   "neural": 33.05,
+   "sh": 32.81
+  }
+ }
+}

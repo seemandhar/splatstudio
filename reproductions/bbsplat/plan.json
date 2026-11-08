@@ -1,0 +1,8 @@
+{"method": "bbsplat", "module": "ss_bbsplat",
+ "variants": {"bbsplat": "M360 cap 60K", "bbsplat-tnt": "T&T cap 30K", "bbsplat-300k": "scripts budget 300K"},
+ "components": ["bbsplat-raster (renderer, official CUDA JIT)", "bbsplat-mcmc (density)", "photometric (loss)", "bbsplat-texture-reg (loss)", "bbsplat-geometry (loss, lambdas 0)"],
+ "fields": [{"name": "bb_alpha", "shape": [16, 16]}, {"name": "bb_color", "shape": [3, 16, 16]}],
+ "probes": ["raster-vs-reference", "texture-composition", "texture-reg", "mcmc-relocation", "init-sky-fps", "schedule"],
+ "contributions": ["textured-billboard-raster", "sh-plus-texture-colour", "impact-texture-reg", "bbsplat-mcmc", "sky-fps-init", "sh-finetune-stage"],
+ "fidelity_gaps": ["adam step not skipped on relocation iterations", "densify after optimizer step", "runtime view sampling/SSIM/SH step", "Tab.1 cap/max_read unpublished (cap=Points, read=cap-10K)", "depth-normal reg off per scripts", "FPS start/order", "inf logits stored as 1e4", "eval texture quantisation emulated; rendered images not 8-bit quantised", "paper 3DGS baseline budget-constrained"],
+ "feasible_natively": true}

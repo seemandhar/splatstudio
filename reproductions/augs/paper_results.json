@@ -1,0 +1,251 @@
+{
+ "paper": "Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting",
+ "arxiv": "2602.19916",
+ "method_label": "Ours (3DGS, sh=3)",
+ "iterations": "30000 base + 30 x |train views| joint optimisation",
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.39,
+     "ssim": 0.834,
+     "lpips": 0.184
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.85,
+      "flowers": 21.81,
+      "garden": 28.21,
+      "stump": 27.3,
+      "treehill": 23.0,
+      "room": 32.39,
+      "counter": 30.48,
+      "kitchen": 32.24,
+      "bonsai": 34.26
+     },
+     "ssim": {
+      "bicycle": 0.793,
+      "flowers": 0.633,
+      "garden": 0.881,
+      "stump": 0.796,
+      "treehill": 0.66,
+      "room": 0.931,
+      "counter": 0.924,
+      "kitchen": 0.936,
+      "bonsai": 0.954
+     },
+     "lpips": {
+      "bicycle": 0.174,
+      "flowers": 0.294,
+      "garden": 0.093,
+      "stump": 0.186,
+      "treehill": 0.289,
+      "room": 0.183,
+      "counter": 0.166,
+      "kitchen": 0.11,
+      "bonsai": 0.165
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.21,
+     "ssim": 0.815,
+     "lpips": 0.214
+    },
+    "note": "Table 1 3DGS row is copied from the 3DGS paper; the authors' own base (pre-enhancement) PSNR = method - delta (supp. diff_perscene table)",
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.74,
+      "flowers": 21.877,
+      "garden": 27.903,
+      "stump": 27.211,
+      "treehill": 22.832,
+      "room": 31.67,
+      "counter": 29.25,
+      "kitchen": 31.434,
+      "bonsai": 32.495
+     }
+    }
+   },
+   "method_delta_over_own_base": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 0.11,
+      "flowers": -0.067,
+      "garden": 0.307,
+      "stump": 0.089,
+      "treehill": 0.168,
+      "room": 0.72,
+      "counter": 1.23,
+      "kitchen": 0.806,
+      "bonsai": 1.765
+     }
+    },
+    "average": {
+     "psnr": 0.57
+    }
+   },
+   "source": "supp. Table per_scene_m360 (Ours 3DGS sh=3 row), Table diff_ps_mipnerf (delta PSNR), Table 1",
+   "protocol": "official 3DGS loader with --resolution 4 (outdoor) / 2 (indoor) => PIL-resized full-res images (our mipnerf360-pilr), black background"
+  },
+  "mipnerf360_mcmc_sh3": {
+   "method": {
+    "average": {
+     "psnr": 28.96,
+     "ssim": 0.849,
+     "lpips": 0.17
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 26.32,
+      "flowers": 22.44,
+      "garden": 28.36,
+      "stump": 27.9,
+      "treehill": 23.46,
+      "room": 33.45,
+      "counter": 30.82,
+      "kitchen": 33.15,
+      "bonsai": 34.78
+     },
+     "ssim": {
+      "bicycle": 0.814,
+      "flowers": 0.663,
+      "garden": 0.887,
+      "stump": 0.825,
+      "treehill": 0.68,
+      "room": 0.942,
+      "counter": 0.93,
+      "kitchen": 0.941,
+      "bonsai": 0.958
+     },
+     "lpips": {
+      "bicycle": 0.158,
+      "flowers": 0.27,
+      "garden": 0.086,
+      "stump": 0.161,
+      "treehill": 0.259,
+      "room": 0.17,
+      "counter": 0.158,
+      "kitchen": 0.106,
+      "bonsai": 0.159
+     }
+    }
+   },
+   "base_own": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 26.146,
+      "flowers": 22.437,
+      "garden": 28.121,
+      "stump": 27.807,
+      "treehill": 23.381,
+      "room": 32.472,
+      "counter": 29.444,
+      "kitchen": 32.352,
+      "bonsai": 32.805
+     }
+    }
+   },
+   "delta": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 0.174,
+      "flowers": 0.003,
+      "garden": 0.239,
+      "stump": 0.093,
+      "treehill": 0.079,
+      "room": 0.978,
+      "counter": 1.376,
+      "kitchen": 0.798,
+      "bonsai": 1.975
+     }
+    }
+   },
+   "baseline_mcmc_paper": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 26.15,
+      "flowers": 22.12,
+      "garden": 28.16,
+      "stump": 27.8,
+      "treehill": 23.31,
+      "room": 32.48,
+      "counter": 29.51,
+      "kitchen": 32.27,
+      "bonsai": 32.88
+     }
+    }
+   },
+   "source": "supp. per_scene_m360 / diff_ps_mipnerf"
+  },
+  "mipnerf360_mcmc_sh2": {
+   "method": {
+    "average": {
+     "psnr": 28.89
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 26.31,
+      "flowers": 22.34,
+      "garden": 28.35,
+      "stump": 27.97,
+      "treehill": 23.49,
+      "room": 33.32,
+      "counter": 30.64,
+      "kitchen": 33.01,
+      "bonsai": 34.6
+     }
+    }
+   },
+   "delta": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 0.227,
+      "flowers": 0.007,
+      "garden": 0.397,
+      "stump": 0.212,
+      "treehill": 0.085,
+      "room": 0.967,
+      "counter": 1.622,
+      "kitchen": 0.976,
+      "bonsai": 2.225
+     }
+    }
+   }
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.9,
+     "ssim": 0.856,
+     "lpips": 0.158
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.71,
+      "train": 22.09
+     }
+    }
+   },
+   "source": "supp. per_scene_tnt_db (3DGS sh=3)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.9,
+     "ssim": 0.903,
+     "lpips": 0.237
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.31,
+      "playroom": 30.5
+     }
+    }
+   },
+   "source": "supp. per_scene_tnt_db (3DGS sh=3)"
+  }
+ },
+ "notes": "Benchmark target: 3DGS sh=3 variant on mipnerf360-pilr, scenes bicycle (25.85, delta +0.110) and room (32.39, delta +0.720). Authors' implied bases bicycle 25.74 / room 31.67 vs our gsplat pilr baseline 25.45 / 31.69."
+}

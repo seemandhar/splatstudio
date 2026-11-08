@@ -1,0 +1,10 @@
+{"method": "confidence-densify",
+ "datasets": {"mipnerf360": ["garden", "kitchen"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "controls": {"cad-mcmc-control": {"mipnerf360": ["garden", "kitchen"]}},
+ "paper_budget": 1000000,
+ "paper_psnr": {"garden": 27.68, "kitchen": 32.39},
+ "paper_mcmc_psnr": {"garden": 26.86, "kitchen": 31.63},
+ "notes": "Budget 1M = cap_max default of both methods (Supp. Table S.3). Also compare with baseline3dgs-mipnerf360-30000. Paper gain over its MCMC: +0.82 garden, +0.76 kitchen."}

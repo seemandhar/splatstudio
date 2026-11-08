@@ -1,0 +1,201 @@
+{
+ "paper": "Perceptual-GS: Scene-adaptive Perceptual Densification for Gaussian Splatting",
+ "arxiv": "2506.12400",
+ "method_label": "Ours (Perceptual-GS)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.01,
+     "ssim": 0.839,
+     "lpips": 0.172
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.956,
+      "bonsai": 32.73,
+      "counter": 29.452,
+      "kitchen": 32.005,
+      "room": 32.22,
+      "stump": 27.302,
+      "garden": 27.961,
+      "flowers": 21.798,
+      "treehill": 22.634
+     },
+     "ssim": {
+      "bicycle": 0.805,
+      "bonsai": 0.953,
+      "counter": 0.922,
+      "kitchen": 0.936,
+      "room": 0.936,
+      "stump": 0.807,
+      "garden": 0.877,
+      "flowers": 0.654,
+      "treehill": 0.657
+     },
+     "lpips": {
+      "bicycle": 0.165,
+      "bonsai": 0.151,
+      "counter": 0.157,
+      "kitchen": 0.108,
+      "room": 0.168,
+      "stump": 0.175,
+      "garden": 0.098,
+      "flowers": 0.257,
+      "treehill": 0.273
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.71,
+     "ssim": 0.826,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.617,
+      "bonsai": 32.349,
+      "counter": 29.144,
+      "kitchen": 31.45,
+      "room": 31.628,
+      "stump": 26.913,
+      "garden": 27.735,
+      "flowers": 21.808,
+      "treehill": 22.736
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "bonsai": 0.948,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "room": 0.927,
+      "stump": 0.784,
+      "garden": 0.874,
+      "flowers": 0.621,
+      "treehill": 0.651
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "bonsai": 0.173,
+      "counter": 0.178,
+      "kitchen": 0.113,
+      "room": 0.191,
+      "stump": 0.208,
+      "garden": 0.103,
+      "flowers": 0.329,
+      "treehill": 0.319
+     }
+    }
+   },
+   "source": "Table 1 (averages); Appendix E Tables 12/13/14 (per-scene PSNR/SSIM/LPIPS)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.9,
+     "ssim": 0.857,
+     "lpips": 0.151
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.154,
+      "truck": 25.637
+     },
+     "ssim": {
+      "train": 0.826,
+      "truck": 0.888
+     },
+     "lpips": {
+      "train": 0.184,
+      "truck": 0.117
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.61,
+     "ssim": 0.845,
+     "lpips": 0.178
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.768,
+      "truck": 25.452
+     },
+     "ssim": {
+      "train": 0.81,
+      "truck": 0.879
+     },
+     "lpips": {
+      "train": 0.209,
+      "truck": 0.147
+     }
+    }
+   },
+   "source": "Table 1 (averages); Appendix E Tables 12/13/14 (per-scene PSNR/SSIM/LPIPS)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.94,
+     "ssim": 0.907,
+     "lpips": 0.231
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.663,
+      "playroom": 30.219
+     },
+     "ssim": {
+      "drjohnson": 0.905,
+      "playroom": 0.908
+     },
+     "lpips": {
+      "drjohnson": 0.23,
+      "playroom": 0.231
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.54,
+     "ssim": 0.9,
+     "lpips": 0.247
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.139,
+      "playroom": 29.935
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.902
+     },
+     "lpips": {
+      "drjohnson": 0.247,
+      "playroom": 0.246
+     }
+    }
+   },
+   "source": "Table 1 (averages); Appendix E Tables 12/13/14 (per-scene PSNR/SSIM/LPIPS)"
+  }
+ },
+ "gaussians_millions": {
+  "method": {
+   "bicycle": 3.89,
+   "counter": 1.49,
+   "garden": 3.03,
+   "truck": 2.05
+  },
+  "baseline_3dgs": {
+   "bicycle": 5.78,
+   "counter": 1.17,
+   "garden": 5.07,
+   "truck": 2.58
+  },
+  "source": "Table 15"
+ },
+ "notes": "3DGS* = 3DGS retrained by the authors. Protocol (official run.py): Mip-NeRF 360 outdoor -r 4, indoor -r 2 (PIL resize of full-res images, = our mipnerf360-pilr), T&T/DB -r 1; llffhold8 --eval; black background; RTX4090."
+}

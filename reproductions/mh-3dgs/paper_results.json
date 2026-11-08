@@ -1,0 +1,59 @@
+{
+  "paper": "Metropolis-Hastings Sampling for 3D Gaussian Reconstruction",
+  "arxiv": "2506.12945",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.34, "ssim": 0.798, "lpips": 0.241},
+        "per_scene": {
+          "psnr": {"bonsai": 32.52, "counter": 29.30, "kitchen": 31.35, "room": 32.15, "bicycle": 24.53, "flowers": 20.99, "garden": 26.49, "stump": 25.95, "treehill": 22.80},
+          "ssim": {"bonsai": 0.950, "counter": 0.918, "kitchen": 0.930, "room": 0.934, "bicycle": 0.711, "flowers": 0.556, "garden": 0.819, "stump": 0.743, "treehill": 0.621},
+          "lpips": {"bonsai": 0.171, "counter": 0.174, "kitchen": 0.123, "room": 0.179, "bicycle": 0.289, "flowers": 0.384, "garden": 0.185, "stump": 0.279, "treehill": 0.384},
+          "gaussians": {"bonsai": 777782, "counter": 698871, "kitchen": 623992, "room": 764539, "bicycle": 741748, "flowers": 695495, "garden": 811695, "stump": 697792, "treehill": 690517}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.44, "ssim": 0.811, "lpips": 0.223},
+        "per_scene": {
+          "psnr": {"bonsai": 32.14, "counter": 28.98, "kitchen": 31.25, "room": 31.65, "bicycle": 25.10, "flowers": 21.33, "garden": 27.31, "stump": 26.64, "treehill": 22.54},
+          "ssim": {"bonsai": 0.940, "counter": 0.906, "kitchen": 0.931, "room": 0.927, "bicycle": 0.747, "flowers": 0.589, "garden": 0.857, "stump": 0.770, "treehill": 0.635},
+          "lpips": {"bonsai": 0.206, "counter": 0.202, "kitchen": 0.117, "room": 0.197, "bicycle": 0.244, "flowers": 0.359, "garden": 0.122, "stump": 0.216, "treehill": 0.347}
+        }
+      },
+      "mcmc_same_budget": {
+        "average": {"psnr": 27.69, "ssim": 0.816, "lpips": 0.234},
+        "per_scene": {
+          "psnr": {"bonsai": 32.48, "counter": 29.27, "kitchen": 31.41, "room": 32.15, "bicycle": 25.13, "flowers": 21.64, "garden": 26.71, "stump": 27.21, "treehill": 23.09},
+          "ssim": {"bonsai": 0.949, "counter": 0.920, "kitchen": 0.930, "room": 0.933, "bicycle": 0.745, "flowers": 0.595, "garden": 0.832, "stump": 0.791, "treehill": 0.648},
+          "lpips": {"bonsai": 0.176, "counter": 0.177, "kitchen": 0.126, "room": 0.186, "bicycle": 0.275, "flowers": 0.377, "garden": 0.170, "stump": 0.247, "treehill": 0.370}
+        }
+      },
+      "baseline_3dgs_same_budget": {
+        "average": {"psnr": 26.62, "ssim": 0.761, "lpips": 0.299},
+        "per_scene": {"psnr": {"bonsai": 31.37, "counter": 28.84, "kitchen": 30.91, "room": 31.04, "bicycle": 23.55, "flowers": 20.10, "garden": 26.27, "stump": 24.84, "treehill": 22.64}}
+      },
+      "source": "Main Table 1 (averages); Appendix Tab. full_360 (per scene); Tab. table2-points (counts)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.99, "ssim": 0.852, "lpips": 0.166},
+                 "per_scene": {"psnr": {"train": 22.44, "truck": 25.54}, "ssim": {"train": 0.821, "truck": 0.883}, "lpips": {"train": 0.198, "truck": 0.134}, "gaussians": {"train": 788942, "truck": 756104}}},
+      "baseline_3dgs": {"average": {"psnr": 23.63, "ssim": 0.848, "lpips": 0.177},
+                        "per_scene": {"psnr": {"train": 21.89, "truck": 25.37}, "ssim": {"train": 0.814, "truck": 0.882}, "lpips": {"train": 0.207, "truck": 0.147}}},
+      "mcmc_same_budget": {"average": {"psnr": 24.30, "ssim": 0.862, "lpips": 0.170},
+                           "per_scene": {"psnr": {"train": 22.58, "truck": 26.02}}},
+      "source": "Main Table 1; Appendix Tab. full_rest"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.12, "ssim": 0.909, "lpips": 0.245},
+                 "per_scene": {"psnr": {"drjohnson": 29.77, "playroom": 30.47}, "ssim": {"drjohnson": 0.904, "playroom": 0.913}, "lpips": {"drjohnson": 0.249, "playroom": 0.240}, "gaussians": {"drjohnson": 766469, "playroom": 735409}}},
+      "baseline_3dgs": {"average": {"psnr": 29.53, "ssim": 0.904, "lpips": 0.244},
+                        "per_scene": {"psnr": {"drjohnson": 29.08, "playroom": 29.97}, "ssim": {"drjohnson": 0.901, "playroom": 0.907}, "lpips": {"drjohnson": 0.244, "playroom": 0.244}}},
+      "mcmc_same_budget": {"average": {"psnr": 29.84, "ssim": 0.906, "lpips": 0.254},
+                           "per_scene": {"psnr": {"drjohnson": 29.37, "playroom": 30.30}}},
+      "source": "Main Table 1; Appendix Tab. full_rest"
+    }
+  },
+  "notes": "baseline_3dgs = authors' retrained 3DGS* (full budget). mcmc_same_budget = 3DGS-MCMC with cap = MH-3DGS's final Gaussian count; baseline_3dgs_same_budget = 3DGS-S. M360 per-scene numbers below full 3DGS because MH-3DGS ends at only ~0.6-0.8M Gaussians. Room count 764,539 (Tab. full_360) vs 765,370 (Tab. table2-points). Single run, RTX 3090."
+}

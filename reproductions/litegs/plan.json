@@ -1,0 +1,40 @@
+{
+ "method": "litegs",
+ "module": "ss_litegs",
+ "components": [
+  {
+   "name": "litegs-renderer",
+   "kind": "renderer"
+  },
+  {
+   "name": "litegs-density",
+   "kind": "density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "litegs-stats-kernel",
+  "litegs-variance-score",
+  "litegs-densify",
+  "litegs-decay-schedule",
+  "litegs-adam",
+  "litegs-sh-schedule"
+ ],
+ "contributions": [
+  "opacity-gradient-variance-densification",
+  "opacity-decay-schedule",
+  "litegs-training-recipe"
+ ],
+ "fidelity_gaps": [
+  "system parts (warp raster, cluster-cull-compact) not ported: speed only",
+  "per-primitive vs per-cluster sparse-Adam visibility",
+  "exact per-pixel squares vs official running-sum quirk",
+  "runtime: with-replacement view sampling, white bg, SSIM valid conv",
+  "append truncation to 128 not ported"
+ ],
+ "feasible_natively": true
+}

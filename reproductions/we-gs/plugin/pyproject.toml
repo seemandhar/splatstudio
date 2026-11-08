@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-we-gs"
+version = "0.1.0"
+description = "WE-GS (arXiv 2406.02407) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "lpips"]
+
+[project.entry-points."splatstudio.methods"]
+we-gs = "ss_wegs:method"
+
+[tool.setuptools.packages.find]
+include = ["ss_wegs*"]
+
+[tool.ruff]
+line-length = 100

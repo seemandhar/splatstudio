@@ -1,0 +1,35 @@
+{
+ "method": "we-gs",
+ "datasets": {
+  "phototourism": [
+   "brandenburg-gate",
+   "sacre-coeur"
+  ]
+ },
+ "steps": 150000,
+ "per_scene_reported": true,
+ "extra": "--downscale 2 --recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "data_roots": {
+  "brandenburg-gate": "/home/sejain/datasets/phototourism/native/brandenburg-gate",
+  "sacre-coeur": "/home/sejain/datasets/phototourism/native/sacre-coeur"
+ },
+ "post_train_eval": "tools/ssenv python -m ss_wegs.evaluate --run RUN   (writes RUN/test_wegs.json; HEADLINE = metrics.full: test appearance + mask encoded feed-forward from the test image itself, full image, LPIPS-Alex = WE-GS/Ha-NeRF/GS-W protocol; metrics.right_half_reference_not_nerfw is NOT the NeRF-W protocol). Plain ss-eval cannot render we-gs (no bank) and raises. The runtime's own validation.json is produced with the live bank and is the same feed-forward full-image protocol (LPIPS from the runtime).",
+ "protocol": "registered `phototourism` (NeRF-W tsv split, full-res sources) with --downscale 2 (paper: 'images downsampled twice during both training and evaluation', LANCZOS like Ha-NeRF). Not phototourism-sfw (that one is the Splatfacto-W left-half training protocol).",
+ "paper_targets": {
+  "brandenburg-gate": {
+   "psnr": 27.74,
+   "ssim": 0.933,
+   "lpips": 0.128,
+   "3dgs": 20.72
+  },
+  "sacre-coeur": {
+   "psnr": 23.62,
+   "ssim": 0.89,
+   "lpips": 0.148,
+   "3dgs": 17.57
+  }
+ },
+ "baseline": "no shared gsplat baseline on Photo Tourism; optional reference: gsplat with the same extra args (full-image validation.json, white background, no appearance) vs paper 3DGS row 20.72 / 17.57",
+ "time_cost": "smoke-3: 0.29 s/step at ~0.17M Gaussians on a shared A6000 (encoder now runs at training resolution; gsplat 0.043 s/step) -> 150k steps roughly 12-15 h per scene (paper: 1.8 h on a 4090).",
+ "notes": "Put run dirs under /bigdata/sejain/runs with a symlink. Mask/L_regTS activity: grep 'wegs_diagnostics' in the run log (every 100 steps: transient_gaussians, static_mask_mean) or checkpoint density_state.counters.history. Smoke-3 (2k): mask mean 0.54-0.75 (active), L_regTS touched Gaussians only at a few steps (max 9012). Deviation: M detached inside the D-SSIM term (literal Eq. 19+20 collapses to M=0, evidence/smoke-1, reviews/review-1.md). eps=0.1 chosen (paper silent)."
+}

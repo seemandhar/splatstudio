@@ -1,0 +1,187 @@
+{
+ "paper": "Efficient Confidence-Aware Densification for 3D Gaussian Splatting",
+ "arxiv": "2610.13541",
+ "method_label": "Ours",
+ "iterations": 30000,
+ "budget": 1000000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.1,
+     "ssim": 0.831,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.44,
+      "flowers": 22.07,
+      "garden": 27.68,
+      "stump": 27.3,
+      "treehill": 22.96,
+      "room": 32.45,
+      "counter": 29.64,
+      "kitchen": 32.39,
+      "bonsai": 32.92
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "flowers": 0.633,
+      "garden": 0.867,
+      "stump": 0.808,
+      "treehill": 0.654,
+      "room": 0.931,
+      "counter": 0.92,
+      "kitchen": 0.935,
+      "bonsai": 0.951
+     },
+     "lpips": {
+      "bicycle": 0.214,
+      "flowers": 0.313,
+      "garden": 0.12,
+      "stump": 0.189,
+      "treehill": 0.317,
+      "room": 0.191,
+      "counter": 0.174,
+      "kitchen": 0.117,
+      "bonsai": 0.182
+     }
+    }
+   },
+   "baseline_mcmc": {
+    "average": {
+     "psnr": 27.67,
+     "ssim": 0.814,
+     "lpips": 0.231
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.1,
+      "flowers": 21.75,
+      "garden": 26.86,
+      "stump": 26.78,
+      "treehill": 22.88,
+      "room": 32.17,
+      "counter": 29.29,
+      "kitchen": 31.63,
+      "bonsai": 32.53
+     },
+     "ssim": {
+      "bicycle": 0.749,
+      "flowers": 0.597,
+      "garden": 0.846,
+      "stump": 0.776,
+      "treehill": 0.639,
+      "room": 0.928,
+      "counter": 0.915,
+      "kitchen": 0.929,
+      "bonsai": 0.945
+     },
+     "lpips": {
+      "bicycle": 0.259,
+      "flowers": 0.358,
+      "garden": 0.147,
+      "stump": 0.235,
+      "treehill": 0.352,
+      "room": 0.206,
+      "counter": 0.189,
+      "kitchen": 0.13,
+      "bonsai": 0.2
+     }
+    }
+   },
+   "source": "Supp. Table S.3 (tab:results-1000000), budget 1M, SfM init"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.62,
+     "ssim": 0.868,
+     "lpips": 0.142
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 26.23,
+      "train": 23.02
+     },
+     "ssim": {
+      "truck": 0.896,
+      "train": 0.84
+     },
+     "lpips": {
+      "truck": 0.112,
+      "train": 0.172
+     }
+    }
+   },
+   "baseline_mcmc": {
+    "average": {
+     "psnr": 24.28,
+     "ssim": 0.858,
+     "lpips": 0.171
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.77,
+      "train": 22.78
+     },
+     "ssim": {
+      "truck": 0.881,
+      "train": 0.836
+     },
+     "lpips": {
+      "truck": 0.156,
+      "train": 0.187
+     }
+    }
+   },
+   "source": "Supp. Table S.3 (tab:results-1000000), budget 1M, SfM init"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.03,
+     "ssim": 0.911,
+     "lpips": 0.23
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.88,
+      "playroom": 30.18
+     },
+     "ssim": {
+      "drjohnson": 0.91,
+      "playroom": 0.912
+     },
+     "lpips": {
+      "drjohnson": 0.234,
+      "playroom": 0.227
+     }
+    }
+   },
+   "baseline_mcmc": {
+    "average": {
+     "psnr": 29.27,
+     "ssim": 0.905,
+     "lpips": 0.266
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.58,
+      "playroom": 29.97
+     },
+     "ssim": {
+      "drjohnson": 0.898,
+      "playroom": 0.911
+     },
+     "lpips": {
+      "drjohnson": 0.273,
+      "playroom": 0.258
+     }
+    }
+   },
+   "source": "Supp. Table S.3 (tab:results-1000000), budget 1M, SfM init"
+  }
+ },
+ "notes": "Budget 1M primitives (= gsplat-mcmc default cap_max). baseline_mcmc = 3DGS-MCMC re-run by the authors in their 3DGS/Faster-GS codebase at the same budget. No vanilla-3DGS row exists in the fixed-budget tables (variable-budget 3DGS only in Table fixed_prim as group averages), so baseline_3dgs is omitted. Other budgets (100k/500k/2M) in Supp. Tables S.1,S.2,S.4: garden 24.89/27.13/27.98, kitchen 29.73/31.89/32.57 (MCMC: garden 24.37/26.39/27.44, kitchen 28.76/30.93/32.18)."
+}

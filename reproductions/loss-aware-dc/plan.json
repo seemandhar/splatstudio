@@ -1,0 +1,7 @@
+{"method": "loss-aware-dc", "module": "ss_loss_aware_dc",
+ "components": ["renderer lossaware-gsplat", "density lossaware-density", "loss photometric(+target stash)"],
+ "fields": [],
+ "probes": ["stats-kernel", "joint-split-matrix", "split-selection", "clone-surrogate", "decay-surrogate", "proxy-curvature"],
+ "contributions": ["C1 joint position-scale splitting", "C2 stationary+curvature split selection", "C3 surrogate cloning", "C4 surrogate opacity decay (no reset)", "C5 proxy curvature"],
+ "fidelity_gaps": ["no official code; uncertain-filter ambiguity", "white background", "optimizer step before density", "runtime shared diffs", "gsplat rasterizer clamps", "slower training"],
+ "feasible_natively": true}

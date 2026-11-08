@@ -1,0 +1,33 @@
+{
+ "method": "denoising-gs",
+ "module": "ss_denoising_gs",
+ "components": [
+  "gsplat renderer (built-in)",
+  "denoising-density (MCMC + C1..C4)",
+  "photometric (built-in)",
+  "mcmc-reg"
+ ],
+ "fields": [],
+ "probes": [
+  "momentum-drift",
+  "spatial-denoise",
+  "fisher-prune",
+  "scr-densify",
+  "schedule"
+ ],
+ "contributions": [
+  "C1 momentum-biased stochastic exploration",
+  "C2 spatial gradient-based denoising",
+  "C3 uncertainty (Fisher) pruning",
+  "C4 spatial coherence refinement"
+ ],
+ "fidelity_gaps": [
+  "missing appendix: prune/SCR timing, Fisher views, tau guessed",
+  "denser/noisier SfM on M360 unspecified",
+  "grad S = log-scale grad; literal delta-mu sign",
+  "runtime conventions (white bg, sampling, gsplat MCMC)",
+  "T&T/DB caps unknown",
+  "momentum drift numerically tiny (literal)"
+ ],
+ "feasible_natively": true
+}

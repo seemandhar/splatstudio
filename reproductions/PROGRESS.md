@@ -1,6 +1,6 @@
 # Reproduction progress
 
-76/100 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 4 in progress, 24 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 2 matched (iter 1), 3 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 1 partial, 2 partial (2/3 scenes), 13 ready_for_benchmark, 1 skipped
+106/130 started: 2 awaiting_benchmark, 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 4 in progress, 39 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 9 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 14 ready_for_benchmark, 1 skipped
 
 | # | paper | stage | outcome | ours vs paper (PSNR) |
 |---:|---|---|---|---|
@@ -104,3 +104,33 @@
 | 98 | [Multi-Scale 3D Gaussian Splatting for Anti-Aliased Rendering](ms-gs/report.md) | test | ready_for_benchmark |  |
 | 99 | [DRGSplat: Depth-Regularized 3D Gaussian Splatting](drgsplat/report.md) | started | blocked |  |
 | 100 | [Faster-GS: Analyzing and Improving Gaussian Splatting Optimization](faster-gs/report.md) | test | ready_for_benchmark | smoke garden 2k: 23.42 vs gsplat 22.99 dB, 65 s vs 150 s |
+| 101 | [Unified Loss-Aware Density Control for 3D Gaussian Splatting](loss-aware-dc/report.md) | benchmark | matched |  |
+| 102 | [Efficient Confidence-Aware Densification for 3D Gaussian Splatting](confidence-densify/report.md) | gap_analysis | not-matched |  |
+| 103 | [Pushing Rendering Boundaries: Hard Gaussian Splatting](hard-gs/report.md) | report | matched |  |
+| 104 | [Improving Gaussian Splatting with Localized Points Management](lpm/report.md) | report | matched |  |
+| 105 | [ConeGS: Error-Guided Densification Using Pixel Cones for Improved Reco](conegs/report.md) | report | matched (iter 1) | garden 27.46 vs 27.42 (iter 1, post-hoc black bg); room 32.15 vs 32.30 (iter 0) |
+| 106 | [Evaluating Alternatives to SFM Point Cloud Initialization for Gaussian](nerf-init-gs/report.md) | gap_analysis | not-matched |  |
+| 107 | [Beyond Gaussians: Fast and High-Fidelity 3D Splatting with Linear Kern](linear-splatting/report.md) | gap_analysis | not-matched |  |
+| 108 | [3DGabSplat: 3D Gabor Splatting for Frequency-adaptive Radiance Field R](gabsplat/report.md) | gap_analysis | not-matched |  |
+| 109 | [HDGS: Textured 2D Gaussian Splatting for Enhanced Scene Rendering](hdgs/report.md) | test | ready_for_benchmark |  |
+| 110 | [Augmented Radiance Field: A General Framework for Enhanced Gaussian Sp](augs/report.md) | report | matched |  |
+| 111 | [DET-GS: Depth- and Edge-Aware Regularization for High-Fidelity 3D Gaus](det-gs/report.md) | gap-analysis-1 | not-matched |  |
+| 112 | [GaussianPOP: Principled Simplification Framework for Compact 3D Gaussi](gaussianpop/report.md) | benchmark | matched | P=0.8 post-training: bicycle 25.01 (-0.11), counter 28.87 (-0.13) vs paper |
+| 113 | [WE-GS: An In-the-wild Efficient 3D Gaussian Representation for Unconst](we-gs/report.md) | gap-analysis-1 | not-matched |  |
+| 114 | [CRiM-GS: Continuous Rigid Motion-Aware Gaussian Splatting from Motion-](crim-gs/report.md) | gap-analysis | partial |  |
+| 115 | [Denoising-GS: Gaussian Splatting with Spatial-aware Denoising](denoising-gs/report.md) | report | partial | counter -0.21 (matched), bicycle -0.74 (backbone: control -0.69 vs paper MCMC); method-control -0.04/-0.03 vs paper +0.02/+0.06 |
+| 116 | [Sort-free Gaussian Splatting via Weighted Sum Rendering](sort-free-gs/report.md) | gap_analysis | partial |  |
+| 117 | [Turbo-GS: Accelerating 3D Gaussian Fitting for High-Quality Radiance F](turbo-gs/report.md) | report | matched |  |
+| 118 | [Metropolis-Hastings Sampling for 3D Gaussian Reconstruction](mh-3dgs/report.md) | report | matched |  |
+| 119 | [Perceptual-GS: Scene-adaptive Perceptual Densification for Gaussian Sp](perceptual-gs/report.md) | benchmark | matched | pilr 30k: bicycle 25.79 (−0.17), counter 29.21 (−0.24) vs paper; both within ±0.5 |
+| 120 | [LiteGS: A High-performance Framework to Train 3DGS in Subminutes via S](litegs/report.md) | benchmark | matched | garden 27.78 vs 28.15 (−0.37), room 32.79 vs 32.69 (+0.10); Δ vs 3DGS +0.89/+1.27 vs paper +0.76/+1.22 |
+| 121 | [Optimized Minimal Gaussians](omg/report.md) | benchmark | matched | OMG-XS decoded: bicycle 24.68/24.95 (-0.27), counter 27.94/28.40 (-0.46); 421k/299k G (paper 481k/310k); 4.18/2.94 MB (paper 4.61/2.95) |
+| 122 | [Volumetrically Consistent 3D Gaussian Rasterization](vol3dgs/report.md) | benchmark | matched |  |
+| 123 | [On the Error Analysis of 3D Gaussian Splatting and an Optimal Projecti](optimal-projection/report.md) | smoke | awaiting_benchmark |  |
+| 124 | [Compact Neural Appearance Models for Efficient Gaussian Splatting](neural-appearance/report.md) | analysis | matched | Neural garden 28.05 (paper 28.06), room 33.05 (33.23); Neural-SH +0.10/+0.25 = paper |
+| 125 | [Deformable Beta Splatting](beta-splatting/report.md) | report | matched |  |
+| 126 | [3D Student Splatting and Scooping](student-splatting/report.md) | smoke | awaiting_benchmark |  |
+| 127 | [AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering](aaa-gaussians/report.md) | report | matched |  |
+| 128 | [Low-Frequency First: Eliminating Floating Artifacts in 3D Gaussian Spl](efa-gs/report.md) | benchmark | matched | pilr 30k black bg: garden 27.95 (-0.07), bonsai 32.19 (-0.37); control efa-gs-base 27.90/32.39; LFCF effect +0.05/-0.20 vs paper -0.02/+0.22 (single seed, unresolved); 0.66-0.69x Gaussians |
+| 129 | [BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel](bbsplat/report.md) | report | partial |  |
+| 130 | [Effective Rank Analysis and Regularization for Enhanced 3D Gaussian Sp](erank-gs/report.md) | report | not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced) |  |

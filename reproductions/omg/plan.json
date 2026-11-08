@@ -1,0 +1,72 @@
+{
+ "method": "omg",
+ "module": "ss_omg",
+ "variants": {
+  "omg": "OMG-XS outdoor",
+  "omg-indoor": "OMG-XS indoor",
+  "omg-m": "OMG-M outdoor"
+ },
+ "components": [
+  {
+   "kind": "renderer",
+   "factory": "ss_omg.renderer:create_renderer"
+  },
+  {
+   "kind": "density",
+   "factory": "ss_omg.density:create_density",
+   "base": "Mini-Splatting port (copied)"
+  },
+  {
+   "kind": "loss",
+   "factory": "photometric"
+  }
+ ],
+ "fields": [
+  {
+   "name": "omg_static",
+   "shape": [
+    3
+   ],
+   "lr": 0.0025
+  },
+  {
+   "name": "omg_view",
+   "shape": [
+    3
+   ],
+   "lr": 0.0025
+  }
+ ],
+ "probes": [
+  "ms-stats-kernel",
+  "ms-depth-midpoint",
+  "ms-blur-split",
+  "ms-depth-reinit",
+  "ms-simplification",
+  "ms-schedule",
+  "omg-ld-scoring",
+  "omg-space-feature",
+  "omg-train-render",
+  "omg-net-schedule",
+  "omg-svq",
+  "omg-codec"
+ ],
+ "contributions": [
+  "mini-splatting-base",
+  "local-distinctiveness",
+  "space-feature-attributes",
+  "sub-vector-quantisation",
+  "storage"
+ ],
+ "fidelity_gaps": [
+  "white background / gsplat / view sampling (runtime, inherited from MS port)",
+  "fp32 MLPs vs tcnn fp16 (__sinf high-frequency features)",
+  "torch k-means++/Lloyd vs cuML",
+  "G-PCC bypass flag 0 stream in container (TMC13 v14 cannot decode official flag); both sizes reported",
+  "own LZMA container vs LZMA pickle; official write_storage size also reported",
+  "per-Gaussian Adam steps before density hook (one extra tiny position step at 30k)",
+  "LD neighbours follow official code (permutation applied twice), not paper text",
+  "absolute step constants: 30k runs only"
+ ],
+ "feasible_natively": true
+}

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-perceptual-gs"
+version = "0.1.0"
+description = "Perceptual-GS (arXiv 2506.12400) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+perceptual-gs = "ss_perceptual_gs:method"
+
+[project.scripts]
+ss-pgs-prep = "ss_perceptual_gs.sidecar:main"
+
+[tool.setuptools.packages.find]
+include = ["ss_perceptual_gs*"]
+
+[tool.setuptools.package-data]
+ss_perceptual_gs = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

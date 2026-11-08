@@ -1,439 +1,488 @@
 {
-  "_doc": "Benchmark registry used by tools/bench.py. 'raw' is the COLMAP scene, 'native' the converted transforms.json scene. Image folders follow the 3DGS full_eval protocol (outdoor images_4, indoor images_2; T&T/DB native resolution). Splits: llffhold8 (every 8th sorted image is test).",
-  "mipnerf360": {
-    "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
-    "native_root": "/home/sejain/datasets/mipnerf360/native",
-    "scenes": {
-      "bicycle": "images_4",
-      "flowers": "images_4",
-      "garden": "images_4",
-      "stump": "images_4",
-      "treehill": "images_4",
-      "room": "images_2",
-      "counter": "images_2",
-      "kitchen": "images_2",
-      "bonsai": "images_2"
-    }
-  },
-  "tandt": {
-    "raw_root": "/home/sejain/datasets/tandt_db/tandt",
-    "native_root": "/home/sejain/datasets/tandt_db/native",
-    "scenes": {
-      "truck": "images",
-      "train": "images"
-    }
-  },
-  "db": {
-    "raw_root": "/home/sejain/datasets/tandt_db/db",
-    "native_root": "/home/sejain/datasets/tandt_db/native",
-    "scenes": {
-      "drjohnson": "images",
-      "playroom": "images"
-    }
-  },
-  "mipnerf360-edgs": {
-    "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
-    "native_root": "/home/sejain/datasets/edgs-init/mipnerf360",
-    "scenes": {
-      "bicycle": "images_4",
-      "garden": "images_4",
-      "counter": "images_2"
-    }
-  },
-  "tandt-edgs": {
-    "raw_root": "/home/sejain/datasets/tandt_db/tandt",
-    "native_root": "/home/sejain/datasets/edgs-init/tandt",
-    "scenes": {
-      "truck": "images",
-      "train": "images"
-    }
-  },
-  "db-edgs": {
-    "raw_root": "/home/sejain/datasets/tandt_db/db",
-    "native_root": "/home/sejain/datasets/edgs-init/db",
-    "scenes": {
-      "drjohnson": "images",
-      "playroom": "images"
-    }
-  },
-  "llff-fewview3": {
-    "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
-    "native_root": "/home/sejain/datasets/llff/fewview3",
-    "scenes": {
-      "horns": "images",
-      "fortress": "images",
-      "room": "images"
-    },
-    "_doc": "FSGS/CoR-GS/AD-GS 3-view LLFF: explicit train/val/test lists in transforms.json (test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused images, never used for selection). Images: full-res images/ PIL-bicubic /4 -> 1008x756 PNG. Init: COLMAP 3.9.1 point_triangulator + patch_match_stereo/stereo_fusion on the 3 training views only. Built by reproductions/ad-gs/tools/prepare_llff_fewview.py (COLMAP env: conda env 'colmap'); NOT rebuildable by bench.py prepare (colmap_to_transforms.py would use all-view SfM points)."
-  },
-  "mipnerf360-pilr": {
-    "_doc": "3DGS/Mip-Splatting `-r 4` protocol: full-res images PIL-resized (default bicubic) by tools/make_pil_resized.py; poses/intrinsics/splits/points from native. Outdoor -r 4, indoor -r 2 (all 9 scenes since PGSR #58).",
-    "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
-    "native_root": "/home/sejain/datasets/mipnerf360/pilr",
-    "scenes": {
-      "bicycle": "images",
-      "flowers": "images",
-      "garden": "images",
-      "stump": "images",
-      "treehill": "images",
-      "room": "images",
-      "counter": "images",
-      "kitchen": "images",
-      "bonsai": "images"
-    }
-  },
-  "llff-fewview3-r8": {
-    "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
-    "native_root": "/home/sejain/datasets/llff/fewview3-r8",
-    "scenes": {
-      "fern": "images",
-      "flower": "images",
-      "fortress": "images",
-      "horns": "images",
-      "leaves": "images",
-      "orchids": "images",
-      "room": "images",
-      "trex": "images"
-    },
-    "_doc": "FSGS/CoR-GS/DropGaussian 3-view LLFF at the official -r 8 resolution: same split and init as llff-fewview3 (test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused). Images: full-res images/ PIL-bicubic /8 -> 504x378 PNG. Init: COLMAP 3.9.1 point_triangulator + patch_match_stereo/stereo_fusion on the 3 training views only (horns/fortress/room points.npz copied from llff-fewview3, since the cloud does not depend on resolution). Built by reproductions/ad-gs/tools/prepare_llff_fewview.py --downscale 8; NOT rebuildable by bench.py prepare."
-  },
-  "mipnerf360-1600": {
-    "_doc": "3DGS default loader protocol (-r -1 auto): full-res PIL-resized to width 1600 (scale=W/1600). tools/make_pil_resized.py --width 1600; poses/splits/points from native, intrinsics rescaled.",
-    "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
-    "native_root": "/home/sejain/datasets/mipnerf360/w1600",
-    "scenes": {
-      "garden": "images",
-      "bicycle": "images",
-      "counter": "images",
-      "stump": "images",
-      "flowers": "images",
-      "treehill": "images",
-      "room": "images",
-      "kitchen": "images",
-      "bonsai": "images"
-    }
-  },
-  "blender-fewview6": {
-    "_doc": "SplatFields 6-view NeRF-Synthetic (Blender) protocol: train = official KMeans(n, random_state=0) camera selection (sklearn 1.0.2, reproductions/splatfields/tools/select_views.py -> views.json), test = all 200 transforms_test views, val = first 8 transforms_val views (never used for selection); 800x800, RGBA composited on white and truncated to 8 bit (official np.byte cast); world scaled by 2/model_scale (official); points.npz = 100k visual-hull grid samples (official 'hull' init); masks.npz = train alpha for the mask loss. Built by reproductions/splatfields/tools/prepare_blender_fewview.py; NOT rebuildable by bench.py prepare. Raw: nerfbaselines HF mirror of nerf_synthetic (original 2020 files).",
-    "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
-    "native_root": "/home/sejain/datasets/nerf_synthetic/fewview6",
-    "scenes": {
-      "chair": "images",
-      "hotdog": "images",
-      "ficus": "images"
-    }
-  },
-  "blender-fewview6-sf": {
-    "_doc": "SplatFields stage 2 of blender-fewview6: identical images/splits/masks (hard links); points.npz = means of the 40k splatfields-3dgs run on blender-fewview6, hull-filtered with the train masks, random <=100k (official --pts_samples load --max_num_pts 100000). Built by reproductions/splatfields/tools/make_stage2.py AFTER the stage-1 benchmark; NOT rebuildable by bench.py prepare.",
-    "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
-    "native_root": "/home/sejain/datasets/nerf_synthetic/fewview6-sf",
-    "scenes": {
-      "chair": "images",
-      "hotdog": "images",
-      "ficus": "images"
-    }
-  },
-  "blender-fewview12": {
-    "_doc": "SplatFields 12-view NeRF-Synthetic (Blender) protocol: train = official KMeans(n, random_state=0) camera selection (sklearn 1.0.2, reproductions/splatfields/tools/select_views.py -> views.json), test = all 200 transforms_test views, val = first 8 transforms_val views (never used for selection); 800x800, RGBA composited on white and truncated to 8 bit (official np.byte cast); world scaled by 2/model_scale (official); points.npz = 100k visual-hull grid samples (official 'hull' init); masks.npz = train alpha for the mask loss. Built by reproductions/splatfields/tools/prepare_blender_fewview.py; NOT rebuildable by bench.py prepare. Raw: nerfbaselines HF mirror of nerf_synthetic (original 2020 files).",
-    "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
-    "native_root": "/home/sejain/datasets/nerf_synthetic/fewview12",
-    "scenes": {
-      "chair": "images",
-      "hotdog": "images",
-      "ficus": "images"
-    }
-  },
-  "blender-fewview12-sf": {
-    "_doc": "SplatFields stage 2 of blender-fewview12: identical images/splits/masks (hard links); points.npz = means of the 40k splatfields-3dgs run on blender-fewview12, hull-filtered with the train masks, random <=100k (official --pts_samples load --max_num_pts 100000). Built by reproductions/splatfields/tools/make_stage2.py AFTER the stage-1 benchmark; NOT rebuildable by bench.py prepare.",
-    "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
-    "native_root": "/home/sejain/datasets/nerf_synthetic/fewview12-sf",
-    "scenes": {
-      "chair": "images",
-      "hotdog": "images",
-      "ficus": "images"
-    }
-  },
-  "llff-fewview3-r8-dng": {
-    "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
-    "native_root": "/home/sejain/datasets/llff/fewview3-r8-dng",
-    "scenes": {
-      "fern": "images",
-      "flower": "images",
-      "fortress": "images",
-      "horns": "images",
-      "leaves": "images",
-      "orchids": "images",
-      "room": "images",
-      "trex": "images"
-    },
-    "_doc": "DNGaussian 3-view LLFF (official scripts/run_llff.sh): images/ (hard links) and transforms.json (byte copy) of llff-fewview3-r8 (same split: test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused; 504x378 PIL bicubic /8). Differs from llff-fewview3-r8 in init and sidecar: points.npz = official --rand_pcd (np.random.seed(0); uniform box from the bbox of the FULL LLFF sparse/0/points3D.bin: int(max extent*50) points in [20th-smallest, +1.3 extent]); dng_depth.npz = MiDaS v3 DPT_Hybrid (dpt_hybrid_384.pt, sha256 501f0c75...) depth of the 3 TRAINING views only (official get_depth_map_for_llff_dtu.py: full-res -> dpt_transform -> bicubic to H/8xW/8 -> uint16 min-max; target 255 - png/255), keyed by the native viewmat, plus the official 180-pose spiral camera centres (CreateLLFFSpiral) for near-camera pruning. Built by reproductions/dngaussian/tools/prepare_dng_llff.py (PYTHONPATH=~/models/dpt/pylib for timm 0.6.12, MiDaS repo in ~/models/dpt/midas_repo); NOT rebuildable by bench.py prepare."
-  },
-  "mipnerf360-sgs12": {
-    "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
-    "native_root": "/home/sejain/datasets/mipnerf360/sparsegs12",
-    "scenes": {
-      "bicycle": "images",
-      "bonsai": "images",
-      "counter": "images",
-      "garden": "images",
-      "kitchen": "images",
-      "stump": "images"
-    },
-    "_doc": "SparseGS 12-view Mip-NeRF 360: train = the 12 images of the authors' released <scene>_12.zip (Google Drive from the official README; 6 scenes, no room; not llffhold8-compatible), test = llffhold8 minus train, val = all other non-train images (official metrics.py set = test+val). Images: full-res PIL bicubic /4 for ALL scenes (paper: 1/4) -> PNG. Init: COLMAP 3.9.1 MVS (point_triangulator with known poses, patch_match max_image_size 2000, geom_consistency) on the 12 train views only. Sidecar sgs_depth.npz = BoostingMonocularDepth (LeReS res101 + pix2pix merge, Final) of the train views, cv2 cubic resize + min-max (official loader), keyed by native viewmat. Built by reproductions/sparsegs/tools/prepare_m360_sgs12.py (BMD repo ~/models/bmd/repo, PYTHONPATH ~/models/bmd/pylib); NOT rebuildable by bench.py prepare."
-  },
-  "dtu-fatesgs-23_24_33": {
-    "raw_root": "/home/sejain/datasets/dtu_fatesgs/extract",
-    "native_root": "/home/sejain/datasets/dtu_fatesgs/native",
-    "scenes": {
-      "scan24": "images",
-      "scan37": "images",
-      "scan40": "images",
-      "scan55": "images",
-      "scan63": "images",
-      "scan65": "images",
-      "scan69": "images",
-      "scan83": "images",
-      "scan97": "images",
-      "scan105": "images",
-      "scan106": "images",
-      "scan110": "images",
-      "scan114": "images",
-      "scan118": "images",
-      "scan122": "images"
-    },
-    "_doc": "FatesGS authors' DTU release (Google Drive folder 143jIT9DJN17gigp3uxBtqBv6UBdcO7Lm: DTU_TEST.zip, DTU_EVAL.zip, set_23_24_33_depth.zip). train = views 23,24,33 (RGB 777x581 per-channel PIL bicubic, alpha dropped), val = view 22, test = views 25,28 (from set_22_25_28); points.npz = dense/fused.ply; fatesgs.npz sidecar (Marigold depth, pairs, alpha masks) + images_full/ + dtu_eval/. Built by reproductions/fatesgs/tools/prepare_dtu.py; NOT rebuildable by bench.py prepare. GT for CD: /home/sejain/datasets/dtu_official/gt (official SampleSet ObsMask + Points/stl)."
-  },
-  "llff-fewview3-cgs": {
-    "raw_root": "/home/sejain/datasets/llff/coherentgs-official/nerf_llff_data",
-    "native_root": "/home/sejain/datasets/llff/fewview3-cgs",
-    "scenes": {
-      "fern": "images",
-      "flower": "images",
-      "fortress": "images",
-      "horns": "images",
-      "leaves": "images",
-      "orchids": "images",
-      "room": "images",
-      "trex": "images"
-    },
-    "_doc": "CoherentGS 3-view LLFF (official readLLFFInfo): official images_8 PNGs (504x378, pixel-identical to nerf_llff_data/images_8), official poses_bounds frame (fix_rotation, translations x 1/(0.75 min bound)), focal = f/8, centred principal point; test = every 8th sorted image, train = round(linspace) 3 of the rest (same names as llff-fewview3-r8), val = rest. points.npz = one point per training pixel (unaligned Depth-Anything depth after the official bilateral filtering), coherentgs.npz = depth-layer masks (5 ch), FlowFormer++ flows + consistency weights from the author-processed archive llff_sparse.zip (sha256 84caaa59...). Built by reproductions/coherentgs/tools/prepare_cgs_llff.py (PYTHONPATH=~/models/coherentgs/pylib for sklearn); NOT rebuildable by bench.py prepare."
-  },
-  "mipnerf360-1920": {
-    "_doc": "SuGaR load_gs_cameras protocol (max_img_size=1920): full-res PIL-resized so the longer side is 1920, size=(round(W/s),round(H/s)), s=max(W,H)/1920. tools/make_pil_resized.py --max-side 1920; poses/splits/points from native, intrinsics rescaled.",
-    "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
-    "native_root": "/home/sejain/datasets/mipnerf360/w1920",
-    "scenes": {
-      "garden": "images",
-      "bicycle": "images",
-      "counter": "images"
-    }
-  },
-  "deblurnerf-real": {
-    "_doc": "Deblur-NeRF real defocus set (DOF-GS protocol): images/ PIL /4 = 600x400, per-scene hold (cake 9, caps 5, cisco 7, cupcake 6, cups 8, daisy 8, sausage 6, seal 6, tools 7), test = sharp references, validation = copies of test. Built by reproductions/dofgs/tools/prepare_deblurnerf.py (not bench.py prepare).",
-    "raw_root": "/home/sejain/datasets/deblurnerf/real_defocus_blur",
-    "native_root": "/home/sejain/datasets/deblurnerf/native",
-    "scenes": {
-      "cake": "images",
-      "caps": "images",
-      "cisco": "images",
-      "cupcake": "images",
-      "cups": "images",
-      "daisy": "images",
-      "sausage": "images",
-      "seal": "images",
-      "tools": "images"
-    }
-  },
-  "dtu-gsurfels": {
-    "raw_root": "/home/sejain/datasets/gsurfels_dtu/raw",
-    "native_root": "/home/sejain/datasets/gsurfels_dtu/native",
-    "scenes": {
-      "scan24": "images",
-      "scan37": "images",
-      "scan40": "images",
-      "scan55": "images",
-      "scan63": "images",
-      "scan65": "images",
-      "scan69": "images",
-      "scan83": "images",
-      "scan97": "images",
-      "scan105": "images",
-      "scan106": "images",
-      "scan110": "images",
-      "scan114": "images",
-      "scan118": "images",
-      "scan122": "images"
-    },
-    "_doc": "Gaussian Surfels authors' DTU (HF turandai/gaussian-surfels-dtu, IDR layout, masks + Omnidata normals). 1600x1200; test = NeuS2 split (sorted ids 8,13,16,21,26,31,34 [+56]); validation = byte copies of test; images masked on black (official PSNR protocol); gsurfels/ sidecar (masks, priors, downscaled images, init); points.npz = 1e6 random points visual-hull pruned; cameras.npz for the evaluator. Built by reproductions/gaussian-surfels/tools/prepare_dtu.py; NOT rebuildable by bench.py prepare."
-  },
-  "mushroom-vr_room": {
-    "raw_root": "/home/sejain/datasets/mushroom/raw/vr_room_x",
-    "native_root": "/home/sejain/datasets/mushroom/native",
-    "scenes": {
-      "vr_room": "images"
-    },
-    "_doc": "MuSHRoom iPhone vr_room (zenodo 10230733). transforms.json explicit splits: train 376 long_capture frames, test 42 test.txt frames (within), validation 186 short_capture frames (cross trajectory; reported, never used for selection). points.npz = 1M official-style TSDF sensor-depth points; dnsplat/ sidecar (sensor depth, Omnidata v2 normals sha256 38db3f7d..., init scales/quats). Built by reproductions/dn-splatter/tools/prepare_mushroom.py (PYTHONPATH=~/models/dtueval-pylib:~/models/dpt/pylib:~/models/omnidata/pylib); NOT rebuildable by bench.py prepare."
-  },
-  "mushroom": {
-    "native_root": "/home/sejain/datasets/mushroom/native",
-    "scenes": {
-      "coffee_room": "images",
-      "honka": "images",
-      "kokko": "images",
-      "sauna": "images",
-      "computer": "images",
-      "vr_room": "images"
-    },
-    "_doc": "MuSHRoom iPhone (zenodo 10230733). Splits: train long_capture minus test.txt; test = test.txt (within); validation = short_capture (cross). dnsplat/ sidecar (prepare_mushroom.py, copied from dn-splatter) + agsmesh/dnc_mask_u8.npy (prepare_dnc.py). NOT rebuildable by bench.py prepare; tools/prepare_rooms.sh <gpu> rooms..."
-  },
-  "mipnerf360-ms": {
-    "_doc": "Multi-scale Mip-NeRF 360 (MTMT; Analytic-Splatting / Mip-Splatting train_ms.py + mtmt_360.sh protocol). From native images_4 (outdoor) / images_2 (indoor): each frame PIL Image.resize((round(W/s), round(H/s))) default BICUBIC for s in 1,2,4,8 -> images/s{s}/<stem>.png (1x = the images_N decode, lossless PNG); fl_x*w/W, fl_y*h/H, cx=w/2, cy=h/2. Explicit splits: test = llffhold8 frames at all 4 scales; train = the rest at all 4 scales, with each 1x train frame hard-linked 3x (images/s1, s1_dup1, s1_dup2) to approximate --sample_more_highres (P(1x)=0.50 vs official 0.475, fidelity gap); validation = hard-linked copies of test (images/val/s*), never used for selection. points.npz = native SfM. Per-scale metrics: tools/multiscale_summary.py. Built by tools/make_multiscale.py --native <native scene> --output <root>/<scene>; NOT rebuildable by bench.py prepare.",
-    "raw_root": "/home/sejain/datasets/mipnerf360/native",
-    "native_root": "/home/sejain/datasets/mipnerf360/ms",
-    "scenes": {
-      "garden": "images",
-      "counter": "images"
-    }
-  },
-  "deblurnerf-motion": {
-    "_doc": "Deblur-NeRF real camera-motion-blur set (DeblurGS protocol): full-res 2400x1600 JPGs PIL /4 = 600x400 (official -r 4; COLMAP was run at 600x400), split int(name) % hold == 0 -> test (sharp references; hold ball 7, basket 7, buick 7, coffee 6, decoration 6, girl 7, heron 8, parterre 6, puppet 6, stair 6), validation = copies of test. Built by reproductions/deblurgs/tools/prepare_motionblur.py after tools/download_motionblur.py (Drive rate-limited); NOT rebuildable by bench.py prepare.",
-    "raw_root": "/home/sejain/datasets/deblurnerf/real_camera_motion_blur",
-    "native_root": "/home/sejain/datasets/deblurnerf/native-motion",
-    "scenes": {
-      "ball": "images",
-      "basket": "images",
-      "buick": "images",
-      "coffee": "images",
-      "decoration": "images",
-      "girl": "images",
-      "heron": "images",
-      "parterre": "images",
-      "puppet": "images",
-      "stair": "images"
-    }
-  },
-  "robustnerf": {
-    "_doc": "SpotLessSplats protocol (official spotless_trainer.py): authors' preprocessed scenes from Borealis doi:10.5683/SP3/WOFXFT (raw at /bigdata/sejain/datasets/spotless/raw/<scene>: images_8, sparse/0, SD features). images_8 (official data_factor 8), OPENCV distortion removed with cv2 (official Parser), PNG; world normalised (similarity_from_cameras + align_principle_axes, official normalize=True); train = '*clutter*', test = '*extra*' (clean held-out views), validation = hard-linked copies of test (never used for selection); points.npz = all normalised SfM points; SD/ -> authors' SD 2.1 features of the train images; SLS_clusters/ = SLS-agg labels. Built by reproductions/spotlesssplats/tools/prepare_spotless.py (+ make_clusters.py); NOT rebuildable by bench.py prepare. Only android (robustnerf) and patio (onthego) are downloaded.",
-    "raw_root": "/bigdata/sejain/datasets/spotless/raw",
-    "native_root": "/home/sejain/datasets/spotless/native",
-    "scenes": {
-      "android": "images_8",
-      "statue": "images_8",
-      "yoda": "images_8",
-      "crab2": "images_8"
-    }
-  },
-  "onthego": {
-    "_doc": "SpotLessSplats protocol (official spotless_trainer.py): authors' preprocessed scenes from Borealis doi:10.5683/SP3/WOFXFT (raw at /bigdata/sejain/datasets/spotless/raw/<scene>: images_8, sparse/0, SD features). images_8 (official data_factor 8), OPENCV distortion removed with cv2 (official Parser), PNG; world normalised (similarity_from_cameras + align_principle_axes, official normalize=True); train = '*clutter*', test = '*extra*' (clean held-out views), validation = hard-linked copies of test (never used for selection); points.npz = all normalised SfM points; SD/ -> authors' SD 2.1 features of the train images; SLS_clusters/ = SLS-agg labels. Built by reproductions/spotlesssplats/tools/prepare_spotless.py (+ make_clusters.py); NOT rebuildable by bench.py prepare. Only android (robustnerf) and patio (onthego) are downloaded.",
-    "raw_root": "/bigdata/sejain/datasets/spotless/raw",
-    "native_root": "/home/sejain/datasets/spotless/native",
-    "scenes": {
-      "mountain": "images_8",
-      "fountain": "images_8",
-      "corner": "images_8",
-      "patio": "images_8",
-      "spot": "images_8",
-      "patio-high": "images_8"
-    }
-  },
-  "phototourism": {
-    "_doc": "Photo Tourism (IMC-2020 dense models) with NeRF-W train/test splits (.tsv), full resolution. Built by reproductions/wildgaussians/tools/prepare_wild.py; NOT rebuildable by bench.py prepare. Evaluate appearance methods with their own NeRF-W test-time evaluator (left-half embedding optimisation, right-half metrics).",
-    "native_root": "/home/sejain/datasets/phototourism/native",
-    "scenes": {
-      "brandenburg-gate": "images",
-      "sacre-coeur": "images"
-    }
-  },
-  "onthego-undist": {
-    "_doc": "NeRF On-the-go undistorted (HF NerfBaselines set), intrinsics rescaled as NerfBaselines; patio x4 (480x270), patio-high x8. Built by reproductions/wildgaussians/tools/prepare_wild.py; NOT rebuildable by bench.py prepare.",
-    "native_root": "/home/sejain/datasets/onthego-undist/native",
-    "scenes": {
-      "patio": "images",
-      "patio-high": "images"
-    }
-  },
-  "phototourism-sfw": {
-    "_doc": "Splatfacto-W official-code protocol on Photo Tourism: NeRF-W split (tsv, NaN rows dropped), full resolution; train split = all train images + left-half PNG crops (columns < W//2) of every test image (the code trains on all images with the test images' right halves masked); test = full test images, scored on columns >= W//2 by ss_splatfactow.evaluate. Hard links of phototourism/native. Built by reproductions/splatfacto-w/tools/prepare_sfw.py; NOT rebuildable by bench.py prepare.",
-    "native_root": "/home/sejain/datasets/phototourism/sfw",
-    "scenes": {
-      "brandenburg-gate": "images",
-      "sacre-coeur": "images"
-    }
-  },
-  "robustsplat-onthego": {
-    "_doc": "RobustSplat protocol (official github.com/fcyycf/RobustSplat @ a130281): authors' released data hf.co/datasets/fcy99/RobustSplat-data (COLMAP re-run + image_undistorter PINHOLE, mediapy-downsampled images_<f>/images_<4f> JPG), raw at /bigdata/sejain/datasets/robustsplat/raw. Native: images_<f> hard-linked as-is, Inria FoV camera (centred principal point), COLMAP world frame, train='*clutter*', test='*extra*' (clean unused), validation = hard-linked copies of test (never used for selection); coarse/ = images_<4f> for RobustSplat mask bootstrapping. Built by reproductions/robustsplat/tools/prepare_robustsplat.py; NOT rebuildable by bench.py prepare. Factors: patio 4, patio-high 8.",
-    "raw_root": "/bigdata/sejain/datasets/robustsplat/raw/NeRF_On-the-go_undistorted",
-    "native_root": "/home/sejain/datasets/robustsplat/native",
-    "scenes": {
-      "patio": "images",
-      "patio-high": "images"
-    }
-  },
-  "robustsplat-robustnerf": {
-    "_doc": "RobustSplat protocol (official github.com/fcyycf/RobustSplat @ a130281): authors' released data hf.co/datasets/fcy99/RobustSplat-data (COLMAP re-run + image_undistorter PINHOLE, mediapy-downsampled images_<f>/images_<4f> JPG), raw at /bigdata/sejain/datasets/robustsplat/raw. Native: images_<f> hard-linked as-is, Inria FoV camera (centred principal point), COLMAP world frame, train='*clutter*', test='*extra*' (clean unused), validation = hard-linked copies of test (never used for selection); coarse/ = images_<4f> for RobustSplat mask bootstrapping. Built by reproductions/robustsplat/tools/prepare_robustsplat.py; NOT rebuildable by bench.py prepare. Factor 8.",
-    "raw_root": "/bigdata/sejain/datasets/robustsplat/raw/RobustNeRF_undistorted",
-    "native_root": "/home/sejain/datasets/robustsplat/native",
-    "scenes": {
-      "android": "images",
-      "crab2": "images"
-    }
-  },
-  "deblur3dgs-defocus": {
-    "_doc": "Deblur-NeRF real defocus blur from the Deblurring-3DGS release (deblur_dataset.zip; authors re-ran COLMAP -> denser SfM points than deblurnerf-*). Full-res images PIL /4 = 600x400 (official -r 4), split idx % hold == 0 of sorted names -> test (sharp), validation = copies of test. Built by reproductions/deblurring-3dgs/tools/prepare_official.py (not bench.py prepare). Data on /bigdata via ~/datasets/deblurring3dgs symlink.",
-    "raw_root": "/home/sejain/datasets/deblurring3dgs/raw/deblur_dataset/real_defocus_blur",
-    "native_root": "/home/sejain/datasets/deblurring3dgs/native-defocus",
-    "scenes": {
-      "cake": "images",
-      "caps": "images",
-      "cisco": "images",
-      "coral": "images",
-      "cupcake": "images",
-      "cups": "images",
-      "daisy": "images",
-      "sausage": "images",
-      "seal": "images",
-      "tools": "images"
-    }
-  },
-  "deblur3dgs-motion": {
-    "_doc": "Deblur-NeRF real motion blur from the Deblurring-3DGS release (deblur_dataset.zip; authors re-ran COLMAP -> denser SfM points than deblurnerf-*). Full-res images PIL /4 = 600x400 (official -r 4), split idx % hold == 0 of sorted names -> test (sharp), validation = copies of test. Built by reproductions/deblurring-3dgs/tools/prepare_official.py (not bench.py prepare). Data on /bigdata via ~/datasets/deblurring3dgs symlink.",
-    "raw_root": "/home/sejain/datasets/deblurring3dgs/raw/deblur_dataset/real_camera_motion_blur",
-    "native_root": "/home/sejain/datasets/deblurring3dgs/native-motion",
-    "scenes": {
-      "ball": "images",
-      "basket": "images",
-      "buick": "images",
-      "coffee": "images",
-      "decoration": "images",
-      "girl": "images",
-      "heron": "images",
-      "parterre": "images",
-      "puppet": "images",
-      "stair": "images"
-    }
-  },
-  "blender-fisherrf": {
-    "_doc": "FisherRF / 3DGS NeRF-Synthetic full protocol (official readNerfSyntheticInfo, --eval --white_background): train = the 100 transforms_train.json views in file order (the active-selection candidate pool; native train index i == official train index i), test = all 200 transforms_test.json views (never candidates), validation = first 8 transforms_val.json views (never used for selection). 800x800, RGBA composited on white and truncated to 8 bit (official np.byte cast). points.npz = official random init (np.random.seed(0); 100k U[-1.3,1.3]^3, colours SH2RGB(U/255) stored as uint8 like storePly). Raw: nerfbaselines HF mirror of nerf_synthetic (drums/lego/materials/mic/ship on /bigdata via symlinks). Data on /bigdata via ~/datasets/nerf_synthetic/fisherrf symlink. Built by reproductions/fisherrf/tools/prepare_blender_full.py; NOT rebuildable by bench.py prepare.",
-    "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
-    "native_root": "/home/sejain/datasets/nerf_synthetic/fisherrf",
-    "scenes": {
-      "chair": "images",
-      "drums": "images",
-      "ficus": "images",
-      "hotdog": "images",
-      "lego": "images",
-      "materials": "images",
-      "mic": "images",
-      "ship": "images"
-    }
-  },
-  "mipnerf360-msgs": {
-    "_doc": "Multi-scale Mip-NeRF 360 for MS-GS (arXiv 2311.17089, official train.py/train_all.py): base = official -r -1 loader (full-res PIL-resized to width 1600 = mipnerf360-1600), scales s = int(W/(g*s)) PIL BICUBIC from the full-res JPEG, FoV camera. Explicit splits: train = llffhold train frames at 1x only (images/s1, hard links of w1600; the ms-gs plugin renders its 4x..128x training views itself; other methods e.g. gsplat train single-scale = the paper's 3DGS row); test = held-out frames at 1,2,4,8,16,32,64x (128x = 12x8 px is below the loader minimum); validation = hard links (images/val/s*). Built by tools/make_multiscale_msgs.py; NOT rebuildable by bench.py prepare. Per-scale metrics: tools/multiscale_summary.py --dataset mipnerf360-msgs --scales 1,4,16,64.",
-    "raw_root": "/home/sejain/datasets/mipnerf360/w1600",
-    "native_root": "/home/sejain/datasets/mipnerf360/msgs",
-    "scenes": {
-      "garden": "images",
-      "counter": "images"
-    }
+ "_doc": "Benchmark registry used by tools/bench.py. 'raw' is the COLMAP scene, 'native' the converted transforms.json scene. Image folders follow the 3DGS full_eval protocol (outdoor images_4, indoor images_2; T&T/DB native resolution). Splits: llffhold8 (every 8th sorted image is test).",
+ "mipnerf360": {
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/mipnerf360/native",
+  "scenes": {
+   "bicycle": "images_4",
+   "flowers": "images_4",
+   "garden": "images_4",
+   "stump": "images_4",
+   "treehill": "images_4",
+   "room": "images_2",
+   "counter": "images_2",
+   "kitchen": "images_2",
+   "bonsai": "images_2"
   }
+ },
+ "tandt": {
+  "raw_root": "/home/sejain/datasets/tandt_db/tandt",
+  "native_root": "/home/sejain/datasets/tandt_db/native",
+  "scenes": {
+   "truck": "images",
+   "train": "images"
+  }
+ },
+ "db": {
+  "raw_root": "/home/sejain/datasets/tandt_db/db",
+  "native_root": "/home/sejain/datasets/tandt_db/native",
+  "scenes": {
+   "drjohnson": "images",
+   "playroom": "images"
+  }
+ },
+ "mipnerf360-edgs": {
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/edgs-init/mipnerf360",
+  "scenes": {
+   "bicycle": "images_4",
+   "garden": "images_4",
+   "counter": "images_2"
+  }
+ },
+ "tandt-edgs": {
+  "raw_root": "/home/sejain/datasets/tandt_db/tandt",
+  "native_root": "/home/sejain/datasets/edgs-init/tandt",
+  "scenes": {
+   "truck": "images",
+   "train": "images"
+  }
+ },
+ "db-edgs": {
+  "raw_root": "/home/sejain/datasets/tandt_db/db",
+  "native_root": "/home/sejain/datasets/edgs-init/db",
+  "scenes": {
+   "drjohnson": "images",
+   "playroom": "images"
+  }
+ },
+ "llff-fewview3": {
+  "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+  "native_root": "/home/sejain/datasets/llff/fewview3",
+  "scenes": {
+   "horns": "images",
+   "fortress": "images",
+   "room": "images"
+  },
+  "_doc": "FSGS/CoR-GS/AD-GS 3-view LLFF: explicit train/val/test lists in transforms.json (test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused images, never used for selection). Images: full-res images/ PIL-bicubic /4 -> 1008x756 PNG. Init: COLMAP 3.9.1 point_triangulator + patch_match_stereo/stereo_fusion on the 3 training views only. Built by reproductions/ad-gs/tools/prepare_llff_fewview.py (COLMAP env: conda env 'colmap'); NOT rebuildable by bench.py prepare (colmap_to_transforms.py would use all-view SfM points)."
+ },
+ "mipnerf360-pilr": {
+  "_doc": "3DGS/Mip-Splatting `-r 4` protocol: full-res images PIL-resized (default bicubic) by tools/make_pil_resized.py; poses/intrinsics/splits/points from native. Outdoor -r 4, indoor -r 2 (all 9 scenes since PGSR #58).",
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/mipnerf360/pilr",
+  "scenes": {
+   "bicycle": "images",
+   "flowers": "images",
+   "garden": "images",
+   "stump": "images",
+   "treehill": "images",
+   "room": "images",
+   "counter": "images",
+   "kitchen": "images",
+   "bonsai": "images"
+  }
+ },
+ "llff-fewview3-r8": {
+  "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+  "native_root": "/home/sejain/datasets/llff/fewview3-r8",
+  "scenes": {
+   "fern": "images",
+   "flower": "images",
+   "fortress": "images",
+   "horns": "images",
+   "leaves": "images",
+   "orchids": "images",
+   "room": "images",
+   "trex": "images"
+  },
+  "_doc": "FSGS/CoR-GS/DropGaussian 3-view LLFF at the official -r 8 resolution: same split and init as llff-fewview3 (test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused). Images: full-res images/ PIL-bicubic /8 -> 504x378 PNG. Init: COLMAP 3.9.1 point_triangulator + patch_match_stereo/stereo_fusion on the 3 training views only (horns/fortress/room points.npz copied from llff-fewview3, since the cloud does not depend on resolution). Built by reproductions/ad-gs/tools/prepare_llff_fewview.py --downscale 8; NOT rebuildable by bench.py prepare."
+ },
+ "mipnerf360-1600": {
+  "_doc": "3DGS default loader protocol (-r -1 auto): full-res PIL-resized to width 1600 (scale=W/1600). tools/make_pil_resized.py --width 1600; poses/splits/points from native, intrinsics rescaled.",
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/mipnerf360/w1600",
+  "scenes": {
+   "garden": "images",
+   "bicycle": "images",
+   "counter": "images",
+   "stump": "images",
+   "flowers": "images",
+   "treehill": "images",
+   "room": "images",
+   "kitchen": "images",
+   "bonsai": "images"
+  }
+ },
+ "blender-fewview6": {
+  "_doc": "SplatFields 6-view NeRF-Synthetic (Blender) protocol: train = official KMeans(n, random_state=0) camera selection (sklearn 1.0.2, reproductions/splatfields/tools/select_views.py -> views.json), test = all 200 transforms_test views, val = first 8 transforms_val views (never used for selection); 800x800, RGBA composited on white and truncated to 8 bit (official np.byte cast); world scaled by 2/model_scale (official); points.npz = 100k visual-hull grid samples (official 'hull' init); masks.npz = train alpha for the mask loss. Built by reproductions/splatfields/tools/prepare_blender_fewview.py; NOT rebuildable by bench.py prepare. Raw: nerfbaselines HF mirror of nerf_synthetic (original 2020 files).",
+  "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
+  "native_root": "/home/sejain/datasets/nerf_synthetic/fewview6",
+  "scenes": {
+   "chair": "images",
+   "hotdog": "images",
+   "ficus": "images"
+  }
+ },
+ "blender-fewview6-sf": {
+  "_doc": "SplatFields stage 2 of blender-fewview6: identical images/splits/masks (hard links); points.npz = means of the 40k splatfields-3dgs run on blender-fewview6, hull-filtered with the train masks, random <=100k (official --pts_samples load --max_num_pts 100000). Built by reproductions/splatfields/tools/make_stage2.py AFTER the stage-1 benchmark; NOT rebuildable by bench.py prepare.",
+  "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
+  "native_root": "/home/sejain/datasets/nerf_synthetic/fewview6-sf",
+  "scenes": {
+   "chair": "images",
+   "hotdog": "images",
+   "ficus": "images"
+  }
+ },
+ "blender-fewview12": {
+  "_doc": "SplatFields 12-view NeRF-Synthetic (Blender) protocol: train = official KMeans(n, random_state=0) camera selection (sklearn 1.0.2, reproductions/splatfields/tools/select_views.py -> views.json), test = all 200 transforms_test views, val = first 8 transforms_val views (never used for selection); 800x800, RGBA composited on white and truncated to 8 bit (official np.byte cast); world scaled by 2/model_scale (official); points.npz = 100k visual-hull grid samples (official 'hull' init); masks.npz = train alpha for the mask loss. Built by reproductions/splatfields/tools/prepare_blender_fewview.py; NOT rebuildable by bench.py prepare. Raw: nerfbaselines HF mirror of nerf_synthetic (original 2020 files).",
+  "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
+  "native_root": "/home/sejain/datasets/nerf_synthetic/fewview12",
+  "scenes": {
+   "chair": "images",
+   "hotdog": "images",
+   "ficus": "images"
+  }
+ },
+ "blender-fewview12-sf": {
+  "_doc": "SplatFields stage 2 of blender-fewview12: identical images/splits/masks (hard links); points.npz = means of the 40k splatfields-3dgs run on blender-fewview12, hull-filtered with the train masks, random <=100k (official --pts_samples load --max_num_pts 100000). Built by reproductions/splatfields/tools/make_stage2.py AFTER the stage-1 benchmark; NOT rebuildable by bench.py prepare.",
+  "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
+  "native_root": "/home/sejain/datasets/nerf_synthetic/fewview12-sf",
+  "scenes": {
+   "chair": "images",
+   "hotdog": "images",
+   "ficus": "images"
+  }
+ },
+ "llff-fewview3-r8-dng": {
+  "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+  "native_root": "/home/sejain/datasets/llff/fewview3-r8-dng",
+  "scenes": {
+   "fern": "images",
+   "flower": "images",
+   "fortress": "images",
+   "horns": "images",
+   "leaves": "images",
+   "orchids": "images",
+   "room": "images",
+   "trex": "images"
+  },
+  "_doc": "DNGaussian 3-view LLFF (official scripts/run_llff.sh): images/ (hard links) and transforms.json (byte copy) of llff-fewview3-r8 (same split: test = every 8th sorted image, train = 3 uniform np.linspace+round of the rest, val = unused; 504x378 PIL bicubic /8). Differs from llff-fewview3-r8 in init and sidecar: points.npz = official --rand_pcd (np.random.seed(0); uniform box from the bbox of the FULL LLFF sparse/0/points3D.bin: int(max extent*50) points in [20th-smallest, +1.3 extent]); dng_depth.npz = MiDaS v3 DPT_Hybrid (dpt_hybrid_384.pt, sha256 501f0c75...) depth of the 3 TRAINING views only (official get_depth_map_for_llff_dtu.py: full-res -> dpt_transform -> bicubic to H/8xW/8 -> uint16 min-max; target 255 - png/255), keyed by the native viewmat, plus the official 180-pose spiral camera centres (CreateLLFFSpiral) for near-camera pruning. Built by reproductions/dngaussian/tools/prepare_dng_llff.py (PYTHONPATH=~/models/dpt/pylib for timm 0.6.12, MiDaS repo in ~/models/dpt/midas_repo); NOT rebuildable by bench.py prepare."
+ },
+ "mipnerf360-sgs12": {
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/mipnerf360/sparsegs12",
+  "scenes": {
+   "bicycle": "images",
+   "bonsai": "images",
+   "counter": "images",
+   "garden": "images",
+   "kitchen": "images",
+   "stump": "images"
+  },
+  "_doc": "SparseGS 12-view Mip-NeRF 360: train = the 12 images of the authors' released <scene>_12.zip (Google Drive from the official README; 6 scenes, no room; not llffhold8-compatible), test = llffhold8 minus train, val = all other non-train images (official metrics.py set = test+val). Images: full-res PIL bicubic /4 for ALL scenes (paper: 1/4) -> PNG. Init: COLMAP 3.9.1 MVS (point_triangulator with known poses, patch_match max_image_size 2000, geom_consistency) on the 12 train views only. Sidecar sgs_depth.npz = BoostingMonocularDepth (LeReS res101 + pix2pix merge, Final) of the train views, cv2 cubic resize + min-max (official loader), keyed by native viewmat. Built by reproductions/sparsegs/tools/prepare_m360_sgs12.py (BMD repo ~/models/bmd/repo, PYTHONPATH ~/models/bmd/pylib); NOT rebuildable by bench.py prepare."
+ },
+ "dtu-fatesgs-23_24_33": {
+  "raw_root": "/home/sejain/datasets/dtu_fatesgs/extract",
+  "native_root": "/home/sejain/datasets/dtu_fatesgs/native",
+  "scenes": {
+   "scan24": "images",
+   "scan37": "images",
+   "scan40": "images",
+   "scan55": "images",
+   "scan63": "images",
+   "scan65": "images",
+   "scan69": "images",
+   "scan83": "images",
+   "scan97": "images",
+   "scan105": "images",
+   "scan106": "images",
+   "scan110": "images",
+   "scan114": "images",
+   "scan118": "images",
+   "scan122": "images"
+  },
+  "_doc": "FatesGS authors' DTU release (Google Drive folder 143jIT9DJN17gigp3uxBtqBv6UBdcO7Lm: DTU_TEST.zip, DTU_EVAL.zip, set_23_24_33_depth.zip). train = views 23,24,33 (RGB 777x581 per-channel PIL bicubic, alpha dropped), val = view 22, test = views 25,28 (from set_22_25_28); points.npz = dense/fused.ply; fatesgs.npz sidecar (Marigold depth, pairs, alpha masks) + images_full/ + dtu_eval/. Built by reproductions/fatesgs/tools/prepare_dtu.py; NOT rebuildable by bench.py prepare. GT for CD: /home/sejain/datasets/dtu_official/gt (official SampleSet ObsMask + Points/stl)."
+ },
+ "llff-fewview3-cgs": {
+  "raw_root": "/home/sejain/datasets/llff/coherentgs-official/nerf_llff_data",
+  "native_root": "/home/sejain/datasets/llff/fewview3-cgs",
+  "scenes": {
+   "fern": "images",
+   "flower": "images",
+   "fortress": "images",
+   "horns": "images",
+   "leaves": "images",
+   "orchids": "images",
+   "room": "images",
+   "trex": "images"
+  },
+  "_doc": "CoherentGS 3-view LLFF (official readLLFFInfo): official images_8 PNGs (504x378, pixel-identical to nerf_llff_data/images_8), official poses_bounds frame (fix_rotation, translations x 1/(0.75 min bound)), focal = f/8, centred principal point; test = every 8th sorted image, train = round(linspace) 3 of the rest (same names as llff-fewview3-r8), val = rest. points.npz = one point per training pixel (unaligned Depth-Anything depth after the official bilateral filtering), coherentgs.npz = depth-layer masks (5 ch), FlowFormer++ flows + consistency weights from the author-processed archive llff_sparse.zip (sha256 84caaa59...). Built by reproductions/coherentgs/tools/prepare_cgs_llff.py (PYTHONPATH=~/models/coherentgs/pylib for sklearn); NOT rebuildable by bench.py prepare."
+ },
+ "mipnerf360-1920": {
+  "_doc": "SuGaR load_gs_cameras protocol (max_img_size=1920): full-res PIL-resized so the longer side is 1920, size=(round(W/s),round(H/s)), s=max(W,H)/1920. tools/make_pil_resized.py --max-side 1920; poses/splits/points from native, intrinsics rescaled.",
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/mipnerf360/w1920",
+  "scenes": {
+   "garden": "images",
+   "bicycle": "images",
+   "counter": "images"
+  }
+ },
+ "deblurnerf-real": {
+  "_doc": "Deblur-NeRF real defocus set (DOF-GS protocol): images/ PIL /4 = 600x400, per-scene hold (cake 9, caps 5, cisco 7, cupcake 6, cups 8, daisy 8, sausage 6, seal 6, tools 7), test = sharp references, validation = copies of test. Built by reproductions/dofgs/tools/prepare_deblurnerf.py (not bench.py prepare).",
+  "raw_root": "/home/sejain/datasets/deblurnerf/real_defocus_blur",
+  "native_root": "/home/sejain/datasets/deblurnerf/native",
+  "scenes": {
+   "cake": "images",
+   "caps": "images",
+   "cisco": "images",
+   "cupcake": "images",
+   "cups": "images",
+   "daisy": "images",
+   "sausage": "images",
+   "seal": "images",
+   "tools": "images"
+  }
+ },
+ "dtu-gsurfels": {
+  "raw_root": "/home/sejain/datasets/gsurfels_dtu/raw",
+  "native_root": "/home/sejain/datasets/gsurfels_dtu/native",
+  "scenes": {
+   "scan24": "images",
+   "scan37": "images",
+   "scan40": "images",
+   "scan55": "images",
+   "scan63": "images",
+   "scan65": "images",
+   "scan69": "images",
+   "scan83": "images",
+   "scan97": "images",
+   "scan105": "images",
+   "scan106": "images",
+   "scan110": "images",
+   "scan114": "images",
+   "scan118": "images",
+   "scan122": "images"
+  },
+  "_doc": "Gaussian Surfels authors' DTU (HF turandai/gaussian-surfels-dtu, IDR layout, masks + Omnidata normals). 1600x1200; test = NeuS2 split (sorted ids 8,13,16,21,26,31,34 [+56]); validation = byte copies of test; images masked on black (official PSNR protocol); gsurfels/ sidecar (masks, priors, downscaled images, init); points.npz = 1e6 random points visual-hull pruned; cameras.npz for the evaluator. Built by reproductions/gaussian-surfels/tools/prepare_dtu.py; NOT rebuildable by bench.py prepare."
+ },
+ "mushroom-vr_room": {
+  "raw_root": "/home/sejain/datasets/mushroom/raw/vr_room_x",
+  "native_root": "/home/sejain/datasets/mushroom/native",
+  "scenes": {
+   "vr_room": "images"
+  },
+  "_doc": "MuSHRoom iPhone vr_room (zenodo 10230733). transforms.json explicit splits: train 376 long_capture frames, test 42 test.txt frames (within), validation 186 short_capture frames (cross trajectory; reported, never used for selection). points.npz = 1M official-style TSDF sensor-depth points; dnsplat/ sidecar (sensor depth, Omnidata v2 normals sha256 38db3f7d..., init scales/quats). Built by reproductions/dn-splatter/tools/prepare_mushroom.py (PYTHONPATH=~/models/dtueval-pylib:~/models/dpt/pylib:~/models/omnidata/pylib); NOT rebuildable by bench.py prepare."
+ },
+ "mushroom": {
+  "native_root": "/home/sejain/datasets/mushroom/native",
+  "scenes": {
+   "coffee_room": "images",
+   "honka": "images",
+   "kokko": "images",
+   "sauna": "images",
+   "computer": "images",
+   "vr_room": "images"
+  },
+  "_doc": "MuSHRoom iPhone (zenodo 10230733). Splits: train long_capture minus test.txt; test = test.txt (within); validation = short_capture (cross). dnsplat/ sidecar (prepare_mushroom.py, copied from dn-splatter) + agsmesh/dnc_mask_u8.npy (prepare_dnc.py). NOT rebuildable by bench.py prepare; tools/prepare_rooms.sh <gpu> rooms..."
+ },
+ "mipnerf360-ms": {
+  "_doc": "Multi-scale Mip-NeRF 360 (MTMT; Analytic-Splatting / Mip-Splatting train_ms.py + mtmt_360.sh protocol). From native images_4 (outdoor) / images_2 (indoor): each frame PIL Image.resize((round(W/s), round(H/s))) default BICUBIC for s in 1,2,4,8 -> images/s{s}/<stem>.png (1x = the images_N decode, lossless PNG); fl_x*w/W, fl_y*h/H, cx=w/2, cy=h/2. Explicit splits: test = llffhold8 frames at all 4 scales; train = the rest at all 4 scales, with each 1x train frame hard-linked 3x (images/s1, s1_dup1, s1_dup2) to approximate --sample_more_highres (P(1x)=0.50 vs official 0.475, fidelity gap); validation = hard-linked copies of test (images/val/s*), never used for selection. points.npz = native SfM. Per-scale metrics: tools/multiscale_summary.py. Built by tools/make_multiscale.py --native <native scene> --output <root>/<scene>; NOT rebuildable by bench.py prepare.",
+  "raw_root": "/home/sejain/datasets/mipnerf360/native",
+  "native_root": "/home/sejain/datasets/mipnerf360/ms",
+  "scenes": {
+   "garden": "images",
+   "counter": "images"
+  }
+ },
+ "deblurnerf-motion": {
+  "_doc": "Deblur-NeRF real camera-motion-blur set (DeblurGS protocol): full-res 2400x1600 JPGs PIL /4 = 600x400 (official -r 4; COLMAP was run at 600x400), split int(name) % hold == 0 -> test (sharp references; hold ball 7, basket 7, buick 7, coffee 6, decoration 6, girl 7, heron 8, parterre 6, puppet 6, stair 6), validation = copies of test. Built by reproductions/deblurgs/tools/prepare_motionblur.py after tools/download_motionblur.py (Drive rate-limited); NOT rebuildable by bench.py prepare.",
+  "raw_root": "/home/sejain/datasets/deblurnerf/real_camera_motion_blur",
+  "native_root": "/home/sejain/datasets/deblurnerf/native-motion",
+  "scenes": {
+   "ball": "images",
+   "basket": "images",
+   "buick": "images",
+   "coffee": "images",
+   "decoration": "images",
+   "girl": "images",
+   "heron": "images",
+   "parterre": "images",
+   "puppet": "images",
+   "stair": "images"
+  }
+ },
+ "robustnerf": {
+  "_doc": "SpotLessSplats protocol (official spotless_trainer.py): authors' preprocessed scenes from Borealis doi:10.5683/SP3/WOFXFT (raw at /bigdata/sejain/datasets/spotless/raw/<scene>: images_8, sparse/0, SD features). images_8 (official data_factor 8), OPENCV distortion removed with cv2 (official Parser), PNG; world normalised (similarity_from_cameras + align_principle_axes, official normalize=True); train = '*clutter*', test = '*extra*' (clean held-out views), validation = hard-linked copies of test (never used for selection); points.npz = all normalised SfM points; SD/ -> authors' SD 2.1 features of the train images; SLS_clusters/ = SLS-agg labels. Built by reproductions/spotlesssplats/tools/prepare_spotless.py (+ make_clusters.py); NOT rebuildable by bench.py prepare. Only android (robustnerf) and patio (onthego) are downloaded.",
+  "raw_root": "/bigdata/sejain/datasets/spotless/raw",
+  "native_root": "/home/sejain/datasets/spotless/native",
+  "scenes": {
+   "android": "images_8",
+   "statue": "images_8",
+   "yoda": "images_8",
+   "crab2": "images_8"
+  }
+ },
+ "onthego": {
+  "_doc": "SpotLessSplats protocol (official spotless_trainer.py): authors' preprocessed scenes from Borealis doi:10.5683/SP3/WOFXFT (raw at /bigdata/sejain/datasets/spotless/raw/<scene>: images_8, sparse/0, SD features). images_8 (official data_factor 8), OPENCV distortion removed with cv2 (official Parser), PNG; world normalised (similarity_from_cameras + align_principle_axes, official normalize=True); train = '*clutter*', test = '*extra*' (clean held-out views), validation = hard-linked copies of test (never used for selection); points.npz = all normalised SfM points; SD/ -> authors' SD 2.1 features of the train images; SLS_clusters/ = SLS-agg labels. Built by reproductions/spotlesssplats/tools/prepare_spotless.py (+ make_clusters.py); NOT rebuildable by bench.py prepare. Only android (robustnerf) and patio (onthego) are downloaded.",
+  "raw_root": "/bigdata/sejain/datasets/spotless/raw",
+  "native_root": "/home/sejain/datasets/spotless/native",
+  "scenes": {
+   "mountain": "images_8",
+   "fountain": "images_8",
+   "corner": "images_8",
+   "patio": "images_8",
+   "spot": "images_8",
+   "patio-high": "images_8"
+  }
+ },
+ "phototourism": {
+  "_doc": "Photo Tourism (IMC-2020 dense models) with NeRF-W train/test splits (.tsv), full resolution. Built by reproductions/wildgaussians/tools/prepare_wild.py; NOT rebuildable by bench.py prepare. Evaluate appearance methods with their own NeRF-W test-time evaluator (left-half embedding optimisation, right-half metrics).",
+  "native_root": "/home/sejain/datasets/phototourism/native",
+  "scenes": {
+   "brandenburg-gate": "images",
+   "sacre-coeur": "images"
+  }
+ },
+ "onthego-undist": {
+  "_doc": "NeRF On-the-go undistorted (HF NerfBaselines set), intrinsics rescaled as NerfBaselines; patio x4 (480x270), patio-high x8. Built by reproductions/wildgaussians/tools/prepare_wild.py; NOT rebuildable by bench.py prepare.",
+  "native_root": "/home/sejain/datasets/onthego-undist/native",
+  "scenes": {
+   "patio": "images",
+   "patio-high": "images"
+  }
+ },
+ "phototourism-sfw": {
+  "_doc": "Splatfacto-W official-code protocol on Photo Tourism: NeRF-W split (tsv, NaN rows dropped), full resolution; train split = all train images + left-half PNG crops (columns < W//2) of every test image (the code trains on all images with the test images' right halves masked); test = full test images, scored on columns >= W//2 by ss_splatfactow.evaluate. Hard links of phototourism/native. Built by reproductions/splatfacto-w/tools/prepare_sfw.py; NOT rebuildable by bench.py prepare.",
+  "native_root": "/home/sejain/datasets/phototourism/sfw",
+  "scenes": {
+   "brandenburg-gate": "images",
+   "sacre-coeur": "images"
+  }
+ },
+ "robustsplat-onthego": {
+  "_doc": "RobustSplat protocol (official github.com/fcyycf/RobustSplat @ a130281): authors' released data hf.co/datasets/fcy99/RobustSplat-data (COLMAP re-run + image_undistorter PINHOLE, mediapy-downsampled images_<f>/images_<4f> JPG), raw at /bigdata/sejain/datasets/robustsplat/raw. Native: images_<f> hard-linked as-is, Inria FoV camera (centred principal point), COLMAP world frame, train='*clutter*', test='*extra*' (clean unused), validation = hard-linked copies of test (never used for selection); coarse/ = images_<4f> for RobustSplat mask bootstrapping. Built by reproductions/robustsplat/tools/prepare_robustsplat.py; NOT rebuildable by bench.py prepare. Factors: patio 4, patio-high 8.",
+  "raw_root": "/bigdata/sejain/datasets/robustsplat/raw/NeRF_On-the-go_undistorted",
+  "native_root": "/home/sejain/datasets/robustsplat/native",
+  "scenes": {
+   "patio": "images",
+   "patio-high": "images"
+  }
+ },
+ "robustsplat-robustnerf": {
+  "_doc": "RobustSplat protocol (official github.com/fcyycf/RobustSplat @ a130281): authors' released data hf.co/datasets/fcy99/RobustSplat-data (COLMAP re-run + image_undistorter PINHOLE, mediapy-downsampled images_<f>/images_<4f> JPG), raw at /bigdata/sejain/datasets/robustsplat/raw. Native: images_<f> hard-linked as-is, Inria FoV camera (centred principal point), COLMAP world frame, train='*clutter*', test='*extra*' (clean unused), validation = hard-linked copies of test (never used for selection); coarse/ = images_<4f> for RobustSplat mask bootstrapping. Built by reproductions/robustsplat/tools/prepare_robustsplat.py; NOT rebuildable by bench.py prepare. Factor 8.",
+  "raw_root": "/bigdata/sejain/datasets/robustsplat/raw/RobustNeRF_undistorted",
+  "native_root": "/home/sejain/datasets/robustsplat/native",
+  "scenes": {
+   "android": "images",
+   "crab2": "images"
+  }
+ },
+ "deblur3dgs-defocus": {
+  "_doc": "Deblur-NeRF real defocus blur from the Deblurring-3DGS release (deblur_dataset.zip; authors re-ran COLMAP -> denser SfM points than deblurnerf-*). Full-res images PIL /4 = 600x400 (official -r 4), split idx % hold == 0 of sorted names -> test (sharp), validation = copies of test. Built by reproductions/deblurring-3dgs/tools/prepare_official.py (not bench.py prepare). Data on /bigdata via ~/datasets/deblurring3dgs symlink.",
+  "raw_root": "/home/sejain/datasets/deblurring3dgs/raw/deblur_dataset/real_defocus_blur",
+  "native_root": "/home/sejain/datasets/deblurring3dgs/native-defocus",
+  "scenes": {
+   "cake": "images",
+   "caps": "images",
+   "cisco": "images",
+   "coral": "images",
+   "cupcake": "images",
+   "cups": "images",
+   "daisy": "images",
+   "sausage": "images",
+   "seal": "images",
+   "tools": "images"
+  }
+ },
+ "deblur3dgs-motion": {
+  "_doc": "Deblur-NeRF real motion blur from the Deblurring-3DGS release (deblur_dataset.zip; authors re-ran COLMAP -> denser SfM points than deblurnerf-*). Full-res images PIL /4 = 600x400 (official -r 4), split idx % hold == 0 of sorted names -> test (sharp), validation = copies of test. Built by reproductions/deblurring-3dgs/tools/prepare_official.py (not bench.py prepare). Data on /bigdata via ~/datasets/deblurring3dgs symlink.",
+  "raw_root": "/home/sejain/datasets/deblurring3dgs/raw/deblur_dataset/real_camera_motion_blur",
+  "native_root": "/home/sejain/datasets/deblurring3dgs/native-motion",
+  "scenes": {
+   "ball": "images",
+   "basket": "images",
+   "buick": "images",
+   "coffee": "images",
+   "decoration": "images",
+   "girl": "images",
+   "heron": "images",
+   "parterre": "images",
+   "puppet": "images",
+   "stair": "images"
+  }
+ },
+ "blender-fisherrf": {
+  "_doc": "FisherRF / 3DGS NeRF-Synthetic full protocol (official readNerfSyntheticInfo, --eval --white_background): train = the 100 transforms_train.json views in file order (the active-selection candidate pool; native train index i == official train index i), test = all 200 transforms_test.json views (never candidates), validation = first 8 transforms_val.json views (never used for selection). 800x800, RGBA composited on white and truncated to 8 bit (official np.byte cast). points.npz = official random init (np.random.seed(0); 100k U[-1.3,1.3]^3, colours SH2RGB(U/255) stored as uint8 like storePly). Raw: nerfbaselines HF mirror of nerf_synthetic (drums/lego/materials/mic/ship on /bigdata via symlinks). Data on /bigdata via ~/datasets/nerf_synthetic/fisherrf symlink. Built by reproductions/fisherrf/tools/prepare_blender_full.py; NOT rebuildable by bench.py prepare.",
+  "raw_root": "/home/sejain/datasets/nerf_synthetic/raw",
+  "native_root": "/home/sejain/datasets/nerf_synthetic/fisherrf",
+  "scenes": {
+   "chair": "images",
+   "drums": "images",
+   "ficus": "images",
+   "hotdog": "images",
+   "lego": "images",
+   "materials": "images",
+   "mic": "images",
+   "ship": "images"
+  }
+ },
+ "mipnerf360-msgs": {
+  "_doc": "Multi-scale Mip-NeRF 360 for MS-GS (arXiv 2311.17089, official train.py/train_all.py): base = official -r -1 loader (full-res PIL-resized to width 1600 = mipnerf360-1600), scales s = int(W/(g*s)) PIL BICUBIC from the full-res JPEG, FoV camera. Explicit splits: train = llffhold train frames at 1x only (images/s1, hard links of w1600; the ms-gs plugin renders its 4x..128x training views itself; other methods e.g. gsplat train single-scale = the paper's 3DGS row); test = held-out frames at 1,2,4,8,16,32,64x (128x = 12x8 px is below the loader minimum); validation = hard links (images/val/s*). Built by tools/make_multiscale_msgs.py; NOT rebuildable by bench.py prepare. Per-scale metrics: tools/multiscale_summary.py --dataset mipnerf360-msgs --scales 1,4,16,64.",
+  "raw_root": "/home/sejain/datasets/mipnerf360/w1600",
+  "native_root": "/home/sejain/datasets/mipnerf360/msgs",
+  "scenes": {
+   "garden": "images",
+   "counter": "images"
+  }
+ },
+ "mipnerf360-conegs": {
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/conegs-init/mipnerf360",
+  "scenes": {
+   "garden": "images_4",
+   "room": "images_2"
+  },
+  "_note": "ConeGS iNGP-initialized copy (same transforms.json + hard-linked images => same protocol_id; points.npz = 1M iNGP points). Built by ss-conegs-init, not bench.py prepare."
+ },
+ "mipnerf360-nerfinit": {
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/nerfinit-gs/mipnerf360",
+  "scenes": {
+   "garden": "images_4",
+   "room": "images_2"
+  },
+  "_note": "Foroutan et al. (2404.12547) NerfAcc-iNGP@5k-initialized copy: same transforms.json + hard-linked images => same protocol_id as mipnerf360; points.npz = 500k volume-weight samples; nerfinit/ = depth sidecar + 3-NN scales. Built by ss-nerfinit-prep, not bench.py prepare."
+ },
+ "mipnerf360-detgs": {
+  "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+  "native_root": "/home/sejain/datasets/detgs-depth/mipnerf360",
+  "scenes": {
+   "garden": "images_4",
+   "counter": "images_2"
+  },
+  "_note": "DET-GS prior copy (same transforms.json + hard-linked images/points.npz => same protocol_id as mipnerf360; detgs_priors.npz = Depth Anything V2-L disparity + Canny 20/200 of llffhold8 train views). Built by reproductions/det-gs/tools/prepare_detgs.py, not bench.py prepare."
+ },
+ "deblur3dgs-synmotion": {
+  "_doc": "Deblur-NeRF synthetic camera-motion-blur set from the Deblurring-3DGS release (deblur_dataset.zip, COLMAP on blurry images). Full res 600x400 (official -r 1), split idx % 8 == 0 of sorted names -> test (sharp), validation = copies of test. Scene 'wine' = 'Trolley' in CRiM-GS tables. Built by reproductions/crim-gs/tools/prepare_synthetic.py (not bench.py prepare).",
+  "raw_root": "/home/sejain/datasets/deblurring3dgs/raw/deblur_dataset/synthetic_camera_motion_blur",
+  "native_root": "/home/sejain/datasets/deblurring3dgs/native-synmotion",
+  "scenes": {
+   "cozy2room": "images",
+   "factory": "images",
+   "pool": "images",
+   "tanabata": "images",
+   "wine": "images"
+  }
+ },
+ "dtu-2dgs": {
+  "raw_root": "/home/sejain/datasets/dtu_2dgs/raw/DTU",
+  "native_root": "/home/sejain/datasets/dtu_2dgs/native",
+  "scenes": {
+   "scan24": "images",
+   "scan37": "images",
+   "scan122": "images"
+  },
+  "_doc": "2DGS DTU release (Google Drive 1SJFgt8qhQomHX55Q4xSvYE2C6-8tFll9 dtu.tar.gz; only scan24/37/122 extracted). Official 3DGS loader with -r 2 --eval: 777x581 PIL-bicubic RGBA, rgb*alpha on BLACK (methods must render on black), llffhold8 on sorted names (7-8 test views), init = sparse/0/points3D.txt. Built by reproductions/erank-gs/tools/prepare_dtu_2dgs.py; NOT rebuildable by bench.py prepare. Data on /bigdata (symlink ~/datasets/dtu_2dgs)."
+ }
 }

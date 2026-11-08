@@ -1,0 +1,65 @@
+{
+  "paper": "AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering",
+  "arxiv": "2504.12811",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.835, "ssim": 0.836, "lpips": 0.188},
+        "per_scene": {
+          "psnr": {"bicycle": 25.74, "flowers": 22.13, "garden": 27.50, "stump": 27.24, "treehill": 23.03,
+                   "bonsai": 32.32, "counter": 29.24, "kitchen": 31.88, "room": 31.45},
+          "ssim": {"bicycle": 0.801, "flowers": 0.648, "garden": 0.876, "stump": 0.813, "treehill": 0.662,
+                   "bonsai": 0.948, "counter": 0.917, "kitchen": 0.934, "room": 0.928},
+          "lpips": {"bicycle": 0.171, "flowers": 0.285, "garden": 0.099, "stump": 0.171, "treehill": 0.275,
+                    "bonsai": 0.189, "counter": 0.183, "kitchen": 0.121, "room": 0.197}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.443, "ssim": 0.814, "lpips": 0.215},
+        "per_scene": {
+          "psnr": {"bicycle": 25.19, "flowers": 21.53, "garden": 27.30, "stump": 26.62, "treehill": 22.46,
+                   "bonsai": 32.11, "counter": 28.97, "kitchen": 31.33, "room": 31.48},
+          "ssim": {"bicycle": 0.764, "flowers": 0.605, "garden": 0.864, "stump": 0.772, "treehill": 0.633,
+                   "bonsai": 0.941, "counter": 0.907, "kitchen": 0.926, "room": 0.919},
+          "lpips": {"bicycle": 0.210, "flowers": 0.335, "garden": 0.107, "stump": 0.214, "treehill": 0.326,
+                    "bonsai": 0.200, "counter": 0.198, "kitchen": 0.125, "room": 0.216}
+        }
+      },
+      "mcmc": {
+        "per_scene": {"psnr": {"bicycle": 25.69, "flowers": 22.01, "garden": 27.87, "stump": 27.36, "treehill": 22.94,
+                               "bonsai": 32.65, "counter": 29.38, "kitchen": 32.09, "room": 32.25}},
+        "average": {"psnr": 28.027, "ssim": 0.836, "lpips": 0.187}
+      },
+      "source": "Tab. 1 (image_metrics.tex) averages; supp. Tab. 'Per-scene image metrics' (9_appendix.tex, tab:suppl_perscene_full) per scene"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.582, "ssim": 0.867, "lpips": 0.145},
+        "per_scene": {"psnr": {"train": 21.73, "truck": 25.43}, "ssim": {"train": 0.833, "truck": 0.900},
+                      "lpips": {"train": 0.184, "truck": 0.106}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.734, "ssim": 0.847, "lpips": 0.175},
+        "per_scene": {"psnr": {"train": 22.05, "truck": 25.41}, "ssim": {"train": 0.814, "truck": 0.880},
+                      "lpips": {"train": 0.205, "truck": 0.144}}
+      },
+      "source": "Tab. 1; supp. per-scene table"
+    },
+    "db": {
+      "method": {
+        "average": {"psnr": 30.485, "ssim": 0.913, "lpips": 0.222},
+        "per_scene": {"psnr": {"drjohnson": 29.90, "playroom": 31.07}, "ssim": {"drjohnson": 0.910, "playroom": 0.916},
+                      "lpips": {"drjohnson": 0.223, "playroom": 0.220}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 29.510, "ssim": 0.902, "lpips": 0.237},
+        "per_scene": {"psnr": {"drjohnson": 29.05, "playroom": 29.97}, "ssim": {"drjohnson": 0.900, "playroom": 0.905},
+                      "lpips": {"drjohnson": 0.240, "playroom": 0.234}}
+      },
+      "source": "Tab. 1; supp. per-scene table"
+    }
+  },
+  "notes": "Single-scale standard-resolution protocol (images_4 outdoor / images_2 indoor, llffhold 8, 30k it, MCMC with per-scene caps from full_eval.py). The 1x rows of the multi-resolution table (bicycle 25.74, bonsai 32.32) equal the per-scene table. 3DGS row is the authors' table (not necessarily the 3DGS paper numbers). Scout's values bicycle 25.74, garden 27.50, room 31.45, truck 25.43 verified against 9_appendix.tex."
+}

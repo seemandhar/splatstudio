@@ -1,0 +1,30 @@
+{
+ "method": "augs",
+ "datasets": {
+  "mipnerf360-pilr": [
+   "bicycle",
+   "room"
+  ]
+ },
+ "steps": 35070,
+ "steps_per_scene": {
+  "mipnerf360-pilr/bicycle": 35070,
+  "mipnerf360-pilr/room": 38160
+ },
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": {
+  "bicycle": "baseline3dgs-mipnerf360-pilr-30000",
+  "room": "baseline3dgs-mipnerf360-pilr-30000"
+ },
+ "paper_targets_psnr": {
+  "bicycle": 25.85,
+  "room": 32.39
+ },
+ "paper_delta_over_own_base_psnr": {
+  "bicycle": 0.11,
+  "room": 0.72
+ },
+ "notes": "Variant 'Ours (3DGS, sh=3)' (supp. per_scene_m360 / diff_ps_mipnerf). Official loader uses --resolution 4/2 = PIL resize of full-res images -> protocol mipnerf360-pilr. One ss-train job = 30000 base steps (identical to the built-in gsplat 3DGS method) + 30 x |train| joint steps; the density refuses any other --steps (bicycle 169 train views -> 35070, room 272 -> 38160), so launch the two scenes as separate jobs. The base model alone is measured in the same run at step 30000 and written to <run>/base_test.json (compare its gain with the paper's delta); the shared pilr gsplat baseline (bicycle 25.45, room 31.69) is the independent base. Paper implied base (Ours - delta): bicycle 25.74 (our pilr base 25.45, -0.29 dB: base does not match), room 31.67 (matches 31.69). Judge primarily the gain over the in-run base_test.json vs the paper delta. Training images are reloaded from --data (bench.py passes it). Expect long runs: smoke 2D fit ~1.2 s/view at 170 steps + ~0.9 s/view projection; at paper settings (~6x200 + 1000 2D steps/view, ~10x more kernels on bicycle) roughly 20-30 s/view (bicycle ~1-1.5 h, room ~2 h) on top of the base run; peak memory ~15 GB on bicycle (6.9M Gaussians) -> --min-free-gb 24.",
+ "primary_comparison": "gain over <run>/base_test.json vs paper delta (bicycle +0.110, room +0.720)"
+}

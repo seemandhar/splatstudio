@@ -1,0 +1,43 @@
+{
+ "paper": "BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis",
+ "slug": "bbsplat",
+ "plan_id": 129,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "gap_analysis_1": "done",
+  "report": "done"
+ },
+ "outcome": "partial",
+ "method": "bbsplat",
+ "arxiv": "2411.08508",
+ "official_code": "github.com/david-svitov/BBSplat cff8d6a + diff-bbsplat-rasterization 2dbc336 (vendored CUDA, JIT)",
+ "custom_cuda": true,
+ "benchmark_target": "mipnerf360 bicycle (bbsplat, cap 60K) + tandt truck (bbsplat-tnt, cap 30K), 32000 steps; paper 23.28 / 24.19",
+ "smoke": {
+  "bbsplat_2k_bicycle": 20.73,
+  "gsplat_2k_bicycle": 21.14
+ },
+ "results": {
+  "bicycle": {
+   "ours": 23.12,
+   "paper": 23.28,
+   "run": "runs/bbsplat-m360"
+  },
+  "truck": {
+   "ours": 22.2,
+   "paper": 24.19,
+   "run": "runs/bbsplat-tnt"
+  },
+  "truck_iter1": {
+   "ours": 23.12,
+   "paper": 24.19,
+   "run": "runs/bbsplat-tnt-sky2k",
+   "method": "bbsplat-tnt-sky2k",
+   "label": "post-hoc"
+  }
+ },
+ "partial_reason": "bicycle matched (-0.16); truck -1.07 after post-hoc sky2k iteration; remaining gap attributed to authors-own T&T COLMAP data (not available)"
+}

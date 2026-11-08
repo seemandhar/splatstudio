@@ -1,0 +1,18 @@
+{
+ "method": "det-gs",
+ "datasets": {"mipnerf360-detgs": ["garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "baseline": "baseline3dgs-mipnerf360-30000 (same protocol_id: hard-linked images, identical transforms.json)",
+ "paper_targets_psnr": {"garden": 28.09, "counter": 30.07},
+ "paper_3dgs_row_psnr": {"garden": 27.73, "counter": 29.12},
+ "proposed_datasets_json_entries": {
+  "mipnerf360-detgs": {
+   "raw_root": "/home/sejain/datasets/mipnerf360/360_v2",
+   "native_root": "/home/sejain/datasets/detgs-depth/mipnerf360",
+   "scenes": {"garden": "images_4", "counter": "images_2"},
+   "_note": "DET-GS prior copy (same transforms.json + hard-linked images/points.npz => same protocol_id as mipnerf360; detgs_priors.npz = Depth Anything V2-L disparity + Canny 20/200 of llffhold8 train views). Built by reproductions/det-gs/tools/prepare_detgs.py, not bench.py prepare."
+  }
+ }
+}

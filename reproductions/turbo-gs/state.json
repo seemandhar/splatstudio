@@ -1,0 +1,23 @@
+{
+ "paper": "Turbo-GS: Accelerating 3D Gaussian Fitting for High-Quality Radiance Fields",
+ "slug": "turbo-gs",
+ "plan_id": 117,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "method": "turbo-gs",
+ "result": {
+  "db_mean_psnr": 29.107,
+  "paper": 29.21,
+  "delta_vs_paper": -0.1,
+  "delta_vs_baseline": -0.17,
+  "paper_delta_vs_3dgs": -0.54
+ }
+}

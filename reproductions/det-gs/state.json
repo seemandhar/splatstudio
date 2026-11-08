@@ -1,0 +1,32 @@
+{
+ "paper": "DET-GS: Depth- and Edge-Aware Regularization for High-Fidelity 3D Gaussian Splatting",
+ "slug": "det-gs",
+ "plan_id": 111,
+ "stages": {
+  "paper-reader": "done",
+  "planner": "done",
+  "coder": "done",
+  "tester": "done",
+  "review-1": "fixed (major: error_tolerance 0.2; minors documented/space option)",
+  "benchmark": "done",
+  "gap-analysis-1": "done"
+ },
+ "outcome": "not-matched",
+ "method": "det-gs",
+ "dataset": "mipnerf360-detgs",
+ "bench_exps": [
+  "det-gs-mipnerf360"
+ ],
+ "result": {
+  "garden": {
+   "psnr": 26.51,
+   "paper": 28.09,
+   "gsplat": 26.89
+  },
+  "counter": {
+   "psnr": 28.42,
+   "paper": 30.07,
+   "gsplat": 28.85
+  }
+ }
+}

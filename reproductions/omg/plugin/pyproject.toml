@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-omg"
+version = "0.1.0"
+description = "OMG: Optimized Minimal 3D Gaussian Splatting (arXiv 2503.16924) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+omg = "ss_omg:method"
+omg-indoor = "ss_omg:indoor"
+omg-m = "ss_omg:medium"
+
+[tool.setuptools.packages.find]
+include = ["ss_omg*"]
+
+[tool.setuptools.package-data]
+ss_omg = ["csrc/*.cu", "csrc/*.cpp", "csrc/*.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

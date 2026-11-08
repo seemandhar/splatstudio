@@ -1,0 +1,12 @@
+{"method": "nerf-init-gs", "module": "ss_nerf_init_gs",
+ "components": [
+  {"name": "nerfinit-gsplat", "kind": "renderer", "factory": "ss_nerf_init_gs.renderer:create_renderer"},
+  {"name": "nerfinit-density", "kind": "density", "factory": "ss_nerf_init_gs.density:create_density"},
+  {"name": "photometric", "kind": "loss", "factory": "splatstudio.losses:create_photometric"},
+  {"name": "depth-distillation", "kind": "loss", "factory": "ss_nerf_init_gs.losses:create_depth_loss", "config": {"lambda_init": 0.9, "decay": 0.9, "decay_steps": 100}}],
+ "preprocessing": "ss-nerfinit-prep (ss_nerf_init_gs.preprocess:main)",
+ "fields": [],
+ "probes": ["nerfinit-hashgrid", "nerfinit-proposal-sampler", "nerfinit-surface-sampling", "nerfinit-ingp-fit", "nerfinit-init-loading", "nerfinit-depth-loss", "nerfinit-renderer-depth"],
+ "contributions": ["random-box-initialization (preprocessing variant)", "volumetric-initialization", "volumetric-structure-distillation"],
+ "fidelity_gaps": ["GS depth = centre camera-z, not ray-conditional mean", "fp32 torch iNGP vs tcnn fp16", "NeRF trained at images_2 for indoor vs nerfacc factor 4", "depth sidecar fp16", "runtime: white bg, sampling with replacement, SSIM valid conv", "inverse-CDF in lindisp s-space; opaque-background samples kept", "5k schedule scaled", "OMMO/SLAM not reproduced"],
+ "feasible_natively": true}

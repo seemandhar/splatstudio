@@ -1,0 +1,5 @@
+{"method": "loss-aware-dc", "datasets": {"mipnerf360": ["bicycle", "room"]}, "steps": 30000,
+ "per_scene_reported": true, "extra": "",
+ "targets": {"bicycle": {"psnr": 25.31, "paper_3dgs": 25.19}, "room": {"psnr": 32.07, "paper_3dgs": 31.38}},
+ "baseline": "baseline3dgs-mipnerf360-30000",
+ "notes": "App. B.1 per-scene PSNR (mean of 5 runs). Paper Num avg 1.9M on Mip-NeRF 360 vs 3.4M for 3DGS. Training ~slower than gsplat until 15k (stats kernel)."}

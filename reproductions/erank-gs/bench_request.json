@@ -1,0 +1,27 @@
+{
+ "method": "erank-gs",
+ "datasets": {
+  "dtu-2dgs": [
+   "scan24",
+   "scan122"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "paper_targets_psnr": {
+  "scan24": 30.9,
+  "scan122": 38.23
+ },
+ "baseline_method": "erank-gs-3dgs",
+ "baseline_paper_psnr": {
+  "scan24": 30.45,
+  "scan122": 38.07
+ },
+ "ablation_method": "erank-gs-adc",
+ "ablation_paper_psnr": {
+  "scan24": 30.69,
+  "scan122": 38.21
+ },
+ "notes": "DTU NVS: 2DGS release, 777x581, RGB*mask on black, llffhold8 (assumed; paper does not state split). Shared gsplat baselines are M360/white-bg only, so run erank-gs-3dgs on the same scenes (cheap: ~4 min/1k... ~15 min/scene). Recipe --recipe 3dgs --num-gaussians 10000000 (keep all SfM points)."
+}

@@ -1,0 +1,29 @@
+{
+ "paper": "WE-GS: An In-the-wild Efficient 3D Gaussian Representation for Unconstrained Photo Collections",
+ "arxiv": "2406.02407",
+ "method_label": "WE-GS (Ours)",
+ "iterations": 150000,
+ "datasets": {
+  "phototourism": {
+   "method": {
+    "average": {"psnr": 25.00, "ssim": 0.882, "lpips": 0.143},
+    "per_scene": {
+     "psnr": {"brandenburg-gate": 27.74, "sacre-coeur": 23.62, "trevi-fountain": 23.63},
+     "ssim": {"brandenburg-gate": 0.933, "sacre-coeur": 0.890, "trevi-fountain": 0.823},
+     "lpips": {"brandenburg-gate": 0.128, "sacre-coeur": 0.148, "trevi-fountain": 0.153}
+    }
+   },
+   "baseline_3dgs": {
+    "average": {"psnr": 18.44},
+    "per_scene": {
+     "psnr": {"brandenburg-gate": 20.72, "sacre-coeur": 17.57, "trevi-fountain": 17.04},
+     "ssim": {"brandenburg-gate": 0.889, "sacre-coeur": 0.839, "trevi-fountain": 0.690},
+     "lpips": {"brandenburg-gate": 0.152, "sacre-coeur": 0.190, "trevi-fountain": 0.265}
+    }
+   },
+   "source": "Table I (tables/quantitative_comparsion_pt.tex); averages Tab. III complete model / Tab. IV 3DGS"
+  }
+ },
+ "efficiency": {"training_hours": 1.8, "fps": 181, "storage_mb": 66.4, "gpu": "RTX 4090", "source": "Table IV"},
+ "notes": "Verified against the LaTeX table. Protocol: NeRF-W split, downscale 2 (commented-out text), test appearance encoded feed-forward from the test image, full-image metrics. Average 25.00 is the 3-scene mean incl. Trevi (not prepared here); compare per scene only."
+}

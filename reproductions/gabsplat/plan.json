@@ -1,0 +1,10 @@
+{"method": "gabsplat", "module": "ss_gabsplat",
+ "components": [
+  {"kind": "renderer", "name": "gabor-renderer", "factory": "ss_gabsplat.renderer:create_renderer", "config": {"num_freqs": 2, "tile_size": 16, "eps2d": 0.3}},
+  {"kind": "density", "name": "gabor-density", "factory": "ss_gabsplat.density:create_density", "config": {"prune_opa": 0.01, "opacity_lr": 0.025, "child_freq": 0.001, "child_weight": 0.01, "reset_weight": 0.01, "child_reset": true, "weight_reset": true}},
+  {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [{"name": "gabor_freq", "shape": [2, 3], "lr": 0.02, "init": 0.05}, {"name": "gabor_weight", "shape": [2], "lr": 0.01, "init": "logit(0.01)"}],
+ "probes": ["gabor-forward-vs-dense", "gabor-backward-vs-dense", "frequency-projection", "frequency-adaptive-density", "recipe"],
+ "contributions": ["gabor-primitive", "gabor-splatting", "frequency-adaptive-optimization", "training-recipe"],
+ "fidelity_gaps": ["no official code", "F=2 identical-init symmetry", "main-vs-supp lr/init conflict (supp chosen)", "dilated conic in 2D frequency", "runtime protocol vs Inria 3DGS", "opacity lr 0.025 vs baseline 0.05"],
+ "feasible_natively": true}

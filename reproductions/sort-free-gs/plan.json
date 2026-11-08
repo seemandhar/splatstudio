@@ -1,0 +1,7 @@
+{"method": "sort-free-gs", "module": "ss_sort_free_gs",
+ "components": ["wsr-renderer (custom CUDA)", "wsr-density (wraps gsplat DefaultStrategy, no opacity prune/reset, global-field sync, lr schedules)", "photometric"],
+ "fields": ["opa_sh0[1]", "opa_shN[15]", "wsr_sigma[] (global)", "wsr_wbg[] (global)"],
+ "probes": ["wsr-forward-vs-dense", "wsr-backward-vs-dense", "lc-weight", "view-dependent-opacity", "recipe"],
+ "contributions": ["weighted-sum-rendering", "lc-depth-weight", "view-dependent-opacity", "training-recipe"],
+ "fidelity_gaps": ["no official code; lrs/inits from unofficial", "u<=0 culled", "alpha threshold on u*G, 3.33 sigma", "world-size prune kept", "white background", "EXP-WSR not implemented", "runtime protocol offsets", "densification statistics differ"],
+ "feasible_natively": true}

@@ -1,0 +1,10 @@
+{
+ "method": "we-gs",
+ "module": "ss_wegs",
+ "components": ["wegs-renderer", "wegs-density", "wegs-masked-photometric", "wegs-mask-reg", "wegs-sh-reg", "wegs-transient-opacity-reg"],
+ "fields": [],
+ "probes": ["sh-transfer", "attention-encoder", "masked-loss", "sh-reg", "transient-opacity-reg", "bank-training", "feedforward-eval"],
+ "contributions": ["residual-sh-transfer", "attention-mask-encoder", "masked-photometric", "transient-opacity-reg", "feedforward-test-appearance"],
+ "fidelity_gaps": ["regM/regSH reduction and eps assumed", "paper vs released inference model differences", "runtime sampling/SSIM/LPIPS/gsplat", "custom evaluator required", "Trevi not prepared"],
+ "feasible_natively": true
+}

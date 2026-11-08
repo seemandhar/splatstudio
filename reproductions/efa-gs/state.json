@@ -1,0 +1,30 @@
+{
+ "paper": "Low-Frequency First: Eliminating Floating Artifacts in 3D Gaussian Splatting",
+ "slug": "efa-gs",
+ "plan_id": 128,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "arxiv": "2508.02493",
+ "official_code_commit": "57f330f",
+ "custom_cuda": false,
+ "plugin": "plugin/ (ss_efa_gs: efa-gs, efa-gs-base)",
+ "history": [
+  {
+   "event": "review-1 fixes: black bg renderer config, probe wording, LR-delay gap removed, cx/cy documented; re-verified + re-smoked"
+  },
+  {
+   "event": "two crashed smoke folders (evidence/smoke-2, smoke-base-2; background-shape assert) deleted during review-1 fix iteration; held no usable data"
+  }
+ ],
+ "bench_exp": "efa-gs-pilr",
+ "baseline_exp": "baseline3dgs-mipnerf360-pilr-30000",
+ "headline": "pilr 30k black bg: garden 27.95 (-0.07), bonsai 32.19 (-0.37); control efa-gs-base 27.90/32.39; LFCF effect +0.05/-0.20 vs paper -0.02/+0.22 (single seed, unresolved); 0.66-0.69x Gaussians",
+ "report": "report.md content returned to coordinator (subagent file write blocked)"
+}

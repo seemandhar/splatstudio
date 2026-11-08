@@ -1,0 +1,30 @@
+{
+ "paper": "Evaluating Alternatives to SFM Point Cloud Initialization for Gaussian Splatting",
+ "slug": "nerf-init-gs",
+ "plan_id": 106,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "gap_analysis": "done"
+ },
+ "outcome": "not-matched",
+ "official_code": "none (project page only; author prototype fork Youlenda/gaussian-splatting@3dgs_rf is TensoRF/lego, unused)",
+ "method": "nerf-init-gs",
+ "result": {
+  "garden": {
+   "ours": 25.98,
+   "paper": 27.37,
+   "gsplat": 26.89
+  },
+  "room": {
+   "ours": 30.79,
+   "paper": 31.63,
+   "gsplat": 31.52
+  }
+ },
+ "gap_analysis": "gap-analysis-1.md",
+ "iteration_1": "nerf-init-gs-nerfunits (post-hoc diagnostic, mixed on train-only holdout; not benchmarked)"
+}

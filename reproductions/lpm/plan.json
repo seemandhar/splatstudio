@@ -1,0 +1,54 @@
+{
+ "method": "lpm",
+ "module": "ss_lpm",
+ "variants": [
+  "lpm",
+  "lpm-indoor"
+ ],
+ "components": [
+  {
+   "name": "lpm-renderer",
+   "kind": "renderer",
+   "factory": "ss_lpm.renderer:create_renderer"
+  },
+  {
+   "name": "lpm-density",
+   "kind": "density",
+   "factory": "ss_lpm.density:create_density",
+   "requires": [
+    "gradient.screen.signed",
+    "training.target_image"
+   ]
+  },
+  {
+   "name": "photometric",
+   "kind": "loss",
+   "factory": "splatstudio.losses:create_photometric"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "lpm-error-map",
+  "lpm-zone-projection",
+  "lpm-localized-densify",
+  "lpm-localized-reset",
+  "lpm-matching",
+  "lpm-density-cycle"
+ ],
+ "contributions": [
+  "error-map",
+  "cross-view-region-mapping",
+  "zone-projection",
+  "localized-point-addition",
+  "localized-reset"
+ ],
+ "fidelity_gaps": [
+  "lazy pair construction from cached views",
+  "optimizer step before density (runtime)",
+  "white bg / sampling with replacement (runtime)",
+  "paper's zone-centre point addition absent in official code",
+  "indoor reset_interval/angle ambiguity (README vs ablation)",
+  "K-based rays vs symmetric projection"
+ ],
+ "feasible_natively": true
+}

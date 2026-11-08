@@ -1,0 +1,48 @@
+{
+ "method": "hard-gs",
+ "datasets": {
+  "mipnerf360-pilr": [
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000",
+ "also_run": {
+  "method": "scaffold-gs-hgsbase",
+  "datasets": {
+   "mipnerf360-pilr": [
+    "garden",
+    "counter"
+   ]
+  },
+  "why": "same backbone without PGHGS/REHGS: measures HGS gain vs paper's Scaffold->HGS gain (+0.50 garden, +0.60 counter)"
+ },
+ "paper_target": {
+  "psnr": {
+   "garden": 28.33,
+   "counter": 30.26
+  },
+  "ssim": {
+   "garden": 0.884,
+   "counter": 0.928
+  },
+  "lpips": {
+   "garden": 0.086,
+   "counter": 0.149
+  }
+ },
+ "paper_rows": {
+  "scaffold_gs": {
+   "garden": 27.83,
+   "counter": 29.66
+  },
+  "3dgs": {
+   "garden": 27.74,
+   "counter": 29.11
+  }
+ },
+ "notes": "Paper supp. Table (tab/mipnerf360.tex) per-scene, 3DGS-repo PIL -r4/-r2 = mipnerf360-pilr. --max-gaussians counts ANCHORS (x10 neural Gaussians); smoke grew ~100k anchors/100 its at step 2k, watch GPU memory (paper: HGS 66 min / 4x Scaffold storage on T&T). First job JIT-compiles ss_hard_gs_cuda (~1 min). Needs --recipe 3dgs and --num-gaussians > SfM size (guards). counter uses method hard-gs (voxel 0.001 is the mip360 setting for all 9 scenes)."
+}

@@ -1,0 +1,4 @@
+{"method": "turbo-gs",
+ "datasets": {"db": ["drjohnson", "playroom"]},
+ "steps": 30000, "per_scene_reported": false, "extra": "",
+ "compare": "Turbo-3DGS Table 2 Deep Blending average PSNR 29.21 / SSIM 0.905 / LPIPS 0.240 (paper 3DGS 29.75 -> delta -0.54 dB) vs baseline3dgs-db-30000. Supp. per-scene table rows are Turbo-Scaffold-GS (duplicated), do not compare per scene. Optional extension: all 9 mipnerf360 scenes vs avg 27.39 (3DGS 27.45). max-gaussians 12M suffices (M_adaptive <= 1.5x3.27M)."}

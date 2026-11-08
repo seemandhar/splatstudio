@@ -1,0 +1,8 @@
+{"method": "mh-3dgs",
+ "datasets": {"mipnerf360": ["garden", "room"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "control_method": "mh-3dgs-mcmc-control",
+ "baseline": {"garden": "baseline3dgs-mipnerf360-30000", "room": "baseline3dgs-mipnerf360-30000"},
+ "notes": "Paper App. Tab. full_360: MH-3DGS garden 26.49 (811,695 G), room 32.15 (764,539 G); 3DGS* garden 27.31, room 31.65; same-budget 3DGS-MCMC garden 26.71, room 32.15. Low M360 numbers come from the ~0.8M emergent budget, not from resolution (official full_eval uses images_4/images_2 = our native data). Run mh-3dgs-mcmc-control on the same scenes as the paper's same-budget MCMC row (cap looked up from --data basename). Smoke test status: see evidence/smoke-1 (may not have finished when this was written)."}

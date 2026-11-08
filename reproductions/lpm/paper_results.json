@@ -1,0 +1,186 @@
+{
+ "paper": "Improving Gaussian Splatting with Localized Points Management",
+ "arxiv": "2406.04251",
+ "method_label": "3DGS + LPM",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.59,
+     "ssim": 0.82,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.4,
+      "flowers": 21.73,
+      "garden": 27.43,
+      "stump": 26.81,
+      "treehill": 22.78,
+      "room": 31.58,
+      "counter": 28.91,
+      "kitchen": 31.45,
+      "bonsai": 32.2
+     },
+     "ssim": {
+      "bicycle": 0.776,
+      "flowers": 0.609,
+      "garden": 0.87,
+      "stump": 0.781,
+      "treehill": 0.636,
+      "room": 0.923,
+      "counter": 0.909,
+      "kitchen": 0.929,
+      "bonsai": 0.943
+     },
+     "lpips": {
+      "bicycle": 0.203,
+      "flowers": 0.337,
+      "garden": 0.108,
+      "stump": 0.224,
+      "treehill": 0.347,
+      "room": 0.209,
+      "counter": 0.2,
+      "kitchen": 0.125,
+      "bonsai": 0.202
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.47,
+     "ssim": 0.816,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.166,
+      "flowers": 21.576,
+      "garden": 27.388,
+      "stump": 26.637,
+      "treehill": 22.487,
+      "room": 31.53,
+      "counter": 28.9,
+      "kitchen": 31.43,
+      "bonsai": 32.14
+     },
+     "ssim": {
+      "bicycle": 0.765,
+      "flowers": 0.606,
+      "garden": 0.867,
+      "stump": 0.773,
+      "treehill": 0.634,
+      "room": 0.92,
+      "counter": 0.908,
+      "kitchen": 0.927,
+      "bonsai": 0.942
+     },
+     "lpips": {
+      "bicycle": 0.211,
+      "flowers": 0.336,
+      "garden": 0.107,
+      "stump": 0.215,
+      "treehill": 0.324,
+      "room": 0.218,
+      "counter": 0.2,
+      "kitchen": 0.126,
+      "bonsai": 0.204
+     }
+    }
+   },
+   "source": "Table 1 (tab:3dresults, averages); supp. Tables per_scene_psnr_1/2, per_scene_ssim_1/2, per_scene_lpips_1/2 (per scene)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.83,
+     "ssim": 0.85,
+     "lpips": 0.181
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.61,
+      "train": 22.05
+     },
+     "ssim": {
+      "truck": 0.883,
+      "train": 0.817
+     },
+     "lpips": {
+      "truck": 0.154,
+      "train": 0.209
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.67,
+     "ssim": 0.849,
+     "lpips": 0.177
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.42,
+      "train": 21.91
+     },
+     "ssim": {
+      "truck": 0.882,
+      "train": 0.815
+     },
+     "lpips": {
+      "truck": 0.146,
+      "train": 0.207
+     }
+    }
+   },
+   "source": "Table 1 (tab:3dresults, averages); supp. Tables per_scene_psnr_1/2, per_scene_ssim_1/2, per_scene_lpips_1/2 (per scene)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.76,
+     "ssim": 0.908,
+     "lpips": 0.241
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.3,
+      "playroom": 30.22
+     },
+     "ssim": {
+      "drjohnson": 0.905,
+      "playroom": 0.91
+     },
+     "lpips": {
+      "drjohnson": 0.241,
+      "playroom": 0.241
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.55,
+     "ssim": 0.904,
+     "lpips": 0.245
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.08,
+      "playroom": 30.03
+     },
+     "ssim": {
+      "drjohnson": 0.901,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.245,
+      "playroom": 0.244
+     }
+    }
+   },
+   "source": "Table 1 (tab:3dresults, averages); supp. Tables per_scene_psnr_1/2, per_scene_ssim_1/2, per_scene_lpips_1/2 (per scene)"
+  }
+ },
+ "notes": "baseline_3dgs = the paper's '3DGS*' row (retrained by the authors with official 3DGS code), not the 3DGS paper. Per-scene M360 mean of 3DGS+LPM (27.59) matches Table 1. tab:results (db_tanks.tex) has T&T/DB columns swapped; Table 1 used. Ablation (Truck/Playroom): w/o addition 25.43/30.10, w/o reset 25.52/30.07; Gaussians Truck 265k, Playroom 186k (3DGS* 257k/232k). Protocol: 3DGS full_eval (images_4 outdoor / images_2 indoor), llffhold8, RTX 3090."
+}

@@ -1,0 +1,44 @@
+{
+  "paper": "Deformable Beta Splatting",
+  "arxiv": "2501.18630",
+  "method_label": "Ours (30K, sb=2)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 28.60, "ssim": 0.844, "lpips": 0.182},
+        "per_scene": {
+          "psnr": {"bicycle": 26.04, "flowers": 22.44, "garden": 28.15, "stump": 27.56, "treehill": 23.49, "room": 32.83, "counter": 30.36, "kitchen": 32.61, "bonsai": 33.90},
+          "ssim": {"bicycle": 0.804, "flowers": 0.650, "garden": 0.882, "stump": 0.815, "treehill": 0.676, "room": 0.941, "counter": 0.930, "kitchen": 0.939, "bonsai": 0.957},
+          "lpips": {"bicycle": 0.169, "flowers": 0.308, "garden": 0.096, "stump": 0.184, "treehill": 0.293, "room": 0.168, "counter": 0.154, "kitchen": 0.110, "bonsai": 0.156}
+        }
+      },
+      "method_full": {
+        "average": {"psnr": 28.75, "ssim": 0.845, "lpips": 0.179},
+        "per_scene": {
+          "psnr": {"bicycle": 26.10, "flowers": 22.49, "garden": 28.11, "stump": 27.50, "treehill": 23.50, "room": 33.03, "counter": 30.70, "kitchen": 32.84, "bonsai": 34.46}
+        }
+      },
+      "baseline_3dgs": {"average": {"psnr": 27.20, "ssim": 0.815, "lpips": 0.214}},
+      "mcmc_3dgs": {
+        "average": {"psnr": 28.29, "ssim": 0.84, "lpips": 0.21},
+        "per_scene": {"psnr": {"bicycle": 26.15, "flowers": 22.12, "garden": 28.16, "stump": 27.80, "treehill": 23.31, "room": 32.48, "counter": 29.51, "kitchen": 32.27, "bonsai": 32.88}}
+      },
+      "source": "Table 1 (main) and supp. Table allmetrics (X_suppl.tex); 30K sb=2 column"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.79, "ssim": 0.868, "lpips": 0.148},
+                 "per_scene": {"psnr": {"truck": 26.44, "train": 23.13}, "ssim": {"truck": 0.897, "train": 0.839}, "lpips": {"truck": 0.110, "train": 0.185}}},
+      "baseline_3dgs": {"average": {"psnr": 23.15, "ssim": 0.840, "lpips": 0.183}},
+      "source": "Table 1, supp. Table allmetrics"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.10, "ssim": 0.910, "lpips": 0.240},
+                 "per_scene": {"psnr": {"drjohnson": 29.39, "playroom": 30.82}, "ssim": {"drjohnson": 0.908, "playroom": 0.912}, "lpips": {"drjohnson": 0.240, "playroom": 0.240}}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243}},
+      "source": "Table 1, supp. Table allmetrics"
+    }
+  },
+  "per_scene_caps": {"bicycle": 6000000, "flowers": 3000000, "garden": 5000000, "stump": 4500000, "treehill": 3500000, "room": 1500000, "counter": 1500000, "kitchen": 1500000, "bonsai": 1500000, "truck": 2500000, "train": 1000000, "drjohnson": 3500000, "playroom": 2500000},
+  "notes": "3DGS baseline row is 3DGS's own published average (no per-scene 3DGS in this paper). Mip-NeRF 360 resolution: official benchmark.py -r 4 outdoor / -r 2 indoor (PIL resize of full-res images). 'full' mode uses test-set-PSNR checkpoint selection with patience; we compare to the 30K column. Caps from official benchmark.py == supp. 'Number of Primitives'."
+}

@@ -1,0 +1,12 @@
+{
+ "method": "litegs",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": ""
+}

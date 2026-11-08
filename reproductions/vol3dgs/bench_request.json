@@ -1,0 +1,37 @@
+{
+ "method": "vol3dgs-black",
+ "datasets": {
+  "mipnerf360-1600": [
+   "bicycle",
+   "room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--max-gaussians 12000000",
+ "baseline": {
+  "bicycle": "baseline3dgs-mipnerf360-1600-30000",
+  "room": "baseline3dgs-mipnerf360-1600b-30000"
+ },
+ "paper_target": {
+  "bicycle": {
+   "psnr": 25.04,
+   "ssim": 0.7594,
+   "lpips": 0.2155
+  },
+  "room": {
+   "psnr": 32.0,
+   "ssim": 0.9358,
+   "lpips": 0.1845
+  }
+ },
+ "paper_3dgs_row": {
+  "mipnerf360_average": {
+   "psnr": 27.52,
+   "ssim": 0.813,
+   "lpips": 0.222
+  }
+ },
+ "min_free_gb": 24,
+ "notes": "Supp. E per-scene table. Official script passes no -r/-i, so the Inria loader resizes full-res images to width 1600 -> dataset mipnerf360-1600 (w1600). Paper reports 3DGS-Slang only as averages (Vol3DGS is -0.22 dB PSNR, -0.013 LPIPS vs it on Mip-NeRF 360); compare our gain over the gsplat 1600 baseline with that. Paper point counts: bicycle 3.7M, room 1.6M (official cap 7M). First job JIT-compiles ss_vol3dgs_cuda (~1 min, cached). Benchmark vol3dgs-black only (official black background). density2alpha follows the official expression as written (1 - exp(-x)/0.99): halved theta ~0.0102 low, theta>=0.99 split never fires (review-1 M1)."
+}

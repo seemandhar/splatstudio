@@ -1,0 +1,17 @@
+{
+ "method": "lpm",
+ "datasets": {
+  "mipnerf360": [
+   "bicycle",
+   "room"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "method_per_scene": {
+  "mipnerf360/bicycle": "lpm",
+  "mipnerf360/room": "lpm-indoor"
+ },
+ "note": "Paper protocol = 3DGS full_eval (images_4 outdoor / images_2 indoor) -> our `mipnerf360` (not -pilr). Paper supp. per-scene PSNR (3DGS+LPM vs authors' 3DGS*): bicycle 25.40 vs 25.166 (+0.23), room 31.58 vs 31.53 (+0.05). Compare to baseline3dgs-mipnerf360-30000 (bicycle 24.92, room 31.52). lpm = official defaults/README outdoor (reset_interval 100, angle 45); lpm-indoor = README indoor note (200, 90). Needs LightGlue at ~/models/lightglue/src and weights linked into ~/.cache/torch/hub/checkpoints (done). SuperPoint/LightGlue add ~0.2 GB peak GPU (smoke: 1.05 vs 0.89 GB); image cache is on CPU (~0.5-1.3 GB RAM)."
+}

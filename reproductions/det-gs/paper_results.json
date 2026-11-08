@@ -1,0 +1,158 @@
+{
+ "paper": "DET-GS: Depth- and Edge-Aware Regularization for High-Fidelity 3D Gaussian Splatting",
+ "arxiv": "2508.04099",
+ "method_label": "Ours",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.29,
+     "ssim": 0.84,
+     "lpips": 0.175
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.95,
+      "flowers": 21.98,
+      "garden": 28.09,
+      "stump": 27.15,
+      "treehill": 23.41,
+      "room": 32.09,
+      "counter": 30.07,
+      "kitchen": 32.46,
+      "bonsai": 33.4
+     },
+     "ssim": {
+      "bicycle": 0.801,
+      "flowers": 0.655,
+      "garden": 0.882,
+      "stump": 0.805,
+      "treehill": 0.661,
+      "room": 0.939,
+      "counter": 0.924,
+      "kitchen": 0.939,
+      "bonsai": 0.953
+     },
+     "lpips": {
+      "bicycle": 0.165,
+      "flowers": 0.263,
+      "garden": 0.093,
+      "stump": 0.181,
+      "treehill": 0.269,
+      "room": 0.173,
+      "counter": 0.164,
+      "kitchen": 0.105,
+      "bonsai": 0.159
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.79,
+     "ssim": 0.826,
+     "lpips": 0.202
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.63,
+      "flowers": 21.94,
+      "garden": 27.73,
+      "stump": 27.02,
+      "treehill": 22.79,
+      "room": 31.8,
+      "counter": 29.12,
+      "kitchen": 31.61,
+      "bonsai": 32.48
+     },
+     "ssim": {
+      "bicycle": 0.778,
+      "flowers": 0.623,
+      "garden": 0.874,
+      "stump": 0.784,
+      "treehill": 0.651,
+      "room": 0.928,
+      "counter": 0.916,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.204,
+      "flowers": 0.328,
+      "garden": 0.103,
+      "stump": 0.207,
+      "treehill": 0.318,
+      "room": 0.191,
+      "counter": 0.178,
+      "kitchen": 0.113,
+      "bonsai": 0.173
+     }
+    }
+   },
+   "source": "Table I (average); Appendix PSNR/SSIM/LPIPS tables (per scene, all 9)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.98,
+     "ssim": 0.861,
+     "lpips": 0.165
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.13,
+     "ssim": 0.84,
+     "lpips": 0.182
+    }
+   },
+   "source": "Table I (average only)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.05,
+     "ssim": 0.908,
+     "lpips": 0.239
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.42,
+     "ssim": 0.905,
+     "lpips": 0.241
+    }
+   },
+   "source": "Table I (average only)"
+  },
+  "nerf_synthetic": {
+   "method": {
+    "average": {
+     "psnr": 34.13,
+     "ssim": 0.972,
+     "lpips": 0.028
+    }
+   },
+   "source": "Table II"
+  },
+  "nsvf_synthetic": {
+   "method": {
+    "average": {
+     "psnr": 38.39,
+     "ssim": 0.988,
+     "lpips": 0.012
+    }
+   },
+   "source": "Table III"
+  }
+ },
+ "ablation_mipnerf360": {
+  "none": 27.69,
+  "w_depth": 28.2,
+  "w_edge": 28.09,
+  "w_tv": 27.89,
+  "full": 28.29,
+  "note": "Table IV; rows labelled 'w/' but text describes them as removing each component"
+ },
+ "notes": "Full-view protocol (all training views, llffhold8 implied by 3DGS framework, images_4 outdoor / images_2 indoor), despite the abstract's 'sparse-view' wording. The 3DGS row (garden 27.73, counter 29.12, avg 27.79) is NOT the 3DGS paper's own numbers (27.41 / 28.70 / 27.21); it is higher, i.e. retrained or copied from another paper (the text says some competing metrics are sourced from respective papers). Paper gain over its 3DGS row: garden +0.36, counter +0.95 dB. Mean of the 9 per-scene PSNRs = 28.29 vs Table I 28.29."
+}

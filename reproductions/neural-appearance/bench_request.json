@@ -1,0 +1,44 @@
+{
+ "method": "neural-appearance-garden",
+ "methods": [
+  "neural-appearance-garden",
+  "neural-appearance-sh-garden",
+  "neural-appearance-room",
+  "neural-appearance-sh-room"
+ ],
+ "method_per_scene": {
+  "mipnerf360/garden": [
+   "neural-appearance-garden",
+   "neural-appearance-sh-garden"
+  ],
+  "mipnerf360/room": [
+   "neural-appearance-room",
+   "neural-appearance-sh-room"
+  ]
+ },
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "room"
+  ]
+ },
+ "steps": 35000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "post_eval": "plain ss-eval is correct (MLP + PPISP restored from the na_blob field; verified on the smoke run)",
+ "paper_targets": {
+  "garden": {
+   "neural": 28.06,
+   "sh": 27.96,
+   "gain": 0.1
+  },
+  "room": {
+   "neural": 33.23,
+   "sh": 32.98,
+   "gain": 0.25
+  },
+  "source": "supp. per-scene Table (5-run means), same Faster-GS+MCMC+PPISP pipeline for both rows"
+ },
+ "criterion": "primary: Neural within +-0.5 dB of 28.06 / 33.23; secondary: our Neural-SH gain vs paper's +0.10 / +0.25; reference only: baseline3dgs-mipnerf360-30000 garden/room",
+ "notes": "--steps MUST be 35000 (30000 training + 5000 PPISP controller distillation with frozen scene). MCMC caps 5.0M (garden) / 1.5M (room) from paper_configs. Resolution images_4 / images_2 (paper: 3DGS resolutions). Memory: garden at 5M Gaussians ~15-25 GB peak (fp32 MLP on all Gaussians + unused shN) -> use --min-free-gb 28. First use JIT-builds the PPISP and Faster-GS extensions (cached). Smoke speed ~10 steps/s at 0.3M on a shared GPU; expect several hours for garden."
+}

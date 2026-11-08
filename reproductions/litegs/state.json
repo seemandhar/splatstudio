@@ -1,0 +1,20 @@
+{
+ "paper": "LiteGS: A High-performance Framework to Train 3DGS in Subminutes via System and Algorithm Codesign",
+ "slug": "litegs",
+ "plan_id": 120,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "method": "litegs",
+ "variant": "LiteGS-quality (paper Table 5: garden 28.15, room 32.69; 3DGS row 27.39 / 31.47)",
+ "bench_exps": [
+  "litegs-mipnerf360-30000"
+ ],
+ "headline": "garden 27.78 vs 28.15 (\u22120.37), room 32.79 vs 32.69 (+0.10); \u0394 vs 3DGS +0.89/+1.27 vs paper +0.76/+1.22"
+}

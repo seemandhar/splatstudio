@@ -1,0 +1,61 @@
+{
+  "paper": "BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis",
+  "arxiv": "2411.08508",
+  "method_label": "BBSplat (Ours)",
+  "iterations": 32000,
+  "datasets": {
+    "tandt": {
+      "method": {
+        "average": {"psnr": 24.32, "ssim": 0.8476, "lpips": 0.2143},
+        "per_scene": {
+          "psnr": {"train": 21.38, "truck": 24.19, "francis": 28.56, "horse": 24.72, "lighthouse": 22.75},
+          "ssim": {"train": 0.7702, "truck": 0.8418, "francis": 0.9079, "horse": 0.8847, "lighthouse": 0.8332},
+          "lpips": {"train": 0.2604, "truck": 0.1957, "francis": 0.2334, "horse": 0.1604, "lighthouse": 0.2214}
+        },
+        "primitives": 30000
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 20.90, "ssim": 0.7814, "lpips": 0.3130},
+        "per_scene": {
+          "psnr": {"train": 19.81, "truck": 20.43, "francis": 24.16, "horse": 19.17, "lighthouse": 20.93},
+          "ssim": {"train": 0.7229, "truck": 0.7511, "francis": 0.8456, "horse": 0.7831, "lighthouse": 0.8044},
+          "lpips": {"train": 0.3347, "truck": 0.3192, "francis": 0.3368, "horse": 0.2973, "lighthouse": 0.2773}
+        },
+        "primitives": 80000
+      },
+      "source": "Table 1 (fixed storage, 'Points' 30K) + Supp. Table 'Quantitative metrics for all scenes' (active, non-commented table). Average over 5 T&T scenes, not comparable to our 2-scene tandt average."
+    },
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.49, "ssim": 0.8175, "lpips": 0.2336},
+        "per_scene": {
+          "psnr": {"room": 31.13, "kitchen": 30.35, "bonsai": 29.62, "counter": 28.30, "bicycle": 23.28, "garden": 25.75, "stump": 24.00},
+          "ssim": {"room": 0.9146, "kitchen": 0.9116, "bonsai": 0.9085, "counter": 0.8941, "bicycle": 0.6520, "garden": 0.7873, "stump": 0.6547},
+          "lpips": {"room": 0.2150, "kitchen": 0.1430, "bonsai": 0.2334, "counter": 0.2061, "bicycle": 0.3096, "garden": 0.1907, "stump": 0.3376}
+        },
+        "primitives": 60000
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 25.25, "ssim": 0.7800, "lpips": 0.3179},
+        "per_scene": {
+          "psnr": {"room": 29.24, "kitchen": 24.56, "bonsai": 25.47, "counter": 26.36, "bicycle": 23.04, "garden": 23.98, "stump": 24.08},
+          "ssim": {"room": 0.8924, "kitchen": 0.8712, "bonsai": 0.8856, "counter": 0.8716, "bicycle": 0.5912, "garden": 0.7093, "stump": 0.6387},
+          "lpips": {"room": 0.2721, "kitchen": 0.2129, "bonsai": 0.2986, "counter": 0.2628, "bicycle": 0.4354, "garden": 0.3400, "stump": 0.4035}
+        },
+        "primitives": 160000
+      },
+      "source": "Table 1 (fixed storage, 'Points' 60K) + Supp. Table 'Quantitative metrics for all scenes'. 7 public scenes (no flowers/treehill)."
+    },
+    "dtu": {
+      "method": {"average": {"psnr": 29.39, "ssim": 0.8830, "lpips": 0.2770}, "per_scene": {"psnr": {"scan24": 27.47}}, "primitives": 15000},
+      "source": "Table 1 / Supp. per-scene table (only scan24 copied; DTU not available locally)"
+    }
+  },
+  "large_budget_table": {
+    "note": "Table 2 (default/large primitive budgets: DTU 60K, T&T 300K, M360 400K) — averages only in the active text; its per-scene table is inside \\begin{comment} in the LaTeX source (Truck 25.13, Bicycle 24.11) and was dropped from the paper.",
+    "tandt": {"psnr": 25.12, "ssim": 0.8683, "lpips": 0.1728},
+    "mipnerf360": {"psnr": 28.33, "ssim": 0.8450, "lpips": 0.1971},
+    "dtu": {"psnr": 29.72, "ssim": 0.8865, "lpips": 0.2609}
+  },
+  "notes": "baseline_3dgs is the paper's own 3DGS run constrained to the same storage (80K / 160K Gaussians), so it is NOT comparable to our unconstrained gsplat baseline. The fixed-storage 3DGS-MCMC row (truck 23.91, bicycle 23.87) is a closer reference for a budget-matched comparison."
+}

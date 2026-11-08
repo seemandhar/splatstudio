@@ -1,0 +1,59 @@
+{
+ "method": "efa-gs",
+ "module": "ss_efa_gs",
+ "variants": [
+  "efa-gs",
+  "efa-gs-base"
+ ],
+ "components": [
+  {
+   "kind": "renderer",
+   "name": "efa-mip-gsplat",
+   "factory": "ss_efa_gs.renderer:create_renderer"
+  },
+  {
+   "kind": "density",
+   "name": "efa-density",
+   "factory": "ss_efa_gs.density:create_density"
+  },
+  {
+   "kind": "loss",
+   "name": "photometric",
+   "factory": "built-in"
+  }
+ ],
+ "fields": [
+  {
+   "name": "filter_3d",
+   "shape": [],
+   "lr": 1e-08,
+   "note": "constant, recomputed from training cameras"
+  }
+ ],
+ "probes": [
+  "lfcf-decision",
+  "depth-factor",
+  "scale-strategy",
+  "anneal-schedule",
+  "lfcf-gpu-step",
+  "gof-densify",
+  "filter3d",
+  "renderer-absgrad"
+ ],
+ "contributions": [
+  "C1 LFCF",
+  "C2 depth-based strategy",
+  "C3 scale-based strategy",
+  "C4 strategies 1-3 (interval, annealing, probabilistic split)"
+ ],
+ "fidelity_gaps": [
+  "with-replacement sampling",
+  "densify after optimizer step",
+  "cx/cy vs W/2,H/2 in filter projection",
+  "gsplat alpha>=0.999 gradient drop / rasterizer stats",
+  "RNG streams",
+  "control is our port of the EFA base",
+  "baselines use white bg (method black, as official)"
+ ],
+ "feasible_natively": true
+}

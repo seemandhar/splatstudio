@@ -1,0 +1,7 @@
+{"method": "perceptual-gs", "module": "ss_perceptual_gs",
+ "components": [{"name": "pgs-renderer", "kind": "renderer"}, {"name": "pgs-loss", "kind": "loss"}, {"name": "pgs-density", "kind": "density"}],
+ "fields": [{"name": "sensitivity", "shape": [], "lr": 0.05, "init": -2.1972246}],
+ "probes": ["pgs-extraction", "pgs-dual-branch", "pgs-guided-densify", "pgs-opacity-decline", "pgs-scene-decision", "pgs-stats-kernel", "pgs-depth-reinit"],
+ "contributions": ["C1 sensitivity extraction", "C2 dual-branch rendering + BCE", "C3 sensitivity-guided densification", "C4 scene-adaptive depth reinit", "C5 opacity decline"],
+ "fidelity_gaps": ["white background RGB", "optimizer step before density", "gsplat alpha numerics in stats kernels", "view sampling with replacement", "SH degree off by one step", "SSIM/LPIPS implementation"],
+ "feasible_natively": true}

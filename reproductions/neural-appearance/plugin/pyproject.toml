@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-neural-appearance"
+version = "0.1.0"
+description = "Compact Neural Appearance Models (arXiv 2609.05255) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "splatstudio-method-faster-gs"]
+
+[project.entry-points."splatstudio.methods"]
+neural-appearance-garden = "ss_neural_appearance:method_garden"
+neural-appearance-room = "ss_neural_appearance:method_room"
+neural-appearance-bicycle = "ss_neural_appearance:method_bicycle"
+neural-appearance-truck = "ss_neural_appearance:method_truck"
+neural-appearance-sh-garden = "ss_neural_appearance:method_sh_garden"
+neural-appearance-sh-room = "ss_neural_appearance:method_sh_room"
+neural-appearance-sh-bicycle = "ss_neural_appearance:method_sh_bicycle"
+neural-appearance-sh-truck = "ss_neural_appearance:method_sh_truck"
+
+[tool.setuptools.packages.find]
+include = ["ss_neural_appearance*"]
+
+[tool.setuptools.package-data]
+ss_neural_appearance = ["ppisp_vendor/LICENSE", "ppisp_vendor/*.cpp", "ppisp_vendor/*.h", "ppisp_vendor/src/*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["ss_neural_appearance/ppisp_vendor"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

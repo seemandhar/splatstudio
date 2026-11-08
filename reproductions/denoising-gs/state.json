@@ -1,0 +1,34 @@
+{
+ "paper": "Denoising-GS: Gaussian Splatting with Spatial-aware Denoising",
+ "slug": "denoising-gs",
+ "plan_id": 115,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "partial",
+ "bench_exps": [
+  "denoising-gs-35k",
+  "denoising-gs-v2-35k"
+ ],
+ "results": {
+  "bicycle": {
+   "ours": 25.43,
+   "paper": 26.17,
+   "control": 25.46,
+   "paper_mcmc": 26.15
+  },
+  "counter": {
+   "ours": 29.36,
+   "paper": 29.57,
+   "control": 29.39,
+   "paper_mcmc": 29.51
+  }
+ },
+ "headline": "counter -0.21 (matched), bicycle -0.74 (backbone: control -0.69 vs paper MCMC); method-control -0.04/-0.03 vs paper +0.02/+0.06"
+}

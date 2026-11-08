@@ -1,0 +1,44 @@
+{
+  "paper": "Unified Loss-Aware Density Control for 3D Gaussian Splatting",
+  "arxiv": "2611.02044",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.72, "ssim": 0.818, "lpips": 0.219, "gaussians_M": 1.9},
+        "per_scene": {
+          "psnr": {"bicycle": 25.31, "flowers": 21.72, "garden": 27.59, "stump": 26.62, "treehill": 22.83, "room": 32.07, "counter": 29.13, "kitchen": 31.78, "bonsai": 32.46},
+          "psnr_std": {"bicycle": 0.03, "flowers": 0.01, "garden": 0.07, "stump": 0.02, "treehill": 0.06, "room": 0.08, "counter": 0.01, "kitchen": 0.02, "bonsai": 0.03},
+          "ssim": {"bicycle": 0.770, "flowers": 0.607, "garden": 0.868, "stump": 0.776, "treehill": 0.637, "room": 0.921, "counter": 0.909, "kitchen": 0.927, "bonsai": 0.943},
+          "lpips": {"bicycle": 0.213, "flowers": 0.342, "garden": 0.112, "stump": 0.219, "treehill": 0.335, "room": 0.218, "counter": 0.199, "kitchen": 0.128, "bonsai": 0.202}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.35, "ssim": 0.814, "lpips": 0.217, "gaussians_M": 3.4},
+        "per_scene": {
+          "psnr": {"bicycle": 25.19, "flowers": 21.51, "garden": 27.31, "stump": 26.58, "treehill": 22.31, "room": 31.38, "counter": 28.93, "kitchen": 30.84, "bonsai": 32.05},
+          "ssim": {"bicycle": 0.764, "flowers": 0.605, "garden": 0.866, "stump": 0.771, "treehill": 0.632, "room": 0.918, "counter": 0.907, "kitchen": 0.925, "bonsai": 0.940},
+          "lpips": {"bicycle": 0.212, "flowers": 0.336, "garden": 0.108, "stump": 0.216, "treehill": 0.324, "room": 0.220, "counter": 0.201, "kitchen": 0.128, "bonsai": 0.205}
+        }
+      },
+      "baseline_steepgs": {"per_scene": {"psnr": {"bicycle": 24.81, "flowers": 20.72, "garden": 27.14, "stump": 25.87, "treehill": 22.18, "room": 31.35, "counter": 28.73, "kitchen": 30.86, "bonsai": 31.80}}},
+      "source": "Main Tab. 1 (averages); App. B.1 Tables (sup_psnr / sup_ssim / sup_lpips) per scene, mean of 5 runs"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.20, "ssim": 0.853, "lpips": 0.174, "gaussians_M": 1.0},
+                 "per_scene": {"psnr": {"train": 22.44, "truck": 25.96}, "ssim": {"train": 0.818, "truck": 0.889}, "lpips": {"train": 0.205, "truck": 0.142}}},
+      "baseline_3dgs": {"average": {"psnr": 23.39, "ssim": 0.841, "lpips": 0.183, "gaussians_M": 1.8},
+                        "per_scene": {"psnr": {"train": 21.79, "truck": 24.99}, "ssim": {"train": 0.808, "truck": 0.876}, "lpips": {"train": 0.214, "truck": 0.151}}},
+      "source": "Tab. 1; App. B.1"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.79, "ssim": 0.906, "lpips": 0.245, "gaussians_M": 1.3},
+                 "per_scene": {"psnr": {"drjohnson": 29.44, "playroom": 30.14}, "ssim": {"drjohnson": 0.903, "playroom": 0.908}, "lpips": {"drjohnson": 0.245, "playroom": 0.246}}},
+      "baseline_3dgs": {"average": {"psnr": 29.52, "ssim": 0.903, "lpips": 0.242, "gaussians_M": 3.0},
+                        "per_scene": {"psnr": {"drjohnson": 28.98, "playroom": 30.07}, "ssim": {"drjohnson": 0.899, "playroom": 0.907}, "lpips": {"drjohnson": 0.245, "playroom": 0.240}}},
+      "source": "Tab. 1; App. B.1"
+    }
+  },
+  "notes": "3DGS row = officially released 3DGS pretrained models evaluated by the authors (App. A.1). Other baselines retrained by the authors with exposure compensation disabled. Per-scene numbers are means of 5 runs (std given for PSNR). Main-table average Num is per dataset; no per-scene Gaussian counts."
+}

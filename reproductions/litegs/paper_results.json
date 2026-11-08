@@ -1,0 +1,517 @@
+{
+ "paper": "LiteGS: A High-performance Framework to Train 3DGS in Subminutes via System and Algorithm Codesign",
+ "arxiv": "2503.01199",
+ "method_label": "LiteGS-quality",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 28.25,
+     "ssim": 0.836,
+     "lpips": 0.176
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.86,
+      "flowers": 21.75,
+      "garden": 28.15,
+      "stump": 27.29,
+      "treehill": 22.91,
+      "room": 32.69,
+      "counter": 29.87,
+      "kitchen": 32.61,
+      "bonsai": 33.2
+     },
+     "ssim": {
+      "bicycle": 0.798,
+      "flowers": 0.646,
+      "garden": 0.881,
+      "stump": 0.804,
+      "treehill": 0.652,
+      "room": 0.933,
+      "counter": 0.922,
+      "kitchen": 0.936,
+      "bonsai": 0.952
+     },
+     "lpips": {
+      "bicycle": 0.156,
+      "flowers": 0.254,
+      "garden": 0.087,
+      "stump": 0.173,
+      "treehill": 0.26,
+      "room": 0.189,
+      "counter": 0.174,
+      "kitchen": 0.113,
+      "bonsai": 0.182
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.47,
+     "ssim": 0.815,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.19,
+      "flowers": 21.57,
+      "garden": 27.39,
+      "stump": 26.6,
+      "treehill": 22.53,
+      "room": 31.47,
+      "counter": 29.07,
+      "kitchen": 31.51,
+      "bonsai": 32.07
+     },
+     "ssim": {
+      "bicycle": 0.765,
+      "flowers": 0.606,
+      "garden": 0.866,
+      "stump": 0.773,
+      "treehill": 0.633,
+      "room": 0.919,
+      "counter": 0.909,
+      "kitchen": 0.928,
+      "bonsai": 0.942
+     },
+     "lpips": {
+      "bicycle": 0.211,
+      "flowers": 0.336,
+      "garden": 0.107,
+      "stump": 0.215,
+      "treehill": 0.324,
+      "room": 0.219,
+      "counter": 0.2,
+      "kitchen": 0.126,
+      "bonsai": 0.203
+     }
+    }
+   },
+   "source": "Table 1 (averages), Appendix Table 5 (per scene)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.91,
+     "ssim": 0.873,
+     "lpips": 0.133
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 26.66,
+      "train": 22.79
+     },
+     "ssim": {
+      "truck": 0.901,
+      "train": 0.839
+     },
+     "lpips": {
+      "truck": 0.093,
+      "train": 0.175
+     }
+    },
+    "average_30k": {
+     "psnr": 24.72,
+     "ssim": 0.87,
+     "lpips": 0.133
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.66,
+     "ssim": 0.848,
+     "lpips": 0.176
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.38,
+      "train": 22.04
+     },
+     "ssim": {
+      "truck": 0.882,
+      "train": 0.814
+     },
+     "lpips": {
+      "truck": 0.147,
+      "train": 0.207
+     }
+    }
+   },
+   "source": "Table 1 (averages), Appendix Table 5 (per scene)"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.34,
+     "ssim": 0.912,
+     "lpips": 0.218
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.93,
+      "playroom": 30.76
+     },
+     "ssim": {
+      "drjohnson": 0.91,
+      "playroom": 0.914
+     },
+     "lpips": {
+      "drjohnson": 0.223,
+      "playroom": 0.214
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.54,
+     "ssim": 0.904,
+     "lpips": 0.244
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.09,
+      "playroom": 29.98
+     },
+     "ssim": {
+      "drjohnson": 0.901,
+      "playroom": 0.907
+     },
+     "lpips": {
+      "drjohnson": 0.245,
+      "playroom": 0.244
+     }
+    }
+   },
+   "source": "Table 1 (averages), Appendix Table 5 (per scene)"
+  }
+ },
+ "variants": {
+  "LiteGS-turbo": {
+   "mipnerf360": {
+    "average": {
+     "psnr": 27.7,
+     "ssim": 0.81,
+     "lpips": 0.236
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.09,
+      "flowers": 21.65,
+      "garden": 27.27,
+      "stump": 27.11,
+      "treehill": 23.09,
+      "room": 31.96,
+      "counter": 29.07,
+      "kitchen": 31.66,
+      "bonsai": 32.44
+     },
+     "ssim": {
+      "bicycle": 0.744,
+      "flowers": 0.597,
+      "garden": 0.843,
+      "stump": 0.783,
+      "treehill": 0.629,
+      "room": 0.92,
+      "counter": 0.906,
+      "kitchen": 0.924,
+      "bonsai": 0.944
+     },
+     "lpips": {
+      "bicycle": 0.261,
+      "flowers": 0.353,
+      "garden": 0.155,
+      "stump": 0.235,
+      "treehill": 0.366,
+      "room": 0.22,
+      "counter": 0.205,
+      "kitchen": 0.133,
+      "bonsai": 0.198
+     }
+    }
+   },
+   "tandt": {
+    "average": {
+     "psnr": 23.84,
+     "ssim": 0.835,
+     "lpips": 0.201
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.8,
+      "train": 21.89
+     },
+     "ssim": {
+      "truck": 0.876,
+      "train": 0.794
+     },
+     "lpips": {
+      "truck": 0.159,
+      "train": 0.243
+     }
+    }
+   },
+   "db": {
+    "average": {
+     "psnr": 30.42,
+     "ssim": 0.911,
+     "lpips": 0.248
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.74,
+      "playroom": 31.11
+     },
+     "ssim": {
+      "drjohnson": 0.908,
+      "playroom": 0.915
+     },
+     "lpips": {
+      "drjohnson": 0.251,
+      "playroom": 0.245
+     }
+    }
+   }
+  },
+  "LiteGS-balance": {
+   "mipnerf360": {
+    "average": {
+     "psnr": 28.13,
+     "ssim": 0.827,
+     "lpips": 0.205
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.71,
+      "flowers": 21.75,
+      "garden": 27.95,
+      "stump": 27.28,
+      "treehill": 23.11,
+      "room": 32.67,
+      "counter": 29.5,
+      "kitchen": 32.33,
+      "bonsai": 32.9
+     },
+     "ssim": {
+      "bicycle": 0.787,
+      "flowers": 0.62,
+      "garden": 0.872,
+      "stump": 0.8,
+      "treehill": 0.644,
+      "room": 0.93,
+      "counter": 0.911,
+      "kitchen": 0.933,
+      "bonsai": 0.948
+     },
+     "lpips": {
+      "bicycle": 0.188,
+      "flowers": 0.314,
+      "garden": 0.106,
+      "stump": 0.197,
+      "treehill": 0.333,
+      "room": 0.199,
+      "counter": 0.198,
+      "kitchen": 0.119,
+      "bonsai": 0.195
+     }
+    }
+   },
+   "tandt": {
+    "average": {
+     "psnr": 24.61,
+     "ssim": 0.863,
+     "lpips": 0.151
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 26.5,
+      "train": 22.74
+     },
+     "ssim": {
+      "truck": 0.897,
+      "train": 0.829
+     },
+     "lpips": {
+      "truck": 0.108,
+      "train": 0.194
+     }
+    }
+   },
+   "db": {
+    "average": {
+     "psnr": 30.37,
+     "ssim": 0.912,
+     "lpips": 0.233
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.73,
+      "playroom": 31.02
+     },
+     "ssim": {
+      "drjohnson": 0.91,
+      "playroom": 0.915
+     },
+     "lpips": {
+      "drjohnson": 0.238,
+      "playroom": 0.229
+     }
+    }
+   }
+  }
+ },
+ "notes": "Per-scene numbers: Appendix Table 5 (tab:quantitative_evaluation, LaTeX v of arXiv 2503.01199, ICLR2026 submission). Averages: Table 1 (tab:main_results). method = LiteGS-quality (target primitives = 3DGS/TamingGS-big count per scene, 30K iters on Mip-NeRF360/DB, 40K iters on T&T marked * in Table 1; 30K T&T quality = 0.870/24.72/0.133 from caption/Table 2). baseline_3dgs = the 3DGS row of the same tables (looks like the 3DGS paper's published numbers). Mip-NeRF360 uses dataset-provided images_4 (outdoor)/images_2 (indoor). LiteGS-turbo = 18K iters, small budgets; balance = 30K, mid budgets.",
+ "primitives_k": {
+  "TamingGS-budget": {
+   "bicycle": 814.0,
+   "flowers": 575.0,
+   "garden": 2081.0,
+   "stump": 480.0,
+   "treehill": 785.0,
+   "room": 225.0,
+   "counter": 311.0,
+   "kitchen": 482.0,
+   "bonsai": 413.0,
+   "truck": 272.0,
+   "train": 365.0,
+   "drjohnson": 404.0,
+   "playroom": 185.0
+  },
+  "Mini-Splatting": {
+   "bicycle": 530.0,
+   "flowers": 570.0,
+   "garden": 560.0,
+   "stump": 610.0,
+   "treehill": 570.0,
+   "room": 390.0,
+   "counter": 410.0,
+   "kitchen": 430.0,
+   "bonsai": 360.0,
+   "truck": 320.0,
+   "train": 280.0,
+   "drjohnson": 600.0,
+   "playroom": 510.0
+  },
+  "Mini-Splatting v2": {
+   "bicycle": 680.0,
+   "flowers": 610.0,
+   "garden": 730.0,
+   "stump": 670.0,
+   "treehill": 580.0,
+   "room": 520.0,
+   "counter": 550.0,
+   "kitchen": 600.0,
+   "bonsai": 620.0,
+   "truck": 340.0,
+   "train": 360.0,
+   "drjohnson": 800.0,
+   "playroom": 490.0
+  },
+  "LiteGS-turbo": {
+   "bicycle": 680.0,
+   "flowers": 610.0,
+   "garden": 730.0,
+   "stump": 670.0,
+   "treehill": 580.0,
+   "room": 400.0,
+   "counter": 400.0,
+   "kitchen": 600.0,
+   "bonsai": 600.0,
+   "truck": 340.0,
+   "train": 360.0,
+   "drjohnson": 800.0,
+   "playroom": 490.0
+  },
+  "3DGS": {
+   "bicycle": 6100.0,
+   "flowers": 3630.0,
+   "garden": 5840.0,
+   "stump": 4790.0,
+   "treehill": 3890.0,
+   "room": 1550.0,
+   "counter": 1200.0,
+   "kitchen": 1810.0,
+   "bonsai": 1260.0,
+   "truck": 2600.0,
+   "train": 1090.0,
+   "drjohnson": 3310.0,
+   "playroom": 2320.0
+  },
+  "TamingGS-big": {
+   "bicycle": 5987.0,
+   "flowers": 3618.0,
+   "garden": 5728.0,
+   "stump": 4867.0,
+   "treehill": 3770.0,
+   "room": 1548.0,
+   "counter": 1190.0,
+   "kitchen": 1803.0,
+   "bonsai": 1252.0,
+   "truck": 2584.0,
+   "train": 1085.0,
+   "drjohnson": 3273.0,
+   "playroom": 2326.0
+  },
+  "3DGS-MCMC": {
+   "bicycle": 5900.0,
+   "flowers": 3600.0,
+   "garden": 5200.0,
+   "stump": 4750.0,
+   "treehill": 3700.0,
+   "room": 1500.0,
+   "counter": 1200.0,
+   "kitchen": 1800.0,
+   "bonsai": 1300.0,
+   "truck": 2600.0,
+   "train": 1100.0,
+   "drjohnson": 3400.0,
+   "playroom": 2500.0
+  },
+  "SSS": {
+   "bicycle": 3000.0,
+   "flowers": 3000.0,
+   "garden": 3000.0,
+   "stump": 3000.0,
+   "treehill": 3000.0,
+   "room": 1500.0,
+   "counter": 1200.0,
+   "kitchen": 1800.0,
+   "bonsai": 1300.0,
+   "truck": 2600.0,
+   "train": 1100.0,
+   "drjohnson": 600.0,
+   "playroom": 600.0
+  },
+  "LiteGS-balance": {
+   "bicycle": 2000.0,
+   "flowers": 1000.0,
+   "garden": 2000.0,
+   "stump": 1400.0,
+   "treehill": 800.0,
+   "room": 800.0,
+   "counter": 400.0,
+   "kitchen": 900.0,
+   "bonsai": 600.0,
+   "truck": 1200.0,
+   "train": 600.0,
+   "drjohnson": 1000.0,
+   "playroom": 1000.0
+  },
+  "LiteGS-quality": {
+   "bicycle": 5987.0,
+   "flowers": 3618.0,
+   "garden": 5728.0,
+   "stump": 4867.0,
+   "treehill": 3770.0,
+   "room": 1548.0,
+   "counter": 1190.0,
+   "kitchen": 1803.0,
+   "bonsai": 1252.0,
+   "truck": 2584.0,
+   "train": 1085.0,
+   "drjohnson": 3273.0,
+   "playroom": 2326.0
+  }
+ }
+}

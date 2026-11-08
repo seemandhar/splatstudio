@@ -1,0 +1,158 @@
+{
+ "paper": "Effective Rank Analysis and Regularization for Enhanced 3D Gaussian Splatting",
+ "arxiv": "2406.11672",
+ "method_label": "+a+b (3DGS + fixed ADC + erank reg) = 3DGS+e",
+ "iterations": 30000,
+ "datasets": {
+  "dtu-2dgs": {
+   "method": {
+    "average": {
+     "psnr": 33.09,
+     "chamfer": 1.03
+    },
+    "per_scene": {
+     "psnr": {
+      "scan24": 30.9,
+      "scan37": 27.21,
+      "scan40": 30.42,
+      "scan55": 32.23,
+      "scan63": 35.81,
+      "scan65": 31.62,
+      "scan69": 28.41,
+      "scan83": 38.0,
+      "scan97": 30.27,
+      "scan105": 34.41,
+      "scan106": 35.22,
+      "scan110": 34.69,
+      "scan114": 31.2,
+      "scan118": 37.69,
+      "scan122": 38.23
+     },
+     "chamfer": {
+      "scan24": 0.85,
+      "scan37": 0.77,
+      "scan40": 0.88,
+      "scan55": 0.51,
+      "scan63": 1.21,
+      "scan65": 1.45,
+      "scan69": 0.96,
+      "scan83": 1.3,
+      "scan97": 2.09,
+      "scan105": 0.72,
+      "scan106": 0.86,
+      "scan110": 1.45,
+      "scan114": 0.87,
+      "scan118": 0.94,
+      "scan122": 0.66
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 32.82,
+     "chamfer": 1.96
+    },
+    "per_scene": {
+     "psnr": {
+      "scan24": 30.45,
+      "scan37": 26.93,
+      "scan40": 29.79,
+      "scan55": 31.92,
+      "scan63": 35.42,
+      "scan65": 31.09,
+      "scan69": 28.34,
+      "scan83": 38.0,
+      "scan97": 30.2,
+      "scan105": 34.32,
+      "scan106": 35.0,
+      "scan110": 34.65,
+      "scan114": 30.86,
+      "scan118": 37.25,
+      "scan122": 38.07
+     },
+     "chamfer": {
+      "scan24": 2.14,
+      "scan37": 1.53,
+      "scan40": 2.08,
+      "scan55": 1.68,
+      "scan63": 3.49,
+      "scan65": 2.21,
+      "scan69": 1.43,
+      "scan83": 2.07,
+      "scan97": 2.22,
+      "scan105": 1.75,
+      "scan106": 1.79,
+      "scan110": 2.55,
+      "scan114": 1.53,
+      "scan118": 1.52,
+      "scan122": 1.5
+     }
+    }
+   },
+   "ablation_plus_a_only": {
+    "average": {
+     "psnr": 32.97
+    },
+    "per_scene": {
+     "psnr": {
+      "scan24": 30.69,
+      "scan37": 27.14,
+      "scan40": 30.31,
+      "scan55": 32.01,
+      "scan63": 35.93,
+      "scan65": 31.23,
+      "scan69": 28.04,
+      "scan83": 37.95,
+      "scan97": 30.25,
+      "scan105": 34.3,
+      "scan106": 35.11,
+      "scan110": 34.59,
+      "scan114": 31.1,
+      "scan118": 37.65,
+      "scan122": 38.21
+     }
+    }
+   },
+   "source": "App. Table 'dtu_psnr' (tables/dtu_psnr.tex) per-scene PSNR; Table 2 ablation (tables/ablation.tex) CD; mean PSNR 33.09 in Tables 1/2/storage",
+   "protocol": "DTU 15 scans, 800x600 per paper (2DGS -r 2 = 777x581), NVS train/test split not specified (assumed 3DGS --eval llffhold8)"
+  },
+  "mipnerf360": {
+   "method": {
+    "groups": {
+     "outdoor": {
+      "psnr": 24.93,
+      "ssim": 0.757,
+      "lpips": 0.221
+     },
+     "indoor": {
+      "psnr": 31.16,
+      "ssim": 0.953,
+      "lpips": 0.181
+     }
+    },
+    "average": {
+     "psnr": 27.7
+    }
+   },
+   "baseline_3dgs": {
+    "groups": {
+     "outdoor": {
+      "psnr": 24.64,
+      "ssim": 0.731,
+      "lpips": 0.234
+     },
+     "indoor": {
+      "psnr": 31.13,
+      "ssim": 0.92,
+      "lpips": 0.189
+     }
+    },
+    "average": {
+     "psnr": 27.52
+    }
+   },
+   "source": "App. Table mipnerf360 (group averages only) + storage table (9-scene average); no per-scene numbers"
+  }
+ },
+ "notes": "3DGS+e in Table 1 has slightly different CDs than +a+b in Table 2 (e.g. scan24 0.86 vs 0.85) but identical mean PSNR 33.09. 3DGS baseline numbers are the authors' runs. Indoor SSIM 0.953 looks anomalous. M360 3DGS row appears copied from prior tables (BOG)."
+}

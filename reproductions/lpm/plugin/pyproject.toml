@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-lpm"
+version = "0.1.0"
+description = "LPM: Localized Points Management (arXiv 2406.04251) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+lpm = "ss_lpm:method"
+lpm-indoor = "ss_lpm:indoor"
+
+[tool.setuptools.packages.find]
+include = ["ss_lpm*"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

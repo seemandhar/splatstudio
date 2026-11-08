@@ -1,0 +1,35 @@
+{
+ "method": "erank-gs",
+ "module": "ss_erank_gs",
+ "variants": [
+  "erank-gs-adc",
+  "erank-gs-3dgs"
+ ],
+ "components": [
+  "erank-renderer",
+  "erank-density",
+  "photometric",
+  "erank"
+ ],
+ "fields": [],
+ "probes": [
+  "erank-formula",
+  "adc-abs-metric",
+  "absgrad-units",
+  "density-recipe",
+  "state-transitions"
+ ],
+ "contributions": [
+  "erank-regularization (C1)",
+  "fixed-adc (C2)"
+ ],
+ "fidelity_gaps": [
+  "DTU NVS split assumed llffhold8",
+  "777x581 vs stated 800x600",
+  "runtime sampling/order/SH",
+  "opacity-mask loss not ported",
+  "gsplat vs Inria rasterizer",
+  "no mesh/CD"
+ ],
+ "feasible_natively": true
+}

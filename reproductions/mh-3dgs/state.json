@@ -1,0 +1,39 @@
+{
+  "paper": "Metropolis-Hastings Sampling for 3D Gaussian Reconstruction",
+  "slug": "mh-3dgs",
+  "plan_id": 118,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "review": "done (1 major fixed, 6 minors documented)",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "method": "mh-3dgs",
+  "bench_exps": [
+    "mh-3dgs-mipnerf360"
+  ],
+  "result": {
+    "psnr_delta": {
+      "garden": 0.21,
+      "room": -0.18
+    },
+    "control_psnr_delta": {
+      "garden": 0.07,
+      "room": -0.35
+    },
+    "mh_minus_mcmc": {
+      "ours": {
+        "garden": -0.08,
+        "room": 0.17
+      },
+      "paper": {
+        "garden": -0.22,
+        "room": 0.0
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+ "method": "efa-gs",
+ "datasets": {
+  "mipnerf360-pilr": [
+   "garden",
+   "bonsai"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "recipe": "3dgs",
+ "baseline": {
+  "garden": "baseline3dgs-mipnerf360-pilr-30000",
+  "bonsai": "baseline3dgs-mipnerf360-pilr-30000"
+ },
+ "control": {
+  "method": "efa-gs-base",
+  "datasets": {
+   "mipnerf360-pilr": [
+    "garden",
+    "bonsai"
+   ]
+  },
+  "note": "Paper's Mip-splatting row was run with the EFA repo's Mip-Splatting code (GOF abs-grad densification). efa-gs-base = same plugin with LFCF off (official interval_times = inf). Run it in the same experiment; the gain efa-gs - efa-gs-base is compared with paper EFA - Mip (garden -0.02, bonsai +0.22). Secondary older-base reference: runs/mip-splatting-i1-pilr/mip-splatting/mipnerf360-pilr-garden (paper-era Mip, 27.43); no paper-era Mip run exists for bonsai."
+ },
+ "paper_targets": {
+  "psnr": {
+   "garden": 28.02,
+   "bonsai": 32.56
+  },
+  "paper_mip_splatting_row": {
+   "garden": 28.04,
+   "bonsai": 32.34
+  },
+  "paper_3dgs_row": {
+   "garden": 27.28,
+   "bonsai": 32.26
+  },
+  "source": "cw_main.tex Appendix table resofmippsnr (EFA-GS(Mip)); per-scene SSIM/LPIPS in paper_results.json"
+ },
+ "notes": "Official scripts use -r 4 / -r 2 PIL resize of full-res images -> mipnerf360-pilr dataset. Scenes: garden (outdoor) + bonsai (indoor; largest reported EFA gain, also used in the paper's ablation/speed tables). Renderer background black (official); the gsplat baseline uses white. Single seed. Smoke (2k steps, pilr garden) in evidence/test.json. Record #Gaussians and training time per run (paper Tab. speed: bonsai EFA 22'55\" vs Mip 25'05\")."
+}

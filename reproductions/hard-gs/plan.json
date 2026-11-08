@@ -1,0 +1,7 @@
+{"method": "hard-gs", "module": "ss_hard_gs",
+ "components": ["hgs-renderer", "hgs-density", "photometric", "hgs-scaling-reg"],
+ "fields": ["hgs_feat", "hgs_offset", "hgs_scaling", "hgs_blob"],
+ "probes": ["neural-gaussians", "visibility-filter", "anchor-density", "pghgs-criterion", "rehgs-criterion", "blob-eval"],
+ "contributions": ["scaffold-backbone", "pghgs", "rehgs"],
+ "fidelity_gaps": ["no official code: hard-Gaussian integration into 3-level growing is a choice", "gsplat rasterizer", "white background", "view sampling", "update order", "blob transport", "per-dataset voxel size", "authors' retrained baselines", "Effi-HGS not implemented"],
+ "feasible_natively": true}

@@ -1,0 +1,9 @@
+{
+ "method": "omg",
+ "datasets": {"mipnerf360": ["bicycle", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "method_per_scene": {"mipnerf360/bicycle": "omg", "mipnerf360/counter": "omg-indoor"},
+ "notes": "Variant OMG-XS (tau 0.96, official default). Paper supp. Table tab:perscene360 OMG-XS: bicycle PSNR 24.95 / 4.61 MB / 480,772 G; counter 28.40 / 2.95 MB / 310,056 G (MB = 2^20). Official README picks imp_metric by scene class: outdoor -> omg, indoor -> omg-indoor; launch both names in the same exp. Compare to baseline3dgs-mipnerf360-30000 and to our matched Mini-Splatting runs (runs/mini-splatting-mipnerf360 bicycle, runs/mini-splatting-indoor-mipnerf360 counter). --steps must be 30000 (other lengths are refused at step 1). validation.json and ss-eval measure the decoded model (encode->G-PCC/Huffman/LZMA->decode at step 30000). Storage: tools/ssenv python reproductions/omg/plugin/report_size.py <run> -> <run>/omg_size.json (official_total_mb = official write_storage formula, container_mb = real decoded file). Needs tmc3 at ~/models/tmc13/src/build/tmc3/tmc3 (or $OMG_TMC3). First job JIT-compiles the CUDA extension ss_omg_cuda (~1.5 min)."
+}

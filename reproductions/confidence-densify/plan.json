@@ -1,0 +1,47 @@
+{
+ "method": "confidence-densify",
+ "module": "ss_confidence_densify",
+ "components": [
+  "cad-renderer",
+  "confidence-photometric",
+  "mcmc-reg",
+  "cad-density"
+ ],
+ "fields": [
+  {
+   "name": "confidence",
+   "shape": [
+    1
+   ],
+   "lr": 0.00025,
+   "init": 0.0
+  }
+ ],
+ "probes": [
+  "confidence-loss",
+  "confidence-render",
+  "blend-stats-oracle",
+  "sampling-pdf",
+  "relocation-schedule",
+  "densify-step",
+  "color-init"
+ ],
+ "contributions": [
+  "learned-confidence",
+  "error-sampling",
+  "max-weight-relocation",
+  "position-sampling",
+  "color-init"
+ ],
+ "fidelity_gaps": [
+  "gsplat rasterizer instead of Faster-GS",
+  "runtime eval/background conventions",
+  "ambiguities: rank ties, SSIM-term reduction, moment reset",
+  "init opacity 0.5 assumed",
+  "extra stats raster pass (speed only)"
+ ],
+ "feasible_natively": true,
+ "extra_methods": [
+  "cad-mcmc-control"
+ ]
+}

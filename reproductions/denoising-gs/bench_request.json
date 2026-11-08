@@ -1,0 +1,10 @@
+{"method": "denoising-gs",
+ "datasets": {"mipnerf360": ["bicycle", "counter"]},
+ "steps": 35000,
+ "per_scene_reported": true,
+ "extra": "",
+ "controls": {"denoising-gs-mcmc": {"mipnerf360": ["bicycle", "counter"]}},
+ "paper_psnr": {"bicycle": 26.17, "counter": 29.57},
+ "paper_mcmc_psnr": {"bicycle": 26.15, "counter": 29.51},
+ "paper_gaussians_M": {"bicycle": 5.32, "counter": 1.08},
+ "notes": "Paper uses 35k iterations on Mip-NeRF 360 (Sec. 5.1). Cap is set automatically from the scene name (paper Table 2 MCMC counts: bicycle 5.9M, counter 1.2M). Paper gain over its own MCMC is only +0.02 / +0.06 dB, so also run the denoising-gs-mcmc control at 35k; compare against baseline3dgs-mipnerf360-30000 as well. Fisher pass at step 30000 reloads the train images (~20 s + a few GB of host RAM)."}
