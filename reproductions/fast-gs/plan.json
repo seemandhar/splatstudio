@@ -1,0 +1,11 @@
+{"method": "fast-gs", "module": "ss_fast_gs",
+ "variants": ["fast-gs", "fast-gs-big", "fast-gs-tdb", "fast-gs-big-tdb"],
+ "components": [
+  {"kind": "renderer", "name": "fastgs-renderer", "factory": "ss_fast_gs.renderer:create_renderer", "custom_cuda": "vendored official FastGS rasterizer (CB, abs grad, metric counts)"},
+  {"kind": "density", "name": "fastgs-density", "factory": "ss_fast_gs.density:create_density"},
+  {"kind": "loss", "name": "fastgs-photometric", "factory": "ss_fast_gs.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["fastgs-metric-kernel", "fastgs-scores", "fastgs-densify-gate", "fastgs-prune", "fastgs-schedule", "fastgs-optimizer-schedule", "fastgs-scene-table"],
+ "contributions": ["vcd", "vcp", "compact-box", "3dgs-accel-optimizer-schedule", "absgrad-split"],
+ "fidelity_gaps": ["view sampling with replacement", "densify after optimizer step", "score views from cache", "eval SSIM/LPIPS implementations"],
+ "feasible_natively": true}

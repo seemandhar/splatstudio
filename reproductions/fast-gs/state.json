@@ -1,0 +1,29 @@
+{
+ "paper": "FastGS: Training 3D Gaussian Splatting in 100 Seconds",
+ "slug": "fast-gs",
+ "plan_id": 23,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "official_code": "https://github.com/fastgs/FastGS @ 44e02a5",
+ "results": {
+  "garden": {
+   "psnr": 27.23,
+   "paper": 27.2
+  },
+  "counter": {
+   "psnr": 29.16,
+   "paper": 29.15
+  },
+  "big": {
+   "garden": 27.65,
+   "counter": 29.47
+  }
+ }
+}

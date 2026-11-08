@@ -1,0 +1,394 @@
+{
+ "paper": "FastGS: Training 3D Gaussian Splatting in 100 Seconds",
+ "arxiv": "2511.04283",
+ "method_label": "FastGS",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.56,
+     "ssim": 0.797,
+     "lpips": 0.261
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.84,
+      "flowers": 21.21,
+      "garden": 27.2,
+      "stump": 26.65,
+      "treehill": 22.94,
+      "room": 31.98,
+      "counter": 29.15,
+      "kitchen": 31.87,
+      "bonsai": 32.19
+     },
+     "ssim": {
+      "bicycle": 0.714,
+      "flowers": 0.56,
+      "garden": 0.836,
+      "stump": 0.756,
+      "treehill": 0.612,
+      "room": 0.92,
+      "counter": 0.907,
+      "kitchen": 0.929,
+      "bonsai": 0.942
+     },
+     "lpips": {
+      "bicycle": 0.31,
+      "flowers": 0.406,
+      "garden": 0.174,
+      "stump": 0.297,
+      "treehill": 0.429,
+      "room": 0.217,
+      "counter": 0.204,
+      "kitchen": 0.127,
+      "bonsai": 0.191
+     }
+    },
+    "gaussians_M": {
+     "bicycle": 0.54,
+     "flowers": 0.49,
+     "garden": 0.74,
+     "stump": 0.39,
+     "treehill": 0.38,
+     "room": 0.21,
+     "counter": 0.21,
+     "kitchen": 0.38,
+     "bonsai": 0.28
+    },
+    "minutes_rtx4090": {
+     "bicycle": 1.92,
+     "flowers": 1.95,
+     "garden": 2.47,
+     "stump": 1.72,
+     "treehill": 1.72,
+     "room": 1.62,
+     "counter": 1.83,
+     "kitchen": 2.42,
+     "bonsai": 1.83
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.53,
+     "ssim": 0.812,
+     "lpips": 0.221
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.14,
+      "flowers": 21.3,
+      "garden": 27.34,
+      "stump": 26.64,
+      "treehill": 22.59,
+      "room": 31.71,
+      "counter": 29.16,
+      "kitchen": 31.54,
+      "bonsai": 32.37
+     },
+     "ssim": {
+      "bicycle": 0.748,
+      "flowers": 0.586,
+      "garden": 0.857,
+      "stump": 0.768,
+      "treehill": 0.636,
+      "room": 0.927,
+      "counter": 0.915,
+      "kitchen": 0.932,
+      "bonsai": 0.946
+     },
+     "lpips": {
+      "bicycle": 0.242,
+      "flowers": 0.36,
+      "garden": 0.122,
+      "stump": 0.244,
+      "treehill": 0.347,
+      "room": 0.197,
+      "counter": 0.183,
+      "kitchen": 0.116,
+      "bonsai": 0.18
+     }
+    },
+    "gaussians_M": {
+     "bicycle": 4.71,
+     "flowers": 2.82,
+     "garden": 4.19,
+     "stump": 4.05,
+     "treehill": 3.01,
+     "room": 1.25,
+     "counter": 1.05,
+     "kitchen": 1.53,
+     "bonsai": 1.07
+    },
+    "minutes_rtx4090": {
+     "bicycle": 27.97,
+     "flowers": 18.98,
+     "garden": 26.78,
+     "stump": 21.77,
+     "treehill": 20.33,
+     "room": 18.78,
+     "counter": 17.58,
+     "kitchen": 21.3,
+     "bonsai": 14.9
+    }
+   },
+   "source": "Table 1; supp. Tables 17-19"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 30.03,
+     "ssim": 0.901,
+     "lpips": 0.27
+    },
+    "per_scene": {
+     "psnr": {
+      "playroom": 30.57,
+      "drjohnson": 29.5
+     },
+     "ssim": {
+      "playroom": 0.905,
+      "drjohnson": 0.898
+     },
+     "lpips": {
+      "playroom": 0.266,
+      "drjohnson": 0.275
+     }
+    },
+    "gaussians_M": {
+     "playroom": 0.19,
+     "drjohnson": 0.25
+    },
+    "minutes_rtx4090": {
+     "playroom": 1.22,
+     "drjohnson": 1.35
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.71,
+     "ssim": 0.903,
+     "lpips": 0.241
+    },
+    "per_scene": {
+     "psnr": {
+      "playroom": 30.14,
+      "drjohnson": 29.28
+     },
+     "ssim": {
+      "playroom": 0.904,
+      "drjohnson": 0.902
+     },
+     "lpips": {
+      "playroom": 0.243,
+      "drjohnson": 0.239
+     }
+    },
+    "gaussians_M": {
+     "playroom": 1.85,
+     "drjohnson": 3.07
+    },
+    "minutes_rtx4090": {
+     "playroom": 16.75,
+     "drjohnson": 22.78
+    }
+   },
+   "source": "Table 1; supp. Tables 17-19"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.15,
+     "ssim": 0.839,
+     "lpips": 0.21
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.73,
+      "train": 22.57
+     },
+     "ssim": {
+      "truck": 0.872,
+      "train": 0.805
+     },
+     "lpips": {
+      "truck": 0.178,
+      "train": 0.242
+     }
+    },
+    "gaussians_M": {
+     "truck": 0.25,
+     "train": 0.23
+    },
+    "minutes_rtx4090": {
+     "truck": 1.3,
+     "train": 1.33
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.71,
+     "ssim": 0.85,
+     "lpips": 0.17
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.39,
+      "train": 22.03
+     },
+     "ssim": {
+      "truck": 0.881,
+      "train": 0.818
+     },
+     "lpips": {
+      "truck": 0.142,
+      "train": 0.198
+     }
+    },
+    "gaussians_M": {
+     "truck": 2.05,
+     "train": 1.09
+    },
+    "minutes_rtx4090": {
+     "truck": 12.5,
+     "train": 10.18
+    }
+   },
+   "source": "Table 1; supp. Tables 17-19"
+  }
+ },
+ "variants": {
+  "fast-gs-big": {
+   "mipnerf360": {
+    "method": {
+     "average": {
+      "psnr": 27.93,
+      "ssim": 0.82,
+      "lpips": 0.216
+     },
+     "per_scene": {
+      "psnr": {
+       "bicycle": 25.26,
+       "flowers": 21.6,
+       "garden": 27.56,
+       "stump": 27.18,
+       "treehill": 22.83,
+       "room": 32.2,
+       "counter": 29.57,
+       "kitchen": 32.17,
+       "bonsai": 32.97
+      },
+      "ssim": {
+       "bicycle": 0.755,
+       "flowers": 0.602,
+       "garden": 0.864,
+       "stump": 0.786,
+       "treehill": 0.632,
+       "room": 0.929,
+       "counter": 0.917,
+       "kitchen": 0.938,
+       "bonsai": 0.953
+      },
+      "lpips": {
+       "bicycle": 0.245,
+       "flowers": 0.341,
+       "garden": 0.11,
+       "stump": 0.24,
+       "treehill": 0.378,
+       "room": 0.189,
+       "counter": 0.177,
+       "kitchen": 0.105,
+       "bonsai": 0.161
+      }
+     },
+     "gaussians_M": {
+      "bicycle": 1.55,
+      "flowers": 1.14,
+      "garden": 2.64,
+      "stump": 1.06,
+      "treehill": 1.01,
+      "room": 0.57,
+      "counter": 0.47,
+      "kitchen": 1.18,
+      "bonsai": 0.85
+     },
+     "minutes_rtx4090": {
+      "bicycle": 2.59,
+      "flowers": 3.22,
+      "garden": 6.5,
+      "stump": 2.88,
+      "treehill": 2.78,
+      "room": 2.38,
+      "counter": 2.62,
+      "kitchen": 5.15,
+      "bonsai": 3.22
+     }
+    }
+   },
+   "db": {
+    "method": {
+     "average": {
+      "psnr": 30.12,
+      "ssim": 0.907,
+      "lpips": 0.243
+     },
+     "per_scene": {
+      "psnr": {
+       "playroom": 30.55,
+       "drjohnson": 29.69
+      },
+      "ssim": {
+       "playroom": 0.909,
+       "drjohnson": 0.905
+      },
+      "lpips": {
+       "playroom": 0.239,
+       "drjohnson": 0.247
+      }
+     },
+     "gaussians_M": {
+      "playroom": 0.6,
+      "drjohnson": 0.7
+     },
+     "minutes_rtx4090": {
+      "playroom": 1.93,
+      "drjohnson": 2.07
+     }
+    }
+   },
+   "tandt": {
+    "method": {
+     "average": {
+      "psnr": 24.39,
+      "ssim": 0.855,
+      "lpips": 0.175
+     },
+     "per_scene": {
+      "psnr": {
+       "truck": 26.09,
+       "train": 22.68
+      },
+      "ssim": {
+       "truck": 0.886,
+       "train": 0.824
+      },
+      "lpips": {
+       "truck": 0.14,
+       "train": 0.21
+      }
+     },
+     "gaussians_M": {
+      "truck": 0.63,
+      "train": 0.46
+     },
+     "minutes_rtx4090": {
+      "truck": 2.13,
+      "train": 1.93
+     }
+    }
+   }
+  }
+ },
+ "notes": "Averages: main Table 1 (tab:main-result_); per-scene: supp. Tables 17-19 (tab:scenewise-mip360/db/tanks). baseline_3dgs = 3DGS row retrained by the authors (official code, RTX 4090). Mip-NeRF 360 evaluated at the official loader resolution (-i images, -r -1 -> width 1600) = our mipnerf360-1600. 'variants.fast-gs-big' = FastGS-Big row (densification every 100 iterations)."
+}
