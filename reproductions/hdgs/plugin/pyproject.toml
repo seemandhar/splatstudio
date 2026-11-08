@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-hdgs"
+version = "0.1.0"
+description = "HDGS (arXiv 2412.01823) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+hdgs = "ss_hdgs:method"
+hdgs-indoor = "ss_hdgs:method_indoor"
+
+[tool.setuptools.packages.find]
+include = ["ss_hdgs*"]
+
+[tool.setuptools.package-data]
+ss_hdgs = ["csrc/*.md", "csrc/SHA256SUMS*", "csrc/stage1/*", "csrc/stage1/cuda_rasterizer/*", "csrc/texture/*", "csrc/texture/cuda_rasterizer/*", "csrc/third_party/*.txt", "csrc/third_party/glm/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["ss_hdgs/csrc"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

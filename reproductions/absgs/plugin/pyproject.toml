@@ -13,6 +13,7 @@ dependencies = ["splatstudio>=0.1,<0.2"]
 absgs = "ss_absgs:method"
 absgs-0008 = "ss_absgs:absgs_0008"
 absgs-noreset = "ss_absgs:absgs_noreset"
+absgs-noreduce = "ss_absgs:absgs_noreduce"
 
 [tool.setuptools.packages.find]
 include = ["ss_absgs*"]

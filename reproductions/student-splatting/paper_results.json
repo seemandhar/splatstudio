@@ -1,0 +1,48 @@
+{
+  "paper": "3D Student Splatting and Scooping",
+  "arxiv": "2503.10148",
+  "method_label": "SSS",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 29.90, "ssim": 0.893, "lpips": 0.145},
+        "per_scene": {
+          "psnr": {"bicycle": 25.68, "bonsai": 33.50, "counter": 29.87, "garden": 28.09, "kitchen": 32.43, "room": 32.57, "stump": 27.17},
+          "ssim": {"bicycle": 0.798, "bonsai": 0.956, "counter": 0.926, "garden": 0.882, "kitchen": 0.939, "room": 0.938, "stump": 0.813},
+          "lpips": {"bicycle": 0.173, "bonsai": 0.151, "counter": 0.156, "garden": 0.009, "kitchen": 0.104, "room": 0.167, "stump": 0.174}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 28.69, "ssim": 0.870, "lpips": 0.182},
+        "per_scene": {
+          "psnr": {"bicycle": 25.25, "bonsai": 31.98, "counter": 28.70, "garden": 27.41, "kitchen": 30.32, "room": 30.63, "stump": 26.55},
+          "ssim": {"bicycle": 0.771, "bonsai": 0.938, "counter": 0.905, "garden": 0.868, "kitchen": 0.922, "room": 0.914, "stump": 0.775},
+          "lpips": {"bicycle": 0.205, "bonsai": 0.205, "counter": 0.204, "garden": 0.103, "kitchen": 0.129, "room": 0.220, "stump": 0.210}
+        }
+      },
+      "source": "main Table 1 (7-scene average, no flowers/treehill); supp. Tables comparisons_360_psnr/ssim/lpips (per scene, average of three runs)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.87, "ssim": 0.873, "lpips": 0.138},
+                 "per_scene": {"psnr": {"train": 23.32, "truck": 26.41}, "ssim": {"train": 0.850, "truck": 0.897}, "lpips": {"train": 0.166, "truck": 0.109}}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183},
+                        "per_scene": {"psnr": {"train": 21.09, "truck": 25.18}, "ssim": {"train": 0.802, "truck": 0.879}, "lpips": {"train": 0.218, "truck": 0.148}}},
+      "source": "main Table 1; supp. Tables comparisons_td_*"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.07, "ssim": 0.907, "lpips": 0.247},
+                 "per_scene": {"psnr": {"drjohnson": 29.66, "playroom": 30.47}, "ssim": {"drjohnson": 0.905, "playroom": 0.909}, "lpips": {"drjohnson": 0.249, "playroom": 0.245}}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243},
+                        "per_scene": {"psnr": {"drjohnson": 28.77, "playroom": 30.04}, "ssim": {"drjohnson": 0.899, "playroom": 0.906}, "lpips": {"drjohnson": 0.244, "playroom": 0.241}}},
+      "source": "main Table 1; supp. Tables comparisons_td_*"
+    }
+  },
+  "per_scene_protocol": {
+    "bicycle": {"resolution": "-r 4 (PIL resize of full-res images)", "iterations": 30000, "cap_max": 3000000, "nu_init": 100, "C_burnin": 5e8, "C": 120, "burnin_iterations": 15000},
+    "room": {"resolution": "-r 2 (PIL resize of full-res images)", "iterations": 40000, "cap_max": 1500000, "nu_init": 100, "C_burnin": 5e5, "C": 120, "burnin_iterations": 7000},
+    "truck": {"resolution": "-r -1 (width 1600 auto)", "iterations": 40000, "cap_max": 2600000, "nu_init": 100, "C_burnin": 5e5, "C": 120, "burnin_iterations": 7000},
+    "source": "official configs/<scene>.json"
+  },
+  "notes": "Per-scene SSS numbers are the full model (t-kernel + negative components + SGHMC) with the official per-scene configs (cap_max, iterations 30k or 40k), average of three runs. 3DGS rows are the 3DGS paper's numbers. Mip-NeRF 360 average covers 7 scenes. LPIPS garden 0.009 is a typo in the paper table (likely 0.090)."
+}

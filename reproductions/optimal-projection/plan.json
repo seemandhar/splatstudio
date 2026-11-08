@@ -1,0 +1,7 @@
+{"method": "optimal-gs", "module": "ss_optimal_gs",
+ "components": ["optimal-renderer (custom CUDA unit-sphere rasterizer + tangent-plane projection)", "adaptive-density (base)", "photometric (base)"],
+ "fields": [],
+ "probes": ["tangent-jacobian", "cov-gradient", "raster-forward-vs-dense", "raster-backward-vs-dense", "projection-error"],
+ "contributions": ["optimal-projection", "unit-sphere-rasterizer"],
+ "fidelity_gaps": ["white background / gsplat density / sampling (runtime-wide)", "Inria alpha semantics vs gsplat baseline (control optimal-gs-ewa)", "gsplat tile rect rule", "K principal point", "algebraic basis"],
+ "feasible_natively": true}

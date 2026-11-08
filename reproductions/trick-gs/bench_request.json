@@ -1,0 +1,4 @@
+{"method": "trick-gs", "datasets": {"tandt": ["truck", "train"], "db": ["drjohnson", "playroom"]}, "steps": 30000,
+ "per_scene_reported": false, "extra": "",
+ "paper_targets": {"tandt": {"psnr": 23.48, "baseline_3dgs": 23.67}, "db": {"psnr": 29.46, "baseline_3dgs": 29.46}},
+ "notes": "Paper reports dataset averages only (Tables 1-2); T&T and DB are the cheapest complete averages. Needs the SfM-error sidecars in reproductions/trick-gs/sfm_errors/ (present for truck, train, drjohnson, playroom, garden, bicycle, counter). Compare to baseline3dgs-tandt-30000 / baseline3dgs-db-30000."}

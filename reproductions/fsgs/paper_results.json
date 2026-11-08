@@ -1,0 +1,51 @@
+{
+  "paper": "FSGS: Real-Time Few-shot View Synthesis using Gaussian Splatting",
+  "arxiv": "2312.00451",
+  "venue": "ECCV 2024",
+  "method_label": "Ours (FSGS)",
+  "iterations": 10000,
+  "datasets": {
+    "llff-3view-r8": {
+      "method": {"average": {"psnr": 20.31, "ssim": 0.652, "lpips": 0.288}},
+      "baseline_3dgs": {"average": {"psnr": 17.43, "ssim": 0.522, "lpips": 0.321}},
+      "scenes": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"],
+      "source": "Table 1 (1/8 resolution, 504x378, 3 training views); averages only, no per-scene tables in main text, supplementary or rebuttal"
+    },
+    "llff-3view-r4": {
+      "method": {"average": {"psnr": 19.88, "ssim": 0.612, "lpips": 0.340}},
+      "baseline_3dgs": {"average": {"psnr": 16.94, "ssim": 0.488, "lpips": 0.402}},
+      "source": "Table 1 (1/4 resolution, 1008x756)"
+    },
+    "mipnerf360-24view-r8": {
+      "method": {"average": {"psnr": 23.70, "ssim": 0.745, "lpips": 0.220}},
+      "baseline_3dgs": {"average": {"psnr": 20.89, "ssim": 0.633, "lpips": 0.317}},
+      "source": "Table 2 (1/8 resolution, 24 views, 9 scenes)"
+    },
+    "mipnerf360-24view-r4": {
+      "method": {"average": {"psnr": 22.82, "ssim": 0.693, "lpips": 0.293}},
+      "baseline_3dgs": {"average": {"psnr": 19.93, "ssim": 0.588, "lpips": 0.401}},
+      "source": "Table 2 (1/4 resolution)"
+    },
+    "blender-8view": {
+      "method": {"average": {"psnr": 24.64, "ssim": 0.895, "lpips": 0.095}},
+      "baseline_3dgs": {"average": {"psnr": 21.56, "ssim": 0.847, "lpips": 0.130}},
+      "source": "Table 3 (400x400, DietNeRF 8-view split)"
+    },
+    "shiny-3view": {
+      "method": {"average": {"psnr": 19.63, "ssim": 0.612, "lpips": 0.327}},
+      "baseline_3dgs": {"average": {"psnr": 17.83, "ssim": 0.547, "lpips": 0.385}},
+      "source": "Table 3"
+    }
+  },
+  "ablations": {
+    "llff-3view-r8": {
+      "3dgs": {"psnr": 17.43, "ssim": 0.522, "lpips": 0.321},
+      "+unpooling": {"psnr": 18.64, "ssim": 0.580, "lpips": 0.311},
+      "+unpooling+depth": {"psnr": 19.83, "ssim": 0.634, "lpips": 0.297},
+      "+unpooling+depth+pseudo (full)": {"psnr": 20.31, "ssim": 0.652, "lpips": 0.288},
+      "depth estimator": {"MiDaS small": 20.17, "DPT Hybrid": 20.29, "DPT Large": 20.31, "DepthAnything": 20.37},
+      "source": "Tables 4 and 5"
+    }
+  },
+  "notes": "No mipnerf360/tandt/db rows under the dense 3DGS protocol. The paper's 3D-GS rows are 3DGS trained with its dense-view recipe on the same sparse views. Table 5 lists DPT Large as the main-table setting (20.31) but the official code loads DPT_Hybrid (Table 5: 20.29)."
+}

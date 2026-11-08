@@ -66,13 +66,18 @@ def _make(name, label, **overrides):
 
 
 def method():
-    """AbsGS-0004 (tau_split = 0.0004, tau_S = 0.001): main/best paper row, code default."""
+    """AbsGS-0004 (tau_split 0.0004, tau_S 0.001, opacity reduce every 500): official defaults."""
     return _make("absgs", "AbsGS-0004")
 
 
 def absgs_0008():
     """AbsGS-0008 (tau_split = 0.0008, tau_S = 0.001): lighter paper variant."""
     return _make("absgs-0008", "AbsGS-0008", split_grad2d=0.0008)
+
+
+def absgs_noreduce():
+    """Ablation: AbsGS-0004 without the official periodic opacity reduction (use_reduce=False)."""
+    return _make("absgs-noreduce", "AbsGS-0004, no opacity reduction", reduce_every=0)
 
 
 def absgs_noreset():

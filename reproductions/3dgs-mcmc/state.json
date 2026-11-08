@@ -1,0 +1,40 @@
+{
+ "paper": "3D Gaussian Splatting as Markov Chain Monte Carlo",
+ "slug": "3dgs-mcmc",
+ "plan_id": 25,
+ "stages": {
+  "read": "done",
+  "plan": "done (built-in gsplat-mcmc not faithful -> plugin)",
+  "implement": "done",
+  "test": "done (ss-inspect ok, 4 pytest, ss-verify declared_checks_passed, smoke room-pilr 2000 steps val PSNR 25.24, 112.6k->234k G)",
+  "benchmark": "done (runs/mcmc-3dgs-pilr)",
+  "review": "not separate (assembled from reviewed mh-3dgs control pieces)",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "method": "mcmc-3dgs",
+ "official_code": "ubc-vision/3dgs-mcmc@7b4fc9f",
+ "bench_exps": [
+  "mcmc-3dgs-pilr"
+ ],
+ "result": {
+  "psnr": {
+   "garden": 28.3,
+   "room": 32.07
+  },
+  "psnr_delta": {
+   "garden": 0.14,
+   "room": -0.41
+  },
+  "gain_over_baseline": {
+   "ours": {
+    "garden": 0.95,
+    "room": 0.38
+   },
+   "paper": {
+    "garden": 0.43,
+    "room": 0.78
+   }
+  }
+ }
+}

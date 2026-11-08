@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-student-splatting"
+version = "0.1.0"
+description = "3D Student Splatting and Scooping (arXiv 2503.10148) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+student-splatting = "ss_student_splatting:student_splatting"
+student-splatting-bicycle = "ss_student_splatting:student_splatting_bicycle"
+student-splatting-room = "ss_student_splatting:student_splatting_room"
+student-splatting-truck = "ss_student_splatting:student_splatting_truck"
+
+[tool.setuptools]
+packages = ["ss_student_splatting"]
+
+[tool.setuptools.package-data]
+ss_student_splatting = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100

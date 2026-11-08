@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-dwtgs"
+version = "0.1.0"
+description = "DWTGS (arXiv 2507.15690) native SplatStudio port on DropGaussian; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "splatstudio-method-dropgaussian", "gsplat>=1.5", "numpy"]
+
+[project.entry-points."splatstudio.methods"]
+dwtgs = "ss_dwtgs:method"
+dwtgs-lf = "ss_dwtgs:method_lf"
+
+[tool.setuptools.packages.find]
+include = ["ss_dwtgs*"]
+
+[tool.ruff]
+line-length = 100

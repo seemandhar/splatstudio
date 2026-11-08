@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-compgs"
+version = "0.1.0"
+description = "CompGS / Compact3D (Navaneet et al., ECCV 2024, arXiv 2311.18159) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+compgs = "ss_compgs:method"
+compgs-smoke = "ss_compgs:smoke"
+
+[tool.setuptools.packages.find]
+include = ["ss_compgs*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,27 @@
+{
+ "paper": "CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization",
+ "slug": "cor-gs",
+ "plan_id": 21,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "dataset": "llff-fewview3-r8",
+ "result": {
+  "dataset": "llff-fewview3-r8",
+  "psnr": 20.26,
+  "ssim": 0.703,
+  "lpips": 0.232,
+  "paper": {
+   "psnr": 20.45,
+   "ssim": 0.712,
+   "lpips": 0.196
+  },
+  "delta_psnr": -0.19,
+  "run": "runs/cor-gs-llff-r8"
+ }
+}

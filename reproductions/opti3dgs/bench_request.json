@@ -1,0 +1,9 @@
+{"method": "opti3dgs",
+ "datasets": {"tandt": ["truck", "train"], "db": ["drjohnson", "playroom"]},
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "",
+ "also_methods": ["opti3dgs-filter"],
+ "targets": {"opti3dgs": {"tandt": 23.15, "db": 29.56}, "opti3dgs-filter": {"tandt": 23.71, "db": 29.68}, "paper_3dgs": {"tandt": 23.69, "db": 29.54}},
+ "baselines": ["baseline3dgs-tandt-30000", "baseline3dgs-db-30000"],
+ "note": "Paper reports dataset averages only (Table 1 '3DGS+Ours*', Table 2 'Ours-Filtering'); full 2-scene T&T and DB averages are the cheapest complete comparison. opti3dgs-filter is the secondary variant (Table 2)."}

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-trick-gs"
+version = "0.1.0"
+description = "Trick-GS (arXiv 2501.14534) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2"]
+
+[project.entry-points."splatstudio.methods"]
+trick-gs = "ss_trick_gs:method"
+trick-gs-it1 = "ss_trick_gs:iteration1"
+trick-gs-ablate-noshm = "ss_trick_gs:ablate_no_shm"
+
+[tool.setuptools.packages.find]
+include = ["ss_trick_gs*"]
+
+[tool.setuptools.package-data]
+ss_trick_gs = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

@@ -1,0 +1,38 @@
+{
+  "paper": "CompGS: Smaller and Faster Gaussian Splatting with Vector Quantization",
+  "arxiv": "2311.18159",
+  "method_label": "CompGS 32K",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.12, "ssim": 0.806, "lpips": 0.240},
+                 "per_scene": {
+                   "psnr": {"bicycle": 25.068, "bonsai": 31.195, "counter": 28.467, "flowers": 21.262, "garden": 26.822, "kitchen": 30.774, "room": 31.131, "stump": 26.605, "treehill": 22.747},
+                   "ssim": {"bicycle": 0.755, "bonsai": 0.932, "counter": 0.895, "flowers": 0.588, "garden": 0.848, "kitchen": 0.918, "room": 0.912, "stump": 0.770, "treehill": 0.634},
+                   "lpips": {"bicycle": 0.244, "bonsai": 0.223, "counter": 0.222, "flowers": 0.367, "garden": 0.140, "kitchen": 0.142, "room": 0.235, "stump": 0.236, "treehill": 0.355},
+                   "mem_mb": {"bicycle": 29, "bonsai": 10, "counter": 10, "flowers": 23, "garden": 30, "kitchen": 13, "room": 9, "stump": 27, "treehill": 23},
+                   "gaussians": {"bicycle": 1314018, "bonsai": 377227, "counter": 385515, "flowers": 1037132, "garden": 1370624, "kitchen": 564382, "room": 327191, "stump": 1226044, "treehill": 1002290}}},
+      "baseline_3dgs": {"average": {"psnr": 27.42, "ssim": 0.813, "lpips": 0.217},
+                 "per_scene": {
+                   "psnr": {"bicycle": 25.169, "bonsai": 31.918, "counter": 29.018, "flowers": 21.456, "garden": 27.241, "kitchen": 31.510, "room": 31.346, "stump": 26.651, "treehill": 22.504},
+                   "ssim": {"bicycle": 0.763, "bonsai": 0.940, "counter": 0.906, "flowers": 0.602, "garden": 0.863, "kitchen": 0.926, "room": 0.917, "stump": 0.772, "treehill": 0.633},
+                   "lpips": {"bicycle": 0.212, "bonsai": 0.206, "counter": 0.202, "flowers": 0.339, "garden": 0.108, "kitchen": 0.127, "room": 0.221, "stump": 0.215, "treehill": 0.327},
+                   "mem_mb": {"bicycle": 1422, "bonsai": 293, "counter": 283, "flowers": 851, "garden": 1347, "kitchen": 425, "room": 364, "stump": 1136, "treehill": 879}}},
+      "source": "Table 1 (averages) / supp. Table tab:scene_metrics (per scene)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.44, "ssim": 0.838, "lpips": 0.198},
+                 "per_scene": {"psnr": {"train": 21.789, "truck": 25.092}, "ssim": {"train": 0.804, "truck": 0.872}, "lpips": {"train": 0.231, "truck": 0.165}, "mem_mb": {"train": 12, "truck": 13}}},
+      "baseline_3dgs": {"average": {"psnr": 23.68, "ssim": 0.844, "lpips": 0.178},
+                 "per_scene": {"psnr": {"train": 21.991, "truck": 25.385}, "ssim": {"train": 0.811, "truck": 0.878}, "lpips": {"train": 0.209, "truck": 0.148}}},
+      "source": "Table 1 / supp. tab:scene_metrics"
+    },
+    "db": {
+      "method": {"per_scene": {"psnr": {"drjohnson": 29.445, "playroom": 30.347}, "ssim": {"drjohnson": 0.906, "playroom": 0.908}, "lpips": {"drjohnson": 0.249, "playroom": 0.253}, "mem_mb": {"drjohnson": 17, "playroom": 10}}},
+      "baseline_3dgs": {"per_scene": {"psnr": {"drjohnson": 29.089, "playroom": 29.903}, "ssim": {"drjohnson": 0.898, "playroom": 0.901}, "lpips": {"drjohnson": 0.247, "playroom": 0.246}}},
+      "source": "supp. tab:scene_metrics"
+    }
+  },
+  "variants": {"CompGS 16K (mip360 avg)": {"psnr": 27.03, "mem_mb": 18}, "CompGS 32K BitQ (mip360 avg)": {"psnr": 26.97, "mem_mb": 12}, "K-means 4K no opacity reg (mip360 avg, Table 2)": {"psnr": 26.97}, "K-means 32K no opacity reg (mip360 avg, Table 2)": {"psnr": 27.16}},
+  "notes": "baseline_3dgs = authors' retrained 3DGS (official code). Per-scene table is CompGS 32K with opacity regularisation (Gaussian counts reduced 3-4x). Mem in MB from the paper."
+}

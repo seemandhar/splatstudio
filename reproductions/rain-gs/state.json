@@ -1,0 +1,25 @@
+{
+ "paper": "Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting",
+ "slug": "rain-gs",
+ "plan_id": 11,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "results": {
+  "garden": {
+   "psnr": 26.83,
+   "paper": 26.884
+  },
+  "counter": {
+   "psnr": 28.52,
+   "paper": 28.529
+  }
+ },
+ "reviewed": false
+}

@@ -1,0 +1,11 @@
+{"method": "mcmc-3dgs",
+ "datasets": {"mipnerf360-pilr": ["garden", "room"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "launch": ["bench.py launch --exp mcmc-3dgs-pilr --methods mcmc-3dgs --dataset mipnerf360-pilr --scenes garden room --steps 30000"],
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000 (official configs use Inria -r 4 outdoor / -r 2 indoor PIL resize of full-res images = mipnerf360-pilr); gsplat garden 27.35, room 31.69",
+ "paper_reference": {"garden": {"psnr": 28.16, "ssim": 0.89, "lpips": 0.10, "cap_max": 5200000, "paper_3dgs_sfm": 27.73},
+                     "room": {"psnr": 32.48, "ssim": 0.94, "lpips": 0.25, "cap_max": 1500000, "paper_3dgs_sfm": 31.70},
+                     "source": "Supp. Tab. allres, 'Ours (SfM)' column, mean of 3 runs"},
+ "notes": "Cap looked up from the --data basename (official configs/<scene>.json). Paper gain over its own 3DGS run: garden +0.43, room +0.78. Optional: also run built-in gsplat-mcmc (1M cap, no regs) for contrast; not required."}

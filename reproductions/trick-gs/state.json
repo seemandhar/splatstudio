@@ -1,0 +1,23 @@
+{
+ "paper": "Trick-GS: A Balanced Bag of Tricks for Efficient Gaussian Splatting",
+ "slug": "trick-gs",
+ "plan_id": 12,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done (trick-gs-tandt: 22.51 vs 23.48)",
+  "gap_analysis": "done (gap-analysis-1.md)",
+  "iteration1": "done: trick-gs-it1 T&T 22.41 (no gain)",
+  "report": "done"
+ },
+ "outcome": "not-matched",
+ "method": "trick-gs",
+ "official_code": null,
+ "bench_exps": [
+  "trick-gs-tandt",
+  "trick-gs-it1-tandt"
+ ],
+ "headline": "T&T mean 22.51 (iter0) / 22.41 (iter1) vs paper 23.48; method gap -0.66 + runtime -0.31"
+}

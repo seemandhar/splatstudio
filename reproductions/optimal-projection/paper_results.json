@@ -1,0 +1,29 @@
+{
+  "paper": "On the Error Analysis of 3D Gaussian Splatting and an Optimal Projection Strategy",
+  "arxiv": "2402.00752",
+  "method_label": "Ours (Optimal Gaussian Splatting)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.48, "ssim": 0.821, "lpips": 0.209},
+                 "per_scene": {"psnr": {"room": 31.58, "counter": 29.05, "kitchen": 31.23, "bonsai": 32.31,
+                                        "bicycle": 25.07, "flowers": 21.54, "garden": 27.15, "stump": 26.57, "treehill": 22.77}}},
+      "baseline_3dgs": {"average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214},
+                        "per_scene": {"psnr": {"room": 30.63, "counter": 28.70, "kitchen": 30.32, "bonsai": 31.98,
+                                               "bicycle": 25.25, "flowers": 21.52, "garden": 27.41, "stump": 26.55, "treehill": 22.49}}},
+      "group_average_psnr": {"method": {"indoor": 31.04, "outdoor": 24.62}, "baseline_3dgs": {"indoor": 30.41, "outdoor": 24.64}},
+      "source": "Table 1 (averages); supp. Table 3 (tab:360_scene_psnr, per-scene PSNR)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.43}, "per_scene": {"psnr": {"truck": 25.19, "train": 21.67}}},
+      "baseline_3dgs": {"average": {"psnr": 23.14}, "per_scene": {"psnr": {"truck": 25.19, "train": 21.10}}},
+      "source": "supp. Table 4 (tab:ttdb_scene_psnr)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.51}, "per_scene": {"psnr": {"drjohnson": 29.14, "playroom": 29.89}}},
+      "baseline_3dgs": {"average": {"psnr": 29.41}, "per_scene": {"psnr": {"drjohnson": 28.77, "playroom": 30.04}}},
+      "source": "supp. Table 4 (tab:ttdb_scene_psnr)"
+    }
+  },
+  "notes": "3D-GS rows are the published 3DGS numbers. Table 1 lists Tanks+Deep combined average 26.44 for Ours while supp. Table 4 gives 26.47 (inconsistency in the paper). Per-scene SSIM/LPIPS tables exist only as commented-out LaTeX. Scout's room=31.58, bonsai=32.31, truck=25.19 confirmed."
+}

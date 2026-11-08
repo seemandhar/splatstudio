@@ -1,0 +1,44 @@
+{
+ "method": "student-splatting",
+ "module": "ss_student_splatting",
+ "components": [
+  "t-renderer",
+  "sghmc-recycling",
+  "photometric",
+  "mcmc-regularizer"
+ ],
+ "fields": [
+  {
+   "name": "degrees",
+   "shape": [],
+   "lr": 10.0,
+   "init": 100.0
+  }
+ ],
+ "probes": [
+  "t-forward-vs-dense",
+  "t-backward-vs-dense",
+  "t-projection",
+  "scooping-sign",
+  "sghmc-step",
+  "t-relocation",
+  "regularizer"
+ ],
+ "contributions": [
+  "student-t-kernel",
+  "scooping",
+  "sghmc-sampler",
+  "t-recycling"
+ ],
+ "fidelity_gaps": [
+  "SSIM valid conv / view sampling with replacement",
+  "tile rect formula",
+  "final-iteration optimiser step",
+  "SH degree step offset",
+  "Adam eps placement",
+  "float vs 8-bit eval",
+  "1 seed vs 3-run mean",
+  "40k room vs 30k baseline"
+ ],
+ "feasible_natively": true
+}

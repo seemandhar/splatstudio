@@ -1,0 +1,42 @@
+{
+ "paper": "Scaffold-GS: Structured 3D Gaussians for View-Adaptive Rendering",
+ "slug": "scaffold-gs",
+ "plan_id": 17,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done",
+  "review": "not separately reviewed (extracted from reviewed hard-gs backbone)"
+ },
+ "outcome": "matched",
+ "method": "scaffold-gs",
+ "arxiv": "2312.00109",
+ "official_code": "github.com/city-super/Scaffold-GS@59c833b",
+ "derived_from": "reproductions/hard-gs/plugin (scaffold-gs-hgsbase)",
+ "custom_cuda": true,
+ "custom_cuda_note": "vendored simple-knn distCUDA2 only (JIT)",
+ "bench_request": "bench_request.json",
+ "bench_dataset": "mipnerf360-1600",
+ "feasible_natively": true,
+ "ss_eval_transport": "sgs_blob per-anchor field",
+ "bench_exps": [
+  "scaffold-gs-1600"
+ ],
+ "result": {
+  "psnr": {
+   "garden": 27.2,
+   "counter": 29.6
+  },
+  "psnr_delta": {
+   "garden": 0.03,
+   "counter": 0.26
+  },
+  "gain_over_gsplat_w1600": {
+   "garden": 0.27,
+   "counter": 0.56
+  }
+ }
+}

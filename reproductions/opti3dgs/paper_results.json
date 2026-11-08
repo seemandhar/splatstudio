@@ -1,0 +1,27 @@
+{
+  "paper": "Optimized 3D Gaussian Splatting using Coarse-to-Fine Image Frequency Modulation",
+  "arxiv": "2503.14475",
+  "method_label": "3DGS + Ours* (Table 1); Ours-Filtering (Table 2)",
+  "iterations": 30000,
+  "datasets": {
+    "tandt": {
+      "method": {"average": {"psnr": 23.15, "ssim": 0.823, "lpips": 0.217}, "num_gaussians_millions": 0.658},
+      "method_filter_only": {"average": {"psnr": 23.71, "ssim": 0.843, "lpips": 0.191}, "num_gaussians_millions": 1.229},
+      "baseline_3dgs": {"average": {"psnr": 23.69, "ssim": 0.844, "lpips": 0.178}, "num_gaussians_millions": 1.825},
+      "source": "Table 1 (3DGS / 3DGS+Ours*), Table 2 (Ours-Filtering on 3DGS, default hyper-parameters)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.56, "ssim": 0.902, "lpips": 0.255}, "num_gaussians_millions": 0.953},
+      "method_filter_only": {"average": {"psnr": 29.68, "ssim": 0.906, "lpips": 0.246}, "num_gaussians_millions": 2.118},
+      "baseline_3dgs": {"average": {"psnr": 29.54, "ssim": 0.900, "lpips": 0.247}, "num_gaussians_millions": 2.795},
+      "source": "Table 1, Table 2"
+    },
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.09, "ssim": 0.809, "lpips": 0.237}, "num_gaussians_millions": 1.327},
+      "method_filter_only": {"average": {"psnr": 27.37, "ssim": 0.808, "lpips": 0.238}, "num_gaussians_millions": 2.195},
+      "baseline_3dgs": {"average": {"psnr": 27.53, "ssim": 0.813, "lpips": 0.221}, "num_gaussians_millions": 3.157},
+      "source": "Table 1, Table 2 (9-scene averages)"
+    }
+  },
+  "notes": "Averages only; no per-scene tables (no supplementary). 3DGS row is the authors' re-run (H200). 3DGS+Ours* changes scaling_lr=0.01, densification_interval=500, densify_grad_threshold=0.0001; Table 2 'Ours-Filtering' is the filter alone on default 3DGS. No official code released (checked arXiv source, GitHub, web; AutoOpti3DGS follow-up repo is empty)."
+}

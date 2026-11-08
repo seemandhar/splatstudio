@@ -1,0 +1,47 @@
+{
+ "method": "hdgs",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 60000,
+ "per_scene_reported": true,
+ "extra": "",
+ "method_per_scene": {
+  "mipnerf360/garden": "hdgs",
+  "mipnerf360/counter": "hdgs-indoor"
+ },
+ "recipe": "3dgs",
+ "paper_reference": {
+  "psnr": {
+   "garden": 26.98,
+   "counter": 28.94
+  },
+  "ssim": {
+   "garden": 0.857,
+   "counter": 0.909
+  },
+  "lpips": {
+   "garden": 0.115,
+   "counter": 0.188
+  },
+  "baseline_3dgs_in_paper": {
+   "psnr": {
+    "garden": 26.63,
+    "counter": 29.07
+   }
+  },
+  "baseline_2dgs_in_paper": {
+   "psnr": {
+    "garden": 26.91,
+    "counter": 28.45
+   }
+  },
+  "source": "supp. Table 360_full"
+ },
+ "compare_baseline": "baseline3dgs-mipnerf360-30000",
+ "min_free_gb": 30,
+ "notes": "60000 = 40000 stage 1 (2DGS + k-sort k=16 + frustum) + Fisher prune 10% + 20000 texture stage (official run_360.py both branches). Indoor uses hdgs-indoor (tex_res 500, official code; paper text 400). Expect ~3-6 h per scene (k-buffer rasterizer ~5-10x slower per step than gsplat) and texture buffer+Adam memory up to ~10-15 GB on counter at step 40000 -> place on a GPU with >=30 GB free. First job JIT-compiles two extensions (~1 min each). ss-eval reloads the texture from <run>/checkpoint.pt via --run."
+}

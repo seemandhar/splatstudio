@@ -1,0 +1,48 @@
+{
+  "paper": "CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization",
+  "arxiv": "2405.12110",
+  "method_label": "CoR-GS (ours)",
+  "iterations": 10000,
+  "datasets": {
+    "llff-fewview3": {
+      "method": {"average": {"psnr": 20.45, "ssim": 0.712, "lpips": 0.196, "avge": 0.101}},
+      "baseline_3dgs": {"average": {"psnr": 19.22, "ssim": 0.649, "lpips": 0.229, "avge": 0.120}},
+      "ablation": {
+        "co_pruning_only": {"psnr": 19.62, "ssim": 0.673, "lpips": 0.217},
+        "coreg_only": {"psnr": 20.26, "ssim": 0.706, "lpips": 0.198},
+        "tau_3": {"psnr": 20.36, "ssim": 0.709, "lpips": 0.198},
+        "tau_10": {"psnr": 20.46, "ssim": 0.711, "lpips": 0.196},
+        "tau_30": {"psnr": 20.30, "ssim": 0.707, "lpips": 0.198},
+        "fields_3": {"psnr": 20.58, "ssim": 0.721, "lpips": 0.190},
+        "fields_4": {"psnr": 20.61, "ssim": 0.723, "lpips": 0.190}
+      },
+      "source": "Table 1 (3-view column), Table 4 ablation, supp. Table 6; 8 scenes, 1/8 res, averages only"
+    },
+    "llff-fewview6": {
+      "method": {"average": {"psnr": 24.49, "ssim": 0.837, "lpips": 0.115}},
+      "baseline_3dgs": {"average": {"psnr": 23.80, "ssim": 0.814, "lpips": 0.125}},
+      "source": "Table 1"
+    },
+    "llff-fewview9": {
+      "method": {"average": {"psnr": 26.06, "ssim": 0.874, "lpips": 0.089}},
+      "baseline_3dgs": {"average": {"psnr": 25.44, "ssim": 0.860, "lpips": 0.096}},
+      "source": "Table 1"
+    },
+    "mipnerf360-fewview12": {
+      "method": {"average": {"psnr": 19.52, "ssim": 0.558, "lpips": 0.418}},
+      "baseline_3dgs": {"average": {"psnr": 18.52, "ssim": 0.523, "lpips": 0.415}},
+      "source": "Table 2 (9 scenes, 1/4 res, 30k its)"
+    },
+    "mipnerf360-fewview24": {
+      "method": {"average": {"psnr": 23.39, "ssim": 0.727, "lpips": 0.271}},
+      "baseline_3dgs": {"average": {"psnr": 22.80, "ssim": 0.708, "lpips": 0.276}},
+      "source": "Table 2"
+    },
+    "dtu-fewview3": {
+      "method": {"average": {"psnr": 19.21, "ssim": 0.853, "lpips": 0.119}},
+      "baseline_3dgs": {"average": {"psnr": 17.65, "ssim": 0.816, "lpips": 0.146}},
+      "source": "Table 3 (15 scans, masked, 1/4 res)"
+    }
+  },
+  "notes": "No per-scene numbers anywhere (main/supp.). 3DGS rows are the authors' own implementation (same pipeline, one field, no co-reg/co-prune; ablation row 1 = 19.22). Benchmark choice: LLFF 3-view full 8-scene average."
+}

@@ -7,9 +7,10 @@ from splatstudio.components import build
 
 # Paper values (independent of DEFAULTS): §4.1 / Table 1.
 PAPER = {
-    "absgs": {"split": 0.0004, "reset": True},
-    "absgs-0008": {"split": 0.0008, "reset": True},
-    "absgs-noreset": {"split": 0.0004, "reset": False},
+    "absgs": {"split": 0.0004, "reset": True, "reduce": 500},
+    "absgs-0008": {"split": 0.0008, "reset": True, "reduce": 500},
+    "absgs-noreset": {"split": 0.0004, "reset": False, "reduce": 500},
+    "absgs-noreduce": {"split": 0.0004, "reset": True, "reduce": 0},
 }
 TAU_CLONE = 0.0002
 TAU_S = 0.001
@@ -95,6 +96,7 @@ def split_clone_criteria(method, device):
         raise AssertionError(f"No paper values for method {method.name}")
     paper = PAPER[method.name]
     tau_split = paper["split"]
+    reduce_check = _reduce_opacity_check(method, device, paper["reduce"])
     _, density, _ = build(method)
     small, large, huge = 0.5 * TAU_S, 5.0 * TAU_S, 0.05  # scene_scale 1; 0.005 < 3DGS tau 0.01
     rows = [  # (max scale, signed grad, abs grad, visible) -> expected (clone, split)
@@ -147,6 +149,11 @@ def split_clone_criteria(method, device):
     expected_n = n + int(exp_clone.sum()) + int(exp_split.sum())
     if n_after != expected_n:
         raise AssertionError(f"Gaussian count after refine {n_after} != {expected_n}")
+    for name, p in params.items():  # requires_grad pitfall (TODO-runtime.md): fields stay trainable
+        if not (p.is_leaf and p.requires_grad):
+            raise AssertionError(f"Field {name} is no longer a trainable leaf after densification")
+        if opts[name].param_groups[0]["params"][0] is not p:
+            raise AssertionError(f"Optimizer for {name} references a stale parameter")
     for key in ("grad2d", "grad2d_abs", "count"):
         if len(state[key]) != n_after:
             raise AssertionError(f"State {key} not aligned after densification")
@@ -163,4 +170,34 @@ def split_clone_criteria(method, device):
         "split_mask": split_.tolist(),
         "gaussians_after_refine": n_after,
         "max_opacity_after_step_3000": max_opa,
+        **reduce_check,
     }
+
+
+def _reduce_opacity_check(method, device, reduce_every):
+    """Official reduce_opacity (gaussian_model.py:260, train.py:132): every 500 steps before 15k,
+    opacity -> min(o, 0.8) with Adam moments zeroed. Checked at steps 499/500 on a fixture."""
+    _, density, _ = build(method)
+    params, opts = _scene(2, device, [[0, 0, 0], [1, 0, 0]], [[0.1] * 3] * 2, 0.95)
+    density.initialize(params, opts, 1.0)
+    params["opacities"].grad = torch.ones_like(params["opacities"])
+    opts["opacities"].step()  # populate Adam moments
+
+    def info():
+        m2d = torch.zeros((1, 2, 2), device=device)
+        m2d.grad, m2d.absgrad = torch.zeros_like(m2d), torch.zeros_like(m2d)
+        return {"means2d": m2d, "width": 4, "height": 4, "n_cameras": 1,
+                "radii": torch.ones((1, 2, 2), device=device), "gaussian_ids": None}
+
+    density.after_backward(params, opts, 499, {"info": info()})
+    before = torch.sigmoid(params["opacities"]).min().item()
+    density.after_backward(params, opts, 500, {"info": info()})
+    after = torch.sigmoid(params["opacities"]).max().item()
+    moment = opts["opacities"].state[params["opacities"]]["exp_avg"].abs().max().item()
+    if before <= 0.85:
+        raise AssertionError("Opacity changed before the reduce step")
+    if reduce_every == 500 and not (after <= 0.8 + 1e-6 and moment == 0.0):
+        raise AssertionError(f"Official opacity reduction at step 500 missing (max {after})")
+    if reduce_every == 0 and after <= 0.85:
+        raise AssertionError("no-reduce ablation must not reduce opacities")
+    return {"reduce_every": reduce_every, "max_opacity_after_step_500": after}

@@ -1,0 +1,51 @@
+{
+  "paper": "2D Gaussian Splatting for Geometrically Accurate Radiance Fields",
+  "arxiv": "2403.17888",
+  "method_label": "2DGS (Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.03, "ssim": 0.805, "lpips": 0.223},
+        "groups": {
+          "outdoor": {"psnr": 24.34, "ssim": 0.717, "lpips": 0.246},
+          "indoor": {"psnr": 30.40, "ssim": 0.916, "lpips": 0.195}
+        },
+        "per_scene": {
+          "psnr": {"bicycle": 24.87, "flowers": 21.15, "garden": 26.95, "stump": 26.47, "treehill": 22.27,
+                   "room": 31.06, "counter": 28.55, "kitchen": 30.50, "bonsai": 31.52},
+          "ssim": {"bicycle": 0.752, "flowers": 0.588, "garden": 0.852, "stump": 0.765, "treehill": 0.627,
+                   "room": 0.912, "counter": 0.900, "kitchen": 0.919, "bonsai": 0.933},
+          "lpips": {"bicycle": 0.218, "flowers": 0.346, "garden": 0.115, "stump": 0.222, "treehill": 0.329,
+                    "room": 0.223, "counter": 0.208, "kitchen": 0.133, "bonsai": 0.214}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.20, "ssim": 0.815, "lpips": 0.214},
+        "groups": {
+          "outdoor": {"psnr": 24.64, "ssim": 0.731, "lpips": 0.234},
+          "indoor": {"psnr": 30.41, "ssim": 0.920, "lpips": 0.189}
+        },
+        "per_scene": {
+          "psnr": {"bicycle": 25.24, "flowers": 21.52, "garden": 27.41, "stump": 26.55, "treehill": 22.49,
+                   "room": 30.63, "counter": 28.70, "kitchen": 30.32, "bonsai": 31.98},
+          "ssim": {"bicycle": 0.771, "flowers": 0.605, "garden": 0.868, "stump": 0.775, "treehill": 0.638,
+                   "room": 0.914, "counter": 0.905, "kitchen": 0.922, "bonsai": 0.938},
+          "lpips": {"bicycle": 0.205, "flowers": 0.336, "garden": 0.103, "stump": 0.210, "treehill": 0.317,
+                    "room": 0.220, "counter": 0.204, "kitchen": 0.129, "bonsai": 0.205}
+        }
+      },
+      "source": "main Table (tables/mipnerf360.tex, outdoor/indoor groups) and supp. Table tab:mean-mipnerf360-scores (main/07_appendix.tex:117-136, per scene); group means of the supp. table reproduce the main table (24.34 / 30.41)"
+    },
+    "tnt_psnr_only": {
+      "method": {"per_scene": {"psnr": {"barn": 28.79, "caterpillar": 24.23, "courthouse": 23.51, "ignatius": 23.82, "meetingroom": 26.15, "truck": 26.85}}, "average": {"psnr": 25.56}},
+      "baseline_3dgs": {"per_scene": {"psnr": {"barn": 27.99, "caterpillar": 24.82, "courthouse": 23.33, "ignatius": 23.95, "meetingroom": 26.89, "truck": 25.01}}, "average": {"psnr": 25.33}},
+      "source": "supp. Table tab:mean-tnt-scores (geometry TnT training set, not the 3DGS truck/train NVS split)"
+    },
+    "nerf_synthetic": {
+      "method": {"per_scene": {"psnr": {"mic": 35.09, "chair": 35.05, "ship": 30.60, "materials": 29.74, "lego": 35.10, "drums": 26.05, "ficus": 35.57, "hotdog": 37.36}}, "average": {"psnr": 33.07}},
+      "source": "supp. Table tab:nerf_synthetic (no regularisation)"
+    }
+  },
+  "notes": "3DGS rows are as printed in the 2DGS tables (main-table 3DGS outdoor 24.64 / indoor 30.41 retrained at 30k). The official README states the released code (re-implementation) has slightly lower PSNR than the paper because the low-pass-filter gradient was removed from densification. Paper Sec.5: alpha (lambda_dist)=100 for unbounded scenes; released code default lambda_dist=0.0 and scripts/m360_eval.py passes no override. DTU is geometry (Chamfer) only."
+}

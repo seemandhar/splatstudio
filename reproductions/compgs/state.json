@@ -1,0 +1,42 @@
+{
+ "paper": "CompGS: Compact Gaussian Splatting with Vector Quantization",
+ "slug": "compgs",
+ "plan_id": 20,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "arxiv": "2311.18159",
+ "official_code_commit": "dccc07e3ab05f65246be25f0ee416aa9a127b54e",
+ "method": "compgs",
+ "custom_cuda": false,
+ "bench_request": "bench_request.json",
+ "bench_exps": [
+  "compgs-mipnerf360"
+ ],
+ "report": "report.md",
+ "result": {
+  "psnr": {
+   "garden": 26.56,
+   "room": 31.32
+  },
+  "psnr_delta_vs_paper": {
+   "garden": -0.26,
+   "room": 0.18
+  },
+  "paper_size_MB": {
+   "garden": 27.53,
+   "room": 9.12
+  },
+  "gaussians": {
+   "garden": 1230000,
+   "room": 349000
+  }
+ },
+ "headline": "Decoded CompGS 32K: garden 26.56/26.822 (-0.26), room 31.32/31.131 (+0.18); delta vs gsplat -0.33/-0.21 vs paper -0.42/-0.22; paper-formula size 27.53/9.12 MB vs 30/9 MB"
+}

@@ -1,0 +1,39 @@
+{
+ "method": "dwtgs",
+ "module": "ss_dwtgs",
+ "components": [
+  "dropgaussian-renderer (ss_dropgaussian)",
+  "dropgaussian-density (ss_dwtgs subclass)",
+  "photometric (ss_dropgaussian)",
+  "dwtgs-lf",
+  "dwtgs-hf"
+ ],
+ "fields": [],
+ "probes": [
+  "haar-dwt",
+  "lf-loss",
+  "hf-schedule",
+  "hf-novel-view",
+  "pseudo-poses",
+  "+ DropGaussian probes"
+ ],
+ "contributions": [
+  "C1 multi-level LL wavelet supervision (Eq. 5)",
+  "C2 self-supervised HH sparsity at novel views (Eq. 6)",
+  "base: DropGaussian"
+ ],
+ "fidelity_gaps": [
+  "Haar normalisation: averaging (paper-literal) chosen; orthonormal labelled option",
+  "novel views: slerp/lerp of random training pair, t~U(0,1) (details unstated)",
+  "novel view without dropout",
+  "HF weight 1",
+  "LF gradient enters densification statistic (more Gaussians)",
+  "inherited DropGaussian gaps",
+  "only LLFF benchmarked"
+ ],
+ "variants": {
+  "dwtgs-lf": "no HF loss (Table III +LF 2-level, 20.70)"
+ },
+ "feasible_natively": true,
+ "review_1": "C1 average Haar default, M1 interpolated novel views, M2 probes pin paper form"
+}

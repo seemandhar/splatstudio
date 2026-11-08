@@ -1,0 +1,240 @@
+{
+ "paper": "Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting",
+ "arxiv": "2403.09413",
+ "method_label": "RAIN-GS (Ours, Random init N=10)",
+ "iterations": 30000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.042,
+      "flowers": 21.762,
+      "garden": 26.884,
+      "stump": 26.68,
+      "treehill": 22.528,
+      "room": 30.809,
+      "counter": 28.529,
+      "kitchen": 31.27,
+      "bonsai": 31.547
+     },
+     "ssim": {
+      "bicycle": 0.747,
+      "flowers": 0.616,
+      "garden": 0.854,
+      "stump": 0.768,
+      "treehill": 0.621,
+      "room": 0.906,
+      "counter": 0.895,
+      "kitchen": 0.92,
+      "bonsai": 0.934
+     },
+     "lpips": {
+      "bicycle": 0.238,
+      "flowers": 0.324,
+      "garden": 0.114,
+      "stump": 0.215,
+      "treehill": 0.342,
+      "room": 0.247,
+      "counter": 0.223,
+      "kitchen": 0.137,
+      "bonsai": 0.218
+     }
+    },
+    "average": {
+     "psnr": 27.228,
+     "ssim": 0.807,
+     "lpips": 0.229
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.246,
+      "flowers": 21.52,
+      "garden": 27.41,
+      "stump": 26.55,
+      "treehill": 22.49,
+      "room": 30.632,
+      "counter": 28.7,
+      "kitchen": 30.317,
+      "bonsai": 31.98
+     },
+     "ssim": {
+      "bicycle": 0.771,
+      "flowers": 0.605,
+      "garden": 0.868,
+      "stump": 0.775,
+      "treehill": 0.638,
+      "room": 0.914,
+      "counter": 0.905,
+      "kitchen": 0.922,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.336,
+      "garden": 0.103,
+      "stump": 0.21,
+      "treehill": 0.317,
+      "room": 0.22,
+      "counter": 0.204,
+      "kitchen": 0.129,
+      "bonsai": 0.205
+     }
+    },
+    "average": {
+     "psnr": 27.205,
+     "ssim": 0.815,
+     "lpips": 0.214
+    }
+   },
+   "baseline_3dgs_random": {
+    "per_scene": {
+     "psnr": {
+      "bicycle": 21.034,
+      "flowers": 17.815,
+      "garden": 23.217,
+      "stump": 20.745,
+      "treehill": 18.986,
+      "room": 29.685,
+      "counter": 23.608,
+      "kitchen": 26.078,
+      "bonsai": 18.538
+     },
+     "ssim": {
+      "bicycle": 0.575,
+      "flowers": 0.469,
+      "garden": 0.783,
+      "stump": 0.618,
+      "treehill": 0.55,
+      "room": 0.894,
+      "counter": 0.833,
+      "kitchen": 0.893,
+      "bonsai": 0.719
+     },
+     "lpips": {
+      "bicycle": 0.378,
+      "flowers": 0.403,
+      "garden": 0.175,
+      "stump": 0.345,
+      "treehill": 0.413,
+      "room": 0.265,
+      "counter": 0.276,
+      "kitchen": 0.161,
+      "bonsai": 0.401
+     }
+    },
+    "average": {
+     "psnr": 22.19,
+     "ssim": 0.704,
+     "lpips": 0.313
+    }
+   },
+   "source": "Table 1 (tab:main_mip360) / Table 3 (tab:mip360), arXiv v3 LaTeX"
+  },
+  "tandt": {
+   "method": {
+    "per_scene": {
+     "psnr": {
+      "truck": 24.816,
+      "train": 21.436
+     },
+     "ssim": {
+      "truck": 0.865,
+      "train": 0.786
+     },
+     "lpips": {
+      "truck": 0.169,
+      "train": 0.244
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "truck": 25.187,
+      "train": 21.097
+     },
+     "ssim": {
+      "truck": 0.879,
+      "train": 0.802
+     },
+     "lpips": {
+      "truck": 0.148,
+      "train": 0.218
+     }
+    }
+   },
+   "baseline_3dgs_random": {
+    "per_scene": {
+     "psnr": {
+      "truck": 20.149,
+      "train": 20.824
+     },
+     "ssim": {
+      "truck": 0.758,
+      "train": 0.772
+     },
+     "lpips": {
+      "truck": 0.248,
+      "train": 0.255
+     }
+    }
+   },
+   "source": "Table 2 (tab:mai_tnt_bl)"
+  },
+  "db": {
+   "method": {
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.675,
+      "playroom": 30.165
+     },
+     "ssim": {
+      "drjohnson": 0.896,
+      "playroom": 0.903
+     },
+     "lpips": {
+      "drjohnson": 0.26,
+      "playroom": 0.25
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.766,
+      "playroom": 30.044
+     },
+     "ssim": {
+      "drjohnson": 0.899,
+      "playroom": 0.906
+     },
+     "lpips": {
+      "drjohnson": 0.244,
+      "playroom": 0.241
+     }
+    }
+   },
+   "baseline_3dgs_random": {
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 28.668,
+      "playroom": 28.358
+     },
+     "ssim": {
+      "drjohnson": 0.894,
+      "playroom": 0.896
+     },
+     "lpips": {
+      "drjohnson": 0.258,
+      "playroom": 0.258
+     }
+    }
+   },
+   "source": "Table 2 (tab:mai_tnt_bl)"
+  }
+ },
+ "notes": "Headline method rows use random init (N=10). baseline_3dgs = 3DGS with SfM init (equals 3DGS paper numbers); baseline_3dgs_random = 3DGS with dense random init (1M? DSV) from the same tables. Table 3 truck random-3DGS PSNR typo '21,149' vs Table 2 20.149. SfM-subset variants (cluster, <10%) also in Table 3, not targeted."
+}

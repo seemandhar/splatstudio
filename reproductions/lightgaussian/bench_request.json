@@ -1,0 +1,13 @@
+{
+ "method": "lightgaussian",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "room"
+  ]
+ },
+ "steps": 45000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "Single 45k run = 3DGS 30k (same recipe/LR as baseline3dgs-mipnerf360-30000) + significance prune 66% @30000 + 5k co-adaptation + SH3->2 distillation 5k (pseudo views) + VQ @40000 + 5k VQ fine-tune + official zip; ss-eval measures the decoded model. steps must stay 45000 (guard). Paper appendix Tab.6 final-model PSNR: garden 26.961, room 31.399 (paper 3D-GS* 27.29 / 31.336 -> deltas -0.33 / +0.06); our baseline3dgs: garden 26.89, room 31.52. Size: `tools/ssenv python reproductions/lightgaussian/plugin/report_size.py <run_dir>` (size_MiB = official zip/1024^2; paper reports only the 9-scene mean 45 MB, room 21 MB in Tab.2). Optional: lightgaussian-released (--steps 40000) = released-code path without VQ fine-tune (paper room #7 Codebook Quant. 31.09). First call JIT-builds the significance kernel."
+}

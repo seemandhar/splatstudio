@@ -1,0 +1,36 @@
+{
+ "paper": "VoD-3DGS: View-opacity-Dependent 3D Gaussian Splatting",
+ "slug": "vod3dgs",
+ "plan_id": 10,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "smoke_test": "done",
+  "benchmark": "done",
+  "gap_analysis": "done",
+  "report": "done"
+ },
+ "outcome": "not-matched",
+ "official_code": null,
+ "method": "vod3dgs-s",
+ "custom_cuda": false,
+ "smoke": {
+  "method": 22.47,
+  "baseline": 22.14,
+  "scene": "truck"
+ },
+ "results": {
+  "tandt_mean": {
+   "psnr": 23.65,
+   "paper": 24.17,
+   "base": 23.36,
+   "paper_base": 23.75,
+   "gain": 0.29,
+   "paper_gain": 0.42
+  },
+  "truck": 25.4,
+  "train": 21.9
+ },
+ "gap_summary": "-0.52 dB: ~-0.39 baseline offset, ~-0.13 method; gain 70% of paper's. Mechanism active (96% Gaussians eig span>1). No paper-grounded >=0.3 dB fix (gamma reset, moments, detached means, covis vs LightGlue all <=small)."
+}

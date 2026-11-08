@@ -1,0 +1,3 @@
+{"method": "lp-3dgs", "datasets": {"mipnerf360": ["garden", "room"]}, "steps": 30000,
+ "per_scene_reported": true, "extra": "",
+ "note": "Target Table 1 'LP-3DGS (RadSplat Score)': garden 27.290 (paper 3DGS 27.254, prune ratio 0.59), room 31.490 (3DGS 31.500, ratio 0.74). Compare delta vs baseline3dgs-mipnerf360-30000. Pruning ratio: training stdout line {\"lp3dgs\": {\"event\": \"prune\", before, after, pruning_ratio}} at step 20000 (also gaussians in training.jsonl at 19999 vs 20000). First job JIT-compiles the score kernel (~1 min)."}

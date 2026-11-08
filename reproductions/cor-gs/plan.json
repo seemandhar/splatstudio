@@ -1,0 +1,30 @@
+{
+  "method": "cor-gs",
+  "module": "ss_corgs",
+  "variants": ["cor-gs-single"],
+  "components": [
+    {"name": "corgs-renderer", "kind": "renderer"},
+    {"name": "corgs-density", "kind": "density", "owns": "second radiance field + pseudo poses"},
+    {"name": "photometric", "kind": "loss"},
+    {"name": "corgs-field2", "kind": "loss"},
+    {"name": "corgs-coreg", "kind": "loss"}
+  ],
+  "fields": [],
+  "probes": ["co-pruning", "pseudo-coregularization", "two-fields", "corgs-schedule"],
+  "contributions": [
+    {"name": "co-pruning", "probes": ["co-pruning"]},
+    {"name": "pseudo-view-coregularization", "probes": ["pseudo-coregularization"]},
+    {"name": "dual-radiance-fields", "probes": ["two-fields"]},
+    {"name": "official-training-protocol", "probes": ["corgs-schedule"]}
+  ],
+  "fidelity_gaps": [
+    "optimizer step before density control (runtime order)",
+    "view sampling with replacement",
+    "gsplat vs Inria rasterizer",
+    "runtime SSIM (valid conv) and lpips package; float vs 8-bit PNG eval",
+    "COLMAP version of 3-view MVS init",
+    "optimizer step at final iteration",
+    "single seed / different RNG streams"
+  ],
+  "feasible_natively": true
+}

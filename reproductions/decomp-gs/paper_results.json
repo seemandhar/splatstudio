@@ -1,0 +1,38 @@
+{
+  "paper": "Decomposing Densification in Gaussian Splatting for Faster 3D Scene Reconstruction",
+  "arxiv": "2507.20239",
+  "method_label": "Ours",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.79, "ssim": 0.8257, "lpips": 0.2136, "gaussians_millions": 1.469, "minutes": 5.33}},
+      "baseline_3dgs": {"average": {"psnr": 27.72, "ssim": 0.8263, "lpips": 0.2016, "gaussians_millions": 2.578, "minutes": 25.01}},
+      "baseline_3dgs_accel": {"average": {"psnr": 27.57, "ssim": 0.8213, "lpips": 0.2095, "gaussians_millions": 2.331, "minutes": 11.18}},
+      "source": "Table 2 (tab:quantitative); averages only, all 9 scenes"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.05, "ssim": 0.9094, "lpips": 0.2540, "gaussians_millions": 1.272, "minutes": 4.54}},
+      "baseline_3dgs": {"average": {"psnr": 29.44, "ssim": 0.9075, "lpips": 0.2381, "gaussians_millions": 2.475, "minutes": 23.32}},
+      "baseline_3dgs_accel": {"average": {"psnr": 29.54, "ssim": 0.9027, "lpips": 0.2537, "gaussians_millions": 2.394, "minutes": 8.16}},
+      "source": "Table 2; averages only (drjohnson, playroom)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.06, "ssim": 0.8461, "lpips": 0.1891, "gaussians_millions": 0.867, "minutes": 4.10}},
+      "baseline_3dgs": {"average": {"psnr": 23.62, "ssim": 0.8471, "lpips": 0.1772, "gaussians_millions": 1.576, "minutes": 15.80}},
+      "baseline_3dgs_accel": {"average": {"psnr": 23.58, "ssim": 0.8460, "lpips": 0.1756, "gaussians_millions": 1.550, "minutes": 7.73}},
+      "source": "Table 2; averages only (truck, train)"
+    },
+    "mipnerf360_ablation": {
+      "rows": {
+        "3DGS-accel": {"psnr": 27.57, "ssim": 0.8213, "lpips": 0.2095, "gaussians_millions": 2.331},
+        "+G2L": {"psnr": 27.47, "ssim": 0.8066, "lpips": 0.2235, "gaussians_millions": 1.887},
+        "+C2F": {"psnr": 27.84, "ssim": 0.8246, "lpips": 0.2202, "gaussians_millions": 2.018},
+        "+G2L+C2F": {"psnr": 27.75, "ssim": 0.8176, "lpips": 0.2203, "gaussians_millions": 1.853},
+        "+Pruning": {"psnr": 27.56, "ssim": 0.8211, "lpips": 0.2234, "gaussians_millions": 1.685},
+        "Full": {"psnr": 27.79, "ssim": 0.8257, "lpips": 0.2136, "gaussians_millions": 1.469}
+      },
+      "source": "Table 4 (tab:ablation)"
+    }
+  },
+  "notes": "No per-scene numbers anywhere (no supplementary in the arXiv source). 3DGS row = authors' table (higher than the 3DGS paper on T&T/DB: 23.62 vs 23.14, 29.44 vs 29.41). The method is built on 3DGS-accel (3DGS + Taming per-splat backprop + sparse Adam); improvement over 3DGS-accel: m360 +0.22, db +0.51, tandt +0.48 dB; over 3DGS: +0.07, +0.61, +0.44 dB. Times on an RTX 3090."
+}

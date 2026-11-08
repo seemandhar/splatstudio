@@ -4,8 +4,23 @@
   "plan_id": 1,
   "stages": {
     "read": "done",
-    "plan": "done"
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "benchmark": "done",
+    "report": "done"
   },
-  "outcome": "skipped",
-  "note": "existing Nerfstudio port kept; build stopped by user decision (ids 1-25 out of scope)"
+  "outcome": "matched",
+  "note": "reset 2026-11-07: user asked to port ids 1-25; earlier 'skipped' decision superseded",
+  "result": {
+    "garden": {
+      "psnr": 27.12,
+      "paper": 27.487
+    },
+    "kitchen": {
+      "psnr": 31.56,
+      "paper": 31.621
+    },
+    "run": "runs/absgs-mipnerf360-30000"
+  }
 }

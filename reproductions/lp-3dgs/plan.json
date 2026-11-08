@@ -1,0 +1,7 @@
+{"method": "lp-3dgs", "module": "ss_lp_3dgs",
+ "components": ["lp-renderer (renderer)", "lp-density (density, wraps DefaultStrategy)", "photometric (loss)", "lp-mask-loss (loss)"],
+ "fields": [{"name": "lp_mask", "shape": [], "lr": 0.05, "init": 1.0}],
+ "probes": ["lp-gumbel", "lp-score-kernel", "lp-mask-gradient", "lp-mask-loss", "lp-schedule"],
+ "contributions": ["gumbel-sigmoid-mask-on-score", "mask-sparsity-loss", "learn-then-prune-schedule", "radsplat-importance-score"],
+ "fidelity_gaps": ["runtime white bg / sampling / 0.999 clamp", "AdamW decay order", "extra Adam step at 20000", "score on gsplat numerics", "mini-splatting-score variant not built"],
+ "feasible_natively": true}

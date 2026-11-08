@@ -1,0 +1,16 @@
+{"method": "decomp-gs", "module": "ss_decomp_gs",
+ "components": [
+  {"name": "decomp-renderer", "kind": "renderer", "factory": "ss_decomp_gs.renderer:create_renderer"},
+  {"name": "decomp-density", "kind": "density", "factory": "ss_decomp_gs.density:create_density"},
+  {"name": "photometric", "kind": "loss", "factory": "ss_decomp_gs.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["decomp-c2f-schedule", "decomp-render-scale", "decomp-target-downsample", "decomp-lr-schedule",
+            "decomp-g2l-phases", "decomp-adaptive-prune", "decomp-cycle", "decomp-renderer-gradient"],
+ "contributions": ["global-to-local-densification", "energy-coarse-to-fine", "adaptive-opacity-pruning"],
+ "fidelity_gaps": ["3DGS-accel sparse Adam / per-splat backprop not used (dense Adam)",
+                   "global-phase handling of clone candidates ambiguous (skip_clone default)",
+                   "position-LR reduction form unstated (log-linear from T_2)",
+                   "energy aggregation across views unstated (sum)",
+                   "runtime-wide: white bg, sampling with replacement, valid eval SSIM",
+                   "timing not comparable to RTX 3090 minutes"],
+ "feasible_natively": true}

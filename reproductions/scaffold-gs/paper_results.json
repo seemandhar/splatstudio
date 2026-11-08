@@ -1,0 +1,44 @@
+{
+  "paper": "Scaffold-GS: Structured 3D Gaussians for View-Adaptive Rendering",
+  "arxiv": "2312.00109",
+  "method_label": "Ours (Scaffold-GS)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 28.84, "ssim": 0.848, "lpips": 0.220},
+        "per_scene": {
+          "psnr": {"bicycle": 24.50, "garden": 27.17, "stump": 26.27, "room": 31.93, "counter": 29.34, "kitchen": 31.30, "bonsai": 32.70},
+          "ssim": {"bicycle": 0.705, "garden": 0.842, "stump": 0.784, "room": 0.925, "counter": 0.914, "kitchen": 0.928, "bonsai": 0.946},
+          "lpips": {"bicycle": 0.306, "garden": 0.146, "stump": 0.284, "room": 0.202, "counter": 0.191, "kitchen": 0.126, "bonsai": 0.185}
+        },
+        "storage_mb": {"bicycle": 248, "garden": 271, "stump": 493, "room": 133, "counter": 194, "kitchen": 173, "bonsai": 258}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 28.69, "ssim": 0.870, "lpips": 0.182},
+        "per_scene": {
+          "psnr": {"bicycle": 25.25, "garden": 27.41, "stump": 26.55, "room": 30.63, "counter": 28.70, "kitchen": 30.32, "bonsai": 31.98},
+          "ssim": {"bicycle": 0.771, "garden": 0.868, "stump": 0.775, "room": 0.914, "counter": 0.905, "kitchen": 0.922, "bonsai": 0.938},
+          "lpips": {"bicycle": 0.205, "garden": 0.103, "stump": 0.210, "room": 0.220, "counter": 0.204, "kitchen": 0.129, "bonsai": 0.205}
+        }
+      },
+      "scenes_note": "7 scenes (no flowers/treehill); the 3DGS average 28.69 is the 3DGS paper's 9-scene average, Scaffold's 28.84 is over 7 scenes",
+      "source": "Table 1 (averages), supp. tab:psnr_mip / tab:ssim_mip / tab:LPIPS_mip / tab:mem_mip"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.96, "ssim": 0.853, "lpips": 0.177},
+                 "per_scene": {"psnr": {"truck": 25.77, "train": 22.15}, "ssim": {"truck": 0.883, "train": 0.822}, "lpips": {"truck": 0.147, "train": 0.206}}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183},
+                        "per_scene": {"psnr": {"truck": 25.19, "train": 21.10}, "ssim": {"truck": 0.879, "train": 0.802}, "lpips": {"truck": 0.148, "train": 0.218}}},
+      "source": "Table 1, supp. tab:PSNR_two / tab:SSIM_two / tab:LPIPS_two"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.21, "ssim": 0.906, "lpips": 0.254},
+                 "per_scene": {"psnr": {"drjohnson": 29.80, "playroom": 30.62}, "ssim": {"drjohnson": 0.907, "playroom": 0.904}, "lpips": {"drjohnson": 0.250, "playroom": 0.258}}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243},
+                        "per_scene": {"psnr": {"drjohnson": 28.77, "playroom": 30.04}, "ssim": {"drjohnson": 0.899, "playroom": 0.906}, "lpips": {"drjohnson": 0.244, "playroom": 0.241}}},
+      "source": "Table 1, supp. tab:PSNR_two / tab:SSIM_two / tab:LPIPS_two"
+    }
+  },
+  "notes": "3DGS rows are copied from the 3DGS paper (images_4/images_2 protocol). Scaffold-GS's own runs use the official scripts: full-res `images/` with resolution -1, i.e. PIL resize to width 1600 (utils/camera_utils.py) = our mipnerf360-1600. So the paper's 3DGS and Scaffold rows on Mip-NeRF 360 are at different resolutions."
+}

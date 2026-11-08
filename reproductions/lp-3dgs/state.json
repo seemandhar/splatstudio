@@ -1,0 +1,19 @@
+{
+ "paper": "LP-3DGS: Learning to Prune 3D Gaussian Splatting",
+ "slug": "lp-3dgs",
+ "plan_id": 19,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done"
+ },
+ "outcome": "matched",
+ "method": "lp-3dgs",
+ "bench_request": "bench_request.json",
+ "bench_exps": [
+  "lp-3dgs-mipnerf360"
+ ],
+ "headline": "garden 26.99 (-0.30), room 31.30 (-0.19); prune ratio 0.576/0.735 vs paper 0.59/0.74"
+}

@@ -1,0 +1,32 @@
+{
+ "paper": "DWTGS: Rethinking Frequency Regularization for Sparse-view 3D Gaussian Splatting",
+ "slug": "dwtgs",
+ "plan_id": 18,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review-1": "fixed (C1 average Haar, M1 interp views, M2 probes)",
+  "benchmark": "done",
+  "gap_analysis": "done",
+  "report": "done"
+ },
+ "outcome": "not-matched",
+ "method": "dwtgs",
+ "dataset": "llff-fewview3-r8",
+ "official_code": null,
+ "base": "dropgaussian (reproductions/dropgaussian)",
+ "bench_exps": [
+  "dwtgs-llff-r8"
+ ],
+ "result": {
+  "mean_psnr": 20.12,
+  "ssim": 0.698,
+  "lpips": 0.232,
+  "paper": 20.78,
+  "our_dropgaussian": 20.36,
+  "paper_dropgaussian_rerun": 20.39
+ },
+ "gap": "method: HF novel-view term hurts fortress/room (LF-only fortress 22.90); no paper-grounded fix >=0.5 dB; see gap-analysis-1.md"
+}

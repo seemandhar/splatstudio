@@ -1,0 +1,14 @@
+{
+ "method": "absgs",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "kitchen"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "baseline": "baseline3dgs-mipnerf360-30000",
+ "notes": "Official full_eval.py trains on pre-downscaled -i images_4 (outdoor) / images_2 (indoor) -> 'mipnerf360' protocol, not -pilr. Paper per-scene PSNR: garden 27.487 (3DGS 27.41), kitchen 31.621 (3DGS 30.317; 3DGS* tau_S=0.001 31.312). absgs now includes official opacity reduce every 500 (review 1); absgs-noreduce available but not requested."
+}

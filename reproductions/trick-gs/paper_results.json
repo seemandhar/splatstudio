@@ -1,0 +1,35 @@
+{
+  "paper": "Trick-GS: A Balanced Bag of Tricks for Efficient Gaussian Splatting",
+  "arxiv": "2501.14534",
+  "method_label": "Trick-GS",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.16, "ssim": 0.802, "lpips": 0.245}},
+      "method_small": {"average": {"psnr": 26.714, "ssim": 0.780, "lpips": 0.285}},
+      "baseline_3dgs": {"average": {"psnr": 27.56, "ssim": 0.818, "lpips": 0.202}},
+      "resources": {"storage_mb": 39, "train_min": 15.41, "fps": 222, "max_gaussians_k": 1369, "final_gaussians_k": 830},
+      "source": "Table 1 (tables/mip_tandt_table.tex), rows retrained on the authors' RTX 3090"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.48, "ssim": 0.830, "lpips": 0.209}},
+      "method_small": {"average": {"psnr": 23.21, "ssim": 0.818, "lpips": 0.232}},
+      "baseline_3dgs": {"average": {"psnr": 23.67, "ssim": 0.845, "lpips": 0.178}},
+      "resources": {"storage_mb": 20, "train_min": 10.56, "fps": 298, "max_gaussians_k": 696, "final_gaussians_k": 443},
+      "source": "Table 1 (tables/mip_tandt_table.tex)"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.46, "ssim": 0.899, "lpips": 0.260}},
+      "method_small": {"average": {"psnr": 29.63, "ssim": 0.899, "lpips": 0.266}},
+      "baseline_3dgs": {"average": {"psnr": 29.46, "ssim": 0.899, "lpips": 0.266}},
+      "resources": {"storage_mb": 25, "train_min": 13.11, "fps": 260, "max_gaussians_k": 1308, "final_gaussians_k": 639},
+      "source": "Table 2 (tables/dp_table.tex)"
+    },
+    "mipnerf360_bicycle_ablation": {
+      "method": {"per_scene": {"psnr": {"bicycle": 25.07}, "ssim": {"bicycle": 0.75}, "lpips": {"bicycle": 0.25}}},
+      "baseline_3dgs": {"per_scene": {"psnr": {"bicycle": 25.18}, "ssim": {"bicycle": 0.76}, "lpips": {"bicycle": 0.21}}},
+      "source": "Table 3 ablation (tables/ablation.tex), full model row (all 8 tricks); 2-decimal precision"
+    }
+  },
+  "notes": "Averages only for the three datasets (no per-scene tables, no supplementary). The only per-scene number is the bicycle ablation (Table 3). baseline_3dgs = 3DGS retrained by the authors on their system (rows between the double lines). Headline 'Trick-GS' = all 8 tricks (BL, DS, SG, GM, AT, SHM, DE, SC); 'Trick-GS-small' = all but DE and SC."
+}

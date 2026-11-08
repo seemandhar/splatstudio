@@ -1,0 +1,236 @@
+{
+ "paper": "HDGS: Textured 2D Gaussian Splatting for Enhanced Scene Rendering",
+ "arxiv": "2412.01823",
+ "method_label": "Ours",
+ "iterations": 60000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.25,
+     "ssim": 0.807,
+     "lpips": 0.216
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.83,
+      "flowers": 21.22,
+      "garden": 26.98,
+      "stump": 26.4,
+      "treehill": 22.5,
+      "room": 31.2,
+      "counter": 28.94,
+      "kitchen": 31.09,
+      "bonsai": 32.06
+     },
+     "ssim": {
+      "bicycle": 0.742,
+      "flowers": 0.588,
+      "garden": 0.857,
+      "stump": 0.76,
+      "treehill": 0.608,
+      "room": 0.925,
+      "counter": 0.909,
+      "kitchen": 0.928,
+      "bonsai": 0.943
+     },
+     "lpips": {
+      "bicycle": 0.231,
+      "flowers": 0.34,
+      "garden": 0.115,
+      "stump": 0.223,
+      "treehill": 0.354,
+      "room": 0.201,
+      "counter": 0.188,
+      "kitchen": 0.119,
+      "bonsai": 0.177
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.24,
+     "ssim": 0.815,
+     "lpips": 0.214
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.71,
+      "flowers": 21.09,
+      "garden": 26.63,
+      "stump": 26.45,
+      "treehill": 22.33,
+      "room": 31.5,
+      "counter": 29.07,
+      "kitchen": 31.13,
+      "bonsai": 32.26
+     },
+     "ssim": {
+      "bicycle": 0.771,
+      "flowers": 0.605,
+      "garden": 0.868,
+      "stump": 0.775,
+      "treehill": 0.638,
+      "room": 0.914,
+      "counter": 0.905,
+      "kitchen": 0.922,
+      "bonsai": 0.938
+     },
+     "lpips": {
+      "bicycle": 0.205,
+      "flowers": 0.336,
+      "garden": 0.103,
+      "stump": 0.21,
+      "treehill": 0.317,
+      "room": 0.22,
+      "counter": 0.204,
+      "kitchen": 0.129,
+      "bonsai": 0.205
+     }
+    }
+   },
+   "baseline_2dgs": {
+    "average": {
+     "psnr": 27.03,
+     "ssim": 0.805,
+     "lpips": 0.223
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 24.82,
+      "flowers": 20.99,
+      "garden": 26.91,
+      "stump": 26.41,
+      "treehill": 22.52,
+      "room": 30.86,
+      "counter": 28.45,
+      "kitchen": 30.62,
+      "bonsai": 31.64
+     }
+    }
+   },
+   "source": "Table 360nerf (main) / supp. Table 360_full (tables/360_full.tex)"
+  },
+  "nerf_synthetic": {
+   "method": {
+    "average": {
+     "psnr": 33.46,
+     "ssim": 0.968,
+     "lpips": 0.03
+    },
+    "per_scene": {
+     "psnr": {
+      "chair": 35.92,
+      "drums": 26.05,
+      "ficus": 35.9,
+      "hotdog": 38.08,
+      "lego": 35.37,
+      "materials": 29.87,
+      "mic": 35.36,
+      "ship": 31.1
+     },
+     "ssim": {
+      "chair": 0.986,
+      "drums": 0.952,
+      "ficus": 0.988,
+      "hotdog": 0.986,
+      "lego": 0.981,
+      "materials": 0.957,
+      "mic": 0.991,
+      "ship": 0.901
+     },
+     "lpips": {
+      "chair": 0.013,
+      "drums": 0.042,
+      "ficus": 0.011,
+      "hotdog": 0.019,
+      "lego": 0.017,
+      "materials": 0.037,
+      "mic": 0.007,
+      "ship": 0.094
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 33.34,
+     "ssim": 0.969,
+     "lpips": 0.03
+    },
+    "per_scene": {
+     "psnr": {
+      "chair": 35.9,
+      "drums": 26.16,
+      "ficus": 34.85,
+      "hotdog": 37.7,
+      "lego": 35.78,
+      "materials": 30.0,
+      "mic": 35.42,
+      "ship": 30.9
+     }
+    }
+   },
+   "baseline_2dgs": {
+    "average": {
+     "psnr": 32.67
+    },
+    "per_scene": {
+     "psnr": {
+      "chair": 34.24,
+      "drums": 26.1,
+      "ficus": 35.4,
+      "hotdog": 36.97,
+      "lego": 34.03,
+      "materials": 29.54,
+      "mic": 34.64,
+      "ship": 30.46
+     }
+    }
+   },
+   "ablation_psnr": {
+    "w/o texture": {
+     "chair": 35.59,
+     "drums": 26.04,
+     "ficus": 35.81,
+     "hotdog": 37.74,
+     "lego": 35.25,
+     "materials": 29.86,
+     "mic": 35.24,
+     "ship": 30.73
+    },
+    "w/o pruning": {
+     "chair": 35.8,
+     "drums": 26.06,
+     "ficus": 35.96,
+     "hotdog": 37.95,
+     "lego": 35.3,
+     "materials": 29.82,
+     "mic": 35.32,
+     "ship": 31.02
+    },
+    "w/o sorting": {
+     "chair": 34.16,
+     "drums": 25.63,
+     "ficus": 35.12,
+     "hotdog": 35.76,
+     "lego": 33.23,
+     "materials": 29.05,
+     "mic": 33.34,
+     "ship": 29.64
+    },
+    "w/o frustum": {
+     "chair": 35.66,
+     "drums": 26.06,
+     "ficus": 35.89,
+     "hotdog": 37.23,
+     "lego": 34.99,
+     "materials": 29.75,
+     "mic": 35.43,
+     "ship": 31.19
+    }
+   },
+   "source": "supp. Tables nerf_full, ablation_full, prune_full"
+  }
+ },
+ "notes": "3DGS/2DGS rows are numbers quoted in the HDGS table (3DGS = Kerbl et al. reported values). Mip-NeRF 360 mean in main table 27.25. No tandt/db results. Mip-NeRF 360 protocol: images_4 outdoor / images_2 indoor, llffhold 8, black background (official run_360.py). Iterations 60000 = 40000 stage 1 + 20000 stage 2 (official scripts; paper silent)."
+}

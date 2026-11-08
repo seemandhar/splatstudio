@@ -1,0 +1,30 @@
+{
+ "paper": "On the Error Analysis of 3D Gaussian Splatting and an Optimal Projection Strategy",
+ "slug": "optimal-projection",
+ "plan_id": 123,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "smoke": "done",
+  "review": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "method": "optimal-gs",
+ "results": {
+  "room": {
+   "psnr": 31.41,
+   "paper": 31.58,
+   "control": 31.39,
+   "gsplat": 31.52
+  },
+  "treehill": {
+   "psnr": 22.39,
+   "paper": 22.77,
+   "control": 22.19,
+   "gsplat": 22.28
+  }
+ }
+}

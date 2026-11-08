@@ -1,0 +1,39 @@
+{
+  "paper": "BOGausS: Better Optimized Gaussian Splatting",
+  "arxiv": "2504.01844",
+  "method_label": "Ours (Big)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 28.40, "ssim": 0.844, "lpips": 0.172}, "gaussians_millions": 3.21},
+      "baseline_3dgs": {"average": {"psnr": 27.57, "ssim": 0.816, "lpips": 0.215}, "gaussians_millions": 3.31},
+      "source": "Table 2 (tab:results), 'Without Exposure Correction', bogauss-30k-fast-1.00.tex / 3dgs-1.0.tex"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.78, "ssim": 0.866, "lpips": 0.176}, "gaussians_millions": 1.83},
+      "baseline_3dgs": {"average": {"psnr": 23.79, "ssim": 0.853, "lpips": 0.169}, "gaussians_millions": 1.84},
+      "source": "Table 2 (tab:results), 'Without Exposure Correction'"
+    },
+    "db": {
+      "method": {"average": {"psnr": 30.41, "ssim": 0.915, "lpips": 0.230}, "gaussians_millions": 2.80},
+      "baseline_3dgs": {"average": {"psnr": 29.69, "ssim": 0.906, "lpips": 0.238}, "gaussians_millions": 2.81},
+      "source": "Table 2 (tab:results), 'Without Exposure Correction'"
+    }
+  },
+  "other_rows": {
+    "medium_0.40": {"mipnerf360": {"psnr": 28.21, "ssim": 0.836, "lpips": 0.192, "gaussians_millions": 1.28},
+                    "tandt": {"psnr": 24.62, "ssim": 0.857, "lpips": 0.199, "gaussians_millions": 0.73},
+                    "db": {"psnr": 30.37, "ssim": 0.913, "lpips": 0.237, "gaussians_millions": 1.12}},
+    "light_0.10": {"mipnerf360": {"psnr": 27.21, "ssim": 0.805, "lpips": 0.251, "gaussians_millions": 0.32},
+                   "tandt": {"psnr": 23.72, "ssim": 0.830, "lpips": 0.250, "gaussians_millions": 0.18},
+                   "db": {"psnr": 30.18, "ssim": 0.908, "lpips": 0.259, "gaussians_millions": 0.28}},
+    "with_exposure_correction_big": {"mipnerf360": {"psnr": 28.82}, "tandt": {"psnr": 25.99}, "db": {"psnr": 31.25}},
+    "ablation_garden_1.01M": {"bogauss": {"psnr": 27.81, "ssim": 0.861, "lpips": 0.132},
+      "no_sparse_adam": 27.49, "no_state_inheritance": 27.77, "no_scaled_updates": 27.51,
+      "no_effective_opacity_pruning": 27.77, "no_snr_split_priority": 27.66,
+      "source": "Table 1 (tab:ablations)"},
+    "psnr_vs_budget_curves": "figure_SNR.tex csv files (mip360/tat/db-bogauss-30k-fast.csv)"
+  },
+  "per_scene_reported": false,
+  "notes": "Only dataset averages are reported (no per-scene table, no supplementary). The 3DGS row (27.57/23.79/29.69) is higher than the 3DGS paper's own numbers (27.21/23.14/29.41): retrained by the authors. #G of 'Big' equals Taming 3DGS 'big' budgets (T&T avg 1.83M = (2.584+1.085)/2, DB 2.80M = (3.274+2.326)/2), so budgets = per-scene 3DGS counts from Taming's full_eval.py. Exposure-corrected rows are not used."
+}

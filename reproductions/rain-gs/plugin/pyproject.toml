@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-rain-gs"
+version = "0.1.0"
+description = "RAIN-GS (arXiv 2403.09413) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy"]
+
+[project.entry-points."splatstudio.methods"]
+rain-gs = "ss_rain_gs:method"
+
+[tool.setuptools.packages.find]
+include = ["ss_rain_gs*"]
+
+[tool.ruff]
+line-length = 100

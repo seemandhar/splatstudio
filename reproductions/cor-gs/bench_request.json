@@ -1,0 +1,15 @@
+{
+  "method": "cor-gs",
+  "datasets": {"llff-fewview3-r8": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]},
+  "steps": 10000,
+  "per_scene_reported": false,
+  "extra": "",
+  "recipe": "3dgs",
+  "paper_reference": {"dataset": "LLFF 3-view, 1/8 res (504x378, -r 8 from full-res images)", "average": {"psnr": 20.45, "ssim": 0.712, "lpips": 0.196},
+                      "baseline_3dgs": {"psnr": 19.22, "ssim": 0.649, "lpips": 0.229},
+                      "source": "paper Table 1 / Table 4; averages only (no per-scene numbers in main or supp.) -> full 8-scene mean"},
+  "ablation": {"method": "cor-gs-single", "datasets": {"llff-fewview3-r8": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]}, "steps": 10000,
+               "note": "Same pipeline with one field, no co-prune/co-reg = authors' 3DGS row (19.22); protocol-matched baseline for the +1.23 dB gain."},
+  "dataset_note": "llff-fewview3-r8 (not -fsgs): official CoR-GS run_llff.sh uses -r 8 on full-res images/ (PIL bicubic), same split/init as FSGS/DropGaussian.",
+  "notes": "~0.15 s/step on a shared A6000 => ~25-30 min/scene, <1 GB peak memory. Eval = field 1 only (field 2 is density-owned state, not in the checkpoint)."
+}

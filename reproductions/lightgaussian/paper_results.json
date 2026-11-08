@@ -1,0 +1,199 @@
+{
+ "paper": "LightGaussian: Unbounded 3D Gaussian Compression with 15x Reduction and 200+ FPS",
+ "arxiv": "2311.17245",
+ "method_label": "LightGaussian (Ours)",
+ "iterations": 45000,
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 27.13,
+     "ssim": 0.806,
+     "lpips": 0.237,
+     "size_mb": 45,
+     "fps": 237
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.196,
+      "flowers": 21.538,
+      "garden": 26.961,
+      "stump": 26.77,
+      "room": 31.399,
+      "treehill": 22.685,
+      "counter": 28.478,
+      "kitchen": 30.869,
+      "bonsai": 31.414
+     },
+     "ssim": {
+      "bicycle": 0.765,
+      "flowers": 0.598,
+      "garden": 0.855,
+      "stump": 0.776,
+      "room": 0.916,
+      "treehill": 0.635,
+      "counter": 0.898,
+      "kitchen": 0.919,
+      "bonsai": 0.934
+     },
+     "lpips": {
+      "bicycle": 0.218,
+      "flowers": 0.352,
+      "garden": 0.122,
+      "stump": 0.222,
+      "room": 0.232,
+      "treehill": 0.338,
+      "counter": 0.22,
+      "kitchen": 0.141,
+      "bonsai": 0.221
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 27.4,
+     "ssim": 0.813,
+     "lpips": 0.217,
+     "size_mb": 782,
+     "fps": 144
+    },
+    "per_scene": {
+     "psnr": {
+      "bicycle": 25.194,
+      "flowers": 21.414,
+      "garden": 27.29,
+      "stump": 26.598,
+      "room": 31.336,
+      "treehill": 22.476,
+      "counter": 28.989,
+      "kitchen": 31.328,
+      "bonsai": 31.948
+     },
+     "ssim": {
+      "bicycle": 0.764,
+      "flowers": 0.601,
+      "garden": 0.862,
+      "stump": 0.77,
+      "room": 0.917,
+      "treehill": 0.632,
+      "counter": 0.906,
+      "kitchen": 0.925,
+      "bonsai": 0.939
+     },
+     "lpips": {
+      "bicycle": 0.211,
+      "flowers": 0.339,
+      "garden": 0.108,
+      "stump": 0.216,
+      "room": 0.221,
+      "treehill": 0.327,
+      "counter": 0.201,
+      "kitchen": 0.127,
+      "bonsai": 0.206
+     }
+    }
+   },
+   "stages_room": {
+    "source": "Tab. 2 (scene room)",
+    "3dgs": {
+     "psnr": 31.34,
+     "ssim": 0.917,
+     "lpips": 0.221,
+     "size_mb": 365
+    },
+    "prune": {
+     "psnr": 30.67,
+     "ssim": 0.91,
+     "lpips": 0.234,
+     "size_mb": 123
+    },
+    "prune+coadapt": {
+     "psnr": 31.64,
+     "ssim": 0.918,
+     "lpips": 0.228,
+     "size_mb": 123
+    },
+    "sh2_no_distill": {
+     "psnr": 30.32,
+     "ssim": 0.904,
+     "lpips": 0.238,
+     "size_mb": 81
+    },
+    "sh2_photometric": {
+     "psnr": 31.42,
+     "ssim": 0.916,
+     "lpips": 0.234,
+     "size_mb": 81
+    },
+    "sh2_distill_pseudo": {
+     "psnr": 31.48,
+     "ssim": 0.917,
+     "lpips": 0.231,
+     "size_mb": 81
+    },
+    "vq": {
+     "psnr": 31.09,
+     "ssim": 0.918,
+     "lpips": 0.236,
+     "size_mb": 21
+    },
+    "vq_finetune_final": {
+     "psnr": 31.4,
+     "ssim": 0.916,
+     "lpips": 0.232,
+     "size_mb": 21
+    }
+   },
+   "source": "Tab. 1 (average), appendix Tabs. 6-8 (per scene PSNR/SSIM/LPIPS), Tab. 2 (room stages)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 23.44,
+     "ssim": 0.832,
+     "lpips": 0.202,
+     "size_mb": 25,
+     "fps": 357
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.399,
+      "train": 21.838
+     },
+     "ssim": {
+      "truck": 0.877,
+      "train": 0.801
+     },
+     "lpips": {
+      "truck": 0.155,
+      "train": 0.239
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.66,
+     "ssim": 0.845,
+     "lpips": 0.178,
+     "size_mb": 433
+    },
+    "per_scene": {
+     "psnr": {
+      "truck": 25.372,
+      "train": 21.957
+     },
+     "ssim": {
+      "truck": 0.878,
+      "train": 0.811
+     },
+     "lpips": {
+      "truck": 0.147,
+      "train": 0.209
+     }
+    }
+   },
+   "source": "Tab. 1, appendix Tabs. 6-8"
+  }
+ },
+ "notes": "Per-scene 'Ours' = final compressed model (room 31.399 = Tab.2 #8/#9 after VQ fine-tune). baseline_3dgs = authors' retrained 3D-GS* (A6000). Per-scene Ours mean over 9 Mip-NeRF360 scenes = 27.257, inconsistent with Tab. 1's 27.13 (3D-GS* per-scene mean 27.397 matches Tab.1 27.40). Per-scene sizes not reported. iterations = 30000 3DGS + 5000 prune fine-tune + 5000 distill + 5000 VQ fine-tune."
+}

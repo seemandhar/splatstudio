@@ -1,0 +1,18 @@
+{"method": "trick-gs", "module": "ss_trick_gs",
+ "components": [
+  {"kind": "renderer", "name": "trick-renderer", "factory": "ss_trick_gs.renderer:create_renderer"},
+  {"kind": "density", "name": "trick-density", "factory": "ss_trick_gs.density:create_density"},
+  {"kind": "loss", "name": "trick-photometric", "factory": "ss_trick_gs.losses:create_photometric"},
+  {"kind": "loss", "name": "gaussian-mask", "factory": "ss_trick_gs.losses:create_gaussian_mask"},
+  {"kind": "loss", "name": "sh-mask", "factory": "ss_trick_gs.losses:create_sh_mask"}],
+ "fields": [{"name": "trick_mask", "shape": [], "lr": 0.5, "init": 1.0},
+            {"name": "trick_sh_mask", "shape": [3], "lr": 0.05, "init": 0.0}],
+ "probes": ["trick-gaussian-mask", "trick-sh-mask", "trick-significance", "trick-progressive",
+            "trick-lowpass-abe", "trick-accelerated", "trick-redensify", "trick-cycle"],
+ "contributions": ["GM volume mask", "SG significance pruning", "SHM SH masking", "BL progressive blur",
+                   "DS progressive resolution", "SC progressive scale + ABE + 20% SfM init",
+                   "AT batched SH + separable SSIM", "DE late densification", "FP16 storage"],
+ "fidelity_gaps": ["no official code: SG steps from Fig.3, BL decay law, mask inits, SH-mask start, DS linear vs log",
+                   "white background / random view sampling (shared with baseline)",
+                   "eval SSIM valid convolution", "timing/storage not on RTX 3090"],
+ "feasible_natively": true}

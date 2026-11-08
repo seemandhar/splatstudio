@@ -1,0 +1,1 @@
+{"paper":"3D Gaussian Splatting for Real-Time Radiance Field Rendering","slug":"3dgs","plan_id":24,"stages":{"benchmark":"done","report":"done"},"outcome":"matched","method":"gsplat","note":"built-in config; full 13-scene comparison"}

@@ -1,0 +1,7 @@
+{"method": "bogauss", "module": "ss_bogauss",
+ "components": ["bogauss-renderer", "bogauss-density", "photometric"],
+ "fields": [],
+ "probes": ["bogauss-precision", "bogauss-unbiased-sparse-adam", "bogauss-linear-size", "bogauss-state-inheritance", "bogauss-stats-kernel", "bogauss-prune", "bogauss-split", "bogauss-split-priority", "bogauss-schedule"],
+ "contributions": ["precision-confidence", "unbiased-sparse-adam", "state-inheritance", "effective-opacity-pruning", "density-preserving-split", "snr-split-priority"],
+ "fidelity_gaps": ["no official code: eta, sigma_uv, frustum, S_i, SplitAdaptation, growth curve chosen", "gsplat backend shared with baseline", "stats from training views only", "optimizer before density", "no exposure correction"],
+ "feasible_natively": true}

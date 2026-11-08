@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-fsgs"
+version = "0.1.0"
+description = "FSGS (arXiv 2312.00451) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio>=0.1,<0.2", "gsplat>=1.5", "numpy"]
+
+[project.entry-points."splatstudio.methods"]
+fsgs = "ss_fsgs:method"
+
+[tool.setuptools.packages.find]
+include = ["ss_fsgs*"]
+
+[tool.ruff]
+line-length = 100

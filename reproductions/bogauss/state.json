@@ -1,0 +1,27 @@
+{
+ "paper": "BOGausS: Better Optimized Gaussian Splatting",
+ "slug": "bogauss",
+ "plan_id": 7,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "gap_analysis": "done (1)",
+  "report": "done"
+ },
+ "outcome": "not-matched",
+ "method": "bogauss",
+ "bench_exps": [
+  "bogauss-tandt"
+ ],
+ "result": {
+  "tandt_mean": 23.94,
+  "paper": 24.78,
+  "psnr_delta": -0.84,
+  "gain_vs_ours": 0.58,
+  "paper_gain": 0.99,
+  "baseline_offset": -0.43
+ }
+}

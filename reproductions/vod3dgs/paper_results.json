@@ -1,0 +1,36 @@
+{
+  "paper": "VoD-3DGS: View-opacity-Dependent 3D Gaussian Splatting",
+  "arxiv": "2501.17978",
+  "method_label": "VoD-3DGS[S] / VoD-3DGS[L]",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {"average": {"psnr": 27.66, "ssim": 0.817, "lpips": 0.217}},
+      "method_L": {"average": {"psnr": 27.79, "ssim": 0.818, "lpips": 0.213}},
+      "baseline_3dgs": {"average": {"psnr": 27.53, "ssim": 0.816, "lpips": 0.215}},
+      "baseline_3dgs_original_paper": {"average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214}},
+      "source": "Table 1"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.17, "ssim": 0.859, "lpips": 0.165}},
+      "method_L": {"average": {"psnr": 23.91, "ssim": 0.860, "lpips": 0.160}},
+      "baseline_3dgs": {"average": {"psnr": 23.75, "ssim": 0.852, "lpips": 0.169}},
+      "baseline_3dgs_original_paper": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183}},
+      "source": "Table 1"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.75, "ssim": 0.907, "lpips": 0.244}},
+      "method_L": {"average": {"psnr": 29.84, "ssim": 0.908, "lpips": 0.240}},
+      "baseline_3dgs": {"average": {"psnr": 29.77, "ssim": 0.907, "lpips": 0.238}},
+      "baseline_3dgs_original_paper": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243}},
+      "source": "Table 1"
+    },
+    "nerf_synthetic": {
+      "method": {"average": {"psnr": 33.79, "ssim": 0.971, "lpips": 0.0296}},
+      "method_L": {"average": {"psnr": 33.69, "ssim": 0.971, "lpips": 0.0297}},
+      "baseline_3dgs": {"average": {"psnr": 33.48, "ssim": 0.970, "lpips": 0.0298}},
+      "source": "Table 2 (ablation Table 4: matrix only 33.513, +L_vc uniform 33.782, +keypoints 33.792)"
+    }
+  },
+  "notes": "'method' = VoD-3DGS[S], 'method_L' = VoD-3DGS[L]. Averages only; no per-scene tables. baseline_3dgs = 3DGS-dagger recomputed by the authors on an L40. Mem column (MB): S 687/430/559, L 849/525/606, 3DGS-dagger 649/372/586."
+}

@@ -1,0 +1,21 @@
+{
+ "paper": "Decomposing Densification in Gaussian Splatting for Faster 3D Scene Reconstruction",
+ "slug": "decomp-gs",
+ "plan_id": 6,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done (tandt)",
+  "gap_analysis": "done (gap-analysis-1.md)"
+ },
+ "outcome": "not-matched",
+ "method": "decomp-gs",
+ "official_code": null,
+ "bench_note": "averages only -> T&T complete average (2 scenes)",
+ "bench_exps": [
+  "decomp-gs-tandt"
+ ],
+ "headline": "T&T mean 23.32 vs paper 24.06 (-0.74); delta vs our gsplat -0.04 vs paper +0.44; Gaussians 0.51x, 2.3x faster (paper 0.55x)"
+}

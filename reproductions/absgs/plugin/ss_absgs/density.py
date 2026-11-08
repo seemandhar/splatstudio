@@ -26,7 +26,10 @@ DEFAULTS = {
     "refine_every": 100,
     "reset_every": 3000,
     "opacity_reset": True,  # 3DGS opacity reset (see AbsGSStrategy.step_post_backward)
-    "reduce_every": 0,  # code-only `use_reduce` (opacity <= 0.8 every 500); not used in paper
+    # Official default use_reduce=True, opacity_reduce_interval=500 (arguments:92-93), run by
+    # train.py:132 before 15k and left on by full_eval.py; the README "not used in our paper"
+    # list names only initial pruning and weight pruning. 0 disables (absgs-noreduce).
+    "reduce_every": 500,
 }
 
 
@@ -35,7 +38,7 @@ class AbsGSStrategy(DefaultStrategy):
     clone_grad2d: float = DEFAULTS["clone_grad2d"]
     split_grad2d: float = DEFAULTS["split_grad2d"]
     opacity_reset: bool = True
-    reduce_every: int = 0
+    reduce_every: int = DEFAULTS["reduce_every"]
 
     def initialize_state(self, scene_scale: float = 1.0):
         state = super().initialize_state(scene_scale)

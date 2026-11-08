@@ -1,0 +1,14 @@
+{"method": "student-splatting-bicycle",
+ "datasets": {"mipnerf360-pilr": ["bicycle", "room"]},
+ "steps": 30000, "per_scene_reported": true, "extra": "",
+ "methods_by_scene": {"bicycle": ["student-splatting-bicycle"], "room": ["student-splatting-room"]},
+ "steps_by_scene": {"bicycle": 30000, "room": 40000},
+ "launch": [
+  "bench.py launch --exp student-splatting-bicycle-pilr --methods student-splatting-bicycle --dataset mipnerf360-pilr --scenes bicycle --steps 30000",
+  "bench.py launch --exp student-splatting-room-pilr --methods student-splatting-room --dataset mipnerf360-pilr --scenes room --steps 40000"],
+ "baseline": "baseline3dgs-mipnerf360-pilr-30000 (official -r 4 outdoor / -r 2 indoor PIL resize = mipnerf360-pilr); gsplat bicycle 25.447, room 31.687",
+ "paper_reference": {"bicycle": {"psnr": 25.68, "ssim": 0.798, "lpips": 0.173, "cap_max": 3000000, "iterations": 30000},
+                     "room": {"psnr": 32.57, "ssim": 0.938, "lpips": 0.167, "cap_max": 1500000, "iterations": 40000},
+                     "source": "supp. Tables comparisons_360_psnr/ssim/lpips (full SSS, official per-scene configs, mean of 3 runs)",
+                     "paper_3dgs_baseline_per_scene": {"bicycle": 25.25, "room": 30.63}},
+ "notes": "One method per launch (configs differ per scene; room uses 40k steps per official configs/room.json). Compare delta over gsplat baseline to paper delta over 3DGS (bicycle +0.43, room +1.94). Runtime ~1.7 s/100 steps-ish on shared GPUs; bicycle grows to 3M primitives. Optional third scene: student-splatting-truck on tandt (40k, paper 26.41)."}

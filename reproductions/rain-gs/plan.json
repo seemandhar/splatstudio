@@ -1,0 +1,7 @@
+{"method": "rain-gs", "module": "ss_rain_gs",
+ "components": ["rain-gs-renderer (renderer)", "rain-gs-density (density)", "photometric (loss)"],
+ "fields": [],
+ "probes": ["slv-init", "lowpass-schedule", "lowpass-in-render", "abe-split", "warmup-schedule", "trainable-leaves"],
+ "contributions": ["slv-init", "progressive-lowpass", "abe-split", "warmup-schedule"],
+ "fidelity_gaps": ["cube from train tvecs only", "runtime order/sampling/SSIM", "gsplat per-axis radius", "black background vs white baseline", "seed variance"],
+ "feasible_natively": true}

@@ -1,0 +1,7 @@
+{"method": "scaffold-gs", "module": "ss_scaffold_gs",
+ "components": ["scaffold-renderer", "scaffold-density", "photometric", "scaffold-scaling-reg"],
+ "fields": ["sgs_feat", "sgs_offset", "sgs_scaling", "sgs_blob"],
+ "probes": ["neural-gaussians", "visibility-filter", "anchor-density", "opacity-selection", "blob-eval"],
+ "contributions": ["anchor-init", "neural-gaussians", "anchor-refinement", "volume-reg"],
+ "fidelity_gaps": ["gsplat rasterizer", "white background", "view sampling with replacement", "adam-before-grow order", "fixed 30k LR schedule", "blob transport", "2 of 7 scenes"],
+ "feasible_natively": true, "derived_from": "reproductions/hard-gs/plugin (scaffold-gs-hgsbase)"}

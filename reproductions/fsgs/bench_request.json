@@ -1,0 +1,14 @@
+{
+  "method": "fsgs",
+  "datasets": {"llff-fewview3-r8-fsgs": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]},
+  "steps": 10000,
+  "per_scene_reported": false,
+  "extra": "",
+  "recipe": "3dgs",
+  "paper_reference": {"dataset": "LLFF 3-view, 1/8 res (504x378)", "average": {"psnr": 20.31, "ssim": 0.652, "lpips": 0.288},
+                      "baseline_3dgs": {"psnr": 17.43, "ssim": 0.522, "lpips": 0.321},
+                      "source": "paper Table 1; averages only (no per-scene tables in main/supp./rebuttal) -> full 8-scene mean"},
+  "dataset_note": "New registered key llff-fewview3-r8-fsgs = llff-fewview3-r8 with the official LLFF images_8 PNGs (FSGS --images images_8); built by reproductions/fsgs/tools/prepare_llff_fsgs.py. Same split/init as dropgaussian's llff-fewview3-r8.",
+  "optional_baseline": {"method": "gsplat", "datasets": {"llff-fewview3-r8-fsgs": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"]}, "steps": 10000},
+  "notes": "Estimated ~20-25 min/scene on a shared A6000 (DPT-Hybrid forward+backward on a pseudo view every step 2001-9499, ~2-3 GB extra memory). Needs ~/models/dpt (MiDaS repo, dpt_hybrid_384.pt, timm 0.6.12 pylib), loaded in-process."
+}

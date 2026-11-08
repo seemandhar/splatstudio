@@ -1,0 +1,22 @@
+{
+ "method": "2dgs",
+ "datasets": {
+  "mipnerf360": [
+   "garden",
+   "counter"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "paper_psnr": {
+  "garden": 26.95,
+  "counter": 28.55
+ },
+ "paper_3dgs_psnr": {
+  "garden": 27.41,
+  "counter": 28.7
+ },
+ "baseline": "baseline3dgs-mipnerf360-30000",
+ "optional_ablation": "2dgs-paperdist (lambda_dist 100) on the same scenes"
+}

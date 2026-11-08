@@ -1,0 +1,10 @@
+{"method": "scaffold-gs",
+ "datasets": {"mipnerf360-1600": ["garden", "counter"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": "baseline3dgs-mipnerf360-1600-30000",
+ "paper_target": {"psnr": {"garden": 27.17, "counter": 29.34}, "ssim": {"garden": 0.842, "counter": 0.914}, "lpips": {"garden": 0.146, "counter": 0.191}},
+ "paper_rows_3dgs": {"garden": 27.41, "counter": 28.70},
+ "reuse_hgsbase": false,
+ "notes": "Official Scaffold-GS train.sh loads full-res images/ with --resolution -1 -> PIL width 1600 = mipnerf360-1600 (the hgsbase control ran on mipnerf360-pilr, so it is not reusable; plugin source also differs: sgs_* fields + 0.999 straight-through opacity cap). Voxel 0.001 for both scenes (train_mip360.sh). Paper's 3DGS row is the 3DGS paper's images_4/images_2 numbers, i.e. a different resolution; compare to our 1600 baseline (garden 26.93, counter 29.04). --max-gaussians counts anchors. Suggest /bigdata symlink for runs/scaffold-gs-mipnerf360-1600."}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-optimal-gs"
+version = "0.1.0"
+description = "Optimal Gaussian Splatting (arXiv 2402.00752) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+optimal-gs = "ss_optimal_gs:optimal_gs"
+optimal-gs-ewa = "ss_optimal_gs:optimal_gs_ewa"
+
+[tool.setuptools]
+packages = ["ss_optimal_gs"]
+
+[tool.setuptools.package-data]
+ss_optimal_gs = ["csrc/*.cu", "csrc/*.cpp"]
+
+[tool.ruff]
+line-length = 100

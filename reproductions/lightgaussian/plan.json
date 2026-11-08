@@ -1,0 +1,46 @@
+{
+ "method": "lightgaussian",
+ "module": "ss_lightgaussian",
+ "components": [
+  {
+   "name": "lightgaussian-renderer",
+   "kind": "renderer"
+  },
+  {
+   "name": "lightgaussian-density",
+   "kind": "density"
+  },
+  {
+   "name": "photometric",
+   "kind": "loss"
+  },
+  {
+   "name": "lightgaussian-distill",
+   "kind": "loss"
+  }
+ ],
+ "fields": [],
+ "probes": [
+  "significance-oracle",
+  "prune-rule",
+  "distill-views",
+  "vq-official",
+  "codec-roundtrip",
+  "pipeline",
+  "schedule"
+ ],
+ "contributions": [
+  "global-significance-prune (C1, \u00a73.2)",
+  "sh-distillation-pseudo-views (C2, \u00a73.3)",
+  "significance-vq (C3, \u00a73.4)"
+ ],
+ "fidelity_gaps": [
+  "VQ fine-tune optimiser unspecified (not released)",
+  "teacher = pruned 35k model (Alg. 1)",
+  "white background / view sampling / SSIM conv",
+  "gsplat projection in score kernel; atomics",
+  "prune one-step offset",
+  "AdamW decay after update"
+ ],
+ "feasible_natively": true
+}

@@ -1,0 +1,34 @@
+{
+ "method": "2dgs",
+ "module": "ss_twodgs",
+ "feasible_natively": true,
+ "components": [
+  "2dgs-surfel (renderer, vendored official diff-surfel-rasterization CUDA)",
+  "2dgs-density",
+  "photometric",
+  "2dgs-distortion",
+  "2dgs-normal"
+ ],
+ "fields": [],
+ "probes": [
+  "ray-splat",
+  "distortion-kernel",
+  "normal-loss",
+  "distortion-loss",
+  "density-recipe",
+  "projected-center-grad"
+ ],
+ "contributions": [
+  "C1 surfel ray-splat rasteriser + low-pass",
+  "C2 depth distortion",
+  "C3 normal consistency",
+  "C4 projected-centre densification"
+ ],
+ "fidelity_gaps": [
+  "optimizer step before densify",
+  "view sampling / SSIM valid conv",
+  "lambda_dist code 0 vs paper 100",
+  "released code differs from paper code (low-pass densify grad removed)",
+  "float metrics vs PNG"
+ ]
+}

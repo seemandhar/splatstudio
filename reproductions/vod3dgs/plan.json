@@ -1,0 +1,7 @@
+{"method": "vod3dgs-s", "module": "ss_vod3dgs",
+ "components": ["vod-renderer", "vod-density", "photometric", "vod-view-consistency"],
+ "fields": [{"name": "vod_S", "shape": [6], "lr": 0.0125, "init": 0.0}],
+ "probes": ["vod-opacity", "max-view-prune", "eigen-reset", "vc-loss", "opacity-lr"],
+ "contributions": ["view-dependent-opacity", "max-view-opacity-prune", "eigen-opacity-reset", "view-consistency-loss", "opacity-learning-rates"],
+ "fidelity_gaps": ["SfM covisibility instead of LightGlue matches", "gamma also reset (ambiguous)", "L_vc means detached; S Adam moments zeroed at reset", "native runtime vs Inria 3DGS differences", "averages-only benchmark (tandt+db)"],
+ "feasible_natively": true}

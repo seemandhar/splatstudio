@@ -71,8 +71,10 @@ Baseline rows: "3D-GS" = numbers copied from the 3DGS paper; "3D-GS*" = authors'
   improve performance in large scenarios. None of these modifications were utilized in our
   paper"): (a) SfM points filtered at load (`max_err=2, min_track_length=3`), (b)
   `use_reduce=True`: every 500 iterations (during densification) opacities clamped to ≤0.8
-  (`reduce_opacity`), (c) weight-based pruning (`use_prune_weight=False` by default). We follow
-  the paper (none of these); (b) is available as an off-by-default config `reduce_every`.
+  (`reduce_opacity`), (c) weight-based pruning (`use_prune_weight=False` by default). The README's
+  "not used in our paper" list names only (a) and (c); (b) is on in the release and in
+  `full_eval.py`, so the plugin enables it by default (`reduce_every=500`, review 1);
+  `absgs-noreduce` disables it.
 - Paper text writes `>`; code uses `>=` for both clone and split (immaterial).
 - Which variant is "AbsGS": both are reported; AbsGS-0004 is the best and the code default →
   method `absgs`; `absgs-0008` registered as variant.

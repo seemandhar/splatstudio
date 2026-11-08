@@ -1,0 +1,28 @@
+{
+ "paper": "LightGaussian: Unbounded 3D Gaussian Compression with 15x Reduction and 200+ FPS",
+ "slug": "lightgaussian",
+ "plan_id": 8,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "results": {
+  "garden": {
+   "psnr": 26.81,
+   "paper": 26.961,
+   "size_MiB": 73.62,
+   "gaussians": 1619012
+  },
+  "room": {
+   "psnr": 31.39,
+   "paper": 31.399,
+   "size_MiB": 26.91,
+   "gaussians": 590636
+  }
+ }
+}

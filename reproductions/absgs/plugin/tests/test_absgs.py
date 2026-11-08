@@ -10,11 +10,12 @@ def test_paper_defaults():
     assert DEFAULTS["clone_grad2d"] == 0.0002
     assert DEFAULTS["split_grad2d"] == 0.0004
     assert DEFAULTS["grow_scale3d"] == 0.001
-    assert DEFAULTS["refine_stop_iter"] == 15000 and DEFAULTS["reduce_every"] == 0
+    assert DEFAULTS["refine_stop_iter"] == 15000 and DEFAULTS["reduce_every"] == 500
 
 
 def test_criteria_cpu():
-    for factory in (ss_absgs.method, ss_absgs.absgs_0008, ss_absgs.absgs_noreset):
+    for factory in (ss_absgs.method, ss_absgs.absgs_0008, ss_absgs.absgs_noreset,
+                    ss_absgs.absgs_noreduce):
         out = probes.split_clone_criteria(factory(), "cpu")
         assert out["split_mask"] == [False, False, True, False, False, False, True]
 
@@ -52,3 +53,12 @@ def test_reduce_opacity_optional():
     assert torch.sigmoid(params["opacities"]).min() > 0.9
     density.after_backward(params, opts, 500, {"info": info})
     assert torch.sigmoid(params["opacities"]).max() <= 0.8 + 1e-6
+
+
+def test_reduce_removed_detected():
+    m = ss_absgs._make("absgs", "x", reduce_every=0)
+    try:
+        probes.split_clone_criteria(m, "cpu")
+    except AssertionError:
+        return
+    raise AssertionError("probe did not detect missing opacity reduction")

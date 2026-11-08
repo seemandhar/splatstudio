@@ -1,0 +1,4 @@
+{"method": "decomp-gs",
+ "datasets": {"tandt": ["truck", "train"]},
+ "steps": 30000, "per_scene_reported": false, "extra": "",
+ "compare": "paper Table 2 T&T average: Ours 24.06 / 0.8461 / 0.1891, 0.867M; paper 3DGS 23.62 (delta +0.44), 3DGS-accel 23.58 (+0.48). Compare delta vs baseline3dgs-tandt-30000 (gsplat 23.36). Also report gaussians and training_seconds vs baseline (paper: ~45% fewer Gaussians, ~2x faster than 3DGS-accel). Optional second cheap average: db (drjohnson, playroom; paper 30.05 vs 3DGS 29.44)."}

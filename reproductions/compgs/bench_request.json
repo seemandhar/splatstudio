@@ -1,0 +1,6 @@
+{"method": "compgs",
+ "datasets": {"mipnerf360": ["garden", "room"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "",
+ "notes": "CompGS 32K (opacity reg) decoded-model PSNR, paper supp. tab:scene_metrics: garden 26.822 (30 MB, 1.37M G), room 31.131 (9 MB, 0.33M G); authors' 3DGS 27.241 / 31.346 (paper deltas -0.42 / -0.22 dB). Our baseline: baseline3dgs-mipnerf360-30000 (garden 26.89, room 31.52). steps must stay 30000 (= compgs-density total_steps; guard raises otherwise). ss-eval measures the baked decoded model. Size: tools/ssenv python reproductions/compgs/plugin/report_size.py <run_dir> (paper_size.MB is the paper formula; also printed as the 'bake' line of the training log). K-means (32K codebooks, 51 assignments x 5 Lloyd its) adds roughly 10-25 min per scene."}

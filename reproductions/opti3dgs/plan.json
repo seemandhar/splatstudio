@@ -1,0 +1,11 @@
+{"method": "opti3dgs", "module": "ss_opti3dgs",
+ "variants": ["opti3dgs", "opti3dgs-filter"],
+ "components": [
+  {"kind": "renderer", "name": "gsplat", "factory": "splatstudio.backends.gsplat:create_renderer"},
+  {"kind": "density", "name": "opti-density", "factory": "ss_opti3dgs.density:create_density", "config": {"scales_lr": 0.01, "refine_every": 500, "grow_grad2d": 0.0001}},
+  {"kind": "loss", "name": "photometric", "factory": "ss_opti3dgs.losses:create_photometric", "config": {"ssim_weight": 0.2, "kernel_sizes": [15, 9, 5, 3], "boundaries": [1000, 4000, 8000, 12000], "padding_mode": "reflect"}}],
+ "fields": [],
+ "probes": ["opti-mean-filter", "opti-schedule", "opti-loss-target", "opti-density-config"],
+ "contributions": ["frequency-modulation (C1, Eq. 2)", "step-schedule (C2, Fig. 3)", "progressive-growing (C3, Eq. 3-5)", "3dgs-settings (Table 1 *)"],
+ "fidelity_gaps": ["no official code: step boundaries from Fig. 3, padding mode guessed (reflect)", "runtime protocol differences vs Inria 3DGS", "densification_interval mapped to refine_every only"],
+ "feasible_natively": true}

@@ -1,0 +1,7 @@
+{"method": "compgs", "module": "ss_compgs",
+ "components": ["compgs-renderer", "compgs-density", "photometric", "compgs-opacity-reg"],
+ "fields": [],
+ "probes": ["kmeans-official", "ste-render", "schedule", "opacity-reg", "pipeline"],
+ "contributions": ["kmeans-vq-training", "opacity-regularization-pruning", "decoded-compact-storage"],
+ "fidelity_gaps": ["runtime protocol (white bg, sampling, gsplat)", "index_add centroid averaging", "prune after optimizer step", "final-step optimizer update of means/opacity", "ambiguous VQ start / Lloyd iters / SH codebook", "analytic size formula"],
+ "feasible_natively": true}

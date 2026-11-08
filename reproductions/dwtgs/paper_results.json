@@ -1,0 +1,39 @@
+{
+  "paper": "DWTGS: Rethinking Frequency Regularization for Sparse-view 3D Gaussian Splatting",
+  "arxiv": "2507.15690",
+  "version": "v3 (8 Oct 2025)",
+  "method_label": "DWTGS",
+  "iterations": 10000,
+  "datasets": {
+    "llff-3view": {
+      "method": {"average": {"psnr": 20.78, "ssim": 0.720, "lpips": 0.197}},
+      "baseline_3dgs": {"average": {"psnr": 19.22, "ssim": 0.649, "lpips": 0.229}},
+      "base_dropgaussian_rerun": {"average": {"psnr": 20.39, "ssim": 0.706, "lpips": 0.198}},
+      "fregs_rerun": {"average": {"psnr": 20.40, "ssim": 0.706, "lpips": 0.198}},
+      "ablation": {
+        "dropgaussian": {"psnr": 20.39, "ssim": 0.706, "lpips": 0.198},
+        "+LF 1-level": {"psnr": 20.50, "ssim": 0.711, "lpips": 0.214},
+        "+LF 2-level": {"psnr": 20.70, "ssim": 0.711, "lpips": 0.209},
+        "+LF 3-level": {"psnr": 20.64, "ssim": 0.711, "lpips": 0.208},
+        "+LF 2-level +HF supervised": {"psnr": 20.07, "ssim": 0.701, "lpips": 0.211},
+        "+LF 2-level +HF self-supervised (DWTGS)": {"psnr": 20.78, "ssim": 0.720, "lpips": 0.197}
+      },
+      "scenes": ["fern", "flower", "fortress", "horns", "leaves", "orchids", "room", "trex"],
+      "source": "Table I (LLFF columns), Table III (ablation); averages only"
+    },
+    "mipnerf360-12view": {
+      "method": {"average": {"psnr": 19.75, "ssim": 0.590, "lpips": 0.343}},
+      "baseline_3dgs": {"average": {"psnr": 18.52, "ssim": 0.523, "lpips": 0.415}},
+      "base_dropgaussian_rerun": {"average": {"psnr": 19.30, "ssim": 0.564, "lpips": 0.352}},
+      "fregs_rerun": {"average": {"psnr": 19.41, "ssim": 0.571, "lpips": 0.344}},
+      "source": "Table I (Mip-NeRF 360 columns); averages only"
+    },
+    "blender-8view": {
+      "method": {"average": {"psnr": 25.56, "ssim": 0.889, "lpips": 0.091}},
+      "baseline_3dgs": {"average": {"psnr": 21.56, "ssim": 0.847, "lpips": 0.130}},
+      "base_dropgaussian_rerun": {"average": {"psnr": 25.13, "ssim": 0.869, "lpips": 0.101}},
+      "source": "Table II; averages only"
+    }
+  },
+  "notes": "No per-scene numbers anywhere (no supplementary). 3DGS row is copied from earlier papers (not re-run); DropGaussian and FreGS rows were re-run by the authors. Iterations are not stated; DWTGS is built on the DropGaussian release, whose LLFF/M360 default is 10000. No mipnerf360/tandt/db dense-view numbers."
+}

@@ -1,0 +1,50 @@
+{
+  "paper": "LP-3DGS: Learning to Prune 3D Gaussian Splatting",
+  "arxiv": "2405.18784",
+  "method_label": "LP-3DGS (RadSplat Score)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.47, "ssim": 0.8120, "lpips": 0.2269},
+        "per_scene": {
+          "psnr": {"bicycle": 25.099, "bonsai": 32.094, "counter": 28.936, "kitchen": 31.515, "room": 31.490, "stump": 26.687, "garden": 27.290, "flowers": 21.383, "treehill": 22.706},
+          "ssim": {"bicycle": 0.7458, "bonsai": 0.9441, "counter": 0.9120, "kitchen": 0.9311, "room": 0.9243, "stump": 0.7714, "garden": 0.8548, "flowers": 0.5865, "treehill": 0.6381},
+          "lpips": {"bicycle": 0.2516, "bonsai": 0.1865, "counter": 0.1896, "kitchen": 0.1194, "room": 0.2032, "stump": 0.2466, "garden": 0.1270, "flowers": 0.3656, "treehill": 0.3527},
+          "pruning_ratio": {"bicycle": 0.64, "bonsai": 0.65, "counter": 0.66, "kitchen": 0.58, "room": 0.74, "stump": 0.65, "garden": 0.59, "flowers": 0.59, "treehill": 0.59}
+        },
+        "average_pruning_ratio": 0.63
+      },
+      "method_minisplatting_score": {
+        "average": {"psnr": 27.12, "ssim": 0.8047, "lpips": 0.2391},
+        "per_scene": {
+          "psnr": {"bicycle": 24.906, "bonsai": 31.370, "counter": 28.4098, "kitchen": 30.785, "room": 31.132, "stump": 26.679, "garden": 27.095, "flowers": 21.150, "treehill": 22.522},
+          "ssim": {"bicycle": 0.7373, "bonsai": 0.9358, "counter": 0.9017, "kitchen": 0.9249, "room": 0.9167, "stump": 0.7677, "garden": 0.8493, "flowers": 0.5756, "treehill": 0.6336},
+          "lpips": {"bicycle": 0.2642, "bonsai": 0.2036, "counter": 0.2068, "kitchen": 0.1292, "room": 0.2208, "stump": 0.2553, "garden": 0.1353, "flowers": 0.3753, "treehill": 0.3618},
+          "pruning_ratio": {"bicycle": 0.57, "bonsai": 0.67, "counter": 0.64, "kitchen": 0.56, "room": 0.71, "stump": 0.61, "garden": 0.60, "flowers": 0.54, "treehill": 0.54}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.48, "ssim": 0.8125, "lpips": 0.2215},
+        "per_scene": {
+          "psnr": {"bicycle": 25.087, "bonsai": 32.262, "counter": 29.079, "kitchen": 31.581, "room": 31.500, "stump": 26.655, "garden": 27.254, "flowers": 21.348, "treehill": 22.561},
+          "ssim": {"bicycle": 0.7464, "bonsai": 0.9460, "counter": 0.9138, "kitchen": 0.9320, "room": 0.9249, "stump": 0.7700, "garden": 0.8557, "flowers": 0.5876, "treehill": 0.6358},
+          "lpips": {"bicycle": 0.2441, "bonsai": 0.1799, "counter": 0.1839, "kitchen": 0.1164, "room": 0.1978, "stump": 0.2423, "garden": 0.1224, "flowers": 0.3601, "treehill": 0.3469}
+        }
+      },
+      "source": "Table 1 (tab:prune_ratio_list), arXiv v1 LaTeX"
+    },
+    "tandt": {
+      "method": {
+        "average": {"psnr": 23.599, "ssim": 0.8420, "lpips": 0.1879},
+        "per_scene": {"psnr": {"truck": 25.376, "train": 21.822}, "ssim": {"truck": 0.8768, "train": 0.8072}, "lpips": {"truck": 0.1541, "train": 0.2217}, "pruning_ratio": {"truck": 0.72, "train": 0.63}}
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 23.644, "ssim": 0.8448, "lpips": 0.1783},
+        "per_scene": {"psnr": {"truck": 25.263, "train": 22.025}, "ssim": {"truck": 0.8778, "train": 0.8118}, "lpips": {"truck": 0.1482, "train": 0.2083}}
+      },
+      "source": "Appendix table 'quantitative results on Tanks & Temples' (RadSplat score row)"
+    }
+  },
+  "notes": "Baseline rows are the authors' own 3DGS runs (black background, official 3DGS code). Note Table 4 (STE vs Gumbel on RadSplat score) repeats the baseline LPIPS row as the LP-3DGS LPIPS (copy error); Table 1 LPIPS values used here. Deep Blending not reported. NeRF-Synthetic also reported (not in our datasets)."
+}

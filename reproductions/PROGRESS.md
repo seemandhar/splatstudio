@@ -1,34 +1,34 @@
 # Reproduction progress
 
-106/130 started: 2 awaiting_benchmark, 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 4 in progress, 39 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 9 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 14 ready_for_benchmark, 1 skipped
+126/130 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 6 in progress, 1 iterating, 54 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 14 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 14 ready_for_benchmark
 
 | # | paper | stage | outcome | ours vs paper (PSNR) |
 |---:|---|---|---|---|
-| 1 | [AbsGS: Recovering Fine Details for 3D Gaussian Splatting](absgs/report.md) | plan | skipped |  |
+| 1 | [AbsGS: Recovering Fine Details for 3D Gaussian Splatting](absgs/report.md) | report | matched |  |
 | 2 | Micro-splatting: Multistage Isotropy-informed Covariance Regularizatio | — | — | |
 | 3 | Gradient-Driven Natural Selection for Compact 3D Gaussian Splatting | — | — | |
-| 4 | Multi-Sample Anti-Aliasing and Constrained Optimization for 3D Gaussia | — | — | |
-| 5 | Optimized 3D Gaussian Splatting using Coarse-to-Fine Image Frequency M | — | — | |
-| 6 | Decomposing Densification in Gaussian Splatting for Faster 3D Scene Re | — | — | |
-| 7 | BOGausS: Better Optimized Gaussian Splatting | — | — | |
-| 8 | LightGaussian: Unbounded 3D Gaussian Compression with 15x Reduction an | — | — | |
-| 9 | StableGS: A Floater-Free Framework for 3D Gaussian Splatting | — | — | |
-| 10 | VoD-3DGS: View-opacity-Dependent 3D Gaussian Splatting | — | — | |
-| 11 | Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting | — | — | |
-| 12 | Trick-GS: A Balanced Bag of Tricks for Efficient Gaussian Splatting | — | — | |
+| 4 | [Multi-Sample Anti-Aliasing and Constrained Optimization for 3D Gaussia](msaa-gs/report.md) | iter1-implement | iterating |  |
+| 5 | [Optimized 3D Gaussian Splatting using Coarse-to-Fine Image Frequency M](opti3dgs/report.md) | report | matched | T&T 23.46 vs paper 23.15 (+0.31); Δ vs our 3DGS +0.10 vs paper −0.54; #G −41% vs paper −64% |
+| 6 | [Decomposing Densification in Gaussian Splatting for Faster 3D Scene Re](decomp-gs/report.md) | gap_analysis | not-matched | T&T mean 23.32 vs paper 24.06 (-0.74); delta vs our gsplat -0.04 vs paper +0.44; Gaussians 0.51x, 2.3x faster (paper 0.55x) |
+| 7 | [BOGausS: Better Optimized Gaussian Splatting](bogauss/report.md) | report | not-matched |  |
+| 8 | [LightGaussian: Unbounded 3D Gaussian Compression with 15x Reduction an](lightgaussian/report.md) | report | matched |  |
+| 9 | [StableGS: A Floater-Free Framework for 3D Gaussian Splatting](stablegs/report.md) | test | ready_for_benchmark |  |
+| 10 | [VoD-3DGS: View-opacity-Dependent 3D Gaussian Splatting](vod3dgs/report.md) | report | not-matched |  |
+| 11 | [Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting](rain-gs/report.md) | report | matched |  |
+| 12 | [Trick-GS: A Balanced Bag of Tricks for Efficient Gaussian Splatting](trick-gs/report.md) | report | not-matched | T&T mean 22.51 (iter0) / 22.41 (iter1) vs paper 23.48; method gap -0.66 + runtime -0.31 |
 | 13 | CLoD-GS: Continuous Level-of-Detail via 3D Gaussian Splatting | — | — | |
-| 14 | 2D Gaussian Splatting for Geometrically Accurate Radiance Fields | — | — | |
-| 15 | Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Sp | — | — | |
+| 14 | [2D Gaussian Splatting for Geometrically Accurate Radiance Fields](2dgs/report.md) | report | matched |  |
+| 15 | [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Sp](pixel-gs/report.md) | test | in progress |  |
 | 16 | GaussianShader: 3D Gaussian Splatting with Shading Functions for Refle | — | — | |
-| 17 | Scaffold-GS: Structured 3D Gaussians for View-Adaptive Rendering | — | — | |
-| 18 | DWTGS: Rethinking Frequency Regularization for Sparse-view 3D Gaussian | — | — | |
-| 19 | LP-3DGS: Learning to Prune 3D Gaussian Splatting | — | — | |
-| 20 | CompGS: Compact Gaussian Splatting with Vector Quantization | — | — | |
-| 21 | CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization | — | — | |
-| 22 | FSGS: Real-Time Few-shot View Synthesis using Gaussian Splatting | — | — | |
-| 23 | FastGS: Training 3D Gaussian Splatting in 100 Seconds | — | — | |
-| 24 | 3D Gaussian Splatting for Real-Time Radiance Field Rendering | — | — | |
-| 25 | 3D Gaussian Splatting as Markov Chain Monte Carlo | — | — | |
+| 17 | [Scaffold-GS: Structured 3D Gaussians for View-Adaptive Rendering](scaffold-gs/report.md) | report | matched |  |
+| 18 | [DWTGS: Rethinking Frequency Regularization for Sparse-view 3D Gaussian](dwtgs/report.md) | report | not-matched |  |
+| 19 | [LP-3DGS: Learning to Prune 3D Gaussian Splatting](lp-3dgs/report.md) | benchmark | matched | garden 26.99 (-0.30), room 31.30 (-0.19); prune ratio 0.576/0.735 vs paper 0.59/0.74 |
+| 20 | [CompGS: Compact Gaussian Splatting with Vector Quantization](compgs/report.md) | report | matched | Decoded CompGS 32K: garden 26.56/26.822 (-0.26), room 31.32/31.131 (+0.18); delta vs gsplat -0.33/-0.21 vs paper -0.42/-0.22; paper-formula size 27.53/9.12 MB vs 30/9 MB |
+| 21 | [CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization](cor-gs/report.md) | benchmark | matched |  |
+| 22 | [FSGS: Real-Time Few-shot View Synthesis using Gaussian Splatting](fsgs/report.md) | report | matched |  |
+| 23 | [FastGS: Training 3D Gaussian Splatting in 100 Seconds](fast-gs/report.md) | implement | in progress |  |
+| 24 | [3D Gaussian Splatting for Real-Time Radiance Field Rendering](3dgs/report.md) | report | matched |  |
+| 25 | [3D Gaussian Splatting as Markov Chain Monte Carlo](3dgs-mcmc/report.md) | report | matched |  |
 | 26 | [Mip-Splatting: Alias-free 3D Gaussian Splatting](mip-splatting/report.md) | benchmark | matched | 3 scenes: −0.17/−0.33/−0.19 dB after PIL-protocol iteration; gain over 3DGS ≥ paper |
 | 27 | [FreGS: 3D Gaussian Splatting with Progressive Frequency Regularization](fregs/report.md) | calibrate_threshold | not-matched | 27.12 vs 27.85 (−0.73) after 1 iteration; Δ vs our 3DGS −0.16 vs paper +0.64 |
 | 28 | [Mini-Splatting: Representing Scenes with a Constrained Number of Gauss](mini-splatting/report.md) | benchmark | matched | 5 scenes: mean gap −0.09 dB (all within ±0.5) |
@@ -112,7 +112,7 @@
 | 106 | [Evaluating Alternatives to SFM Point Cloud Initialization for Gaussian](nerf-init-gs/report.md) | gap_analysis | not-matched |  |
 | 107 | [Beyond Gaussians: Fast and High-Fidelity 3D Splatting with Linear Kern](linear-splatting/report.md) | gap_analysis | not-matched |  |
 | 108 | [3DGabSplat: 3D Gabor Splatting for Frequency-adaptive Radiance Field R](gabsplat/report.md) | gap_analysis | not-matched |  |
-| 109 | [HDGS: Textured 2D Gaussian Splatting for Enhanced Scene Rendering](hdgs/report.md) | test | ready_for_benchmark |  |
+| 109 | [HDGS: Textured 2D Gaussian Splatting for Enhanced Scene Rendering](hdgs/report.md) | report | matched |  |
 | 110 | [Augmented Radiance Field: A General Framework for Enhanced Gaussian Sp](augs/report.md) | report | matched |  |
 | 111 | [DET-GS: Depth- and Edge-Aware Regularization for High-Fidelity 3D Gaus](det-gs/report.md) | gap-analysis-1 | not-matched |  |
 | 112 | [GaussianPOP: Principled Simplification Framework for Compact 3D Gaussi](gaussianpop/report.md) | benchmark | matched | P=0.8 post-training: bicycle 25.01 (-0.11), counter 28.87 (-0.13) vs paper |
@@ -126,10 +126,10 @@
 | 120 | [LiteGS: A High-performance Framework to Train 3DGS in Subminutes via S](litegs/report.md) | benchmark | matched | garden 27.78 vs 28.15 (−0.37), room 32.79 vs 32.69 (+0.10); Δ vs 3DGS +0.89/+1.27 vs paper +0.76/+1.22 |
 | 121 | [Optimized Minimal Gaussians](omg/report.md) | benchmark | matched | OMG-XS decoded: bicycle 24.68/24.95 (-0.27), counter 27.94/28.40 (-0.46); 421k/299k G (paper 481k/310k); 4.18/2.94 MB (paper 4.61/2.95) |
 | 122 | [Volumetrically Consistent 3D Gaussian Rasterization](vol3dgs/report.md) | benchmark | matched |  |
-| 123 | [On the Error Analysis of 3D Gaussian Splatting and an Optimal Projecti](optimal-projection/report.md) | smoke | awaiting_benchmark |  |
+| 123 | [On the Error Analysis of 3D Gaussian Splatting and an Optimal Projecti](optimal-projection/report.md) | report | matched |  |
 | 124 | [Compact Neural Appearance Models for Efficient Gaussian Splatting](neural-appearance/report.md) | analysis | matched | Neural garden 28.05 (paper 28.06), room 33.05 (33.23); Neural-SH +0.10/+0.25 = paper |
 | 125 | [Deformable Beta Splatting](beta-splatting/report.md) | report | matched |  |
-| 126 | [3D Student Splatting and Scooping](student-splatting/report.md) | smoke | awaiting_benchmark |  |
+| 126 | [3D Student Splatting and Scooping](student-splatting/report.md) | benchmark | matched |  |
 | 127 | [AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering](aaa-gaussians/report.md) | report | matched |  |
 | 128 | [Low-Frequency First: Eliminating Floating Artifacts in 3D Gaussian Spl](efa-gs/report.md) | benchmark | matched | pilr 30k black bg: garden 27.95 (-0.07), bonsai 32.19 (-0.37); control efa-gs-base 27.90/32.39; LFCF effect +0.05/-0.20 vs paper -0.02/+0.22 (single seed, unresolved); 0.66-0.69x Gaussians |
 | 129 | [BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel](bbsplat/report.md) | report | partial |  |

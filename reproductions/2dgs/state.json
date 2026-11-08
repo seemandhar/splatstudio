@@ -1,0 +1,37 @@
+{
+ "paper": "2D Gaussian Splatting for Geometrically Accurate Radiance Fields",
+ "slug": "2dgs",
+ "plan_id": 14,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done",
+  "review": "skipped (official rasteriser vendored unmodified; probes pass)"
+ },
+ "outcome": "matched",
+ "arxiv": "2403.17888",
+ "official_code_commit": "f3e3b9f",
+ "rasterizer_commit": "e0ed020",
+ "method": "2dgs",
+ "methods": [
+  "2dgs",
+  "2dgs-paperdist"
+ ],
+ "custom_cuda": true,
+ "bench_exps": [
+  "2dgs-mipnerf360"
+ ],
+ "results": {
+  "garden": {
+   "psnr": 26.73,
+   "paper": 26.95
+  },
+  "counter": {
+   "psnr": 28.11,
+   "paper": 28.55
+  }
+ }
+}

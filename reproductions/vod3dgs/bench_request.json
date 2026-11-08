@@ -1,0 +1,17 @@
+{
+ "method": "vod3dgs-s",
+ "datasets": {
+  "tandt": [
+   "truck",
+   "train"
+  ],
+  "db": [
+   "drjohnson",
+   "playroom"
+  ]
+ },
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "",
+ "notes": "Averages only in paper (Table 1). Compare complete tandt avg (paper S 24.17 vs 3DGS-dagger 23.75, +0.42) and db avg (29.75 vs 29.77, -0.02) to baseline3dgs-tandt-30000 / baseline3dgs-db-30000. vod3dgs-l also installed (tandt 23.91, db 29.84)."
+}

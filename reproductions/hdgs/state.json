@@ -1,0 +1,41 @@
+{
+ "paper": "HDGS: Textured 2D Gaussian Splatting for Enhanced Scene Rendering",
+ "slug": "hdgs",
+ "plan_id": 109,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done (approved, 6 minors)",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "official_code": "github.com/TimSong412/HDGS main@b13a359 + texture@01c6fd4",
+ "method": "hdgs",
+ "arxiv": "2412.01823",
+ "custom_cuda": true,
+ "benchmark_target": "mipnerf360 garden (hdgs) + counter (hdgs-indoor), 60000 steps",
+ "smoke": {
+  "hdgs_2k": 23.11,
+  "baseline_2k": 23.02,
+  "switch_2500": 23.26
+ },
+ "bench_exps": [
+  "hdgs-mipnerf360-60000",
+  "hdgs-indoor-mipnerf360-60000"
+ ],
+ "results": {
+  "garden": {
+   "psnr": 26.89,
+   "paper": 26.98,
+   "delta": -0.09
+  },
+  "counter": {
+   "psnr": 29.0,
+   "paper": 28.94,
+   "delta": 0.06
+  }
+ }
+}

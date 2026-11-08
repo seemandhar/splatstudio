@@ -1,0 +1,7 @@
+{"method": "bogauss",
+ "datasets": {"tandt": ["truck", "train"]},
+ "steps": 30000,
+ "per_scene_reported": false,
+ "extra": "",
+ "baseline": {"truck": "baseline3dgs-tandt-30000", "train": "baseline3dgs-tandt-30000"},
+ "notes": "Paper reports averages only. Cheapest complete average: T&T 'Ours (Big)' PSNR 24.78 / SSIM 0.866 / LPIPS 0.176 at 1.83M avg Gaussians vs the paper's 3DGS row 23.79 (+0.99). Our gsplat baseline T&T mean 23.363 -> delta-based expectation ~24.35. Budgets: truck 2584171, train 1085480 (Taming big budgets, looked up by SfM count). DB (30.41 vs 29.69, +0.72) is the optional second average. Smoke truck 2k: 21.70 vs gsplat 22.09."}

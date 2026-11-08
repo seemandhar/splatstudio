@@ -1,0 +1,47 @@
+{
+ "method": "hdgs",
+ "module": "ss_hdgs",
+ "variants": {
+  "hdgs": "outdoor tex_res 200",
+  "hdgs-indoor": "indoor tex_res 500"
+ },
+ "components": [
+  "hdgs-raster (renderer)",
+  "hdgs-density (density)",
+  "photometric (loss)",
+  "hdgs-geometry (loss)"
+ ],
+ "fields": [
+  {
+   "name": "hdgs_textured",
+   "shape": [
+    1
+   ],
+   "purpose": "stage-2 flag"
+  }
+ ],
+ "probes": [
+  "raster-vs-reference",
+  "texture-vs-reference",
+  "fisher-estimator",
+  "stage-schedule",
+  "state-transitions"
+ ],
+ "contributions": [
+  "per-ray-sort",
+  "frustum-sampling",
+  "fisher-pruning",
+  "per-surfel-texture",
+  "two-stage-optimisation"
+ ],
+ "fidelity_gaps": [
+  "Fisher pruning unreleased: Hutchinson diag-F estimate, score sum log F_jj",
+  "random view sampling with replacement",
+  "SSIM valid conv",
+  "stage-2 f_rest 1000-it delay via lr 0",
+  "SH degree step offset 1",
+  "stage-2 at stage-1 resolution (official script)",
+  "texture memory on indoor scenes"
+ ],
+ "feasible_natively": true
+}

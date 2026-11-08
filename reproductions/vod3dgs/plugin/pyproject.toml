@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splatstudio-method-vod3dgs"
+version = "0.1.0"
+description = "VoD-3DGS (arXiv 2501.17978) native SplatStudio port; paper fidelity unverified"
+requires-python = ">=3.10"
+dependencies = ["splatstudio"]
+
+[project.entry-points."splatstudio.methods"]
+vod3dgs-s = "ss_vod3dgs:method_s"
+vod3dgs-l = "ss_vod3dgs:method_l"
+
+[tool.setuptools]
+packages = ["ss_vod3dgs"]
+
+[tool.setuptools.package-data]
+ss_vod3dgs = ["covis_data/*.npz"]
+
+[tool.ruff]
+line-length = 120

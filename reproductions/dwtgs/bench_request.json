@@ -1,0 +1,58 @@
+{
+ "method": "dwtgs",
+ "datasets": {
+  "llff-fewview3-r8": [
+   "fern",
+   "flower",
+   "fortress",
+   "horns",
+   "leaves",
+   "orchids",
+   "room",
+   "trex"
+  ]
+ },
+ "steps": 10000,
+ "per_scene_reported": false,
+ "extra": "",
+ "recipe": "3dgs",
+ "ablation": {
+  "method": "dwtgs-lf",
+  "datasets": {
+   "llff-fewview3-r8": [
+    "fern",
+    "flower",
+    "fortress",
+    "horns",
+    "leaves",
+    "orchids",
+    "room",
+    "trex"
+   ]
+  },
+  "steps": 10000,
+  "note": "Optional (coordinator benchmarks dwtgs only). Paper Table III '+LF (2-level)' = 20.70."
+ },
+ "base_reference": {
+  "exp": "runs/dropgaussian-i1-llff-r8",
+  "method": "dropgaussian",
+  "mean_psnr": 20.36,
+  "note": "Same base plugin/protocol (matched DropGaussian port). Compare DWTGS gain over it with the paper's +0.39 dB (20.78 vs its DropGaussian re-run 20.39). Re-run dropgaussian in the same experiment if a paired comparison is wanted (plugin unchanged since)."
+ },
+ "paper_reference": {
+  "dataset": "llff-3view",
+  "average": {
+   "psnr": 20.78,
+   "ssim": 0.72,
+   "lpips": 0.197
+  },
+  "dropgaussian_rerun": {
+   "psnr": 20.39,
+   "ssim": 0.706,
+   "lpips": 0.198
+  },
+  "source": "Table I; averages only, all 8 scenes"
+ },
+ "notes": "Paper reports averages only (LLFF 3-view, M360 12-view, Blender 8-view); LLFF 8-scene 1/8-res is the cheapest complete average. ~0.06 s/step on a shared A6000 at 2k (HF novel render every 10 steps adds ~10%), ~12-25 min per scene.",
+ "defaults": "haar_norm average, novel_views interp (review 1)"
+}

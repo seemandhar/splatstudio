@@ -1,0 +1,7 @@
+{"method": "fsgs", "module": "ss_fsgs",
+ "components": ["fsgs-renderer", "fsgs-density", "photometric", "fsgs-depth", "fsgs-pseudo"],
+ "fields": [],
+ "probes": ["proximity-unpooling", "fsgs-densify", "pearson-depth", "pseudo-views", "sh-schedule"],
+ "contributions": ["proximity-guided-unpooling", "pseudo-view-augmentation", "monocular-depth-pearson", "official-training-protocol"],
+ "fidelity_gaps": ["view sampling with replacement", "optimizer step before densification", "gsplat vs Inria rasterizer", "SSIM/LPIPS implementation", "COLMAP 3.9.1 init", "DPT code version", "single seed"],
+ "feasible_natively": true}

@@ -1,0 +1,311 @@
+{
+ "paper": "3D Gaussian Splatting as Markov Chain Monte Carlo",
+ "arxiv": "2404.09591",
+ "method_label": "Ours (SfM)",
+ "iterations": 30000,
+ "notes": "Supp. Tab. allres (tables/allres.tex): mean of 3 runs, same #Gaussians as 3DGS (cap_max = official configs/<scene>.json). Only 2 decimals for SSIM/LPIPS. Mip-NeRF 360 has 7 scenes (no flowers/treehill), so the paper's M360 average is a 7-scene average. Official configs use Inria '-r 4' (outdoor) / '-r 2' (indoor) PIL downscaling of the full-res images => our mipnerf360-pilr dataset. baseline_3dgs is the paper's own run of official 3DGS with SfM init at the same count.",
+ "datasets": {
+  "mipnerf360": {
+   "method": {
+    "average": {
+     "psnr": 29.89,
+     "ssim": 0.9,
+     "lpips": 0.19
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.51,
+      "stump": 27.8,
+      "kitchen": 32.27,
+      "bicycle": 26.15,
+      "bonsai": 32.88,
+      "room": 32.48,
+      "garden": 28.16
+     },
+     "ssim": {
+      "counter": 0.92,
+      "stump": 0.82,
+      "kitchen": 0.94,
+      "bicycle": 0.81,
+      "bonsai": 0.95,
+      "room": 0.94,
+      "garden": 0.89
+     },
+     "lpips": {
+      "counter": 0.22,
+      "stump": 0.19,
+      "kitchen": 0.14,
+      "bicycle": 0.18,
+      "bonsai": 0.22,
+      "room": 0.25,
+      "garden": 0.1
+     },
+     "gaussians": {
+      "counter": 1200000,
+      "stump": 4750000,
+      "kitchen": 1800000,
+      "bicycle": 5900000,
+      "bonsai": 1300000,
+      "room": 1500000,
+      "garden": 5200000
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.3,
+     "ssim": 0.88,
+     "lpips": 0.21
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.12,
+      "stump": 26.99,
+      "kitchen": 31.58,
+      "bicycle": 25.64,
+      "bonsai": 32.32,
+      "room": 31.7,
+      "garden": 27.73
+     },
+     "ssim": {
+      "counter": 0.91,
+      "stump": 0.78,
+      "kitchen": 0.93,
+      "bicycle": 0.78,
+      "bonsai": 0.95,
+      "room": 0.93,
+      "garden": 0.87
+     },
+     "lpips": {
+      "counter": 0.24,
+      "stump": 0.24,
+      "kitchen": 0.14,
+      "bicycle": 0.23,
+      "bonsai": 0.24,
+      "room": 0.27,
+      "garden": 0.12
+     }
+    }
+   },
+   "method_random_init": {
+    "average": {
+     "psnr": 29.72,
+     "ssim": 0.89,
+     "lpips": 0.19
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.16,
+      "stump": 27.67,
+      "kitchen": 32.23,
+      "bicycle": 26.06,
+      "bonsai": 32.67,
+      "room": 32.3,
+      "garden": 27.99
+     }
+    }
+   },
+   "source": "Supp. Tab. allres; main Tab. gs_number_same (averages)"
+  },
+  "tandt": {
+   "method": {
+    "average": {
+     "psnr": 24.29,
+     "ssim": 0.86,
+     "lpips": 0.19
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 22.47,
+      "truck": 26.11
+     },
+     "ssim": {
+      "train": 0.83,
+      "truck": 0.89
+     },
+     "lpips": {
+      "train": 0.24,
+      "truck": 0.14
+     },
+     "gaussians": {
+      "train": 1100000,
+      "truck": 2600000
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 23.67,
+     "ssim": 0.84,
+     "lpips": 0.22
+    },
+    "per_scene": {
+     "psnr": {
+      "train": 21.94,
+      "truck": 25.4
+     },
+     "ssim": {
+      "train": 0.81,
+      "truck": 0.88
+     },
+     "lpips": {
+      "train": 0.25,
+      "truck": 0.18
+     }
+    }
+   },
+   "source": "Supp. Tab. allres"
+  },
+  "db": {
+   "method": {
+    "average": {
+     "psnr": 29.67,
+     "ssim": 0.89,
+     "lpips": 0.32
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.0,
+      "playroom": 30.33
+     },
+     "ssim": {
+      "drjohnson": 0.89,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.33,
+      "playroom": 0.31
+     },
+     "gaussians": {
+      "drjohnson": 3400000,
+      "playroom": 2500000
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.64,
+     "ssim": 0.9,
+     "lpips": 0.32
+    },
+    "per_scene": {
+     "psnr": {
+      "drjohnson": 29.14,
+      "playroom": 30.15
+     },
+     "ssim": {
+      "drjohnson": 0.9,
+      "playroom": 0.9
+     },
+     "lpips": {
+      "drjohnson": 0.33,
+      "playroom": 0.32
+     }
+    }
+   },
+   "source": "Supp. Tab. allres"
+  },
+  "mipnerf360-pilr": {
+   "method": {
+    "average": {
+     "psnr": 29.89,
+     "ssim": 0.9,
+     "lpips": 0.19
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.51,
+      "stump": 27.8,
+      "kitchen": 32.27,
+      "bicycle": 26.15,
+      "bonsai": 32.88,
+      "room": 32.48,
+      "garden": 28.16
+     },
+     "ssim": {
+      "counter": 0.92,
+      "stump": 0.82,
+      "kitchen": 0.94,
+      "bicycle": 0.81,
+      "bonsai": 0.95,
+      "room": 0.94,
+      "garden": 0.89
+     },
+     "lpips": {
+      "counter": 0.22,
+      "stump": 0.19,
+      "kitchen": 0.14,
+      "bicycle": 0.18,
+      "bonsai": 0.22,
+      "room": 0.25,
+      "garden": 0.1
+     },
+     "gaussians": {
+      "counter": 1200000,
+      "stump": 4750000,
+      "kitchen": 1800000,
+      "bicycle": 5900000,
+      "bonsai": 1300000,
+      "room": 1500000,
+      "garden": 5200000
+     }
+    }
+   },
+   "baseline_3dgs": {
+    "average": {
+     "psnr": 29.3,
+     "ssim": 0.88,
+     "lpips": 0.21
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.12,
+      "stump": 26.99,
+      "kitchen": 31.58,
+      "bicycle": 25.64,
+      "bonsai": 32.32,
+      "room": 31.7,
+      "garden": 27.73
+     },
+     "ssim": {
+      "counter": 0.91,
+      "stump": 0.78,
+      "kitchen": 0.93,
+      "bicycle": 0.78,
+      "bonsai": 0.95,
+      "room": 0.93,
+      "garden": 0.87
+     },
+     "lpips": {
+      "counter": 0.24,
+      "stump": 0.24,
+      "kitchen": 0.14,
+      "bicycle": 0.23,
+      "bonsai": 0.24,
+      "room": 0.27,
+      "garden": 0.12
+     }
+    }
+   },
+   "method_random_init": {
+    "average": {
+     "psnr": 29.72,
+     "ssim": 0.89,
+     "lpips": 0.19
+    },
+    "per_scene": {
+     "psnr": {
+      "counter": 29.16,
+      "stump": 27.67,
+      "kitchen": 32.23,
+      "bicycle": 26.06,
+      "bonsai": 32.67,
+      "room": 32.3,
+      "garden": 27.99
+     }
+    }
+   },
+   "source": "Supp. Tab. allres; main Tab. gs_number_same (averages) (copy keyed for the mipnerf360-pilr protocol dataset, = official -r 4/-r 2)"
+  }
+ }
+}

@@ -1,0 +1,24 @@
+{
+  "paper": "Optimized 3D Gaussian Splatting using Coarse-to-Fine Image Frequency Modulation",
+  "slug": "opti3dgs",
+  "plan_id": 5,
+  "stages": {
+    "read": "done",
+    "plan": "done",
+    "implement": "done",
+    "test": "done",
+    "benchmark": "done",
+    "report": "done"
+  },
+  "outcome": "matched",
+  "arxiv": "2503.14475",
+  "methods": [
+    "opti3dgs",
+    "opti3dgs-filter"
+  ],
+  "smoke": "garden 2k: 20.45 dB / 216k G vs gsplat 22.91 / 848k (still blurred targets at 2k)",
+  "bench_exp": "opti3dgs-tandt",
+  "baseline_exp": "baseline3dgs-tandt-30000",
+  "headline": "T&T 23.46 vs paper 23.15 (+0.31); \u0394 vs our 3DGS +0.10 vs paper \u22120.54; #G \u221241% vs paper \u221264%",
+  "reviewed": false
+}

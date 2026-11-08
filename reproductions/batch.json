@@ -103,15 +103,43 @@
   127,
   128,
   129,
-  130
+  130,
+  25,
+  1,
+  15,
+  14,
+  17,
+  8,
+  19,
+  20,
+  22,
+  21,
+  18,
+  11,
+  7,
+  6,
+  5,
+  2,
+  3,
+  4,
+  9,
+  10,
+  12,
+  13,
+  16,
+  23
  ],
  "active": {
-  "build": [],
-  "review": [],
+  "build": [
+   15
+  ],
+  "review": [
+   1
+  ],
   "bench": [
    109,
-   123,
-   126
+   126,
+   25
   ]
  },
  "done": {
@@ -215,7 +243,27 @@
   "128": "matched",
   "129": "partial",
   "124": "matched",
-  "110": "matched"
+  "110": "matched",
+  "24": "matched",
+  "123": "matched",
+  "1": "matched",
+  "17": "matched",
+  "25": "matched",
+  "22": "matched",
+  "14": "matched",
+  "109": "matched",
+  "5": "matched",
+  "18": "not-matched",
+  "20": "matched",
+  "8": "matched",
+  "19": "matched",
+  "6": "not-matched",
+  "21": "matched",
+  "7": "not-matched",
+  "12": "not-matched",
+  "11": "matched",
+  "10": "not-matched",
+  "126": "matched"
  },
  "rules": {
   "tolerance_db": 0.5,
@@ -238,7 +286,7 @@
   35,
   36
  ],
- "notes": "ids 1-23 exist as imported Nerfstudio ports (unbenchmarked), 24-25 native; done last. #1 AbsGS built early (already in progress). | 2026-11-06: added #101-#130 (web scout; per-scene tables, no-code first) to bring native suite to 100.",
+ "notes": "ids 1-23 exist as imported Nerfstudio ports (unbenchmarked), 24-25 native; done last. #1 AbsGS built early (already in progress). | 2026-11-06: added #101-#130 (web scout; per-scene tables, no-code first) to bring native suite to 100. | 2026-11-07: user asked to reach 100 matched+partial; porting #1-#25 natively (fresh plugins, old Nerfstudio ports as reference only).",
  "skipped_existing": [
   1,
   2,

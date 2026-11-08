@@ -484,5 +484,20 @@
    "scan122": "images"
   },
   "_doc": "2DGS DTU release (Google Drive 1SJFgt8qhQomHX55Q4xSvYE2C6-8tFll9 dtu.tar.gz; only scan24/37/122 extracted). Official 3DGS loader with -r 2 --eval: 777x581 PIL-bicubic RGBA, rgb*alpha on BLACK (methods must render on black), llffhold8 on sorted names (7-8 test views), init = sparse/0/points3D.txt. Built by reproductions/erank-gs/tools/prepare_dtu_2dgs.py; NOT rebuildable by bench.py prepare. Data on /bigdata (symlink ~/datasets/dtu_2dgs)."
+ },
+ "llff-fewview3-r8-fsgs": {
+  "raw_root": "/home/sejain/datasets/llff/nerf_llff_data",
+  "native_root": "/home/sejain/datasets/llff/fewview3-r8-fsgs",
+  "scenes": {
+   "fern": "images",
+   "flower": "images",
+   "fortress": "images",
+   "horns": "images",
+   "leaves": "images",
+   "orchids": "images",
+   "room": "images",
+   "trex": "images"
+  },
+  "_doc": "FSGS 3-view LLFF with the official images: identical to llff-fewview3-r8 (hard-linked transforms.json, points.npz = COLMAP 3.9.1 MVS of the 3 train views, prep.json; same split: test = every 8th sorted image, train = round(linspace) 3 of the rest, val = unused) except images/ = hard links of the LLFF-release images_8 PNGs (504x378; official FSGS --images images_8, matched by sorted order and renamed to the full-res stems; ~37-47 dB from the PIL /8 images of llff-fewview3-r8). Built by reproductions/fsgs/tools/prepare_llff_fsgs.py; NOT rebuildable by bench.py prepare."
  }
 }

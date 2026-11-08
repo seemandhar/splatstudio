@@ -1,0 +1,25 @@
+{
+ "paper": "FSGS: Real-Time Few-shot View Synthesis using Gaussian Splatting",
+ "slug": "fsgs",
+ "plan_id": 22,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "dataset": "llff-fewview3-r8-fsgs",
+ "bench_exps": [
+  "fsgs-llff3"
+ ],
+ "result": {
+  "mean_psnr": 20.5,
+  "mean_ssim": 0.703,
+  "mean_lpips": 0.236,
+  "paper": 20.31,
+  "paper_3dgs": 17.43
+ }
+}
