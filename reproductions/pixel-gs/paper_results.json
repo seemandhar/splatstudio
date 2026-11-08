@@ -1,0 +1,33 @@
+{
+  "paper": "Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting",
+  "arxiv": "2403.15530",
+  "method_label": "Pixel-GS (Ours)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.88, "ssim": 0.834, "lpips": 0.176},
+        "per_scene": {
+          "psnr": {"bicycle": 25.739, "flowers": 21.940, "garden": 27.834, "stump": 27.111, "treehill": 22.597, "room": 31.794, "counter": 29.299, "kitchen": 31.956, "bonsai": 32.697},
+          "ssim": {"bicycle": 0.793, "flowers": 0.652, "garden": 0.878, "stump": 0.796, "treehill": 0.653, "room": 0.930, "counter": 0.921, "kitchen": 0.936, "bonsai": 0.951},
+          "lpips": {"bicycle": 0.173, "flowers": 0.251, "garden": 0.094, "stump": 0.181, "treehill": 0.269, "room": 0.183, "counter": 0.162, "kitchen": 0.106, "bonsai": 0.162}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.71, "ssim": 0.826, "lpips": 0.202},
+        "per_scene": {
+          "psnr": {"bicycle": 25.634, "flowers": 21.892, "garden": 27.742, "stump": 26.897, "treehill": 22.802, "room": 31.506, "counter": 29.123, "kitchen": 31.561, "bonsai": 32.184},
+          "ssim": {"bicycle": 0.778, "flowers": 0.622, "garden": 0.873, "stump": 0.785, "treehill": 0.652, "room": 0.926, "counter": 0.915, "kitchen": 0.933, "bonsai": 0.947},
+          "lpips": {"bicycle": 0.204, "flowers": 0.328, "garden": 0.094, "stump": 0.207, "treehill": 0.319, "room": 0.193, "counter": 0.179, "kitchen": 0.113, "bonsai": 0.174}
+        }
+      },
+      "baseline_3dgs_original": {
+        "average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214},
+        "per_scene": {"psnr": {"bicycle": 25.246, "flowers": 21.520, "garden": 27.410, "stump": 26.550, "treehill": 22.490, "room": 30.632, "counter": 28.700, "kitchen": 30.317, "bonsai": 31.980}}
+      },
+      "ablation_average": {"pixel_aware_only": {"psnr": 27.74, "ssim": 0.833, "lpips": 0.176}, "scaled_field_only": {"psnr": 27.72, "ssim": 0.825, "lpips": 0.202}},
+      "source": "Table 1 (avg, flowers/bicycle/stump), supp. Table 7 360scene_compare.tex (per-scene), Table 3 ablation_table.tex"
+    }
+  },
+  "notes": "baseline_3dgs = 3DGS* retrained by the authors (their codebase, -r 4/-r 2 PIL resize = our mipnerf360-pilr); baseline_3dgs_original = numbers from the 3DGS paper. Tanks&Temples uses all 21 scenes with authors' processing (not our tandt split); omitted."
+}

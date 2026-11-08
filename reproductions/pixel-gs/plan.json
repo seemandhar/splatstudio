@@ -1,0 +1,9 @@
+{"method": "pixel-gs", "module": "ss_pixel_gs",
+ "components": [{"kind": "renderer", "name": "gsplat", "factory": "splatstudio.backends.gsplat:create_renderer"},
+                {"kind": "density", "name": "pixel-gs-density", "factory": "ss_pixel_gs.density:create_density", "config": {"grow_grad2d": 0.0002, "pixel_aware": true, "depth_scaling": true, "gamma_depth": 0.37}},
+                {"kind": "loss", "name": "photometric", "factory": "splatstudio.losses:create_photometric"}],
+ "fields": [],
+ "probes": ["pixel-count-kernel", "pixel-aware-accumulation", "depth-scaling"],
+ "contributions": ["pixel-aware-gradient (Sec 3.2, Eq 7-8)", "scaled-gradient-field (Sec 3.3, Eq 9-11)"],
+ "fidelity_gaps": ["gsplat alpha clamp 0.999 vs Inria 0.99 in pixel counting/rendering", "white vs black background", "view sampling with replacement", "SSIM valid conv / lpips package", "> vs >= threshold", "bbox tile assignment differences"],
+ "feasible_natively": true}

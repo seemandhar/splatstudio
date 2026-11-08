@@ -1,0 +1,12 @@
+{"method": "pixel-gs",
+ "datasets": {"mipnerf360-pilr": ["bicycle", "bonsai"]},
+ "steps": 30000,
+ "per_scene_reported": true,
+ "extra": "--recipe 3dgs --num-gaussians 10000000 --max-gaussians 12000000",
+ "baseline": {"bicycle": "baseline3dgs-mipnerf360-pilr-30000", "bonsai": "baseline3dgs-mipnerf360-pilr-30000"},
+ "paper_targets_psnr": {"bicycle": 25.739, "bonsai": 32.697},
+ "paper_3dgs_star_psnr": {"bicycle": 25.634, "bonsai": 32.184},
+ "paper_delta_over_own_base_psnr": {"bicycle": 0.105, "bonsai": 0.513},
+ "our_baseline_psnr": {"bicycle": 25.45, "bonsai": 32.18},
+ "notes": "Official script/mipnerf360.py trains with -r 4 (outdoor) / -r 2 (indoor) = PIL resize of full-res images -> mipnerf360-pilr protocol. Per-scene PSNR from supp. Table 7 (360scene_compare.tex). Bicycle = outdoor (paper Table 1 challenging scene), bonsai = indoor with the largest reported gain. Primary comparison: gain over the pilr gsplat baseline vs paper gain over 3DGS*. Expect ~1.3-1.7x baseline Gaussians and memory (paper Table 4: 1.2 GB vs 0.72 GB); bicycle may reach ~8-10M Gaussians -> --min-free-gb 20. First job JIT-compiles the small CUDA kernel (~1 min, cached). Optional ablations: pixel-gs-pixel-only, pixel-gs-depth-only."
+}

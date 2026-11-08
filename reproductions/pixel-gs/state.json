@@ -1,0 +1,19 @@
+{
+ "paper": "Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting",
+ "slug": "pixel-gs",
+ "plan_id": 15,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "review": "done (approved, 4 minors)",
+  "benchmark": "done (runs/pixel-gs-pilr-30000)",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "bench_request": "bench_request.json",
+ "bench_exps": [
+  "pixel-gs-pilr-30000"
+ ]
+}

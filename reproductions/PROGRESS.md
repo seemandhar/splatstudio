@@ -1,6 +1,6 @@
 # Reproduction progress
 
-126/130 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 6 in progress, 1 iterating, 54 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 14 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 14 ready_for_benchmark
+126/130 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 5 in progress, 1 iterating, 55 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 14 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 14 ready_for_benchmark
 
 | # | paper | stage | outcome | ours vs paper (PSNR) |
 |---:|---|---|---|---|
@@ -18,7 +18,7 @@
 | 12 | [Trick-GS: A Balanced Bag of Tricks for Efficient Gaussian Splatting](trick-gs/report.md) | report | not-matched | T&T mean 22.51 (iter0) / 22.41 (iter1) vs paper 23.48; method gap -0.66 + runtime -0.31 |
 | 13 | CLoD-GS: Continuous Level-of-Detail via 3D Gaussian Splatting | — | — | |
 | 14 | [2D Gaussian Splatting for Geometrically Accurate Radiance Fields](2dgs/report.md) | report | matched |  |
-| 15 | [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Sp](pixel-gs/report.md) | test | in progress |  |
+| 15 | [Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Sp](pixel-gs/report.md) | report | matched |  |
 | 16 | GaussianShader: 3D Gaussian Splatting with Shading Functions for Refle | — | — | |
 | 17 | [Scaffold-GS: Structured 3D Gaussians for View-Adaptive Rendering](scaffold-gs/report.md) | report | matched |  |
 | 18 | [DWTGS: Rethinking Frequency Regularization for Sparse-view 3D Gaussian](dwtgs/report.md) | report | not-matched |  |
