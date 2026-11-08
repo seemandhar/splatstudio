@@ -1,0 +1,7 @@
+{"method": "msaa-gs", "module": "ss_msaa_gs",
+ "components": ["msaa-renderer (custom CUDA, 4 sub-samples)", "adaptive-density (gsplat DefaultStrategy, 3DGS)", "aws-recon (0.8 Lw + 0.2 DSSIM)", "gdc (0.1 Lgrad)"],
+ "fields": [],
+ "probes": ["msaa-forward-vs-dense", "msaa-backward-vs-dense", "msaa-single-sample-equals-gsplat", "aws-weights", "gdc-loss", "loss-weights"],
+ "contributions": ["C1 MSAA rasterization", "C2 adaptive weighting strategy", "C3 gradient difference constraints"],
+ "fidelity_gaps": ["no official code: offsets/alpha/eps/reductions guessed", "lambda3 constant 0.1 (no schedule given)", "runtime protocol differences vs Inria 3DGS", "paper per-scene 3DGS row is a retrained run", "~4x raster cost"],
+ "feasible_natively": true}

@@ -1,0 +1,48 @@
+{
+  "paper": "Multi-Sample Anti-Aliasing and Constrained Optimization for 3D Gaussian Splatting",
+  "arxiv": "2508.10507",
+  "method_label": "Ours(3DGS)",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360": {
+      "method": {
+        "average": {"psnr": 27.62, "ssim": 0.819, "lpips": 0.207},
+        "per_scene": {
+          "psnr":  {"bicycle": 25.23, "bonsai": 32.44, "counter": 29.12, "flowers": 21.69, "garden": 27.41, "kitchen": 31.45, "room": 31.78, "stump": 26.81, "treehill": 22.63},
+          "ssim":  {"bicycle": 0.758, "bonsai": 0.949, "counter": 0.918, "flowers": 0.606, "garden": 0.863, "kitchen": 0.934, "room": 0.929, "stump": 0.778, "treehill": 0.643},
+          "lpips": {"bicycle": 0.222, "bonsai": 0.173, "counter": 0.175, "flowers": 0.339, "garden": 0.109, "kitchen": 0.111, "room": 0.186, "stump": 0.224, "treehill": 0.327}
+        }
+      },
+      "baseline_3dgs": {
+        "average": {"psnr": 27.21, "ssim": 0.815, "lpips": 0.214},
+        "per_scene": {
+          "psnr":  {"bicycle": 25.08, "bonsai": 32.36, "counter": 29.11, "flowers": 21.40, "garden": 27.28, "kitchen": 31.32, "room": 31.70, "stump": 26.63, "treehill": 22.52},
+          "ssim":  {"bicycle": 0.745, "bonsai": 0.947, "counter": 0.915, "flowers": 0.589, "garden": 0.856, "kitchen": 0.931, "room": 0.926, "stump": 0.768, "treehill": 0.635},
+          "lpips": {"bicycle": 0.245, "bonsai": 0.179, "counter": 0.182, "flowers": 0.358, "garden": 0.122, "kitchen": 0.116, "room": 0.196, "stump": 0.243, "treehill": 0.346}
+        }
+      },
+      "ablation_3dgs_msaa": {"average": {"psnr": 27.50, "ssim": 0.812, "lpips": 0.221}},
+      "ablation_3dgs_aws_gdc": {"average": {"psnr": 27.45, "ssim": 0.816, "lpips": 0.210}},
+      "source": "Table 1 (averages), Table 2 (per-scene, Ours vs 3DGS), Table 3 (ablation)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 23.79, "ssim": 0.851, "lpips": 0.165}},
+      "baseline_3dgs": {"average": {"psnr": 23.14, "ssim": 0.841, "lpips": 0.183}},
+      "ablation_3dgs_msaa": {"average": {"psnr": 23.69, "ssim": 0.844, "lpips": 0.178}},
+      "ablation_3dgs_aws_gdc": {"average": {"psnr": 23.66, "ssim": 0.846, "lpips": 0.170}},
+      "source": "Table 1, Table 3"
+    },
+    "db": {
+      "method": {"average": {"psnr": 29.52, "ssim": 0.900, "lpips": 0.246}},
+      "baseline_3dgs": {"average": {"psnr": 29.41, "ssim": 0.903, "lpips": 0.243}},
+      "ablation_3dgs_msaa": {"average": {"psnr": 29.48, "ssim": 0.899, "lpips": 0.246}},
+      "ablation_3dgs_aws_gdc": {"average": {"psnr": 29.44, "ssim": 0.901, "lpips": 0.244}},
+      "source": "Table 1, Table 3"
+    }
+  },
+  "variants": {
+    "Ours(Pixel-GS)": {"mipnerf360": {"psnr": 27.68, "ssim": 0.830, "lpips": 0.189}, "tandt": {"psnr": 23.75, "ssim": 0.865, "lpips": 0.145}, "db": {"psnr": 28.92, "ssim": 0.907, "lpips": 0.242}},
+    "Ours(AbsGS)": {"mipnerf360": {"psnr": 27.51, "ssim": 0.829, "lpips": 0.188}, "tandt": {"psnr": 23.74, "ssim": 0.862, "lpips": 0.157}, "db": {"psnr": 29.69, "ssim": 0.906, "lpips": 0.230}}
+  },
+  "notes": "Table 1's 3DGS row is the 3DGS paper's own averages (27.21/23.14/29.41). Table 2's per-scene 3DGS row is a different (author-retrained) run: its mean is 27.49 dB, not 27.21 (e.g. kitchen 31.32 vs 30.32 in the 3DGS paper). Per-scene PSNR of Ours averages to 27.62 = Table 1. Per-scene numbers exist only for Ours(3DGS) on Mip-NeRF 360; Pixel-GS/AbsGS variants (msaa-gs-plus) have averages only."
+}

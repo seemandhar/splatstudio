@@ -1,0 +1,1 @@
+{"method": "msaa-gs-it1", "datasets": {"mipnerf360": ["garden", "kitchen"]}, "steps": 30000, "per_scene_reported": true, "extra": "", "label": "iteration 1 (post-hoc): AWS weights mean-normalised"}

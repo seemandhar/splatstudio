@@ -1,0 +1,31 @@
+{
+ "paper": "Multi-Sample Anti-Aliasing and Constrained Optimization for 3D Gaussian Splatting",
+ "slug": "msaa-gs",
+ "plan_id": 4,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark-iter0": "done",
+  "gap-analysis-1": "done",
+  "iter1-implement": "done",
+  "benchmark-iter1": "done",
+  "report": "done"
+ },
+ "outcome": "matched (iter 1)",
+ "iteration": 1,
+ "iter0": {
+  "garden": 26.9,
+  "kitchen": 30.66,
+  "baseline": {
+   "garden": 26.89,
+   "kitchen": 31.34
+  }
+ },
+ "iter1": {
+  "garden": 26.93,
+  "kitchen": 31.48,
+  "label": "post-hoc: AWS weights mean-normalised"
+ }
+}
