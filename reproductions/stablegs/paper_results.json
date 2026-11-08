@@ -1,0 +1,33 @@
+{
+  "paper": "StableGS: A Floater-Free Framework for 3D Gaussian Splatting",
+  "arxiv": "2503.18458",
+  "method_label": "StableGS w/o L_prior",
+  "iterations": 30000,
+  "datasets": {
+    "mipnerf360_indoor": {
+      "method": {"average": {"psnr": 31.548, "ssim": 0.9283, "lpips": 0.1762}},
+      "method_full_with_prior": {"average": {"psnr": 31.542, "ssim": 0.9281, "lpips": 0.1761}},
+      "baseline_3dgs": {"average": {"psnr": 31.160, "ssim": 0.9255, "lpips": 0.1859}},
+      "source": "Table 1 (group average, 4 indoor scenes)"
+    },
+    "mipnerf360_outdoor": {
+      "method": {"average": {"psnr": 26.733, "ssim": 0.8102, "lpips": 0.1716}},
+      "method_full_with_prior": {"average": {"psnr": 26.738, "ssim": 0.8105, "lpips": 0.1715}},
+      "baseline_3dgs": {"average": {"psnr": 26.348, "ssim": 0.7882, "lpips": 0.2058}},
+      "source": "Table 1 (group average, 5 outdoor scenes)"
+    },
+    "tandt": {
+      "method": {"average": {"psnr": 24.165, "ssim": 0.8577, "lpips": 0.1628}},
+      "method_full_with_prior": {"average": {"psnr": 24.196, "ssim": 0.8590, "lpips": 0.1610}},
+      "baseline_3dgs": {"average": {"psnr": 23.933, "ssim": 0.8562, "lpips": 0.1697}},
+      "source": "Table 1 (average of truck, train)"
+    },
+    "blender": {
+      "method": {"average": {"psnr": 30.123, "ssim": 0.9111, "lpips": 0.2341}},
+      "method_full_with_prior": {"average": {"psnr": 30.190, "ssim": 0.9113, "lpips": 0.2347}},
+      "baseline_3dgs": {"average": {"psnr": 29.646, "ssim": 0.9070, "lpips": 0.2387}},
+      "source": "Table 1"
+    }
+  },
+  "notes": "Averages only (no per-scene table). baseline_3dgs = '3DGS(updated)' row retrained by the authors (latest official 3DGS release). 'method' = 'StableGS w/o L_prior' (no DUSt3R); full StableGS row stored as method_full_with_prior. Blender here is probably NeRF-synthetic per the table header (unusual LPIPS ~0.23). Deep Blending is mentioned in Sec. 4.1 but has no row."
+}

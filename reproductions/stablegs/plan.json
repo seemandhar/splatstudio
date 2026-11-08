@@ -1,0 +1,7 @@
+{"method": "stablegs", "module": "ss_stablegs",
+ "components": ["stablegs-raster (renderer)", "stablegs-density (density, Taming subclass)", "pair-color", "geometric-color", "depth-normal", "depth-consistency"],
+ "fields": [{"name": "opacity_aux", "shape": [], "lr": 0.025, "init": 4.59512}],
+ "probes": ["dual-opacity-paths", "depth-consistency-formula", "pair-selection", "pair-stack", "loss-schedule", "gof-qualifier"],
+ "contributions": ["C1 dual opacity", "C2 depth consistency (+pair selection)", "pipeline: RaDe-GS depth-normal + Taming densification"],
+ "fidelity_gaps": ["pair retrieval paper criteria vs BoQ", "reconstructed renderer/arguments", "DUSt3R prior not built", "runtime optimizer order", "Taming score via gsplat"],
+ "feasible_natively": true}

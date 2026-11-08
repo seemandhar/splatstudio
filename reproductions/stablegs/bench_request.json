@@ -1,0 +1,10 @@
+{
+  "method": "stablegs",
+  "datasets": {"tandt": ["truck", "train"]},
+  "steps": 30000,
+  "per_scene_reported": false,
+  "extra": "",
+  "baseline": "baseline3dgs-tandt-30000",
+  "paper_target": {"tandt_average_psnr": 24.165, "paper_3dgs_updated": 23.933, "paper_delta": 0.232, "row": "StableGS w/o L_prior (Table 1)"},
+  "notes": "Averages only in the paper; T&T is the cheapest complete average. Each iteration renders 2 views (4 after 15k) with the Inria-style RaDe-GS kernel: expect ~5-10x the gsplat baseline wall time per scene. Needs ~12-20 GB GPU memory (2.6M Gaussians on truck, 4 renders with graph)."
+}

@@ -1,0 +1,31 @@
+{
+ "paper": "StableGS: A Floater-Free Framework for 3D Gaussian Splatting",
+ "slug": "stablegs",
+ "plan_id": 9,
+ "stages": {
+  "read": "done",
+  "plan": "done",
+  "implement": "done",
+  "test": "done",
+  "benchmark": "done",
+  "report": "done"
+ },
+ "outcome": "matched",
+ "official_code": "https://github.com/MooreThreads/StableGS@397a9c00 (incomplete: gaussian_renderer/arguments missing)",
+ "method": "stablegs",
+ "custom_cuda": true,
+ "benchmark_target": "tandt truck+train average (paper w/o L_prior 24.165, 3DGS(updated) 23.933)",
+ "baseline": "baseline3dgs-tandt-30000",
+ "smoke": {
+  "stablegs": 22.494,
+  "stablegs_geo_switch1000": 22.296,
+  "baseline": 22.129,
+  "steps": 2000,
+  "scene": "truck"
+ },
+ "bench_exps": [
+  "stablegs-tandt"
+ ],
+ "headline": "T&T 24.13 vs 24.165 (-0.03); gain vs our gsplat +0.77 vs paper +0.23",
+ "reviewed": false
+}

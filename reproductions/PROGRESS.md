@@ -1,6 +1,6 @@
 # Reproduction progress
 
-126/130 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 5 in progress, 1 iterating, 55 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 14 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 14 ready_for_benchmark
+126/130 started: 4 blocked, 10 built, 5 built (benchmark pending), 1 built (fix pending re-benchmark), 5 in progress, 1 iterating, 56 matched, 1 matched (3/3 scenes), 1 matched (T&T, DB), 1 matched (absolute; gain over Splatfacto not reproduced), 1 matched (absolute; indoor gain over 3DGS not reproduced), 3 matched (iter 1), 1 not matched (test split: -0.65/-0.85 dB; control 3DGS -0.18/-0.51; gain over control not reproduced), 14 not-matched, 1 not-matched (borderline), 1 not-matched (iter 1), 5 partial, 2 partial (2/3 scenes), 13 ready_for_benchmark
 
 | # | paper | stage | outcome | ours vs paper (PSNR) |
 |---:|---|---|---|---|
@@ -12,7 +12,7 @@
 | 6 | [Decomposing Densification in Gaussian Splatting for Faster 3D Scene Re](decomp-gs/report.md) | gap_analysis | not-matched | T&T mean 23.32 vs paper 24.06 (-0.74); delta vs our gsplat -0.04 vs paper +0.44; Gaussians 0.51x, 2.3x faster (paper 0.55x) |
 | 7 | [BOGausS: Better Optimized Gaussian Splatting](bogauss/report.md) | report | not-matched |  |
 | 8 | [LightGaussian: Unbounded 3D Gaussian Compression with 15x Reduction an](lightgaussian/report.md) | report | matched |  |
-| 9 | [StableGS: A Floater-Free Framework for 3D Gaussian Splatting](stablegs/report.md) | test | ready_for_benchmark |  |
+| 9 | [StableGS: A Floater-Free Framework for 3D Gaussian Splatting](stablegs/report.md) | report | matched | T&T 24.13 vs 24.165 (-0.03); gain vs our gsplat +0.77 vs paper +0.23 |
 | 10 | [VoD-3DGS: View-opacity-Dependent 3D Gaussian Splatting](vod3dgs/report.md) | report | not-matched |  |
 | 11 | [Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting](rain-gs/report.md) | report | matched |  |
 | 12 | [Trick-GS: A Balanced Bag of Tricks for Efficient Gaussian Splatting](trick-gs/report.md) | report | not-matched | T&T mean 22.51 (iter0) / 22.41 (iter1) vs paper 23.48; method gap -0.66 + runtime -0.31 |
